@@ -48,6 +48,9 @@ namespace FTL
                 // 투사체에 타깃 정보 전달
                 GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
                 ProjectileController projectileController = projectile.GetComponent<ProjectileController>();
+                projectileController.SetTarget(roomTarget);
+                projectile.transform.rotation = transform.rotation;
+                ChargeProgress = 0f;
             }
 
             prevIsPowered = IsPowered;
