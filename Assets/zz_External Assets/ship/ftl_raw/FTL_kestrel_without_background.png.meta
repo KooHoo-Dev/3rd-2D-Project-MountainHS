@@ -1,0 +1,1092 @@
+fileFormatVersion: 2
+guid: 1b650ec0fab81184bb71ab102274f616
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3556655903687659030
+    second: FTL_kestrel_without_background_0
+  - first:
+      213: 1086155897386988418
+    second: FTL_kestrel_without_background_1
+  - first:
+      213: -7119927056812780213
+    second: FTL_kestrel_without_background_2
+  - first:
+      213: 5452256759124836934
+    second: FTL_kestrel_without_background_3
+  - first:
+      213: 2046634540243381012
+    second: FTL_kestrel_without_background_4
+  - first:
+      213: -167204362989014235
+    second: FTL_kestrel_without_background_5
+  - first:
+      213: 5062445850385610098
+    second: FTL_kestrel_without_background_6
+  - first:
+      213: -8150161365253463059
+    second: FTL_kestrel_without_background_7
+  - first:
+      213: -2430254992674652797
+    second: FTL_kestrel_without_background_8
+  - first:
+      213: -1902078329620461360
+    second: FTL_kestrel_without_background_9
+  - first:
+      213: -5909415408264542731
+    second: FTL_kestrel_without_background_10
+  - first:
+      213: -5644681456964211632
+    second: FTL_kestrel_without_background_11
+  - first:
+      213: -994988387544215806
+    second: FTL_kestrel_without_background_12
+  - first:
+      213: 5307281626653763205
+    second: FTL_kestrel_without_background_13
+  - first:
+      213: 9008522899975112873
+    second: FTL_kestrel_without_background_14
+  - first:
+      213: -4351616847013921038
+    second: FTL_kestrel_without_background_15
+  - first:
+      213: -994138695985721372
+    second: FTL_kestrel_without_background_16
+  - first:
+      213: 575183555888396229
+    second: FTL_kestrel_without_background_17
+  - first:
+      213: 6920484741988074601
+    second: FTL_kestrel_without_background_18
+  - first:
+      213: -3909027544429855007
+    second: FTL_kestrel_without_background_19
+  - first:
+      213: -1171252317145319986
+    second: FTL_kestrel_without_background_20
+  - first:
+      213: 1572228082593674995
+    second: FTL_kestrel_without_background_21
+  - first:
+      213: -8727167187280340023
+    second: FTL_kestrel_without_background_22
+  - first:
+      213: -742112807408039082
+    second: FTL_kestrel_without_background_23
+  - first:
+      213: -472911108543426798
+    second: FTL_kestrel_without_background_24
+  - first:
+      213: -698023718138009005
+    second: FTL_kestrel_without_background_25
+  - first:
+      213: -1654354355263502085
+    second: FTL_kestrel_without_background_26
+  - first:
+      213: 4568942127136844960
+    second: FTL_kestrel_without_background_27
+  - first:
+      213: 2236306075265235907
+    second: FTL_kestrel_without_background_28
+  - first:
+      213: -5483459245747671340
+    second: FTL_kestrel_without_background_29
+  - first:
+      213: -4047527593765666180
+    second: FTL_kestrel_without_background_30
+  - first:
+      213: 7366746144672574494
+    second: FTL_kestrel_without_background_31
+  - first:
+      213: -5244127462681556238
+    second: FTL_kestrel_without_background_32
+  - first:
+      213: -5865150455465932167
+    second: FTL_kestrel_without_background_33
+  - first:
+      213: -4201311987261347929
+    second: FTL_kestrel_without_background_34
+  - first:
+      213: -4271126531697995479
+    second: FTL_kestrel_without_background_35
+  - first:
+      213: -8789573660267336071
+    second: FTL_kestrel_without_background_36
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_0
+      rect:
+        serializedVersion: 2
+        x: 186
+        y: 2611
+        width: 339
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61e499f43b7cb5130800000000000000
+      internalID: 3556655903687659030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_1
+      rect:
+        serializedVersion: 2
+        x: 898
+        y: 2611
+        width: 339
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2837272b80dc21f00800000000000000
+      internalID: 1086155897386988418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_2
+      rect:
+        serializedVersion: 2
+        x: 1610
+        y: 2611
+        width: 339
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b455bf79010f03d90800000000000000
+      internalID: -7119927056812780213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_3
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 2180
+        width: 654
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 642cbd792ae4aab40800000000000000
+      internalID: 5452256759124836934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_4
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 2180
+        width: 654
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41b6044554b176c10800000000000000
+      internalID: 2046634540243381012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_5
+      rect:
+        serializedVersion: 2
+        x: 1482
+        y: 2180
+        width: 653
+        height: 420
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 523f42b8488fdadf0800000000000000
+      internalID: -167204362989014235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_6
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 1837
+        width: 541
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27572eecdab614640800000000000000
+      internalID: 5062445850385610098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_7
+      rect:
+        serializedVersion: 2
+        x: 858
+        y: 1819
+        width: 504
+        height: 259
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de364f17b6fc4ee80800000000000000
+      internalID: -8150161365253463059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_8
+      rect:
+        serializedVersion: 2
+        x: 1534
+        y: 1837
+        width: 541
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38df100d5fff54ed0800000000000000
+      internalID: -2430254992674652797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_9
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 1400
+        width: 530
+        height: 218
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d8010c36d57a95e0800000000000000
+      internalID: -1902078329620461360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_10
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 1381
+        width: 492
+        height: 253
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f50c20eef98dfda0800000000000000
+      internalID: -5909415408264542731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_11
+      rect:
+        serializedVersion: 2
+        x: 1538
+        y: 1400
+        width: 530
+        height: 218
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05ce9672f101aa1b0800000000000000
+      internalID: -5644681456964211632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 847
+        width: 701
+        height: 442
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20fc9cc45571132f0800000000000000
+      internalID: -994988387544215806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_13
+      rect:
+        serializedVersion: 2
+        x: 789
+        y: 876
+        width: 615
+        height: 382
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 586a7af258047a940800000000000000
+      internalID: 5307281626653763205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_14
+      rect:
+        serializedVersion: 2
+        x: 1844
+        y: 1150
+        width: 281
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a80dfb29d3b40d70800000000000000
+      internalID: 9008522899975112873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_15
+      rect:
+        serializedVersion: 2
+        x: 1428
+        y: 973
+        width: 184
+        height: 115
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fe31239883fb93c0800000000000000
+      internalID: -4351616847013921038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_16
+      rect:
+        serializedVersion: 2
+        x: 1620
+        y: 973
+        width: 184
+        height: 115
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ef0d488f1c1432f0800000000000000
+      internalID: -994138695985721372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_17
+      rect:
+        serializedVersion: 2
+        x: 1428
+        y: 851
+        width: 184
+        height: 115
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c7bf5985667bf700800000000000000
+      internalID: 575183555888396229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_18
+      rect:
+        serializedVersion: 2
+        x: 1620
+        y: 851
+        width: 184
+        height: 115
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 964c5bfd4308a0060800000000000000
+      internalID: 6920484741988074601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_19
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 691
+        width: 265
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ee7a05c82850c9c0800000000000000
+      internalID: -3909027544429855007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_20
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 560
+        width: 370
+        height: 284
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec5333e1930eebfe0800000000000000
+      internalID: -1171252317145319986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_21
+      rect:
+        serializedVersion: 2
+        x: 719
+        y: 691
+        width: 265
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f6b3e07c1da1d510800000000000000
+      internalID: 1572228082593674995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_22
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 560
+        width: 370
+        height: 284
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9cbd5b28eafd2e680800000000000000
+      internalID: -8727167187280340023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_23
+      rect:
+        serializedVersion: 2
+        x: 1431
+        y: 691
+        width: 265
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65b0d23655c73b5f0800000000000000
+      internalID: -742112807408039082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_24
+      rect:
+        serializedVersion: 2
+        x: 1712
+        y: 560
+        width: 370
+        height: 284
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21fcee43ad1ef69f0800000000000000
+      internalID: -472911108543426798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_25
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 461
+        width: 209
+        height: 218
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35a269b602f1056f0800000000000000
+      internalID: -698023718138009005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_26
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 323
+        width: 332
+        height: 206
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf806e1aa7d8a09e0800000000000000
+      internalID: -1654354355263502085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_27
+      rect:
+        serializedVersion: 2
+        x: 716
+        y: 461
+        width: 209
+        height: 218
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ac2f4748a4286f30800000000000000
+      internalID: 4568942127136844960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_28
+      rect:
+        serializedVersion: 2
+        x: 929
+        y: 323
+        width: 332
+        height: 206
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3cb7b39e684f80f10800000000000000
+      internalID: 2236306075265235907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_29
+      rect:
+        serializedVersion: 2
+        x: 1428
+        y: 461
+        width: 209
+        height: 218
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4dee0ec5ed6d6e3b0800000000000000
+      internalID: -5483459245747671340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_30
+      rect:
+        serializedVersion: 2
+        x: 1641
+        y: 323
+        width: 332
+        height: 206
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c728103291b44d7c0800000000000000
+      internalID: -4047527593765666180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_31
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 13
+        width: 324
+        height: 295
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1cefaf7690fb3660800000000000000
+      internalID: 7366746144672574494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_32
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 122
+        width: 277
+        height: 184
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2facef57bdd1937b0800000000000000
+      internalID: -5244127462681556238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_33
+      rect:
+        serializedVersion: 2
+        x: 734
+        y: 13
+        width: 324
+        height: 295
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97a8bb35cbcca9ea0800000000000000
+      internalID: -5865150455465932167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_34
+      rect:
+        serializedVersion: 2
+        x: 1097
+        y: 122
+        width: 277
+        height: 184
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a762b0d101f1b5c0800000000000000
+      internalID: -4201311987261347929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_35
+      rect:
+        serializedVersion: 2
+        x: 1446
+        y: 13
+        width: 324
+        height: 295
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 921156f7c09e9b4c0800000000000000
+      internalID: -4271126531697995479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_kestrel_without_background_36
+      rect:
+        serializedVersion: 2
+        x: 1809
+        y: 122
+        width: 277
+        height: 184
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97ea2ac3359250680800000000000000
+      internalID: -8789573660267336071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      FTL_kestrel_without_background_0: 3556655903687659030
+      FTL_kestrel_without_background_1: 1086155897386988418
+      FTL_kestrel_without_background_10: -5909415408264542731
+      FTL_kestrel_without_background_11: -5644681456964211632
+      FTL_kestrel_without_background_12: -994988387544215806
+      FTL_kestrel_without_background_13: 5307281626653763205
+      FTL_kestrel_without_background_14: 9008522899975112873
+      FTL_kestrel_without_background_15: -4351616847013921038
+      FTL_kestrel_without_background_16: -994138695985721372
+      FTL_kestrel_without_background_17: 575183555888396229
+      FTL_kestrel_without_background_18: 6920484741988074601
+      FTL_kestrel_without_background_19: -3909027544429855007
+      FTL_kestrel_without_background_2: -7119927056812780213
+      FTL_kestrel_without_background_20: -1171252317145319986
+      FTL_kestrel_without_background_21: 1572228082593674995
+      FTL_kestrel_without_background_22: -8727167187280340023
+      FTL_kestrel_without_background_23: -742112807408039082
+      FTL_kestrel_without_background_24: -472911108543426798
+      FTL_kestrel_without_background_25: -698023718138009005
+      FTL_kestrel_without_background_26: -1654354355263502085
+      FTL_kestrel_without_background_27: 4568942127136844960
+      FTL_kestrel_without_background_28: 2236306075265235907
+      FTL_kestrel_without_background_29: -5483459245747671340
+      FTL_kestrel_without_background_3: 5452256759124836934
+      FTL_kestrel_without_background_30: -4047527593765666180
+      FTL_kestrel_without_background_31: 7366746144672574494
+      FTL_kestrel_without_background_32: -5244127462681556238
+      FTL_kestrel_without_background_33: -5865150455465932167
+      FTL_kestrel_without_background_34: -4201311987261347929
+      FTL_kestrel_without_background_35: -4271126531697995479
+      FTL_kestrel_without_background_36: -8789573660267336071
+      FTL_kestrel_without_background_4: 2046634540243381012
+      FTL_kestrel_without_background_5: -167204362989014235
+      FTL_kestrel_without_background_6: 5062445850385610098
+      FTL_kestrel_without_background_7: -8150161365253463059
+      FTL_kestrel_without_background_8: -2430254992674652797
+      FTL_kestrel_without_background_9: -1902078329620461360
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

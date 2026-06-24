@@ -1,0 +1,428 @@
+fileFormatVersion: 2
+guid: f70ff8e3f4dcaa64e8529aaf3e5f7188
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8975566802882876672
+    second: PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser_0
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 150
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser
+        1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2174
+        width: 710
+        height: 436
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c24c98c3859a8a49bf465cf376f0458
+      internalID: -240539741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser
+        1_1
+      rect:
+        serializedVersion: 2
+        x: 713
+        y: 2174
+        width: 710
+        height: 436
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3f0f0b8c20fed74abfbc14088d219f0
+      internalID: -487276921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser
+        1_2
+      rect:
+        serializedVersion: 2
+        x: 1420
+        y: 2170
+        width: 710
+        height: 440
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7419df17f62472d4cac579bdcde89b31
+      internalID: -2005705356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser
+        1_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1733
+        width: 710
+        height: 436
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 955b5da1fefc5ad48a9c1af998411bc1
+      internalID: -563127989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser
+        1_4
+      rect:
+        serializedVersion: 2
+        x: 713
+        y: 1733
+        width: 710
+        height: 436
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 659a388aa8eb829479fc0e8630f3ca4d
+      internalID: -1523218252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser
+        1_5
+      rect:
+        serializedVersion: 2
+        x: 1420
+        y: 1730
+        width: 710
+        height: 440
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9158b98ac522bc418d9fcdcb2f63b59
+      internalID: -1056562226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser
+        1_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1292
+        width: 710
+        height: 436
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d61c5bedf4ead434f988a8bf9d499be3
+      internalID: -1879899516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser
+        1_7
+      rect:
+        serializedVersion: 2
+        x: 713
+        y: 1292
+        width: 710
+        height: 436
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e06328fc13350c4cb8581e5c04effd8
+      internalID: 2144629613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser
+        1_8
+      rect:
+        serializedVersion: 2
+        x: 1420
+        y: 1290
+        width: 710
+        height: 440
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8526d5370edc39419e0415a5b810481
+      internalID: 1189472528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser
+        1_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 850
+        width: 710
+        height: 435
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 409eb76a6386abe40bbd3ff321bf7e5b
+      internalID: 2030677936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser
+        1_10
+      rect:
+        serializedVersion: 2
+        x: 713
+        y: 851
+        width: 710
+        height: 436
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 634cb1d2f7a217246b46384d788fec03
+      internalID: -222663240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser
+        1_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 680
+        width: 285
+        height: 167
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a92f8738708d9634bbc0789119f2cf10
+      internalID: -1632831629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 2173b9254ebaa7e41994497dfe570d2d
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceOnImport
+        value: False
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":710.0,"y":436.0},"gridSpriteOffset":{"x":0.0,"y":50.0},"gridSpritePadding":{"x":3.0,"y":5.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":1,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser 1_0: -240539741
+      PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser 1_1: -487276921
+      PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser 1_10: -222663240
+      PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser 1_11: -1194390444
+      PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser 1_12: -1632831629
+      PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser 1_13: 1380711693
+      PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser 1_14: 1401266403
+      PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser 1_2: -2005705356
+      PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser 1_3: -563127989
+      PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser 1_4: -1523218252
+      PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser 1_5: -1056562226
+      PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser 1_6: -1879899516
+      PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser 1_7: 2144629613
+      PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser 1_8: 1189472528
+      PC _ Computer - FTL_ Faster Than Light - Playable Ships - Kestrel Cruiser 1_9: 2030677936
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

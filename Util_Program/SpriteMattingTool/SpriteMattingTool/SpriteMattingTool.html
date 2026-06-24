@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprite Tool v3.1 (Grid Slicer)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .checkerboard {
+            background-color: #2a2a2a;
+            background-image:
+                linear-gradient(45deg, #333 25%, transparent 25%),
+                linear-gradient(-45deg, #333 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #333 75%),
+                linear-gradient(-45deg, transparent 75%, #333 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+        canvas { image-rendering: pixelated; }
+
+        .tool-btn.active {
+            background-color: #7e22ce;
+            color: white;
+            border-color: #a855f7;
+        }
+        input[type="color"] {
+            -webkit-appearance: none;
+            border: none;
+            padding: 0;
+            overflow: hidden;
+            border-radius: 0.25rem;
+            cursor: pointer;
+        }
+        input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+        input[type="color"]::-webkit-color-swatch { border: none; }
+
+        /* Extraction handles drawn as DOM overlays */
+        .ext-handle {
+            position: absolute;
+            width: 10px; height: 10px;
+            background: #a855f7;
+            border: 1.5px solid #fff;
+            border-radius: 2px;
+            z-index: 40;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 4px rgba(0,0,0,0.6);
+        }
+        .ext-handle:hover { background: #c084fc; }
+
+        .ext-subtab, .grid-mode-tab { color: #94a3b8; background: transparent; }
+        .ext-subtab:hover, .grid-mode-tab:hover { color: #e2e8f0; }
+        .ext-subtab.active { background: #7e22ce; color: #fff; }
+        .grid-mode-tab.active { background: #475569; color: #fff; }
+        .thumb-item img {
+            image-rendering: pixelated;
+            background-color: #2a2a2a;
+            background-image:
+                linear-gradient(45deg, #333 25%, transparent 25%),
+                linear-gradient(-45deg, #333 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #333 75%),
+                linear-gradient(-45deg, transparent 75%, #333 75%);
+            background-size: 12px 12px;
+            background-position: 0 0, 0 6px, 6px -6px, -6px 0px;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 min-h-screen text-slate-300 selection:bg-purple-500 selection:text-white flex flex-col">
+
+    <!-- Header -->
+    <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur-md sticky top-0 z-50 h-14 flex-none">
+        <div class="max-w-[1920px] mx-auto px-6 h-full flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-gradient-to-br from-purple-600 to-indigo-600 rounded flex items-center justify-center shadow-lg shadow-purple-900/20">
+                    <i class="fa-solid fa-layer-group text-white text-sm"></i>
+                </div>
+                <h1 class="font-bold text-lg tracking-tight text-slate-100">Sprite Tool <span class="text-xs text-purple-400 font-mono ml-2">v3.1</span></h1>
+            </div>
+
+            <div class="flex items-center gap-6 text-xs font-mono">
+                <div class="flex items-center gap-2 text-slate-400">
+                    <kbd class="bg-slate-800 px-2 py-0.5 rounded border border-slate-700">Ctrl + Z</kbd>
+                    <span>Undo</span>
+                </div>
+                <div class="w-px h-4 bg-slate-700"></div>
+                <span class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-green-500"></div>Ready</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow flex flex-col lg:flex-row h-[calc(100vh-56px)] overflow-hidden">
+
+        <!-- Left: Toolbar -->
+        <aside class="w-full lg:w-80 bg-slate-900 border-r border-slate-800 flex flex-col p-4 gap-5 z-20 shadow-xl overflow-y-auto flex-none">
+
+            <!-- 1. Input -->
+            <div>
+                <h2 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Source</h2>
+                <div id="dropZone" class="border-2 border-dashed border-slate-700 bg-slate-800/50 rounded-lg p-4 text-center hover:border-purple-500 hover:bg-slate-800 transition-all cursor-pointer group">
+                    <input type="file" id="fileInput" accept="image/*" class="hidden">
+                    <i class="fa-solid fa-image text-xl text-slate-600 mb-2 group-hover:text-purple-400 transition-colors"></i>
+                    <p class="text-xs text-slate-400">Load Sprite Sheet</p>
+                </div>
+            </div>
+
+            <hr class="border-slate-800">
+
+            <!-- 2. Tools -->
+            <div class="space-y-3">
+                <h2 class="text-xs font-bold text-slate-500 uppercase tracking-wider">Mode Selection</h2>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <button id="toolFloodFill" class="tool-btn active p-3 rounded bg-slate-800 border border-slate-700 hover:bg-slate-700 transition-all text-xs font-medium flex flex-col items-center gap-2">
+                        <i class="fa-solid fa-fill-drip text-lg"></i>
+                        <span>Smart Eraser</span>
+                    </button>
+                    <button id="toolColorKey" class="tool-btn p-3 rounded bg-slate-800 border border-slate-700 hover:bg-slate-700 transition-all text-xs font-medium flex flex-col items-center gap-2">
+                        <i class="fa-solid fa-eye-dropper text-lg"></i>
+                        <span>Color Key</span>
+                    </button>
+                    <button id="toolExtract" class="tool-btn p-3 rounded bg-slate-800 border border-slate-700 hover:bg-slate-700 transition-all text-xs font-medium flex flex-col items-center gap-2">
+                        <i class="fa-solid fa-vector-square text-lg"></i>
+                        <span>Extract</span>
+                    </button>
+                    <button id="toolUpscale" class="tool-btn p-3 rounded bg-slate-800 border border-slate-700 hover:bg-slate-700 transition-all text-xs font-medium flex flex-col items-center gap-2">
+                        <i class="fa-solid fa-expand text-lg"></i>
+                        <span>Upscale</span>
+                    </button>
+                </div>
+
+                <!-- Contextual: Smart Eraser (Flood Fill) -->
+                <div id="eraserOptions" class="bg-slate-800/50 p-3 rounded border border-slate-700/50">
+                    <div class="flex justify-between text-xs mb-1.5">
+                        <span class="text-slate-400">Tolerance</span>
+                        <span class="font-mono text-purple-400 tolerance-display">10</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="10" class="tolerance-range w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-purple-500">
+                    <p class="text-[10px] text-slate-500 mt-2">
+                        <i class="fa-solid fa-info-circle mr-1"></i>Removes connected pixels only.
+                    </p>
+                </div>
+
+                <!-- Contextual: Color Key (Global Removal) -->
+                <div id="colorKeyOptions" class="hidden bg-slate-800/50 p-3 rounded border border-slate-700/50 space-y-3">
+                    <div>
+                        <div class="flex justify-between text-xs mb-1.5">
+                            <span class="text-slate-400">Target Color</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <input type="color" id="targetColorPicker" value="#ff00ff" class="h-8 w-12 bg-transparent">
+                            <button id="removeColorBtn" class="flex-grow bg-slate-700 hover:bg-slate-600 text-xs rounded text-slate-200 transition-colors">
+                                Remove Selected
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1.5">
+                            <span class="text-slate-400">Tolerance</span>
+                            <span class="font-mono text-purple-400 tolerance-display">10</span>
+                        </div>
+                        <input type="range" min="0" max="100" value="10" class="tolerance-range w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-purple-500">
+                    </div>
+                    <p class="text-[10px] text-slate-400 leading-relaxed">
+                        <i class="fa-solid fa-wand-magic-sparkles mr-1"></i><strong>Click anywhere</strong> on the image to remove that color globally.
+                    </p>
+                </div>
+
+                <!-- Contextual: Extract (Auto-Trim + Grid Slicer) -->
+                <div id="extractOptions" class="hidden bg-slate-800/50 p-3 rounded border border-slate-700/50 space-y-3">
+
+                    <!-- Sub-tabs: Single | Grid -->
+                    <div class="grid grid-cols-2 gap-1 bg-slate-900/60 p-1 rounded">
+                        <button id="subTabSingle" class="ext-subtab active py-1.5 text-xs font-medium rounded transition-colors">
+                            <i class="fa-solid fa-vector-square mr-1"></i>Single
+                        </button>
+                        <button id="subTabGrid" class="ext-subtab py-1.5 text-xs font-medium rounded transition-colors">
+                            <i class="fa-solid fa-table-cells mr-1"></i>Grid
+                        </button>
+                    </div>
+
+                    <!-- Shared: Alpha threshold (used by both single trim & grid trim) -->
+                    <div>
+                        <div class="flex justify-between text-xs mb-1.5">
+                            <span class="text-slate-400">Alpha Threshold</span>
+                            <span id="alphaThreshDisplay" class="font-mono text-purple-400">8</span>
+                        </div>
+                        <input type="range" id="alphaThreshRange" min="0" max="254" value="8" class="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-purple-500">
+                        <p class="text-[10px] text-slate-500 mt-1">Pixels with alpha &le; this count as empty padding.</p>
+                    </div>
+
+                    <!-- === SINGLE panel === -->
+                    <div id="singlePanel" class="space-y-3">
+                        <p class="text-[10px] text-slate-400 leading-relaxed">
+                            <i class="fa-solid fa-mouse-pointer mr-1"></i>Drag over a sprite. The box auto-trims to its opaque bounds. Adjust handles, then add.
+                        </p>
+                        <label class="flex items-center gap-2 text-xs text-slate-400 cursor-pointer select-none">
+                            <input type="checkbox" id="autoTrimToggle" checked class="accent-purple-500">
+                            Auto-trim on drag
+                        </label>
+                        <div class="grid grid-cols-2 gap-2 pt-1">
+                            <button id="retrimBtn" class="py-1.5 bg-slate-700 hover:bg-slate-600 text-xs rounded text-slate-200 transition-colors disabled:opacity-40" disabled>
+                                <i class="fa-solid fa-crop mr-1"></i>Re-trim
+                            </button>
+                            <button id="addRegionBtn" class="py-1.5 bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold rounded transition-colors disabled:opacity-40" disabled>
+                                <i class="fa-solid fa-plus mr-1"></i>Add
+                            </button>
+                        </div>
+                        <div id="extractMeta" class="hidden text-[10px] font-mono text-slate-400 bg-slate-900/60 rounded px-2 py-1.5 leading-relaxed"></div>
+                    </div>
+
+                    <!-- === GRID panel === -->
+                    <div id="gridPanel" class="hidden space-y-3">
+                        <!-- mode toggle: Cell Size / Cell Count -->
+                        <div class="grid grid-cols-2 gap-1 bg-slate-900/60 p-1 rounded">
+                            <button id="gridModeSize" class="grid-mode-tab active py-1 text-[11px] font-medium rounded transition-colors">Cell Size</button>
+                            <button id="gridModeCount" class="grid-mode-tab py-1 text-[11px] font-medium rounded transition-colors">Cell Count</button>
+                        </div>
+
+                        <!-- Size inputs -->
+                        <div id="gridSizeInputs" class="grid grid-cols-2 gap-2">
+                            <label class="text-[10px] text-slate-400">Cell W
+                                <input type="number" id="cellW" min="1" value="16" class="mt-0.5 w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs font-mono text-slate-200">
+                            </label>
+                            <label class="text-[10px] text-slate-400">Cell H
+                                <input type="number" id="cellH" min="1" value="16" class="mt-0.5 w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs font-mono text-slate-200">
+                            </label>
+                        </div>
+
+                        <!-- Count inputs -->
+                        <div id="gridCountInputs" class="hidden grid grid-cols-2 gap-2">
+                            <label class="text-[10px] text-slate-400">Columns
+                                <input type="number" id="cellCols" min="1" value="4" class="mt-0.5 w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs font-mono text-slate-200">
+                            </label>
+                            <label class="text-[10px] text-slate-400">Rows
+                                <input type="number" id="cellRows" min="1" value="4" class="mt-0.5 w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs font-mono text-slate-200">
+                            </label>
+                        </div>
+
+                        <!-- Offset + Spacing -->
+                        <div class="grid grid-cols-2 gap-2">
+                            <label class="text-[10px] text-slate-400">Offset X
+                                <input type="number" id="offX" min="0" value="0" class="mt-0.5 w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs font-mono text-slate-200">
+                            </label>
+                            <label class="text-[10px] text-slate-400">Offset Y
+                                <input type="number" id="offY" min="0" value="0" class="mt-0.5 w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs font-mono text-slate-200">
+                            </label>
+                            <label class="text-[10px] text-slate-400">Spacing X
+                                <input type="number" id="spX" min="0" value="0" class="mt-0.5 w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs font-mono text-slate-200">
+                            </label>
+                            <label class="text-[10px] text-slate-400">Spacing Y
+                                <input type="number" id="spY" min="0" value="0" class="mt-0.5 w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs font-mono text-slate-200">
+                            </label>
+                        </div>
+
+                        <label class="flex items-center gap-2 text-xs text-slate-400 cursor-pointer select-none">
+                            <input type="checkbox" id="gridTrimToggle" checked class="accent-purple-500">
+                            Auto-trim each cell &amp; skip empty
+                        </label>
+
+                        <div id="gridMeta" class="text-[10px] font-mono text-slate-400 bg-slate-900/60 rounded px-2 py-1.5 leading-relaxed">No image loaded.</div>
+
+                        <button id="sliceGridBtn" class="w-full py-2 bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold rounded transition-colors disabled:opacity-40" disabled>
+                            <i class="fa-solid fa-scissors mr-1"></i>Slice &amp; Add All
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Contextual: Upscale -->
+                <div id="upscaleOptions" class="hidden bg-slate-800/50 p-3 rounded border border-slate-700/50 space-y-3">
+                    <button id="doUpscaleBtn" class="w-full py-2 bg-purple-600 hover:bg-purple-500 text-white rounded text-xs font-bold transition-colors flex items-center justify-center gap-2 shadow-lg shadow-purple-900/20">
+                        <i class="fa-solid fa-arrow-up-right-dots"></i> 4x Upscale &amp; Save
+                    </button>
+                    <p class="text-[10px] text-slate-400 leading-relaxed">
+                        <i class="fa-solid fa-circle-info mr-1"></i>Pixel-perfect scaling using Nearest Neighbor.
+                    </p>
+                </div>
+            </div>
+
+            <hr class="border-slate-800">
+
+            <!-- 3. Refinement -->
+            <div class="space-y-2">
+                <h2 class="text-xs font-bold text-slate-500 uppercase tracking-wider">Refinement</h2>
+                <button id="despeckleBtn" class="w-full py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded text-xs text-slate-300 transition-colors">
+                    <i class="fa-solid fa-eraser mr-2"></i>Despeckle (Noise)
+                </button>
+                <button id="smoothBtn" class="w-full py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded text-xs text-slate-300 transition-colors">
+                    <i class="fa-solid fa-droplet mr-2"></i>Smooth Edges
+                </button>
+            </div>
+
+            <div class="mt-auto pt-4">
+                <button id="downloadBtn" disabled class="w-full bg-slate-100 hover:bg-white text-slate-900 disabled:opacity-50 disabled:cursor-not-allowed py-3 rounded font-bold shadow-lg transition-all flex justify-center items-center gap-2">
+                    <i class="fa-solid fa-download"></i> Save Current Sheet
+                </button>
+            </div>
+        </aside>
+
+        <!-- Center: Workspace -->
+        <section class="flex-grow bg-black relative overflow-hidden flex flex-col" id="workspace">
+
+            <!-- Floating Overlay Controls -->
+            <div class="absolute top-4 left-1/2 -translate-x-1/2 bg-slate-800/90 backdrop-blur border border-slate-700 rounded-full px-4 py-2 flex gap-4 z-30 shadow-2xl">
+                <div class="flex items-center gap-2 text-xs text-slate-400">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span>Scroll (Smart Zoom)</span>
+                </div>
+                <div class="w-px h-4 bg-slate-600 my-auto"></div>
+                <div class="flex items-center gap-2 text-xs text-slate-400">
+                    <i class="fa-solid fa-hand"></i>
+                    <span>Mid-Click Pan</span>
+                </div>
+                <div class="w-px h-4 bg-slate-600 my-auto"></div>
+                <button id="resetViewBtn" class="text-xs text-purple-400 hover:text-purple-300 font-bold">Reset View</button>
+            </div>
+
+            <!-- Canvas Container -->
+            <div id="canvasContainer" class="flex-grow w-full h-full relative checkerboard overflow-hidden cursor-crosshair">
+                <div id="canvasWrapper" class="origin-top-left absolute top-0 left-0">
+                    <canvas id="mainCanvas" class="absolute top-0 left-0 z-10"></canvas>
+                    <canvas id="overlayCanvas" class="absolute top-0 left-0 z-20 pointer-events-none"></canvas>
+                </div>
+                <!-- Handles layer (screen-space DOM, not scaled) -->
+                <div id="handleLayer" class="absolute top-0 left-0 w-full h-full pointer-events-none z-40"></div>
+            </div>
+        </section>
+
+        <!-- Right: Extracted Tiles tray -->
+        <aside id="trayPanel" class="hidden w-full lg:w-72 bg-slate-900 border-l border-slate-800 flex flex-col z-20 shadow-xl flex-none">
+            <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+                <div>
+                    <h2 class="text-xs font-bold text-slate-500 uppercase tracking-wider">Extracted Tiles</h2>
+                    <p class="text-[10px] text-slate-500 mt-0.5"><span id="trayCount" class="font-mono text-purple-400">0</span> tiles ready</p>
+                </div>
+                <button id="clearTrayBtn" class="text-[10px] text-slate-500 hover:text-red-400 transition-colors">
+                    <i class="fa-solid fa-trash mr-1"></i>Clear
+                </button>
+            </div>
+            <div id="trayList" class="flex-grow overflow-y-auto p-3 grid grid-cols-2 gap-3 content-start"></div>
+            <div class="p-3 border-t border-slate-800">
+                <button id="zipDownloadBtn" disabled class="w-full bg-purple-600 hover:bg-purple-500 disabled:opacity-40 disabled:cursor-not-allowed text-white py-2.5 rounded font-bold text-sm transition-colors flex justify-center items-center gap-2">
+                    <i class="fa-solid fa-file-zipper"></i> Download All (ZIP)
+                </button>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-8 right-8 bg-slate-800 border border-slate-600 text-white px-5 py-3 rounded shadow-2xl transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-3">
+        <i class="fa-solid fa-check-circle text-green-400"></i>
+        <span id="toastMsg" class="text-sm font-medium">Action Complete</span>
+    </div>
+
+<script>
+/**
+ * Sprite Tool v3.0
+ * Added: Auto-Trim Extract (tight rect detection) + preview handles + tile tray + ZIP export.
+ * Refactor: extraction isolated into ExtractionController; viewport transform centralized;
+ *           undo now restores canvas + overlay sizing; floodfill uses squared distance.
+ */
+
+const MODES = {
+    ERASER: 'eraser',
+    COLOR_KEY: 'color_key',
+    EXTRACT: 'extract',
+    UPSCALE: 'upscale'
+};
+
+/* ============================================================
+ * Geometry helper — a normalized rect in image space.
+ * ============================================================ */
+class Rect {
+    constructor(x, y, w, h) { this.x = x; this.y = y; this.w = w; this.h = h; }
+    get right() { return this.x + this.w; }
+    get bottom() { return this.y + this.h; }
+    clone() { return new Rect(this.x, this.y, this.w, this.h); }
+
+    /** Build from two arbitrary corner points, clamped to bounds. */
+    static fromPoints(a, b, bounds) {
+        let x = Math.min(a.x, b.x);
+        let y = Math.min(a.y, b.y);
+        let w = Math.abs(a.x - b.x);
+        let h = Math.abs(a.y - b.y);
+        if (bounds) {
+            x = Math.max(0, Math.min(x, bounds.w));
+            y = Math.max(0, Math.min(y, bounds.h));
+            w = Math.min(w, bounds.w - x);
+            h = Math.min(h, bounds.h - y);
+        }
+        return new Rect(Math.round(x), Math.round(y), Math.round(w), Math.round(h));
+    }
+
+    clampTo(bounds) {
+        this.x = Math.max(0, Math.min(this.x, bounds.w - 1));
+        this.y = Math.max(0, Math.min(this.y, bounds.h - 1));
+        this.w = Math.max(1, Math.min(this.w, bounds.w - this.x));
+        this.h = Math.max(1, Math.min(this.h, bounds.h - this.y));
+        return this;
+    }
+}
+
+/* ============================================================
+ * History — restores pixels AND canvas dimensions on undo.
+ * onRestore() lets the app re-sync dependent surfaces.
+ * ============================================================ */
+class HistoryManager {
+    constructor(canvas, onRestore, maxStates = 20) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+        this.onRestore = onRestore;
+        this.undoStack = [];
+        this.maxStates = maxStates;
+    }
+
+    saveState() {
+        const data = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
+        this.undoStack.push(data);
+        if (this.undoStack.length > this.maxStates) this.undoStack.shift();
+    }
+
+    undo() {
+        if (this.undoStack.length === 0) return false;
+        const prev = this.undoStack.pop();
+        if (this.canvas.width !== prev.width || this.canvas.height !== prev.height) {
+            this.canvas.width = prev.width;
+            this.canvas.height = prev.height;
+        }
+        this.ctx.putImageData(prev, 0, 0);
+        if (this.onRestore) this.onRestore(prev.width, prev.height);
+        return true;
+    }
+}
+
+/* ============================================================
+ * Pure pixel operations.
+ * ============================================================ */
+class ImageProcessor {
+    // Connected-region erase. Uses squared distance (no sqrt per pixel).
+    static floodFill(ctx, startX, startY, tolerance, width, height) {
+        const imageData = ctx.getImageData(0, 0, width, height);
+        const data = imageData.data;
+        const startPos = (startY * width + startX) * 4;
+        const r0 = data[startPos], g0 = data[startPos + 1], b0 = data[startPos + 2], a0 = data[startPos + 3];
+        if (a0 === 0) return null;
+
+        const maxDist = tolerance / 100 * 441.67;
+        const maxDistSq = maxDist * maxDist;
+        const stack = [[startX, startY]];
+
+        const match = (pos) => {
+            if (data[pos + 3] === 0) return false;
+            const dr = data[pos] - r0, dg = data[pos + 1] - g0, db = data[pos + 2] - b0;
+            return (dr * dr + dg * dg + db * db) <= maxDistSq;
+        };
+
+        while (stack.length) {
+            const [x, y] = stack.pop();
+            if (x < 0 || x >= width || y < 0 || y >= height) continue;
+            const pos = (y * width + x) * 4;
+            if (data[pos + 3] === 0) continue;
+            if (match(pos)) {
+                data[pos + 3] = 0;
+                stack.push([x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]);
+            }
+        }
+        return imageData;
+    }
+
+    static removeColor(ctx, targetColor, tolerance, width, height) {
+        const imageData = ctx.getImageData(0, 0, width, height);
+        const data = imageData.data;
+        const r0 = targetColor.r, g0 = targetColor.g, b0 = targetColor.b;
+        const maxDist = tolerance / 100 * 441.67;
+        const maxDistSq = maxDist * maxDist;
+
+        for (let i = 0; i < data.length; i += 4) {
+            if (data[i + 3] === 0) continue;
+            const dr = data[i] - r0, dg = data[i + 1] - g0, db = data[i + 2] - b0;
+            if ((dr * dr + dg * dg + db * db) <= maxDistSq) data[i + 3] = 0;
+        }
+        return imageData;
+    }
+
+    static hexToRgb(hex) {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : null;
+    }
+
+    static despeckle(ctx, width, height) {
+        const imageData = ctx.getImageData(0, 0, width, height);
+        const data = imageData.data;
+        const buffer = new Uint8ClampedArray(data);
+        for (let y = 1; y < height - 1; y++) {
+            for (let x = 1; x < width - 1; x++) {
+                const i = (y * width + x) * 4;
+                if (buffer[i + 3] === 0) continue;
+                let neighbors = 0;
+                if (buffer[((y - 1) * width + x) * 4 + 3] > 0) neighbors++;
+                if (buffer[((y + 1) * width + x) * 4 + 3] > 0) neighbors++;
+                if (buffer[(y * width + x - 1) * 4 + 3] > 0) neighbors++;
+                if (buffer[(y * width + x + 1) * 4 + 3] > 0) neighbors++;
+                if (neighbors < 2) data[i + 3] = 0;
+            }
+        }
+        return imageData;
+    }
+
+    // Alpha-aware edge smoothing: softens boundary pixels only.
+    static smoothEdges(ctx, width, height) {
+        const imageData = ctx.getImageData(0, 0, width, height);
+        const data = imageData.data;
+        const buffer = new Uint8ClampedArray(data);
+        for (let y = 1; y < height - 1; y++) {
+            for (let x = 1; x < width - 1; x++) {
+                const i = (y * width + x) * 4;
+                const aC = buffer[i + 3];
+                const aL = buffer[(y * width + x - 1) * 4 + 3];
+                const aR = buffer[(y * width + x + 1) * 4 + 3];
+                const aT = buffer[((y - 1) * width + x) * 4 + 3];
+                const aB = buffer[((y + 1) * width + x) * 4 + 3];
+                const transparentN = (aL === 0) + (aR === 0) + (aT === 0) + (aB === 0);
+                if (transparentN > 0 && transparentN < 4) {
+                    data[i + 3] = Math.round((aC + aL + aR + aT + aB) / 5);
+                }
+            }
+        }
+        return imageData;
+    }
+
+    static upscale(sourceCanvas, scaleFactor) {
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = sourceCanvas.width * scaleFactor;
+        tempCanvas.height = sourceCanvas.height * scaleFactor;
+        const tempCtx = tempCanvas.getContext('2d');
+        tempCtx.imageSmoothingEnabled = false;
+        tempCtx.drawImage(sourceCanvas, 0, 0, tempCanvas.width, tempCanvas.height);
+        return tempCanvas;
+    }
+
+    /**
+     * Auto-trim: within `region`, find the tight bounding box of pixels whose
+     * alpha > alphaThreshold. Returns a Rect in image space, or null if empty.
+     */
+    static computeTrimBounds(ctx, region, alphaThreshold) {
+        const { x, y, w, h } = region;
+        if (w <= 0 || h <= 0) return null;
+        const data = ctx.getImageData(x, y, w, h).data;
+        let minX = w, minY = h, maxX = -1, maxY = -1;
+        for (let py = 0; py < h; py++) {
+            for (let px = 0; px < w; px++) {
+                const a = data[(py * w + px) * 4 + 3];
+                if (a > alphaThreshold) {
+                    if (px < minX) minX = px;
+                    if (px > maxX) maxX = px;
+                    if (py < minY) minY = py;
+                    if (py > maxY) maxY = py;
+                }
+            }
+        }
+        if (maxX < 0) return null; // nothing opaque
+        return new Rect(x + minX, y + minY, (maxX - minX + 1), (maxY - minY + 1));
+    }
+
+    /** Extract a region into a fresh canvas (no padding added). */
+    static extractRegion(sourceCanvas, rect) {
+        const out = document.createElement('canvas');
+        out.width = rect.w; out.height = rect.h;
+        out.getContext('2d').drawImage(
+            sourceCanvas, rect.x, rect.y, rect.w, rect.h, 0, 0, rect.w, rect.h
+        );
+        return out;
+    }
+}
+
+/* ============================================================
+ * Viewport — single source of truth for pan/zoom + coord mapping.
+ * ============================================================ */
+class Viewport {
+    constructor(wrapper, container) {
+        this.wrapper = wrapper;
+        this.container = container;
+        this.scale = 1;
+        this.tx = 0;
+        this.ty = 0;
+    }
+
+    apply() {
+        this.wrapper.style.transform = `translate(${this.tx}px, ${this.ty}px) scale(${this.scale})`;
+    }
+
+    reset() { this.scale = 1; this.tx = 0; this.ty = 0; this.apply(); }
+
+    /** Screen event -> integer image coords (clamped to bounds if given). */
+    toImage(e, bounds) {
+        const rect = this.wrapper.getBoundingClientRect();
+        let x = Math.floor((e.clientX - rect.left) / this.scale);
+        let y = Math.floor((e.clientY - rect.top) / this.scale);
+        if (bounds) {
+            x = Math.max(0, Math.min(x, bounds.w - 1));
+            y = Math.max(0, Math.min(y, bounds.h - 1));
+        }
+        return { x, y };
+    }
+
+    /** Image point -> screen point relative to container. */
+    toScreen(ix, iy) {
+        const cRect = this.container.getBoundingClientRect();
+        const wRect = this.wrapper.getBoundingClientRect();
+        return {
+            x: (wRect.left - cRect.left) + ix * this.scale,
+            y: (wRect.top - cRect.top) + iy * this.scale
+        };
+    }
+
+    zoomAt(screenX, screenY, deltaY) {
+        const cRect = this.container.getBoundingClientRect();
+        const mx = screenX - cRect.left;
+        const my = screenY - cRect.top;
+        const delta = deltaY > 0 ? 0.9 : 1.1;
+        const newScale = Math.max(0.1, Math.min(this.scale * delta, 30));
+        const worldX = (mx - this.tx) / this.scale;
+        const worldY = (my - this.ty) / this.scale;
+        this.tx = mx - worldX * newScale;
+        this.ty = my - worldY * newScale;
+        this.scale = newScale;
+        this.apply();
+    }
+
+    fit(imgW, imgH) {
+        this.scale = Math.min((this.container.clientWidth - 40) / imgW, (this.container.clientHeight - 40) / imgH);
+        if (!isFinite(this.scale) || this.scale <= 0) this.scale = 1;
+        this.tx = (this.container.clientWidth - imgW * this.scale) / 2;
+        this.ty = (this.container.clientHeight - imgH * this.scale) / 2;
+        this.apply();
+    }
+}
+
+/* ============================================================
+ * ExtractionController — owns the Extract mode lifecycle:
+ * drag -> auto-trim -> editable rect w/ 8 handles -> confirm.
+ * Renders rect on overlay canvas, handles as DOM in handleLayer.
+ * ============================================================ */
+const HANDLE_DEFS = [
+    { id: 'nw', fx: 0,   fy: 0   },
+    { id: 'n',  fx: 0.5, fy: 0   },
+    { id: 'ne', fx: 1,   fy: 0   },
+    { id: 'e',  fx: 1,   fy: 0.5 },
+    { id: 'se', fx: 1,   fy: 1   },
+    { id: 's',  fx: 0.5, fy: 1   },
+    { id: 'sw', fx: 0,   fy: 1   },
+    { id: 'w',  fx: 0,   fy: 0.5 }
+];
+
+class ExtractionController {
+    constructor(app) {
+        this.app = app;
+        this.overlayCtx = app.overlayCtx;
+        this.handleLayer = document.getElementById('handleLayer');
+        this.rect = null;          // editable Rect in image space
+        this.dragStart = null;     // initial drag corner
+        this.isDrawing = false;
+        this.activeHandle = null;
+        this.moveAnchor = null;    // for body-drag move
+    }
+
+    get bounds() { return { w: this.app.mainCanvas.width, h: this.app.mainCanvas.height }; }
+
+    reset() {
+        this.rect = null;
+        this.dragStart = null;
+        this.isDrawing = false;
+        this.activeHandle = null;
+        this.clearOverlay();
+        this.clearHandles();
+        this.app.refreshExtractUI();
+    }
+
+    clearOverlay() {
+        this.overlayCtx.clearRect(0, 0, this.app.overlayCanvas.width, this.app.overlayCanvas.height);
+    }
+
+    clearHandles() { this.handleLayer.innerHTML = ''; }
+
+    // --- drag-to-define ---
+    beginDraw(p) {
+        this.isDrawing = true;
+        this.dragStart = p;
+        this.rect = new Rect(p.x, p.y, 0, 0);
+        this.clearHandles();
+    }
+
+    updateDraw(p) {
+        if (!this.isDrawing) return;
+        this.rect = Rect.fromPoints(this.dragStart, p, this.bounds);
+        this.render();
+    }
+
+    endDraw(p) {
+        if (!this.isDrawing) return;
+        this.isDrawing = false;
+        this.rect = Rect.fromPoints(this.dragStart, p, this.bounds);
+        if (this.rect.w < 2 || this.rect.h < 2) { this.reset(); return; }
+        if (this.app.autoTrim) this.applyTrim();
+        this.render();
+        this.app.refreshExtractUI();
+    }
+
+    applyTrim() {
+        const trimmed = ImageProcessor.computeTrimBounds(
+            this.app.mainCtx, this.rect, this.app.alphaThreshold
+        );
+        if (trimmed) {
+            this.rect = trimmed;
+        } else {
+            this.app.showToast('No opaque pixels in selection', 'error');
+        }
+    }
+
+    // --- handle / body manipulation ---
+    hitTest(p) {
+        if (!this.rect) return null;
+        const pad = 7 / this.app.viewport.scale;
+        for (const def of HANDLE_DEFS) {
+            const hx = this.rect.x + def.fx * this.rect.w;
+            const hy = this.rect.y + def.fy * this.rect.h;
+            if (Math.abs(p.x - hx) <= pad && Math.abs(p.y - hy) <= pad) return def.id;
+        }
+        if (p.x >= this.rect.x && p.x <= this.rect.right && p.y >= this.rect.y && p.y <= this.rect.bottom) {
+            return 'move';
+        }
+        return null;
+    }
+
+    beginManipulate(handle, p) {
+        this.activeHandle = handle;
+        if (handle === 'move') this.moveAnchor = { x: p.x - this.rect.x, y: p.y - this.rect.y };
+    }
+
+    updateManipulate(p) {
+        if (!this.activeHandle || !this.rect) return;
+        const r = this.rect;
+        const h = this.activeHandle;
+
+        if (h === 'move') {
+            const nx = Math.max(0, Math.min(p.x - this.moveAnchor.x, this.bounds.w - r.w));
+            const ny = Math.max(0, Math.min(p.y - this.moveAnchor.y, this.bounds.h - r.h));
+            r.x = Math.round(nx); r.y = Math.round(ny);
+            this.render();
+            return;
+        }
+
+        let x = r.x, y = r.y, right = r.right, bottom = r.bottom;
+        if (h.includes('w')) x = Math.min(p.x, right - 1);
+        if (h.includes('e')) right = Math.max(p.x, x + 1);
+        if (h.includes('n')) y = Math.min(p.y, bottom - 1);
+        if (h.includes('s')) bottom = Math.max(p.y, y + 1);
+
+        r.x = Math.round(x); r.y = Math.round(y);
+        r.w = Math.round(right - x); r.h = Math.round(bottom - y);
+        r.clampTo(this.bounds);
+        this.render();
+    }
+
+    endManipulate() {
+        this.activeHandle = null;
+        this.moveAnchor = null;
+        this.app.refreshExtractUI();
+    }
+
+    // --- rendering ---
+    render() {
+        this.clearOverlay();
+        if (!this.rect) { this.clearHandles(); return; }
+        const r = this.rect;
+        const ctx = this.overlayCtx;
+        const lw = 1 / this.app.viewport.scale;
+        ctx.save();
+        ctx.strokeStyle = '#a855f7';
+        ctx.lineWidth = lw;
+        ctx.setLineDash([4 * lw, 2 * lw]);
+        ctx.strokeRect(r.x + lw / 2, r.y + lw / 2, Math.max(0, r.w - lw), Math.max(0, r.h - lw));
+        ctx.setLineDash([]);
+        ctx.fillStyle = 'rgba(168, 85, 247, 0.12)';
+        ctx.fillRect(r.x, r.y, r.w, r.h);
+        ctx.restore();
+        this.renderHandles();
+    }
+
+    renderHandles() {
+        this.clearHandles();
+        if (!this.rect || this.isDrawing) return;
+        const r = this.rect;
+        for (const def of HANDLE_DEFS) {
+            const ix = r.x + def.fx * r.w;
+            const iy = r.y + def.fy * r.h;
+            const s = this.app.viewport.toScreen(ix, iy);
+            const el = document.createElement('div');
+            el.className = 'ext-handle';
+            el.style.left = s.x + 'px';
+            el.style.top = s.y + 'px';
+            this.handleLayer.appendChild(el);
+        }
+    }
+}
+
+/* ============================================================
+ * GridSlicer — divides the sheet into a grid (by cell size or
+ * cell count) with offset/spacing, previews the lattice live,
+ * and slices every cell into the tray (auto-trim + skip-empty).
+ * ============================================================ */
+class GridSlicer {
+    constructor(app) {
+        this.app = app;
+        this.overlayCtx = app.overlayCtx;
+        this.mode = 'size';        // 'size' | 'count'
+        this.trimCells = true;
+        this.lastCells = [];       // cached cell rects for slicing
+    }
+
+    get bounds() { return { w: this.app.mainCanvas.width, h: this.app.mainCanvas.height }; }
+
+    /** Read current inputs and compute cell rects. Pure geometry. */
+    buildCells() {
+        const { w: imgW, h: imgH } = this.bounds;
+        if (imgW <= 0 || imgH <= 0) return { cells: [], cw: 0, ch: 0, nc: 0, nr: 0 };
+
+        const num = (id, min = 0) => Math.max(min, parseInt(document.getElementById(id).value) || 0);
+        const offX = num('offX'), offY = num('offY');
+        const spX = num('spX'), spY = num('spY');
+
+        let cw, ch, nc, nr;
+        if (this.mode === 'size') {
+            cw = num('cellW', 1); ch = num('cellH', 1);
+            nc = Math.max(0, Math.floor((imgW - offX + spX) / (cw + spX)));
+            nr = Math.max(0, Math.floor((imgH - offY + spY) / (ch + spY)));
+        } else {
+            nc = num('cellCols', 1); nr = num('cellRows', 1);
+            cw = Math.floor((imgW - offX - spX * (nc - 1)) / nc);
+            ch = Math.floor((imgH - offY - spY * (nr - 1)) / nr);
+        }
+
+        const cells = [];
+        if (cw > 0 && ch > 0) {
+            for (let r = 0; r < nr; r++) {
+                for (let c = 0; c < nc; c++) {
+                    const x = offX + c * (cw + spX);
+                    const y = offY + r * (ch + spY);
+                    if (x + cw > imgW || y + ch > imgH) continue;
+                    cells.push(new Rect(x, y, cw, ch));
+                }
+            }
+        }
+        this.lastCells = cells;
+        return { cells, cw, ch, nc, nr };
+    }
+
+    setMode(mode) {
+        this.mode = mode;
+        document.getElementById('gridModeSize').classList.toggle('active', mode === 'size');
+        document.getElementById('gridModeCount').classList.toggle('active', mode === 'count');
+        document.getElementById('gridSizeInputs').classList.toggle('hidden', mode !== 'size');
+        document.getElementById('gridCountInputs').classList.toggle('hidden', mode !== 'count');
+        this.refresh();
+    }
+
+    clearOverlay() {
+        this.overlayCtx.clearRect(0, 0, this.app.overlayCanvas.width, this.app.overlayCanvas.height);
+    }
+
+    /** Recompute, update meta text, and redraw the preview lattice. */
+    refresh() {
+        const meta = document.getElementById('gridMeta');
+        const btn = document.getElementById('sliceGridBtn');
+        if (!this.app.hasImage()) {
+            this.clearOverlay();
+            if (meta) meta.textContent = 'No image loaded.';
+            if (btn) btn.disabled = true;
+            return;
+        }
+        const { cells, cw, ch, nc, nr } = this.buildCells();
+        if (meta) meta.innerHTML = `grid: ${nc}×${nr} &nbsp; cell: ${cw}×${ch}<br>cells in bounds: ${cells.length}`;
+        if (btn) btn.disabled = cells.length === 0;
+        this.render(cells);
+    }
+
+    render(cells) {
+        this.clearOverlay();
+        if (!cells || cells.length === 0) return;
+        const ctx = this.overlayCtx;
+        const lw = 1 / this.app.viewport.scale;
+        ctx.save();
+        ctx.strokeStyle = '#a855f7';
+        ctx.lineWidth = lw;
+        ctx.fillStyle = 'rgba(168, 85, 247, 0.06)';
+        for (const r of cells) {
+            ctx.fillRect(r.x, r.y, r.w, r.h);
+            ctx.strokeRect(r.x + lw / 2, r.y + lw / 2, r.w - lw, r.h - lw);
+        }
+        ctx.restore();
+    }
+
+    /** Slice every cell into the tray. Returns count added. */
+    slice() {
+        if (!this.app.hasImage()) return 0;
+        const { cells } = this.buildCells();
+        let added = 0, skipped = 0;
+        for (const cell of cells) {
+            let rect = cell;
+            if (this.trimCells) {
+                const trimmed = ImageProcessor.computeTrimBounds(
+                    this.app.mainCtx, cell, this.app.alphaThreshold
+                );
+                if (!trimmed) { skipped++; continue; } // empty cell
+                rect = trimmed;
+            }
+            const tile = ImageProcessor.extractRegion(this.app.mainCanvas, rect);
+            this.app.tray.add(tile, this.app.baseName);
+            added++;
+        }
+        this.app.showToast(`Sliced ${added} tiles${skipped ? ` (${skipped} empty skipped)` : ''}`);
+        return added;
+    }
+}
+
+/* ============================================================
+ * TileTray — collects extracted tiles, renders thumbnails,
+ * supports individual PNG download, remove, clear, ZIP export.
+ * ============================================================ */
+class TileTray {
+    constructor(app) {
+        this.app = app;
+        this.tiles = []; // { id, canvas, name }
+        this.seq = 0;
+        this.panel = document.getElementById('trayPanel');
+        this.list = document.getElementById('trayList');
+        this.countEl = document.getElementById('trayCount');
+        this.zipBtn = document.getElementById('zipDownloadBtn');
+    }
+
+    add(canvas, baseName) {
+        const id = ++this.seq;
+        const name = `${baseName}_${String(id).padStart(3, '0')}_${canvas.width}x${canvas.height}.png`;
+        this.tiles.push({ id, canvas, name });
+        this.panel.classList.remove('hidden');
+        this.render();
+    }
+
+    remove(id) {
+        this.tiles = this.tiles.filter(t => t.id !== id);
+        this.render();
+    }
+
+    clear() {
+        this.tiles = [];
+        this.render();
+    }
+
+    render() {
+        this.countEl.textContent = this.tiles.length;
+        this.zipBtn.disabled = this.tiles.length === 0;
+        this.list.innerHTML = '';
+        for (const t of this.tiles) {
+            const card = document.createElement('div');
+            card.className = 'thumb-item group relative bg-slate-800 border border-slate-700 rounded p-2 flex flex-col gap-1.5';
+            const img = document.createElement('img');
+            img.src = t.canvas.toDataURL('image/png');
+            img.className = 'w-full h-20 object-contain rounded';
+            const label = document.createElement('p');
+            label.className = 'text-[9px] font-mono text-slate-400 truncate';
+            label.textContent = `${t.canvas.width}×${t.canvas.height}`;
+            const row = document.createElement('div');
+            row.className = 'flex gap-1';
+            const dl = document.createElement('button');
+            dl.className = 'flex-grow bg-slate-700 hover:bg-purple-600 text-[10px] rounded py-1 transition-colors';
+            dl.innerHTML = '<i class="fa-solid fa-download"></i>';
+            dl.title = 'Download PNG';
+            dl.onclick = () => this.app.downloadCanvas(t.canvas, t.name);
+            const rm = document.createElement('button');
+            rm.className = 'px-2 bg-slate-700 hover:bg-red-600 text-[10px] rounded py-1 transition-colors';
+            rm.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+            rm.title = 'Remove';
+            rm.onclick = () => this.remove(t.id);
+            row.appendChild(dl); row.appendChild(rm);
+            card.appendChild(img); card.appendChild(label); card.appendChild(row);
+            this.list.appendChild(card);
+        }
+    }
+
+    async downloadZip() {
+        if (this.tiles.length === 0) return;
+        if (typeof JSZip === 'undefined') { this.app.showToast('ZIP library unavailable', 'error'); return; }
+        const zip = new JSZip();
+        for (const t of this.tiles) {
+            const blob = await new Promise(res => t.canvas.toBlob(res, 'image/png'));
+            zip.file(t.name, blob);
+        }
+        const content = await zip.generateAsync({ type: 'blob' });
+        const url = URL.createObjectURL(content);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `tileset_${Date.now()}.zip`;
+        link.click();
+        URL.revokeObjectURL(url);
+        this.app.showToast(`Exported ${this.tiles.length} tiles`);
+    }
+}
+
+/* ============================================================
+ * AppManager — wires UI, owns canvases, delegates to controllers.
+ * ============================================================ */
+class AppManager {
+    constructor() {
+        this.mainCanvas = document.getElementById('mainCanvas');
+        this.mainCtx = this.mainCanvas.getContext('2d', { willReadFrequently: true });
+        this.overlayCanvas = document.getElementById('overlayCanvas');
+        this.overlayCtx = this.overlayCanvas.getContext('2d');
+        this.canvasWrapper = document.getElementById('canvasWrapper');
+        this.container = document.getElementById('canvasContainer');
+
+        this.currentMode = MODES.ERASER;
+        this.extractSubMode = 'single';   // 'single' | 'grid'
+        this.isPanning = false;
+        this.panStart = { x: 0, y: 0 };
+        this.globalTolerance = 10;
+        this.alphaThreshold = 8;
+        this.autoTrim = true;
+        this.baseName = 'sprite';
+        this._toastTimer = null;
+
+        this.viewport = new Viewport(this.canvasWrapper, this.container);
+        this.history = new HistoryManager(this.mainCanvas, (w, h) => this.onCanvasResized(w, h));
+        this.extraction = new ExtractionController(this);
+        this.gridSlicer = new GridSlicer(this);
+        this.tray = new TileTray(this);
+
+        this.initListeners();
+        this.updateModeUI();
+    }
+
+    /* ---------- listeners ---------- */
+    initListeners() {
+        const fileInput = document.getElementById('fileInput');
+        const dropZone = document.getElementById('dropZone');
+        dropZone.onclick = () => fileInput.click();
+        fileInput.onchange = (e) => this.loadImage(e.target.files[0]);
+        dropZone.ondragover = (e) => { e.preventDefault(); dropZone.classList.add('border-purple-500'); };
+        dropZone.ondragleave = () => dropZone.classList.remove('border-purple-500');
+        dropZone.ondrop = (e) => { e.preventDefault(); dropZone.classList.remove('border-purple-500'); if (e.dataTransfer.files[0]) this.loadImage(e.dataTransfer.files[0]); };
+
+        this.container.addEventListener('wheel', (e) => this.handleZoom(e), { passive: false });
+        this.container.addEventListener('mousedown', (e) => this.handleMouseDown(e));
+        window.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+        window.addEventListener('mouseup', (e) => this.handleMouseUp(e));
+        document.getElementById('resetViewBtn').onclick = () => { this.viewport.reset(); if (this.currentMode === MODES.EXTRACT) this.applyExtractSubMode(); };
+
+        document.getElementById('toolFloodFill').onclick = () => this.setMode(MODES.ERASER);
+        document.getElementById('toolColorKey').onclick = () => this.setMode(MODES.COLOR_KEY);
+        document.getElementById('toolExtract').onclick = () => this.setMode(MODES.EXTRACT);
+        document.getElementById('toolUpscale').onclick = () => this.setMode(MODES.UPSCALE);
+
+        window.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') {
+                e.preventDefault();
+                if (this.history.undo()) this.showToast('Undo', 'info');
+            }
+            if (e.key === 'Escape' && this.currentMode === MODES.EXTRACT) this.extraction.reset();
+            if (e.key === 'Enter' && this.currentMode === MODES.EXTRACT && this.extraction.rect && !this.extraction.isDrawing) this.confirmExtraction();
+        });
+
+        document.getElementById('despeckleBtn').onclick = () => {
+            if (!this.hasImage()) return;
+            this.history.saveState();
+            const d = ImageProcessor.despeckle(this.mainCtx, this.mainCanvas.width, this.mainCanvas.height);
+            this.mainCtx.putImageData(d, 0, 0);
+            this.showToast('Despeckled');
+        };
+        document.getElementById('smoothBtn').onclick = () => {
+            if (!this.hasImage()) return;
+            this.history.saveState();
+            const d = ImageProcessor.smoothEdges(this.mainCtx, this.mainCanvas.width, this.mainCanvas.height);
+            this.mainCtx.putImageData(d, 0, 0);
+            this.showToast('Edges Smoothed');
+        };
+        document.getElementById('downloadBtn').onclick = () => this.downloadCanvas(this.mainCanvas, 'sprite_sheet.png');
+        document.getElementById('doUpscaleBtn').onclick = () => this.handleUpscale();
+
+        document.getElementById('removeColorBtn').onclick = () => {
+            const hex = document.getElementById('targetColorPicker').value;
+            const rgb = ImageProcessor.hexToRgb(hex);
+            if (rgb && this.hasImage()) {
+                this.history.saveState();
+                const d = ImageProcessor.removeColor(this.mainCtx, rgb, this.globalTolerance, this.mainCanvas.width, this.mainCanvas.height);
+                this.mainCtx.putImageData(d, 0, 0);
+                this.showToast('Color Removed');
+            }
+        };
+
+        document.querySelectorAll('.tolerance-range').forEach(el => {
+            el.oninput = (e) => {
+                this.globalTolerance = parseInt(e.target.value);
+                document.querySelectorAll('.tolerance-display').forEach(d => d.textContent = this.globalTolerance);
+                document.querySelectorAll('.tolerance-range').forEach(r => { if (r !== e.target) r.value = this.globalTolerance; });
+            };
+        });
+
+        // Extract panel — shared
+        document.getElementById('alphaThreshRange').oninput = (e) => {
+            this.alphaThreshold = parseInt(e.target.value);
+            document.getElementById('alphaThreshDisplay').textContent = this.alphaThreshold;
+            // alpha change affects grid empty-skip preview indirectly; refresh meta
+            if (this.currentMode === MODES.EXTRACT && this.extractSubMode === 'grid') this.gridSlicer.refresh();
+        };
+
+        // Single sub-mode
+        document.getElementById('autoTrimToggle').onchange = (e) => { this.autoTrim = e.target.checked; };
+        document.getElementById('retrimBtn').onclick = () => {
+            if (this.extraction.rect) { this.extraction.applyTrim(); this.extraction.render(); this.refreshExtractUI(); }
+        };
+        document.getElementById('addRegionBtn').onclick = () => this.confirmExtraction();
+
+        // Sub-tab switch: Single | Grid
+        document.getElementById('subTabSingle').onclick = () => this.setExtractSubMode('single');
+        document.getElementById('subTabGrid').onclick = () => this.setExtractSubMode('grid');
+
+        // Grid sub-mode
+        document.getElementById('gridModeSize').onclick = () => this.gridSlicer.setMode('size');
+        document.getElementById('gridModeCount').onclick = () => this.gridSlicer.setMode('count');
+        document.getElementById('gridTrimToggle').onchange = (e) => { this.gridSlicer.trimCells = e.target.checked; };
+        ['cellW', 'cellH', 'cellCols', 'cellRows', 'offX', 'offY', 'spX', 'spY'].forEach(id => {
+            document.getElementById(id).oninput = () => { if (this.extractSubMode === 'grid') this.gridSlicer.refresh(); };
+        });
+        document.getElementById('sliceGridBtn').onclick = () => this.gridSlicer.slice();
+
+        // Tray
+        document.getElementById('clearTrayBtn').onclick = () => this.tray.clear();
+        document.getElementById('zipDownloadBtn').onclick = () => this.tray.downloadZip();
+
+        window.addEventListener('resize', () => { if (this.currentMode === MODES.EXTRACT) this.applyExtractSubMode(); });
+    }
+
+    /* ---------- image load ---------- */
+    loadImage(file) {
+        if (!file || !file.type.startsWith('image/')) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+                this.mainCanvas.width = img.width;
+                this.mainCanvas.height = img.height;
+                this.overlayCanvas.width = img.width;
+                this.overlayCanvas.height = img.height;
+                this.mainCtx.drawImage(img, 0, 0);
+                this.history = new HistoryManager(this.mainCanvas, (w, h) => this.onCanvasResized(w, h));
+                this.extraction.reset();
+                this.viewport.fit(img.width, img.height);
+                if (this.currentMode === MODES.EXTRACT) this.applyExtractSubMode();
+                document.getElementById('downloadBtn').disabled = false;
+                this.baseName = (file.name || 'sprite').replace(/\.[^.]+$/, '').replace(/[^a-z0-9_\-]/gi, '_') || 'sprite';
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    hasImage() { return this.mainCanvas.width > 0 && this.mainCanvas.height > 0; }
+
+    onCanvasResized(w, h) {
+        this.overlayCanvas.width = w;
+        this.overlayCanvas.height = h;
+        this.extraction.reset();
+        if (this.currentMode === MODES.EXTRACT && this.extractSubMode === 'grid') this.gridSlicer.refresh();
+    }
+
+    /* ---------- mode ---------- */
+    setMode(mode) {
+        if (this.currentMode === MODES.EXTRACT && mode !== MODES.EXTRACT) {
+            this.extraction.reset();
+            this.gridSlicer.clearOverlay();
+        }
+        this.currentMode = mode;
+        this.updateModeUI();
+        if (mode === MODES.EXTRACT) this.applyExtractSubMode();
+    }
+
+    setExtractSubMode(sub) {
+        this.extractSubMode = sub;
+        document.getElementById('subTabSingle').classList.toggle('active', sub === 'single');
+        document.getElementById('subTabGrid').classList.toggle('active', sub === 'grid');
+        document.getElementById('singlePanel').classList.toggle('hidden', sub !== 'single');
+        document.getElementById('gridPanel').classList.toggle('hidden', sub !== 'grid');
+        this.applyExtractSubMode();
+    }
+
+    /** Sync canvas overlays to the active extract sub-mode. */
+    applyExtractSubMode() {
+        if (this.currentMode !== MODES.EXTRACT) return;
+        if (this.extractSubMode === 'grid') {
+            this.extraction.reset();          // drop any single-rect state + handles
+            this.gridSlicer.refresh();        // draw lattice
+        } else {
+            this.gridSlicer.clearOverlay();   // drop lattice
+            if (this.extraction.rect) this.extraction.render();
+        }
+    }
+
+    updateModeUI() {
+        const btns = {
+            [MODES.ERASER]: document.getElementById('toolFloodFill'),
+            [MODES.COLOR_KEY]: document.getElementById('toolColorKey'),
+            [MODES.EXTRACT]: document.getElementById('toolExtract'),
+            [MODES.UPSCALE]: document.getElementById('toolUpscale')
+        };
+        const panels = {
+            [MODES.ERASER]: document.getElementById('eraserOptions'),
+            [MODES.COLOR_KEY]: document.getElementById('colorKeyOptions'),
+            [MODES.EXTRACT]: document.getElementById('extractOptions'),
+            [MODES.UPSCALE]: document.getElementById('upscaleOptions')
+        };
+        Object.values(btns).forEach(b => b.classList.remove('active'));
+        Object.values(panels).forEach(p => p.classList.add('hidden'));
+        if (btns[this.currentMode]) btns[this.currentMode].classList.add('active');
+        if (panels[this.currentMode]) panels[this.currentMode].classList.remove('hidden');
+
+        this.container.style.cursor =
+            (this.currentMode === MODES.ERASER || this.currentMode === MODES.COLOR_KEY) ? 'crosshair'
+            : (this.currentMode === MODES.EXTRACT ? 'cell' : 'default');
+
+        this.refreshExtractUI();
+    }
+
+    refreshExtractUI() {
+        const has = !!(this.extraction && this.extraction.rect);
+        const retrim = document.getElementById('retrimBtn');
+        const add = document.getElementById('addRegionBtn');
+        const meta = document.getElementById('extractMeta');
+        if (retrim) retrim.disabled = !has;
+        if (add) add.disabled = !has;
+        if (meta) {
+            if (has) {
+                const r = this.extraction.rect;
+                meta.classList.remove('hidden');
+                meta.innerHTML = `x:${r.x} y:${r.y}<br>w:${r.w} h:${r.h}`;
+            } else {
+                meta.classList.add('hidden');
+            }
+        }
+    }
+
+    /* ---------- input routing ---------- */
+    handleMouseDown(e) {
+        if (e.button === 1 || e.shiftKey) {
+            this.isPanning = true;
+            this.panStart = { x: e.clientX - this.viewport.tx, y: e.clientY - this.viewport.ty };
+            this.container.style.cursor = 'grabbing';
+            return;
+        }
+        if (e.button !== 0) return;
+        if (!this.hasImage()) return;
+        if (this.currentMode === MODES.UPSCALE) return;
+
+        const bounds = { w: this.mainCanvas.width, h: this.mainCanvas.height };
+        const coords = this.viewport.toImage(e, bounds);
+
+        if (this.currentMode === MODES.ERASER) {
+            this.history.saveState();
+            const d = ImageProcessor.floodFill(this.mainCtx, coords.x, coords.y, this.globalTolerance, bounds.w, bounds.h);
+            if (d) this.mainCtx.putImageData(d, 0, 0);
+        }
+        else if (this.currentMode === MODES.COLOR_KEY) {
+            const pixel = this.mainCtx.getImageData(coords.x, coords.y, 1, 1).data;
+            if (pixel[3] > 0) {
+                this.history.saveState();
+                const targetColor = { r: pixel[0], g: pixel[1], b: pixel[2] };
+                const hex = "#" + ((1 << 24) + (pixel[0] << 16) + (pixel[1] << 8) + pixel[2]).toString(16).slice(1);
+                document.getElementById('targetColorPicker').value = hex;
+                const d = ImageProcessor.removeColor(this.mainCtx, targetColor, this.globalTolerance, bounds.w, bounds.h);
+                this.mainCtx.putImageData(d, 0, 0);
+                this.showToast(`Color Removed: ${hex}`);
+            }
+        }
+        else if (this.currentMode === MODES.EXTRACT) {
+            if (this.extractSubMode === 'grid') return; // grid uses panel inputs, not drag
+            const hit = this.extraction.hitTest(coords);
+            if (hit) {
+                this.extraction.beginManipulate(hit, coords);
+            } else {
+                this.extraction.beginDraw(coords);
+            }
+        }
+    }
+
+    handleMouseMove(e) {
+        if (this.isPanning) {
+            e.preventDefault();
+            this.viewport.tx = e.clientX - this.panStart.x;
+            this.viewport.ty = e.clientY - this.panStart.y;
+            this.viewport.apply();
+            if (this.currentMode === MODES.EXTRACT) {
+                if (this.extractSubMode === 'grid') this.gridSlicer.refresh();
+                else this.extraction.renderHandles();
+            }
+            return;
+        }
+        if (this.currentMode !== MODES.EXTRACT || !this.hasImage()) return;
+        if (this.extractSubMode === 'grid') return;
+        const bounds = { w: this.mainCanvas.width, h: this.mainCanvas.height };
+        const coords = this.viewport.toImage(e, bounds);
+        if (this.extraction.activeHandle) {
+            this.extraction.updateManipulate(coords);
+        } else if (this.extraction.isDrawing) {
+            this.extraction.updateDraw(coords);
+        } else {
+            const hit = this.extraction.hitTest(coords);
+            this.container.style.cursor = hit === 'move' ? 'move' : (hit ? 'nwse-resize' : 'cell');
+        }
+    }
+
+    handleMouseUp(e) {
+        if (this.isPanning) { this.isPanning = false; this.updateModeUI(); return; }
+        if (this.currentMode !== MODES.EXTRACT || !this.hasImage()) return;
+        if (this.extractSubMode === 'grid') return;
+        const bounds = { w: this.mainCanvas.width, h: this.mainCanvas.height };
+        const coords = this.viewport.toImage(e, bounds);
+        if (this.extraction.activeHandle) {
+            this.extraction.endManipulate();
+        } else if (this.extraction.isDrawing) {
+            this.extraction.endDraw(coords);
+        }
+    }
+
+    /* ---------- extraction confirm ---------- */
+    confirmExtraction() {
+        const r = this.extraction.rect;
+        if (!r) return;
+        const tile = ImageProcessor.extractRegion(this.mainCanvas, r);
+        this.tray.add(tile, this.baseName);
+        this.showToast(`Added ${r.w}×${r.h} tile`);
+        this.extraction.reset();
+    }
+
+    /* ---------- zoom ---------- */
+    handleZoom(e) {
+        e.preventDefault();
+        this.viewport.zoomAt(e.clientX, e.clientY, e.deltaY);
+        if (this.currentMode === MODES.EXTRACT) {
+            if (this.extractSubMode === 'grid') this.gridSlicer.refresh();
+            else this.extraction.renderHandles();
+        }
+    }
+
+    handleUpscale() {
+        if (!this.hasImage()) return this.showToast('No image loaded', 'error');
+        const up = ImageProcessor.upscale(this.mainCanvas, 4);
+        this.downloadCanvas(up, `sprite_upscaled_4x_${Date.now()}.png`);
+        this.showToast('4x Upscale Complete');
+    }
+
+    /* ---------- io ---------- */
+    downloadCanvas(canvas, filename) {
+        const link = document.createElement('a');
+        link.download = filename;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    }
+
+    showToast(msg, type = 'success') {
+        const t = document.getElementById('toast');
+        const icon = t.querySelector('i');
+        document.getElementById('toastMsg').innerText = msg;
+        icon.className = type === 'error'
+            ? 'fa-solid fa-circle-exclamation text-red-400'
+            : (type === 'info' ? 'fa-solid fa-circle-info text-purple-400' : 'fa-solid fa-check-circle text-green-400');
+        t.classList.remove('translate-y-20', 'opacity-0');
+        clearTimeout(this._toastTimer);
+        this._toastTimer = setTimeout(() => t.classList.add('translate-y-20', 'opacity-0'), 2500);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => new AppManager());
+</script>
+</body>
+</html>
