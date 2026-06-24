@@ -131,11 +131,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FTL.ProjectileController
   damage: 1
   speed: 10
-  startCol: {fileID: 0}
-  target: {x: 0, y: 0}
+  <StartCol>k__BackingField: {fileID: 0}
+  endCol: {fileID: 0}
+  target: {x: 0, y: 0, z: 0}
   shipLayer:
     serializedVersion: 2
     m_Bits: 64
+  shieldLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  isAfterStartCol: 0
 --- !u!61 &1258286948456330032
 BoxCollider2D:
   m_ObjectHideFlags: 0

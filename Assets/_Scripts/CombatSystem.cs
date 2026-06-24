@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Utilities;
 
@@ -8,9 +9,10 @@ namespace FTL
     {
 
         [SerializeField] private Collider2D[] shipAreas;
+        [SerializeField] private ShieldSystem[] shieldSystems;
         private Dictionary<Collider2D, EShipArea> colToNextShipAreaDict = new Dictionary<Collider2D, EShipArea>();
         private Dictionary<EShipArea, Collider2D> shipAreaToColDict = new Dictionary<EShipArea, Collider2D>();
-        //private ProjectileController[] projectiles;
+
         protected override void OnInitialize()
         {
             base.OnInitialize();
@@ -21,7 +23,6 @@ namespace FTL
         }
 
         /// <summary>
-        /// 
         ///- 투사체 피격 판정 
         ///    - 멤버
         ///        - 피격 판정
@@ -44,10 +45,34 @@ namespace FTL
             Vector3 spawnPos = GetRandomPositionOnColliderEdge(nextShipCol, projectile.transform.position.z);
 
             // 스폰장소 - 목표 콜라이더 중심 바라보게 회전시키기 right 이용
+            projectile.SetEndCol(nextShipCol);
             projectile.transform.position = spawnPos;
             Vector3 direction = nextShipCol.bounds.center - spawnPos;
             direction.z = projectile.transform.position.z;
             projectile.transform.right = direction;
+        }
+
+        public bool HandleShieldCollision(ProjectileController projectile)
+        {
+            // projectile 주인 확인
+            ShieldSystem oppenentShieldSystem = projectile.StartCol.CompareTag(Tags.PlayerShip) ? shieldSystems[1] : shieldSystems[0];
+            // 실드 시스템의 현재 실드가 1 이상이면
+            // 실드 시스템 TakeDamage 호출
+            // return true;
+            // 현재 실드가 0이라면 
+            // return false
+            if (oppenentShieldSystem.ShieldCount > 0)
+            {
+                oppenentShieldSystem.TakeDamageToShield();
+                return true;
+            }
+            return false;
+        }
+
+        // 미구현
+        public bool HandleRoomCollision(ProjectileController projectile)
+        {
+            return false;
         }
 
         private Vector3 GetRandomPositionOnColliderEdge(Collider2D col, float z)

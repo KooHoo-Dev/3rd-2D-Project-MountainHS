@@ -14,13 +14,13 @@ namespace FTL
         [SerializeField] private GameObject projectilePrefab;
         [SerializeField] private bool isReady;
         [SerializeField] private bool prevIsPowered = false;
-        [SerializeField] private Vector2 roomTarget;
+        [SerializeField] private Vector3 roomTarget;
 
         private void Awake()
         {
             isReady = false;
             IsPowered = false;
-            roomTarget = Vector2.zero;
+            roomTarget = Vector3.zero;
         }
 
         private void Update()
@@ -58,7 +58,7 @@ namespace FTL
 
         private bool IsReadyToFire()
         {
-            return roomTarget != Vector2.zero && isReady;
+            return roomTarget != Vector3.zero && isReady;
         }
 
         private void UpdateIsReady()
@@ -73,7 +73,7 @@ namespace FTL
             }
         }
 
-        public void SetRoomTarget(Vector2 target)
+        public void SetRoomTarget(Vector3 target)
         {
             roomTarget = target;
         }

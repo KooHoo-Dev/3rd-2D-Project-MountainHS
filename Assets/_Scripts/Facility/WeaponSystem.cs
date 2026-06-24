@@ -7,14 +7,14 @@ namespace FTL
     {
         [SerializeField] private List<Weapon> weapons;
         [SerializeField] private Weapon selectedWeapon;
-        [SerializeField] private Vector2 selectedRoomTarget;
+        [SerializeField] private Vector3 selectedRoomTarget;
 
         protected override void Awake()
         {
             base.Awake();
             type = ERoomType.Weapon;
             selectedWeapon = null;
-            selectedRoomTarget = Vector2.zero;
+            selectedRoomTarget = Vector3.zero;
         }
 
         private void Update()
@@ -34,13 +34,13 @@ namespace FTL
             {
                 selectedWeapon.SetRoomTarget(selectedRoomTarget);
                 selectedWeapon = null;
-                selectedRoomTarget = Vector2.zero;
+                selectedRoomTarget = Vector3.zero;
             }
         }
 
         private bool CanUpdateWeapon()
         {
-            return selectedRoomTarget != Vector2.zero &&
+            return selectedRoomTarget != Vector3.zero &&
                             selectedWeapon != null;
         }
 
@@ -73,7 +73,7 @@ namespace FTL
             selectedWeapon = weapons[index - 1];
         }
 
-        public void SetSelectedRoomTarget(Vector2 target)
+        public void SetSelectedRoomTarget(Vector3 target)
         {
             selectedRoomTarget = target;
         }

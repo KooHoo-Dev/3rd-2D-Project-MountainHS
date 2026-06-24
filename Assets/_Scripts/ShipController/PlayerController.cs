@@ -7,9 +7,6 @@ namespace FTL
 {
     public class PlayerController : ShipController, IDamageable
     {
-        private const string ROOM_TAG = "Room";
-        private const string PLAYERSHIP_TAG = "PlayerShip";
-        private const string ENEMYSHIP_TAG = "EnemyShip";
         [SerializeField] private ERoomType aKeyFacilityType = ERoomType.Shield;
         [SerializeField] private ERoomType sKeyFacilityType = ERoomType.Engine;
         [SerializeField] private ERoomType dKeyFacilityType = ERoomType.Weapon;
@@ -79,17 +76,17 @@ namespace FTL
                 Collider2D enemyShipCol = null;
                 foreach (Collider2D col in clickCols)
                 {
-                    if (col.CompareTag(ROOM_TAG))
+                    if (col.CompareTag(Tags.Room))
                     {
                         roomCol = col;
                         Debug.Log($"Room Clicked: {roomCol.gameObject.name}");
                     }
-                    else if (col.CompareTag(PLAYERSHIP_TAG))
+                    else if (col.CompareTag(Tags.PlayerShip))
                     {
                         playerShipCol = col;
                         Debug.Log($"Ship Clicked: {playerShipCol.gameObject.name}");
                     }
-                    else if (col.CompareTag(ENEMYSHIP_TAG))
+                    else if (col.CompareTag(Tags.EnemyShip))
                     {
                         enemyShipCol = col;
                         Debug.Log($"Ship Clicked: {enemyShipCol.gameObject.name}");

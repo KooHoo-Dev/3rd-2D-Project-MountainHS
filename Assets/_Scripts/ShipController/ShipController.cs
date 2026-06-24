@@ -50,5 +50,6 @@ namespace FTL
         {
             powerSystem.TryDeallocatePower(facilityType);
         }
+
     }
 }
