@@ -224,6 +224,7 @@ MonoBehaviour:
   totalDamage: 0
   weapons: []
   selectedWeapon: {fileID: 0}
+  selectedRoomTarget: {x: 0, y: 0}
 --- !u!114 &194710677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1454,9 +1455,9 @@ GameObject:
   - component: {fileID: 679733407}
   - component: {fileID: 679733406}
   - component: {fileID: 679733408}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ship Sprite
-  m_TagString: Untagged
+  m_TagString: EnemyShip
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2302,6 +2303,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 1379425515071318416, guid: ff24f25d241ce424c86c8ecb1a49d417, type: 3}
   isReady: 0
   prevIsPowered: 0
+  roomTarget: {x: 0, y: 0}
 --- !u!114 &956301253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2468,10 +2470,10 @@ MonoBehaviour:
   aKeyFacilityType: 3
   sKeyFacilityType: 2
   dKeyFacilityType: 1
-  weaponSystem: {fileID: 0}
+  weaponSystem: {fileID: 1051567090}
   clickableLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 72
 --- !u!114 &1051567090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2492,6 +2494,7 @@ MonoBehaviour:
   weapons:
   - {fileID: 956301252}
   selectedWeapon: {fileID: 0}
+  selectedRoomTarget: {x: 0, y: 0}
 --- !u!114 &1051567091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3193,6 +3196,37 @@ Transform:
   - {fileID: 402455520}
   - {fileID: 1686917603}
   m_Father: {fileID: 1329524697}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1636100698
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1636100699}
+  m_Layer: 0
+  m_Name: AreaDivider
+  m_TagString: Untagged
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1636100699
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636100698}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1686917602
 PrefabInstance:
@@ -4198,7 +4232,7 @@ GameObject:
   - component: {fileID: 2105931322}
   - component: {fileID: 2105931321}
   - component: {fileID: 2105931323}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ship Sprite
   m_TagString: PlayerShip
   m_Icon: {fileID: 0}
@@ -5454,3 +5488,4 @@ SceneRoots:
   - {fileID: 664189971}
   - {fileID: 533041634}
   - {fileID: 945848292}
+  - {fileID: 1636100699}

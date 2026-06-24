@@ -18,43 +18,55 @@ namespace FTL
         {
             bool isShiftPressed = SimpleInput.GetKey(Key.LeftShift) || SimpleInput.GetKey(Key.RightShift);
 
-            if (SimpleInput.GetKeyDown(Key.A))
-            {
-                HandlePowerInput(aKeyFacilityType, isShiftPressed);
-            }
+            TestHandleFacilityPower(isShiftPressed);
 
-            if (SimpleInput.GetKeyDown(Key.S))
-            {
-                HandlePowerInput(sKeyFacilityType, isShiftPressed);
-            }
-
-            if (SimpleInput.GetKeyDown(Key.D))
-            {
-                HandlePowerInput(dKeyFacilityType, isShiftPressed);
-            }
-
-            if (SimpleInput.GetKeyDown(Key.Space))
-            {
-                powerSystem.AddReactorPower(1);
-            }
+            TestIncreaseReactorPower();
 
             if (SimpleInput.GetKeyDown(Key.Digit5))
             {
                 // 무기 시스템의 선택한 무기를 1번 무기로 교체
-                weaponSystem.SetSelectWeapon(1);
+                weaponSystem.SetSelectedWeapon(1);
+            }
+
+            if (SimpleInput.GetKeyDown(Key.Escape))
+            {
+                weaponSystem.ResetSelectedWeapon();
             }
 
             // 사용자 클릭 정보 리턴
             HandleMouse();
+
+            void TestIncreaseReactorPower()
+            {
+                if (SimpleInput.GetKeyDown(Key.Space))
+                {
+                    powerSystem.AddReactorPower(1);
+                }
+            }
+
+            void TestHandleFacilityPower(bool isShiftPressed)
+            {
+                if (SimpleInput.GetKeyDown(Key.A))
+                {
+                    HandlePowerInput(aKeyFacilityType, isShiftPressed);
+                }
+
+                if (SimpleInput.GetKeyDown(Key.S))
+                {
+                    HandlePowerInput(sKeyFacilityType, isShiftPressed);
+                }
+
+                if (SimpleInput.GetKeyDown(Key.D))
+                {
+                    HandlePowerInput(dKeyFacilityType, isShiftPressed);
+                }
+            }
         }
 
         private void HandleMouse()
         {
             Vector3 mousePosition = SimpleInput.GetMousePosition();
-            //TestMousePosition(mousePosition);
-
             Vector3 worldPoint = Camera.main.ScreenToWorldPoint(mousePosition);
-            //if (Mouse.current.leftButton.wasPressedThisFrame)
             if (SimpleInput.GetMouseButtonDown(SimpleInput.MouseButton.Left))
             {
                 Collider2D[] clickCols = Physics2D.OverlapPointAll(worldPoint, clickableLayer);
@@ -85,7 +97,7 @@ namespace FTL
                     && enemyShipCol != null)
                 {
                     Vector2 target = roomCol.bounds.center;
-                    weaponSystem.SetSelectRoomTarget(target);
+                    weaponSystem.SetSelectedRoomTarget(target);
                 }
                 //TestOverlapPoint(clickCol);
             }
