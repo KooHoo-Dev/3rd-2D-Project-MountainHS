@@ -223,6 +223,7 @@ MonoBehaviour:
   power: 0
   totalDamage: 0
   weapons: []
+  selectedWeapon: {fileID: 0}
 --- !u!114 &194710677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2270,6 +2271,10 @@ MonoBehaviour:
   aKeyFacilityType: 3
   sKeyFacilityType: 2
   dKeyFacilityType: 1
+  weaponSystem: {fileID: 0}
+  clickableLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!114 &1051567090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2289,6 +2294,7 @@ MonoBehaviour:
   totalDamage: 0
   weapons:
   - {fileID: 956301252}
+  selectedWeapon: {fileID: 0}
 --- !u!114 &1051567091
 MonoBehaviour:
   m_ObjectHideFlags: 0

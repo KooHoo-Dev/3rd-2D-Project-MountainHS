@@ -14,7 +14,7 @@ namespace FTL
         {
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
-        private void Update()                        
+        private void LateUpdate()                        
         {
             float chargeRate = weapon.ChargeProgress / weapon.ChargeDuration;
             UpdateChargeSprite(chargeRate);
