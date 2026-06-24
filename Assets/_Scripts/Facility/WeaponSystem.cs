@@ -7,6 +7,7 @@ namespace FTL
     {
         [SerializeField] private List<Weapon> weapons;
         [SerializeField] private Weapon selectedWeapon;
+        [SerializeField] private Vector2 selectRoomTarget;
 
         protected override void Awake()
         {
@@ -53,6 +54,11 @@ namespace FTL
 
             // 선택한 무기 갱신
             selectedWeapon = weapons[index - 1];
+        }
+
+        public void SetSelectRoomTarget(Vector2 target)
+        {
+            selectRoomTarget = target;
         }
     }
 }

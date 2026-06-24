@@ -57,7 +57,36 @@ namespace FTL
             //if (Mouse.current.leftButton.wasPressedThisFrame)
             if (SimpleInput.GetMouseButtonDown(SimpleInput.MouseButton.Left))
             {
-                Collider2D clickCol = Physics2D.OverlapPoint(worldPoint, clickableLayer);
+                Collider2D[] clickCols = Physics2D.OverlapPointAll(worldPoint, clickableLayer);
+                // 해당 콜라이더가 붙은 오브젝트의 태그를 확인해서 이 콜라이더가 플레이어 영역에 있는지, 적 영역에 있는지 확인
+                Collider2D roomCol = null;
+                Collider2D playerShipCol = null;
+                Collider2D enemyShipCol = null;
+                foreach (Collider2D col in clickCols)
+                {
+                    if (col.CompareTag("Room"))
+                    {
+                        roomCol = col;
+                        Debug.Log($"Room Clicked: {roomCol.gameObject.name}");
+                    }
+                    else if (col.CompareTag("PlayerShip"))
+                    {
+                        playerShipCol = col;
+                        Debug.Log($"Ship Clicked: {playerShipCol.gameObject.name}");
+                    }
+                    else if (col.CompareTag("EnemyShip"))
+                    {
+                        enemyShipCol = col;
+                        Debug.Log($"Ship Clicked: {enemyShipCol.gameObject.name}");
+                    }
+                }
+
+                if (roomCol != null 
+                    && enemyShipCol != null)
+                {
+                    Vector2 target = roomCol.bounds.center;
+                    weaponSystem.SetSelectRoomTarget(target);
+                }
                 //TestOverlapPoint(clickCol);
             }
         }
