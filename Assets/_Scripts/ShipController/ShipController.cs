@@ -17,6 +17,7 @@ namespace FTL
         [SerializeField] protected ShipPowerController powerSystem;
         protected List<FacilitySystem> facilitySystems = new List<FacilitySystem>() ;
         [field: SerializeField] public List<Room> Rooms { get; private set; } = new List<Room>();
+        [field: SerializeField] public List<RoomViewer> RoomViewers { get; private set; } = new List<RoomViewer>();
 
         protected void Awake()
         {
@@ -31,6 +32,12 @@ namespace FTL
                 if (room.RoomType != ERoomType.Empty)
                     room.FacilitySystem = GetFacilitySystemByERoomType(room.RoomType);
                 Rooms.Add(room);
+            }
+
+            RoomViewer[] roomViewers = GetComponentsInChildren<RoomViewer>();
+            for (int i = 0; i < roomViewers.Length; i++)
+            {
+                RoomViewers.Add(roomViewers[i]);
             }
         }
 

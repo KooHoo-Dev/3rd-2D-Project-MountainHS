@@ -302,6 +302,7 @@ MonoBehaviour:
   <Hp>k__BackingField: 0
   powerSystem: {fileID: 194710683}
   <Rooms>k__BackingField: []
+  <RoomViewers>k__BackingField: []
 --- !u!114 &194710682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1960,7 +1961,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 1}
+  m_LocalScale: {x: 12, y: 12, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1051567088}
@@ -2397,8 +2398,9 @@ MonoBehaviour:
   projectilePrefab: {fileID: 1379425515071318416, guid: ff24f25d241ce424c86c8ecb1a49d417, type: 3}
   isReady: 0
   prevIsPowered: 0
-  roomTarget: {x: 0, y: 0, z: 0}
-  targetRoomId: 0
+  TargetData:
+    TargetPosition: {x: 0, y: 0, z: 0}
+    RoomId: 0
 --- !u!114 &956301253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2565,6 +2567,7 @@ MonoBehaviour:
   <Hp>k__BackingField: 0
   powerSystem: {fileID: 1051567094}
   <Rooms>k__BackingField: []
+  <RoomViewers>k__BackingField: []
   aKeyFacilityType: 3
   sKeyFacilityType: 2
   dKeyFacilityType: 1
@@ -3512,7 +3515,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 8, y: 8, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 194710675}
@@ -4982,7 +4985,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_MaskInteraction: 0
   m_Sprite: {fileID: -834991920120882256, guid: ce570a1f25671fa4885bba5fb1ef265f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

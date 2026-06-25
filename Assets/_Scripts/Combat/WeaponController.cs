@@ -14,15 +14,16 @@ namespace FTL
         [SerializeField] private GameObject projectilePrefab;
         [SerializeField] private bool isReady;
         [SerializeField] private bool prevIsPowered = false;
-        [SerializeField] private Vector3 roomTarget;
-        [SerializeField] private int targetRoomId;
+        //[SerializeField] private Vector3 roomTarget;
+        //[SerializeField] private int targetRoomId;
+        public SProjectileTargetData TargetData;
 
         private void Awake()
         {
             isReady = false;
             IsPowered = false;
-            roomTarget = Vector3.zero;
-            targetRoomId = -1;
+            TargetData.TargetPosition = Vector3.zero;
+            TargetData.RoomId = -1;
         }
 
         private void Update()
@@ -50,9 +51,9 @@ namespace FTL
                 // 투사체에 타깃 정보 전달
                 GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
                 ProjectileController projectileController = projectile.GetComponent<ProjectileController>();
-                SProjectileTargetData targetData = new SProjectileTargetData(roomTarget, targetRoomId);
-                projectileController.SetTarget(targetData);
+                projectileController.SetTarget(TargetData);
                 projectile.transform.rotation = transform.rotation;
+                TargetData.Reset();
                 ChargeProgress = 0f;
             }
 
@@ -61,7 +62,7 @@ namespace FTL
 
         private bool IsReadyToFire()
         {
-            return roomTarget != Vector3.zero && isReady;
+            return TargetData.IsValid() && isReady;
         }
 
         private void UpdateIsReady()
@@ -78,8 +79,8 @@ namespace FTL
 
         public void SetRoomTarget(SProjectileTargetData targetData)
         {
-            roomTarget = targetData.TargetPosition;
-            targetRoomId = targetData.RoomId;
+            this.TargetData.TargetPosition = targetData.TargetPosition;
+            this.TargetData.RoomId = targetData.RoomId;
         }
     }
 }

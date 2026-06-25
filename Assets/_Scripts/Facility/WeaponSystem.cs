@@ -36,28 +36,24 @@ namespace FTL
                 selectedWeapon = null;
                 targetData = new SProjectileTargetData(Vector3.zero, -1);
             }
+
+            // 적함선 로직
+            for (int i = 0; i < weapons.Count; i++)
+            {
+                WeaponController weapon = weapons[i];
+                if (weapon.IsPowered &&
+                    weapon.TargetData.IsValid() == false)
+                {
+                    // 조준 클래스가 조준 정보 리턴
+
+                }
+            }
         }
 
         private bool CanUpdateWeapon()
         {
             return targetData.IsValid() &&
                             selectedWeapon != null;
-        }
-
-        public void TickCharge(float deltaTime)
-        {
-            // TODO: 현재 전력에 따른 무기 충전 진행 규칙을 구체화한다.
-        }
-
-        public bool CanFire()
-        {
-            // TODO: 전력, 충전 상태, 조준 대상에 따른 발사 가능 여부를 구체화한다.
-            return false;
-        }
-
-        public void Fire(Room targetRoom)
-        {
-            // TODO: 전투 시스템과 연결해 무기 발사 요청을 구체화한다.
         }
 
         public void SetSelectedWeapon(int index)

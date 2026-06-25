@@ -287,10 +287,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bdd167dda6b9614c8d309ff95f69b6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.RoomViewer
-  roomData:
+  <RoomData>k__BackingField:
     <RoomId>k__BackingField: 0
     <RoomType>k__BackingField: 0
     neighborRoomIds: 
+    <FacilitySystem>k__BackingField: {fileID: 0}
 --- !u!61 &2687124784617255714
 BoxCollider2D:
   m_ObjectHideFlags: 0
