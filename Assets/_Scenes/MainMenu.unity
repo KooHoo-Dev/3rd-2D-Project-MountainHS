@@ -285,8 +285,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cad4df13c9620804d9bab6a7faf0fb9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.GameManager
-  mainUIController: {fileID: 0}
-  battleResult: 0
+  mainUIController: {fileID: 1950853981}
+  <BattleResult>k__BackingField: 0
 --- !u!4 &546890627
 Transform:
   m_ObjectHideFlags: 0

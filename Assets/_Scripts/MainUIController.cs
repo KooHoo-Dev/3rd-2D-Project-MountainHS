@@ -5,7 +5,6 @@ namespace FTL
 {
     public class MainUIController : MonoBehaviour
     {
-
         private void MoveScene(int index)
         {
             SceneManager.LoadScene(index);

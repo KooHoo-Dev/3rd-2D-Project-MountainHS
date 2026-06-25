@@ -20,14 +20,14 @@ namespace FTL
         /// </summary>
         /// <returns></returns>
         [SerializeField] private MainUIController mainUIController;
-        [SerializeField] private EBattleResult battleResult;
+        [field: SerializeField] public EBattleResult BattleResult { get; set; }
 
         private void Update()
         {
             //TestHandleBattleResult();
         }
         
-        public bool HandleBattleResult(EBattleResult eBattleResult)
+        public void HandleBattleResult(EBattleResult eBattleResult)
         {
             // 함선이 파괴되면
             switch (eBattleResult)
@@ -50,24 +50,22 @@ namespace FTL
                     Debug.LogError("Unknown EBattleResult");
                     break;
             }
-            // 임시
-            return false;
         }
 
         public void TestHandleBattleResult()
         {
             if (SimpleInput.GetKeyDown(Key.Digit1))
-                battleResult = EBattleResult.PlayerShipDestroyed;
+                BattleResult = EBattleResult.PlayerShipDestroyed;
             if (SimpleInput.GetKeyDown(Key.Digit2))
-                battleResult = EBattleResult.PlayerAllCrewDead;
+                BattleResult = EBattleResult.PlayerAllCrewDead;
             if (SimpleInput.GetKeyDown(Key.Digit3))
-                battleResult = EBattleResult.PlayerRun;
+                BattleResult = EBattleResult.PlayerRun;
             if (SimpleInput.GetKeyDown(Key.Digit4))
-                battleResult = EBattleResult.EnemyAllCrewDead;
+                BattleResult = EBattleResult.EnemyAllCrewDead;
             if (SimpleInput.GetKeyDown(Key.Digit5))
-                battleResult = EBattleResult.EnemyShipDestroyed;
+                BattleResult = EBattleResult.EnemyShipDestroyed;
             if (SimpleInput.AnyKeyDown())
-                HandleBattleResult(battleResult);
+                HandleBattleResult(BattleResult);
 
         }
     }

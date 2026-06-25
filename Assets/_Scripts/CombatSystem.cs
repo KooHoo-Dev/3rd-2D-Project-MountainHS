@@ -34,9 +34,6 @@ namespace FTL
         /// </summary>
         /// <param name="col"></param>
         /// <param name="projectile"></param>
-
-        // 전투 시스템으로 이동
-        // 적 화면 랜덤한 시작 장소로 이동
         public void MoveToEnemyArea(Collider2D col, ProjectileController projectile)
         {
             EShipArea nextShipArea = colToNextShipAreaDict[col];

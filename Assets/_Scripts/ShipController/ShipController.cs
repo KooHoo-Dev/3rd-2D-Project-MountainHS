@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -10,11 +11,11 @@ namespace FTL
     [DefaultExecutionOrder(1000)]
     public class ShipController : MonoBehaviour, IDamageable
     {
+        public bool IsDead => Hp == 0;
         [field: SerializeField] public ShipData ShipData { get; private set; }
         [field: SerializeField] public int Hp { get; private set; }
-
         [SerializeField] protected ShipPowerController powerSystem;
-         protected List<FacilitySystem> facilitySystems = new List<FacilitySystem>() ;
+        protected List<FacilitySystem> facilitySystems = new List<FacilitySystem>() ;
         [field: SerializeField] public List<Room> Rooms { get; private set; } = new List<Room>();
 
         protected void Awake()
@@ -35,6 +36,9 @@ namespace FTL
 
         protected void HandlePowerInput(ERoomType facilityType, bool isRecoverInput)
         {
+            if (IsDead)
+                return;
+
             if (isRecoverInput)
             {
                 RequestDeallocatePower(facilityType);
@@ -75,6 +79,10 @@ namespace FTL
         public void TakeDamage(int damage)
         {
             Hp = (Hp - damage < 0) ? 0 : Hp - damage;
+            if (IsDead)
+            {
+                StartCoroutine(DeadCoroutine(5f));
+            }
         }
 
         public void TakeDamageToRoom(int damage, int roomId)
@@ -91,19 +99,27 @@ namespace FTL
 
         public void RestoreHp(int damage)
         {
+            if (IsDead) return;
             Hp = (Hp + damage > ShipData.MaxHp) ? ShipData.MaxHp : Hp + damage;
         }
 
         public void RequestAllocatePower(ERoomType facilityType)
         {
+            if (IsDead) return;
             powerSystem.TryAllocatePower(facilityType);
         }
 
         public void RequestDeallocatePower(ERoomType facilityType)
         {
+            if (IsDead) return;
             powerSystem.TryDeallocatePower(facilityType);
         }
 
-
+        public IEnumerator DeadCoroutine(float seconds)
+        {
+            yield return new WaitForSeconds(seconds);
+            GameManager.Instance.HandleBattleResult(EBattleResult.EnemyShipDestroyed);
+            Destroy(gameObject);
+        }
     }
 }
