@@ -175,8 +175,8 @@ GameObject:
   m_Component:
   - component: {fileID: 194710675}
   - component: {fileID: 194710680}
-  - component: {fileID: 194710681}
   - component: {fileID: 194710679}
+  - component: {fileID: 194710683}
   - component: {fileID: 194710678}
   - component: {fileID: 194710677}
   - component: {fileID: 194710676}
@@ -300,26 +300,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FTL.EnemyController
   <ShipData>k__BackingField: {fileID: 11400000, guid: 220620f264c5f2a4f8951128e1b6500a, type: 2}
   <Hp>k__BackingField: 0
-  powerSystem: {fileID: 194710681}
-  facilitySystems: []
+  powerSystem: {fileID: 194710683}
   <Rooms>k__BackingField: []
---- !u!114 &194710681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 194710674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 027149c8ad5d48c4a8add1d87b4b10c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FTL.ShipPowerController
-  reactorSystem: {fileID: 194710679}
-  facilities:
-  - {fileID: 194710678}
-  - {fileID: 194710677}
-  - {fileID: 194710676}
 --- !u!114 &194710682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,6 +316,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FTL.ShipViewer
   shipController: {fileID: 194710680}
   roomViewers: []
+--- !u!114 &194710683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194710674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46589655d8090e146aadc255851adb5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FTL.EnemyPowerController
+  reactorSystem: {fileID: 194710679}
+  facilities: []
 --- !u!224 &210686066 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8156740593890411459, guid: 7d3deb80250fa8743a224af800aa4c55, type: 3}
@@ -2568,7 +2564,6 @@ MonoBehaviour:
   <ShipData>k__BackingField: {fileID: 11400000, guid: 94109f598f1c6a042a0eed9a663fdbe0, type: 2}
   <Hp>k__BackingField: 0
   powerSystem: {fileID: 1051567094}
-  facilitySystems: []
   <Rooms>k__BackingField: []
   aKeyFacilityType: 3
   sKeyFacilityType: 2
@@ -2670,10 +2665,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.ShipPowerController
   reactorSystem: {fileID: 1051567093}
-  facilities:
-  - {fileID: 1051567091}
-  - {fileID: 1051567092}
-  - {fileID: 1051567090}
+  facilities: []
 --- !u!114 &1051567095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2888,9 +2880,6 @@ MonoBehaviour:
   shipAreas:
   - {fileID: 842322588}
   - {fileID: 1477667182}
-  shieldSystems:
-  - {fileID: 1051567091}
-  - {fileID: 194710678}
   shipControllers:
   - {fileID: 1051567089}
   - {fileID: 194710680}

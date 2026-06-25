@@ -5,10 +5,6 @@ namespace FTL
 {
     public class EnemyController: ShipController, IDamageable
     {
-        private void Update()
-        {
-        }
-
         public void TestAllocateShieldPower()
         {
             RequestAllocatePower(ERoomType.Shield);
@@ -18,6 +14,5 @@ namespace FTL
         {
             RequestDeallocatePower(ERoomType.Shield);
         }
-
     }
 }

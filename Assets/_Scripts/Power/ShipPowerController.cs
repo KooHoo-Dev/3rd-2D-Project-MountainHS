@@ -5,12 +5,17 @@ namespace FTL
 {
     public class ShipPowerController : MonoBehaviour
     {
-        public List<FacilitySystem> Facilities => facilities;
-        [SerializeField] private ReactorSystem reactorSystem;
-        [SerializeField] private List<FacilitySystem> facilities = new List<FacilitySystem>();
-        private readonly Dictionary<ERoomType, int> assignedPowers = new Dictionary<ERoomType, int>();
+        [SerializeField] protected ReactorSystem reactorSystem;
+        [SerializeField] protected List<FacilitySystem> facilities = new List<FacilitySystem>();
+        protected readonly Dictionary<ERoomType, int> assignedPowers = new Dictionary<ERoomType, int>();
 
-        private void Update()
+        protected virtual void Start()
+        {
+            facilities.Add(GetComponent<ShieldSystem>());
+            facilities.Add(GetComponent<WeaponSystem>());
+            facilities.Add(GetComponent<EngineSystem>());
+        }
+        protected void Update()
         {
             for (ERoomType type = ERoomType.Weapon; type <= ERoomType.Shield; type++)
             {
@@ -105,7 +110,7 @@ namespace FTL
             reactorSystem.AddMaxPower(amount);
         }
 
-        private FacilitySystem FindFacility(ERoomType facilityType)
+        protected FacilitySystem FindFacility(ERoomType facilityType)
         {
             for (int i = 0; i < facilities.Count; i++)
             {
@@ -118,22 +123,22 @@ namespace FTL
             return null;
         }
 
-        private void SetAssignedPower(ERoomType facilityType, int power)
+        protected void SetAssignedPower(ERoomType facilityType, int power)
         {
             assignedPowers[facilityType] = power;
         }
 
-        private bool CanSpendReactorPower(int amount)
+        protected bool CanSpendReactorPower(int amount)
         {
             return reactorSystem.Power >= amount;
         }
 
-        private bool CanRecoverReactorPower(int amount)
+        protected bool CanRecoverReactorPower(int amount)
         {
             return reactorSystem.Power + amount <= reactorSystem.MaxPower;
         }
 
-        private bool CanSetFacilityPower(FacilitySystem facility, int power)
+        protected bool CanSetFacilityPower(FacilitySystem facility, int power)
         {
             return power <= facility.MaxPower;
         }
@@ -150,7 +155,7 @@ namespace FTL
         //    return totalPower;
         //}
 
-        private void HandleFacilityOverflow(ERoomType facilityType)
+        protected void HandleFacilityOverflow(ERoomType facilityType)
         {
             FacilitySystem facility = FindFacility(facilityType);
             if (facility == null)
