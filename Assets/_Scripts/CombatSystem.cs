@@ -72,6 +72,11 @@ namespace FTL
         // 미구현
         public bool HandleRoomCollision(ProjectileController projectile)
         {
+            if (projectile.TargetRoomId < 0)
+            {
+                return false;
+            }
+
             return false;
         }
 

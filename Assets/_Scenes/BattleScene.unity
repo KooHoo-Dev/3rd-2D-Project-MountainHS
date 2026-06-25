@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: 194710678}
   - component: {fileID: 194710677}
   - component: {fileID: 194710676}
+  - component: {fileID: 194710682}
   m_Layer: 0
   m_Name: Enemy Ship
   m_TagString: Untagged
@@ -315,6 +316,20 @@ MonoBehaviour:
   - {fileID: 194710678}
   - {fileID: 194710677}
   - {fileID: 194710676}
+--- !u!114 &194710682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194710674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa12f88316f0aa141b759fd282bfd5a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FTL.ShipViewer
+  shipController: {fileID: 194710680}
+  roomViewers: []
 --- !u!224 &210686066 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8156740593890411459, guid: 7d3deb80250fa8743a224af800aa4c55, type: 3}
@@ -2505,6 +2520,7 @@ GameObject:
   - component: {fileID: 1051567092}
   - component: {fileID: 1051567090}
   - component: {fileID: 1051567093}
+  - component: {fileID: 1051567095}
   m_Layer: 0
   m_Name: Player Ship
   m_TagString: Untagged
@@ -2649,6 +2665,20 @@ MonoBehaviour:
   - {fileID: 1051567091}
   - {fileID: 1051567092}
   - {fileID: 1051567090}
+--- !u!114 &1051567095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051567087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa12f88316f0aa141b759fd282bfd5a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FTL.ShipViewer
+  shipController: {fileID: 1051567089}
+  roomViewers: []
 --- !u!1 &1077214604
 GameObject:
   m_ObjectHideFlags: 0
@@ -3193,12 +3223,16 @@ PrefabInstance:
       value: 20.8
       objectReference: {fileID: 0}
     - target: {fileID: 5958351086290242121, guid: 60d6779eabc44a8479b85076220c88b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5958351086290242121, guid: 60d6779eabc44a8479b85076220c88b3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 194710678}
     - target: {fileID: 5958351086290242121, guid: 60d6779eabc44a8479b85076220c88b3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: TakeDamage
+      value: TakeDamageToShield
       objectReference: {fileID: 0}
     - target: {fileID: 6861728342711646493, guid: 60d6779eabc44a8479b85076220c88b3, type: 3}
       propertyPath: m_text
@@ -5526,9 +5560,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5958351086290242121, guid: 60d6779eabc44a8479b85076220c88b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5958351086290242121, guid: 60d6779eabc44a8479b85076220c88b3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1051567091}
+    - target: {fileID: 5958351086290242121, guid: 60d6779eabc44a8479b85076220c88b3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TakeDamageToShield
+      objectReference: {fileID: 0}
     - target: {fileID: 8940330454718588010, guid: 60d6779eabc44a8479b85076220c88b3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

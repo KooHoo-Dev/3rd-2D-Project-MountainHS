@@ -5,7 +5,7 @@ namespace FTL
 {
     public class RoomViewer : MonoBehaviour
     {
-        [SerializeField] private Room roomData;
+        public Room RoomData { get; set; }
         private SpriteRenderer spriteRenderer;
         private TMP_Text text;
 
@@ -13,7 +13,7 @@ namespace FTL
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
             text = GetComponentInChildren<TMP_Text>();
-            SetRoomState(roomData.RoomId, roomData.RoomType);
+            SetRoomState(RoomData);
         }
 
         /// <summary>
@@ -37,6 +37,21 @@ namespace FTL
                     spriteRenderer.color = Color.green;
                     break;
             }
+        }
+
+        public void SetRoomState(Room roomData)
+        {
+            if (roomData == null)
+            {
+                return;
+            }
+
+            SetRoomState(roomData.RoomId, roomData.RoomType);
+        }
+
+        public void SetRoomState()
+        {
+            SetRoomState(RoomData.RoomId, RoomData.RoomType);
         }
     }
 }

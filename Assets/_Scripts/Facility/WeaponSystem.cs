@@ -5,16 +5,16 @@ namespace FTL
 {
     public class WeaponSystem : FacilitySystem
     {
-        [SerializeField] private List<Weapon> weapons;
-        [SerializeField] private Weapon selectedWeapon;
-        [SerializeField] private Vector3 selectedRoomTarget;
+        [SerializeField] private List<WeaponController> weapons;
+        [SerializeField] private WeaponController selectedWeapon;
+        [SerializeField] private SProjectileTargetData targetData;
 
         protected override void Awake()
         {
             base.Awake();
             type = ERoomType.Weapon;
             selectedWeapon = null;
-            selectedRoomTarget = Vector3.zero;
+            targetData = new SProjectileTargetData(Vector3.zero, -1);
         }
 
         private void Update()
@@ -32,15 +32,15 @@ namespace FTL
 
             if (CanUpdateWeapon())
             {
-                selectedWeapon.SetRoomTarget(selectedRoomTarget);
+                selectedWeapon.SetRoomTarget(targetData);
                 selectedWeapon = null;
-                selectedRoomTarget = Vector3.zero;
+                targetData = new SProjectileTargetData(Vector3.zero, -1);
             }
         }
 
         private bool CanUpdateWeapon()
         {
-            return selectedRoomTarget != Vector3.zero &&
+            return targetData.IsValid() &&
                             selectedWeapon != null;
         }
 
@@ -73,9 +73,9 @@ namespace FTL
             selectedWeapon = weapons[index - 1];
         }
 
-        public void SetSelectedRoomTarget(Vector3 target)
+        public void SetSelectedRoomTarget(SProjectileTargetData targetData)
         {
-            selectedRoomTarget = target;
+            this.targetData = targetData;
         }
 
         // 선택한 무기 리셋

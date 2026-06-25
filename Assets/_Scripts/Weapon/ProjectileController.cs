@@ -6,16 +6,42 @@ using Utilities;
 
 namespace FTL
 {
+    [Serializable]
+    public struct SProjectileTargetData
+    {
+        public Vector3 TargetPosition;
+        public int RoomId;
+
+        public SProjectileTargetData(Vector3 targetPosition, int roomId)
+        {
+            TargetPosition = targetPosition;
+            RoomId = roomId;
+        }
+
+        public void Reset()
+        {
+            TargetPosition = Vector3.zero;
+            RoomId = -1;
+        }
+
+        public bool IsValid()
+        {
+            return TargetPosition != Vector3.zero && RoomId >= 0;
+        }
+    }
+
     public class ProjectileController : MonoBehaviour
     {
         private const string AREA_DIVIDER_TAG = "AreaDivider";
 
         public bool IsArrived => transform.position == target;
+        public int TargetRoomId => targetRoomId;
         [SerializeField] private float damage;
         [SerializeField] private float speed;
         [field: SerializeField] public Collider2D StartCol { get; private set; }
         [SerializeField] private Collider2D endCol;
         [SerializeField] private Vector3 target;
+        [SerializeField] private int targetRoomId;
         [SerializeField] private LayerMask shipLayer;
         [SerializeField] private LayerMask shieldLayer;
         [SerializeField] private bool isAfterStartCol = false;
@@ -24,6 +50,7 @@ namespace FTL
         {
             StartCol = null;
             endCol = null;
+            targetRoomId = -1;
             isAfterStartCol = false;
         }
 
@@ -46,9 +73,10 @@ namespace FTL
         }
         // SetTarget
 
-        public void SetTarget(Vector3 targetPosition)
+        public void SetTarget(SProjectileTargetData targetData)
         {
-            target = targetPosition;
+            target = targetData.TargetPosition;
+            targetRoomId = targetData.RoomId;
         }
 
         public void SetEndCol(Collider2D endCol)

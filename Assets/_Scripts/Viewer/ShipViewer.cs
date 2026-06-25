@@ -8,11 +8,20 @@ namespace FTL
     /// </summary>
     public class ShipViewer : MonoBehaviour
     {
-        List<Room> rooms;
-        List<RoomViewer> roomViewers;
+        [SerializeField] private ShipController shipController;
+        [SerializeField] private RoomViewer[] roomViewers;
+        private ShipData shipData;
 
         private void Start()
         {
+            shipData = shipController.ShipData;
+            roomViewers = GetComponentsInChildren<RoomViewer>();
+            List<Room> rooms = shipData.Rooms;
+            for (int i = 0; i < rooms.Count; i++)
+            {
+                roomViewers[i].RoomData = rooms[i];
+                roomViewers[i].SetRoomState();
+            }
         }
     }
 }

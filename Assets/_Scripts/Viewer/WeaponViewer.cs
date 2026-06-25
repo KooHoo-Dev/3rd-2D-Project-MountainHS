@@ -6,7 +6,7 @@ namespace FTL
     public class WeaponViewer : MonoBehaviour
     {
         [SerializeField] private Sprite[] chargeSprites;
-        [SerializeField] private Weapon weapon;
+        [SerializeField] private WeaponController weapon;
         [SerializeField] private Image weaponChargeBar;
         private SpriteRenderer spriteRenderer;
 

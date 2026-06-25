@@ -74,11 +74,16 @@ namespace FTL
                 Collider2D roomCol = null;
                 Collider2D playerShipCol = null;
                 Collider2D enemyShipCol = null;
+                RoomViewer room = null;
+                int roomId = -1;
+
                 foreach (Collider2D col in clickCols)
                 {
                     if (col.CompareTag(Tags.Room))
                     {
                         roomCol = col;
+                        room = col.gameObject.GetComponent<RoomViewer>();
+                        roomId = room.RoomData.RoomId;
                         Debug.Log($"Room Clicked: {roomCol.gameObject.name}");
                     }
                     else if (col.CompareTag(Tags.PlayerShip))
@@ -97,7 +102,8 @@ namespace FTL
                     && enemyShipCol != null)
                 {
                     Vector2 target = roomCol.bounds.center;
-                    weaponSystem.SetSelectedRoomTarget(target);
+                    SProjectileTargetData targetData = new SProjectileTargetData(target, roomId);
+                    weaponSystem.SetSelectedRoomTarget(targetData);
                 }
                 //TestOverlapPoint(clickCol);
             }

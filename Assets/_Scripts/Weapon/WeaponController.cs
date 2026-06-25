@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace FTL
 {
-    public class Weapon : MonoBehaviour
+    public class WeaponController : MonoBehaviour
     {
         public bool IsReady => isReady;
         public bool IsPowered { set; get; } = false;
@@ -15,12 +15,14 @@ namespace FTL
         [SerializeField] private bool isReady;
         [SerializeField] private bool prevIsPowered = false;
         [SerializeField] private Vector3 roomTarget;
+        [SerializeField] private int targetRoomId;
 
         private void Awake()
         {
             isReady = false;
             IsPowered = false;
             roomTarget = Vector3.zero;
+            targetRoomId = -1;
         }
 
         private void Update()
@@ -48,7 +50,8 @@ namespace FTL
                 // 투사체에 타깃 정보 전달
                 GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
                 ProjectileController projectileController = projectile.GetComponent<ProjectileController>();
-                projectileController.SetTarget(roomTarget);
+                SProjectileTargetData targetData = new SProjectileTargetData(roomTarget, targetRoomId);
+                projectileController.SetTarget(targetData);
                 projectile.transform.rotation = transform.rotation;
                 ChargeProgress = 0f;
             }
@@ -73,9 +76,10 @@ namespace FTL
             }
         }
 
-        public void SetRoomTarget(Vector3 target)
+        public void SetRoomTarget(SProjectileTargetData targetData)
         {
-            roomTarget = target;
+            roomTarget = targetData.TargetPosition;
+            targetRoomId = targetData.RoomId;
         }
     }
 }
