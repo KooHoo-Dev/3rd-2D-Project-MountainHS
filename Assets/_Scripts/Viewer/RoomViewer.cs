@@ -5,7 +5,7 @@ namespace FTL
 {
     public class RoomViewer : MonoBehaviour
     {
-        public Room RoomData { get; set; }
+        [field: SerializeField] public Room RoomData { get; set; }
         private SpriteRenderer spriteRenderer;
         private TMP_Text text;
 

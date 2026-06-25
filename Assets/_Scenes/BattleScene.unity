@@ -198,7 +198,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 4.13, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1477667181}
@@ -226,7 +226,9 @@ MonoBehaviour:
   totalDamage: 0
   weapons: []
   selectedWeapon: {fileID: 0}
-  selectedRoomTarget: {x: 0, y: 0, z: 0}
+  targetData:
+    TargetPosition: {x: 0, y: 0, z: 0}
+    RoomId: 0
 --- !u!114 &194710677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,6 +301,8 @@ MonoBehaviour:
   <ShipData>k__BackingField: {fileID: 11400000, guid: 220620f264c5f2a4f8951128e1b6500a, type: 2}
   <Hp>k__BackingField: 0
   powerSystem: {fileID: 194710681}
+  facilitySystems: []
+  <Rooms>k__BackingField: []
 --- !u!114 &194710681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2398,6 +2402,7 @@ MonoBehaviour:
   isReady: 0
   prevIsPowered: 0
   roomTarget: {x: 0, y: 0, z: 0}
+  targetRoomId: 0
 --- !u!114 &956301253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2538,7 +2543,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -4.5, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 842322587}
@@ -2563,6 +2568,8 @@ MonoBehaviour:
   <ShipData>k__BackingField: {fileID: 11400000, guid: 94109f598f1c6a042a0eed9a663fdbe0, type: 2}
   <Hp>k__BackingField: 0
   powerSystem: {fileID: 1051567094}
+  facilitySystems: []
+  <Rooms>k__BackingField: []
   aKeyFacilityType: 3
   sKeyFacilityType: 2
   dKeyFacilityType: 1
@@ -2590,7 +2597,9 @@ MonoBehaviour:
   weapons:
   - {fileID: 956301252}
   selectedWeapon: {fileID: 0}
-  selectedRoomTarget: {x: 0, y: 0, z: 0}
+  targetData:
+    TargetPosition: {x: 0, y: 0, z: 0}
+    RoomId: 0
 --- !u!114 &1051567091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2882,6 +2891,9 @@ MonoBehaviour:
   shieldSystems:
   - {fileID: 1051567091}
   - {fileID: 194710678}
+  shipControllers:
+  - {fileID: 1051567089}
+  - {fileID: 194710680}
 --- !u!4 &1106016009
 Transform:
   m_ObjectHideFlags: 0

@@ -10,13 +10,11 @@ namespace FTL
     {
         [SerializeField] private ShipController shipController;
         [SerializeField] private RoomViewer[] roomViewers;
-        private ShipData shipData;
 
         private void Start()
         {
-            shipData = shipController.ShipData;
             roomViewers = GetComponentsInChildren<RoomViewer>();
-            List<Room> rooms = shipData.Rooms;
+            List<Room> rooms = shipController.Rooms;
             for (int i = 0; i < rooms.Count; i++)
             {
                 roomViewers[i].RoomData = rooms[i];

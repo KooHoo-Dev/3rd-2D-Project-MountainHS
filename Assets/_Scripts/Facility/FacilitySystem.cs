@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace FTL
 {
-    public abstract class FacilitySystem : MonoBehaviour, IPowerInfo
+    public class FacilitySystem : MonoBehaviour, IPowerInfo
     {
         public ERoomType Type => type;
         public EFacilityStatus FacilityStatus => facilityStatus;

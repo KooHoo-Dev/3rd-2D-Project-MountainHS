@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -36,15 +37,16 @@ namespace FTL
 
         public bool IsArrived => transform.position == target;
         public int TargetRoomId => targetRoomId;
-        [SerializeField] private float damage;
+        [field: SerializeField] public int Damage { get; private set; }
         [SerializeField] private float speed;
         [field: SerializeField] public Collider2D StartCol { get; private set; }
         [SerializeField] private Collider2D endCol;
-        [SerializeField] private Vector3 target;
+        [field: SerializeField] public Vector3 target { get; private set; } = Vector3.zero;
         [SerializeField] private int targetRoomId;
         [SerializeField] private LayerMask shipLayer;
         [SerializeField] private LayerMask shieldLayer;
         [SerializeField] private bool isAfterStartCol = false;
+        [SerializeField] private bool isMoving = true;
 
         private void Awake()
         {
@@ -62,14 +64,17 @@ namespace FTL
                 // 전투 시스템에 판정 요청
                 // 회피이면 무시
                 // 명중이면 삭제
+                CombatSystem.Instance.HandleRoomCollision(this);
                 Destroy(gameObject);
             }
 
-            if (isAfterStartCol == false)
-                transform.Translate(Vector3.right * speed * Time.deltaTime);
-            else
-                transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
-
+            if (isMoving)
+            {
+                if (isAfterStartCol == false)
+                    transform.Translate(Vector3.right * speed * Time.deltaTime);
+                else
+                    transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+            }
         }
         // SetTarget
 
@@ -117,6 +122,8 @@ namespace FTL
                 // 전투 시스템 호출
                 CombatSystem.Instance.MoveToEnemyArea(StartCol, this);
                 isAfterStartCol = true;
+                isMoving = false;
+                StartCoroutine(SetProjectileDelay());
             }
             // 종료 콜라이더 벗어나면 삭제
             if (endCol == collision)
@@ -124,6 +131,23 @@ namespace FTL
                 // 전투 시스템 호출
                 Destroy(gameObject);
             }
+        }
+
+        private IEnumerator SetProjectileDelay()
+        {
+            const float MAX_SPEED = 11f;
+            const float MIN_SPEED = 3f;
+            const float MIN_TIME = 0.5f;
+            const float MAX_TIME = 2f;
+            // 진행도
+
+            // 속도 11 ~ 3
+            float lerpRate = Mathf.InverseLerp(MAX_SPEED, MIN_SPEED, speed);
+            // 목표 시간: 0.5 ~ 2
+            float time = Mathf.Lerp(MIN_TIME, MAX_TIME, lerpRate);
+
+            yield return new WaitForSeconds(time);
+            isMoving = true;
         }
     }
 }
