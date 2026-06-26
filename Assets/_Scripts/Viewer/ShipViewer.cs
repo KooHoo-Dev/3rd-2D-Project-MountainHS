@@ -14,7 +14,7 @@ namespace FTL
         private void Start()
         {
             roomViewers = GetComponentsInChildren<RoomViewer>();
-            List<RoomData> rooms = shipController.Rooms;
+            List<Room> rooms = shipController.Rooms;
             for (int i = 0; i < rooms.Count; i++)
             {
                 roomViewers[i].RoomData = rooms[i];

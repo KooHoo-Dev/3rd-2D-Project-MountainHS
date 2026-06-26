@@ -4,10 +4,10 @@ using UnityEngine;
 namespace FTL
 {
     [System.Serializable]
-    public class RoomData
+    public class Room
     {
         public bool HasFacility => FacilitySystem != null;
-        public void SetRoomData(RoomData roomData)
+        public void SetRoomData(Room roomData)
         {
             Id = roomData.Id;
             Type = roomData.Type;

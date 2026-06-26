@@ -227,7 +227,7 @@ dotnet_naming_rule.enum_should_start_with_e.style = e_prefix_style
 
 dotnet_naming_rule.struct_should_start_with_s.severity = warning
 dotnet_naming_rule.struct_should_start_with_s.symbols = struct_symbols
-dotnet_naming_rule.struct_should_start_with_s.style = s_prefix_style
+dotnet_naming_rule.struct_should_start_with_s.style = pascal_case
 
 dotnet_naming_rule.types_should_be_pascal_case.severity = warning
 dotnet_naming_rule.types_should_be_pascal_case.symbols = types

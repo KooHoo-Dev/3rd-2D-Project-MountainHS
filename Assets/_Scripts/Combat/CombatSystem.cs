@@ -10,16 +10,16 @@ namespace FTL
 
         [SerializeField] private Collider2D[] shipAreas;
         [SerializeField] private ShipController[] ships;
-        private Dictionary<Collider2D, EShipArea> colToNextShipAreaDict = new Dictionary<Collider2D, EShipArea>();
-        private Dictionary<EShipArea, Collider2D> shipAreaToColDict = new Dictionary<EShipArea, Collider2D>();
+        private Dictionary<Collider2D, EShipSide> colToNextShipAreaDict = new Dictionary<Collider2D, EShipSide>();
+        private Dictionary<EShipSide, Collider2D> shipAreaToColDict = new Dictionary<EShipSide, Collider2D>();
 
         protected override void OnInitialize()
         {
             base.OnInitialize();
-            shipAreaToColDict.Add(EShipArea.Player, shipAreas[0]);
-            shipAreaToColDict.Add(EShipArea.Enemy0, shipAreas[1]);
-            colToNextShipAreaDict.Add(shipAreas[0], EShipArea.Enemy0);
-            colToNextShipAreaDict.Add(shipAreas[1], EShipArea.Player);
+            shipAreaToColDict.Add(EShipSide.Player, shipAreas[0]);
+            shipAreaToColDict.Add(EShipSide.Enemy0, shipAreas[1]);
+            colToNextShipAreaDict.Add(shipAreas[0], EShipSide.Enemy0);
+            colToNextShipAreaDict.Add(shipAreas[1], EShipSide.Player);
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace FTL
         /// <param name="projectile"></param>
         public void MoveToEnemyArea(Collider2D col, ProjectileController projectile)
         {
-            EShipArea nextShipArea = colToNextShipAreaDict[col];
+            EShipSide nextShipArea = colToNextShipAreaDict[col];
             Collider2D nextShipCol = shipAreaToColDict[nextShipArea];
 
             Vector3 spawnPos = GetRandomPositionOnColliderEdge(nextShipCol, projectile.transform.position.z);
@@ -70,7 +70,7 @@ namespace FTL
         public bool HandleRoomCollision(ProjectileController projectile)
         {
             ShipController oppenentShipController = projectile.StartCol.CompareTag(Tags.PlayerShip) ? ships[1] : ships[0];
-            SProjectileTargetData targetData = new SProjectileTargetData(projectile.target, projectile.TargetRoomId);
+            ProjectileTargetData targetData = new ProjectileTargetData(projectile.target, projectile.TargetRoomId);
 
             // 명중 판정 로직 추가 (추후 구현)
             oppenentShipController.TakeDamageToRoom(projectile.Damage, targetData.RoomId);
@@ -100,10 +100,21 @@ namespace FTL
             return spawnPos;
         }
 
-        public List<RoomData> GetPlayerRooms()
+        public List<Room> GetPlayerRooms()
         {
             // Implementation for getting player rooms
             return ships[0].Rooms;
+        }
+
+        public Room GetRoomOrNull(EShipSide shipSide, Vector2 position)
+        {
+            List<Room> rooms = ships[(int)shipSide].Rooms;
+            for (int i = 0; i < rooms.Count; i++)
+            {
+                if (rooms[i].GlobalPosition == position)
+                    return rooms[i];
+            }
+            return null;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace FTL
         [SerializeField] private GameObject projectilePrefab;
         [SerializeField] private bool isReady;
         [SerializeField] private bool prevIsPowered = false;
-        public SProjectileTargetData TargetData;
+        public ProjectileTargetData TargetData;
 
         private void Awake()
         {
@@ -75,7 +75,7 @@ namespace FTL
             }
         }
 
-        public void SetRoomTarget(SProjectileTargetData targetData)
+        public void SetRoomTarget(ProjectileTargetData targetData)
         {
             TargetData.TargetPosition = targetData.TargetPosition;
             TargetData.RoomId = targetData.RoomId;

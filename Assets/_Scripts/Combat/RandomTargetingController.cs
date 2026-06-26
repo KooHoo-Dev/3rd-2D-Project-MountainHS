@@ -6,9 +6,9 @@ namespace FTL
     // 랜덤 방정보를 제공하는 클래스
     public class RandomTargeter: ITargeting
     {
-        private List<RoomData> rooms = new List<RoomData>();
+        private List<Room> rooms = new List<Room>();
 
-        public RandomTargeter(List<RoomData> rooms)
+        public RandomTargeter(List<Room> rooms)
         {
             for (int i = 0; i < rooms.Count; i++)
             {
@@ -16,7 +16,7 @@ namespace FTL
             }
         }
 
-        public RoomData GetTarget()
+        public Room GetTarget()
         {
             int randomIndex = Random.Range(0, rooms.Count);
             return rooms[randomIndex];

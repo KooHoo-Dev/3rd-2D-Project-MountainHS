@@ -22,12 +22,13 @@ namespace FTL
         [SerializeField] protected ShipPowerController powerSystem;
 
         [Header("Room")]
-        [field: SerializeField] public List<RoomData> Rooms { get; private set; } = new List<RoomData>();
+        [field: SerializeField] public List<Room> Rooms { get; private set; } = new List<Room>();
         [SerializeField] private GameObject roomPrefab;
         [SerializeField] private Transform roomGroupTransform;
 
         protected WeaponSystem weaponSystem;
         protected List<FacilitySystem> facilitySystems = new List<FacilitySystem>() ;
+        protected ShipOwnership shipOwnership;
 
         protected virtual void Awake()
         {
@@ -35,6 +36,8 @@ namespace FTL
             facilitySystems.Add(GetComponent<WeaponSystem>());
             facilitySystems.Add(GetComponent<EngineSystem>());
             facilitySystems.Add(GetComponent<ShieldSystem>());
+
+            shipOwnership = GetComponentInChildren<ShipOwnership>();
 
             weaponSystem = (WeaponSystem) GetFacilitySystemByERoomType(ERoomType.Weapon);
 
@@ -46,7 +49,7 @@ namespace FTL
                 {
                     GameObject roomObject = Instantiate(roomPrefab, roomGroupTransform);
                     RoomViewer roomViewer = roomObject.GetComponent<RoomViewer>();
-                    RoomData roomData = new RoomData();
+                    Room roomData = new Room();
                     // RoomData 초기화 함수 생성
                     roomData.SetRoomData(ShipData.Rooms[i]);
                     roomObject.transform.localPosition = roomData.LocalPosition;
@@ -80,7 +83,7 @@ namespace FTL
         }
 
         // roomId를 받으면 Rooms에서 탐색해서 해당 room 리턴
-        protected RoomData GetRoomByIdOrNull(int roomId)
+        protected Room GetRoomByIdOrNull(int roomId)
         {
             for (int i = 0; i < Rooms.Count; i++)
             {
@@ -89,6 +92,16 @@ namespace FTL
             }
             return null;
         }
+
+        //protected Room GetRoomByPositionOrNull(Vector2 position)
+        //{
+        //    for (int i = 0; i < Rooms.Count; i++)
+        //    {
+        //        if (Rooms[i].GlobalPosition == position)
+        //            return Rooms[i];
+        //    }
+        //    return null;
+        //}
 
         public FacilitySystem GetFacilitySystemByERoomType(ERoomType roomType)
         {
@@ -119,7 +132,7 @@ namespace FTL
         {
             TakeDamage(damage);
             // 피격당한 room 객체 가져오기
-            RoomData room = GetRoomByIdOrNull(roomId);
+            Room room = GetRoomByIdOrNull(roomId);
             if (room != null &&
                 room.HasFacility)
             {

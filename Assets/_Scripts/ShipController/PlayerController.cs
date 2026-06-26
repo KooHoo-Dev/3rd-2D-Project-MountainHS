@@ -16,6 +16,11 @@ namespace FTL
         private bool oneShotBool = true;
         private bool oneShotBool2 = true;
 
+        private void Start()
+        {
+            shipOwnership.ShipSide = EShipSide.Player;
+        }
+
         private void Update()
         {
             bool isShiftPressed = SimpleInput.GetKey(Key.LeftShift) || SimpleInput.GetKey(Key.RightShift);
@@ -28,6 +33,11 @@ namespace FTL
             {
                 // 무기 시스템의 선택한 무기를 1번 무기로 교체
                 weaponSystem.SetSelectedWeapon(1);
+            }
+            if (SimpleInput.GetKeyDown(Key.Digit6))
+            {
+                // 무기 시스템의 선택한 무기를 1번 무기로 교체
+                weaponSystem.SetSelectedWeapon(2);
             }
 
             if (SimpleInput.GetKeyDown(Key.Escape))
@@ -76,35 +86,36 @@ namespace FTL
                 Collider2D roomCol = null;
                 Collider2D playerShipCol = null;
                 Collider2D enemyShipCol = null;
-                RoomViewer room = null;
+                EShipSide shipSide = EShipSide.None;
+                Room room = null;
                 int roomId = -1;
+                LayerMask roomLayer = LayerMask.GetMask(Tags.ROOM_LAYER);
+                LayerMask shipLayer = LayerMask.GetMask(Tags.SHIP_LAYER);
 
                 foreach (Collider2D col in clickCols)
                 {
-                    if (col.CompareTag(Tags.Room))
+                    if (roomLayer.Contains(col.gameObject.layer))
                     {
                         roomCol = col;
-                        room = col.gameObject.GetComponent<RoomViewer>();
-                        roomId = room.RoomData.Id;
                         Debug.Log($"Room Clicked: {roomCol.gameObject.name}");
                     }
-                    else if (col.CompareTag(Tags.PlayerShip))
+                    else if (shipLayer.Contains(col.gameObject.layer))
                     {
+                        shipSide = col.GetComponent<ShipOwnership>().ShipSide;
                         playerShipCol = col;
                         Debug.Log($"Ship Clicked: {playerShipCol.gameObject.name}");
-                    }
-                    else if (col.CompareTag(Tags.EnemyShip))
-                    {
-                        enemyShipCol = col;
-                        Debug.Log($"Ship Clicked: {enemyShipCol.gameObject.name}");
-                    }
+                    }                           
                 }
 
-                if (roomCol != null 
-                    && enemyShipCol != null)
+                bool isEnemyRoomSelected = roomCol != null
+                    && shipSide != EShipSide.Player
+                    && shipSide != EShipSide.None;
+                if (isEnemyRoomSelected)
                 {
+                    room = CombatSystem.Instance.GetRoomOrNull(shipSide, roomCol.transform.position);
+                    roomId = room.Id;
                     Vector2 target = roomCol.bounds.center;
-                    SProjectileTargetData targetData = new SProjectileTargetData(target, roomId);
+                    ProjectileTargetData targetData = new ProjectileTargetData(target, roomId);
                     weaponSystem.SetSelectedRoomTarget(targetData);
                 }
                 //TestOverlapPoint(clickCol);

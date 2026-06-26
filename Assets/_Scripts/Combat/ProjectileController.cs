@@ -8,12 +8,12 @@ using Utilities;
 namespace FTL
 {
     [Serializable]
-    public struct SProjectileTargetData
+    public struct ProjectileTargetData
     {
         public Vector3 TargetPosition;
         public int RoomId;
 
-        public SProjectileTargetData(Vector3 targetPosition, int roomId)
+        public ProjectileTargetData(Vector3 targetPosition, int roomId)
         {
             TargetPosition = targetPosition;
             RoomId = roomId;
@@ -33,8 +33,6 @@ namespace FTL
 
     public class ProjectileController : MonoBehaviour
     {
-        private const string AREA_DIVIDER_TAG = "AreaDivider";
-
         public bool IsArrived => transform.position == target;
         public int TargetRoomId => targetRoomId;
         [field: SerializeField] public int Damage { get; private set; }
@@ -78,7 +76,7 @@ namespace FTL
         }
         // SetTarget
 
-        public void SetTarget(SProjectileTargetData targetData)
+        public void SetTarget(ProjectileTargetData targetData)
         {
             target = targetData.TargetPosition;
             targetRoomId = targetData.RoomId;

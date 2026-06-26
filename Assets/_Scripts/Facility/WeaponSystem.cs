@@ -7,7 +7,7 @@ namespace FTL
     {
         [SerializeField] private List<WeaponController> weapons;
         [SerializeField] private WeaponController selectedWeapon;
-        [SerializeField] private SProjectileTargetData targetData;
+        [SerializeField] private ProjectileTargetData targetData;
         public ITargeting TargetingSystem { get; set; }
 
         protected override void Awake()
@@ -15,7 +15,7 @@ namespace FTL
             base.Awake();
             type = ERoomType.Weapon;
             selectedWeapon = null;
-            targetData = new SProjectileTargetData(Vector3.zero, -1);
+            targetData = new ProjectileTargetData(Vector3.zero, -1);
         }
 
         private void Start()
@@ -54,7 +54,7 @@ namespace FTL
                 {
                     selectedWeapon.SetRoomTarget(targetData);
                     selectedWeapon = null;
-                    targetData = new SProjectileTargetData(Vector3.zero, -1);
+                    targetData = new ProjectileTargetData(Vector3.zero, -1);
                 }
             }
             else
@@ -70,7 +70,7 @@ namespace FTL
                         weapon.TargetData.IsValid() == false)
                     {
                         // 조준 클래스가 조준 정보 리턴
-                        RoomData targetRoom = TargetingSystem.GetTarget();
+                        Room targetRoom = TargetingSystem.GetTarget();
                         targetData.RoomId = targetRoom.Id;
                         targetData.TargetPosition = targetRoom.GlobalPosition;
 
@@ -92,7 +92,7 @@ namespace FTL
             // 선택한 무기가 없으면 (무기 리스트의 인덱스 범위 초과) 예외처리
             if (index > weapons.Count)
             {
-                Debug.LogError($"WeaponSystem: SetSelectWeapon index out of range");
+                Debug.LogWarning($"WeaponSystem: SetSelectWeapon index out of range");
                 return;
             }
 
@@ -100,7 +100,7 @@ namespace FTL
             selectedWeapon = weapons[index - 1];
         }
 
-        public void SetSelectedRoomTarget(SProjectileTargetData targetData)
+        public void SetSelectedRoomTarget(ProjectileTargetData targetData)
         {
             this.targetData = targetData;
         }

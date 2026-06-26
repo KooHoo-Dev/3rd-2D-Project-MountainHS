@@ -1,4 +1,4 @@
 namespace FTL
 {
-    public enum EShipArea { Player, Enemy0 }
+    public enum EShipSide { None= -1, Player = 0, Enemy0 }
 }

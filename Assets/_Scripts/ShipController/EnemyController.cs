@@ -11,17 +11,18 @@ namespace FTL
         {
             targetingSystem = new RandomTargeter(CombatSystem.Instance.GetPlayerRooms());
             weaponSystem.TargetingSystem = targetingSystem;
+            shipOwnership.ShipSide = EShipSide.Enemy0;
         }
 
-        public void TestAllocateShieldPower()
-        {
-            RequestAllocatePower(ERoomType.Shield);
-        }
+        //public void TestAllocateShieldPower()
+        //{
+        //    RequestAllocatePower(ERoomType.Shield);
+        //}
 
-        public void TestDeallocateShieldPower()
-        {
-            RequestDeallocatePower(ERoomType.Shield);
-        }
+        //public void TestDeallocateShieldPower()
+        //{
+        //    RequestDeallocatePower(ERoomType.Shield);
+        //}
 
         public override IEnumerator DeadCoroutine(float seconds)
         {

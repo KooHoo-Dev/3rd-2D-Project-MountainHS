@@ -10,6 +10,6 @@ namespace FTL
     {
         // scriptable object로 Hp, Rooms 관리
         [field: SerializeField] public int MaxHp { get; private set; }
-        [field: SerializeField] public List<RoomData> Rooms { get; private set; }
+        [field: SerializeField] public List<Room> Rooms { get; private set; }
     }
 }
