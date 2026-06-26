@@ -8,8 +8,7 @@ namespace FTL
         [SerializeField] private List<WeaponController> weapons;
         [SerializeField] private WeaponController selectedWeapon;
         [SerializeField] private SProjectileTargetData targetData;
-        [SerializeField] private MonoBehaviour targetingMono;
-        private ITargeting targetingController;
+        public ITargeting TargetingSystem { get; set; }
 
         protected override void Awake()
         {
@@ -17,12 +16,8 @@ namespace FTL
             type = ERoomType.Weapon;
             selectedWeapon = null;
             targetData = new SProjectileTargetData(Vector3.zero, -1);
-            targetingController = targetingMono?.GetComponent<ITargeting>();
-            if (targetingController == null)
-            {
-                Debug.LogWarning($"Gameobject name: {gameObject.name} does not implement ITargeting interface");
-            }
         }
+
         private void Start()
         {
             WeaponController[] weapons = GetComponentsInChildren<WeaponController>();
@@ -53,7 +48,7 @@ namespace FTL
                 }
             }
 
-            if (targetingController == null)
+            if (TargetingSystem == null)
             {
                 if (CanUpdateWeapon())
                 {
@@ -75,7 +70,7 @@ namespace FTL
                         weapon.TargetData.IsValid() == false)
                     {
                         // 조준 클래스가 조준 정보 리턴
-                        RoomData targetRoom = targetingController.GetTarget();
+                        RoomData targetRoom = TargetingSystem.GetTarget();
                         targetData.RoomId = targetRoom.Id;
                         targetData.TargetPosition = targetRoom.GlobalPosition;
 

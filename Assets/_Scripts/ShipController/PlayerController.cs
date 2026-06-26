@@ -8,7 +8,6 @@ namespace FTL
     public class PlayerController : ShipController
     {
         [Header("Player Settings")]
-        [SerializeField] private WeaponSystem weaponSystem;
         [SerializeField] private LayerMask clickableLayer;
 
         private ERoomType aKeyFacilityType = ERoomType.Shield;
@@ -17,11 +16,6 @@ namespace FTL
         private bool oneShotBool = true;
         private bool oneShotBool2 = true;
 
-        protected override void Awake()
-        {
-            base.Awake();
-            weaponSystem = (WeaponSystem) GetFacilitySystemByERoomType(ERoomType.Weapon);
-        }
         private void Update()
         {
             bool isShiftPressed = SimpleInput.GetKey(Key.LeftShift) || SimpleInput.GetKey(Key.RightShift);
@@ -156,7 +150,7 @@ namespace FTL
         public override IEnumerator DeadCoroutine(float seconds)
         {
             yield return new WaitForSeconds(seconds);
-            GameManager.Instance.HandleBattleResult(EBattleResult.EnemyShipDestroyed);
+            GameManager.Instance.HandleBattleResult(EBattleResult.PlayerShipDestroyed);
             Destroy(gameObject);
         }
 

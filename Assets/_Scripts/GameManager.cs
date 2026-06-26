@@ -52,6 +52,11 @@ namespace FTL
             }
         }
 
+        public void PlayerRun()
+        {
+            HandleBattleResult(EBattleResult.PlayerRun);
+        }
+
         public void TestHandleBattleResult()
         {
             if (SimpleInput.GetKeyDown(Key.Digit1))

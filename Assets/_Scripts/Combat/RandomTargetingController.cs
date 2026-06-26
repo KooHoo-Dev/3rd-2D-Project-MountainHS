@@ -4,16 +4,15 @@ using UnityEngine;
 namespace FTL
 {
     // 랜덤 방정보를 제공하는 클래스
-    public class RandomTargetingController: MonoBehaviour, ITargeting
+    public class RandomTargeter: ITargeting
     {
-        [SerializeField] private ShipController ship;
-        [SerializeField] private List<RoomData> rooms = new List<RoomData>();
+        private List<RoomData> rooms = new List<RoomData>();
 
-        private void Start()
+        public RandomTargeter(List<RoomData> rooms)
         {
-            for (int i = 0; i < ship.Rooms.Count; i++)
+            for (int i = 0; i < rooms.Count; i++)
             {
-                rooms.Add(ship.Rooms[i]);
+                this.rooms.Add(rooms[i]);
             }
         }
 

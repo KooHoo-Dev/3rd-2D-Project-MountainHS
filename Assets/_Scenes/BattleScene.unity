@@ -180,7 +180,6 @@ GameObject:
   - component: {fileID: 194710678}
   - component: {fileID: 194710677}
   - component: {fileID: 194710676}
-  - component: {fileID: 194710684}
   - component: {fileID: 194710682}
   m_Layer: 0
   m_Name: Enemy Ship
@@ -231,7 +230,6 @@ MonoBehaviour:
   targetData:
     TargetPosition: {x: 0, y: 0, z: 0}
     RoomId: 0
-  targetingMono: {fileID: 194710684}
 --- !u!114 &194710677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -335,20 +333,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FTL.EnemyPowerController
   reactorSystem: {fileID: 194710679}
   facilities: []
---- !u!114 &194710684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 194710674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87a72db7251ce98409b3dbda08b7353c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FTL.RandomTargetingController
-  ship: {fileID: 1051567089}
-  rooms: []
 --- !u!224 &210686066 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8156740593890411459, guid: 7d3deb80250fa8743a224af800aa4c55, type: 3}
@@ -3042,7 +3026,6 @@ MonoBehaviour:
   <Rooms>k__BackingField: []
   roomPrefab: {fileID: 4957643729303577055, guid: 2363bb96b39eb5645b714a719b2a5a6d, type: 3}
   roomGroupTransform: {fileID: 80255553}
-  weaponSystem: {fileID: 0}
   clickableLayer:
     serializedVersion: 2
     m_Bits: 72
@@ -3068,7 +3051,6 @@ MonoBehaviour:
   targetData:
     TargetPosition: {x: 0, y: 0, z: 0}
     RoomId: 0
-  targetingMono: {fileID: 0}
 --- !u!114 &1051567091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3468,7 +3450,7 @@ MonoBehaviour:
   shipAreas:
   - {fileID: 842322588}
   - {fileID: 1477667182}
-  shipControllers:
+  ships:
   - {fileID: 1051567089}
   - {fileID: 194710680}
 --- !u!4 &1106016009

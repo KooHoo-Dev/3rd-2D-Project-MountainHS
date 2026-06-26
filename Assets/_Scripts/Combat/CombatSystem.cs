@@ -9,7 +9,7 @@ namespace FTL
     {
 
         [SerializeField] private Collider2D[] shipAreas;
-        [SerializeField] private ShipController[] shipControllers;
+        [SerializeField] private ShipController[] ships;
         private Dictionary<Collider2D, EShipArea> colToNextShipAreaDict = new Dictionary<Collider2D, EShipArea>();
         private Dictionary<EShipArea, Collider2D> shipAreaToColDict = new Dictionary<EShipArea, Collider2D>();
 
@@ -52,7 +52,7 @@ namespace FTL
         public bool HandleShieldCollision(ProjectileController projectile)
         {
             // projectile 주인 확인
-            ShieldSystem oppenentShieldSystem = (ShieldSystem)(projectile.StartCol.CompareTag(Tags.PlayerShip) ? shipControllers[1].GetFacilitySystemByERoomType(ERoomType.Shield) : shipControllers[0].GetFacilitySystemByERoomType(ERoomType.Shield));
+            ShieldSystem oppenentShieldSystem = (ShieldSystem)(projectile.StartCol.CompareTag(Tags.PlayerShip) ? ships[1].GetFacilitySystemByERoomType(ERoomType.Shield) : ships[0].GetFacilitySystemByERoomType(ERoomType.Shield));
             // 실드 시스템의 현재 실드가 1 이상이면
             // 실드 시스템 TakeDamage 호출
             // return true;
@@ -69,7 +69,7 @@ namespace FTL
         // 미구현
         public bool HandleRoomCollision(ProjectileController projectile)
         {
-            ShipController oppenentShipController = projectile.StartCol.CompareTag(Tags.PlayerShip) ? shipControllers[1] : shipControllers[0];
+            ShipController oppenentShipController = projectile.StartCol.CompareTag(Tags.PlayerShip) ? ships[1] : ships[0];
             SProjectileTargetData targetData = new SProjectileTargetData(projectile.target, projectile.TargetRoomId);
 
             // 명중 판정 로직 추가 (추후 구현)
@@ -98,6 +98,12 @@ namespace FTL
             spawnPos.z = z;
 
             return spawnPos;
+        }
+
+        public List<RoomData> GetPlayerRooms()
+        {
+            // Implementation for getting player rooms
+            return ships[0].Rooms;
         }
     }
 }

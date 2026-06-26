@@ -20,13 +20,14 @@ namespace FTL
 
         [Header("Power System")]
         [SerializeField] protected ShipPowerController powerSystem;
-        protected List<FacilitySystem> facilitySystems = new List<FacilitySystem>() ;
 
         [Header("Room")]
         [field: SerializeField] public List<RoomData> Rooms { get; private set; } = new List<RoomData>();
         [SerializeField] private GameObject roomPrefab;
         [SerializeField] private Transform roomGroupTransform;
-        //[field: SerializeField] public List<RoomViewer> RoomViewers { get; private set; } = new List<RoomViewer>();
+
+        protected WeaponSystem weaponSystem;
+        protected List<FacilitySystem> facilitySystems = new List<FacilitySystem>() ;
 
         protected virtual void Awake()
         {
@@ -34,6 +35,8 @@ namespace FTL
             facilitySystems.Add(GetComponent<WeaponSystem>());
             facilitySystems.Add(GetComponent<EngineSystem>());
             facilitySystems.Add(GetComponent<ShieldSystem>());
+
+            weaponSystem = (WeaponSystem) GetFacilitySystemByERoomType(ERoomType.Weapon);
 
             InitRoomObjects();
 
