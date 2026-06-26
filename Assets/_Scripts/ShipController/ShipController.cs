@@ -14,31 +14,50 @@ namespace FTL
     {
         public bool IsDead => Hp == 0;
         [field: SerializeField] public ShipData ShipData { get; private set; }
+
+        [Header("Ship Hp")]
         [field: SerializeField] public int Hp { get; private set; }
+
+        [Header("Power System")]
         [SerializeField] protected ShipPowerController powerSystem;
         protected List<FacilitySystem> facilitySystems = new List<FacilitySystem>() ;
-        [field: SerializeField] public List<Room> Rooms { get; private set; } = new List<Room>();
-        [field: SerializeField] public List<RoomViewer> RoomViewers { get; private set; } = new List<RoomViewer>();
 
-        protected void Awake()
+        [Header("Room")]
+        [field: SerializeField] public List<RoomData> Rooms { get; private set; } = new List<RoomData>();
+        [SerializeField] private GameObject roomPrefab;
+        [SerializeField] private Transform roomGroupTransform;
+        //[field: SerializeField] public List<RoomViewer> RoomViewers { get; private set; } = new List<RoomViewer>();
+
+        protected virtual void Awake()
         {
             Hp = ShipData.MaxHp;
             facilitySystems.Add(GetComponent<WeaponSystem>());
             facilitySystems.Add(GetComponent<EngineSystem>());
             facilitySystems.Add(GetComponent<ShieldSystem>());
 
-            for (int i = 0; i < ShipData.Rooms.Count; i++)
-            {
-                Room room = ShipData.Rooms[i];
-                if (room.RoomType != ERoomType.Empty)
-                    room.FacilitySystem = GetFacilitySystemByERoomType(room.RoomType);
-                Rooms.Add(room);
-            }
+            InitRoomObjects();
 
-            RoomViewer[] roomViewers = GetComponentsInChildren<RoomViewer>();
-            for (int i = 0; i < roomViewers.Length; i++)
+            void InitRoomObjects()
             {
-                RoomViewers.Add(roomViewers[i]);
+                for (int i = 0; i < ShipData.Rooms.Count; i++)
+                {
+                    GameObject roomObject = Instantiate(roomPrefab, roomGroupTransform);
+                    RoomViewer roomViewer = roomObject.GetComponent<RoomViewer>();
+                    RoomData roomData = new RoomData();
+                    // RoomData 초기화 함수 생성
+                    roomData.SetRoomData(ShipData.Rooms[i]);
+                    roomObject.transform.localPosition = roomData.LocalPosition;
+                    roomData.GlobalPosition = roomObject.transform.position;
+                    roomViewer.RoomData = roomData;
+                    roomViewer.SetRoomState();
+
+                    if (roomData.Type != ERoomType.Empty)
+                    {
+                        roomData.FacilitySystem = GetFacilitySystemByERoomType(roomData.Type);
+                    }
+
+                    Rooms.Add(roomData);
+                }
             }
         }
 
@@ -58,11 +77,11 @@ namespace FTL
         }
 
         // roomId를 받으면 Rooms에서 탐색해서 해당 room 리턴
-        protected Room GetRoomByIdOrNull(int roomId)
+        protected RoomData GetRoomByIdOrNull(int roomId)
         {
             for (int i = 0; i < Rooms.Count; i++)
             {
-                if (Rooms[i].RoomId == roomId)
+                if (Rooms[i].Id == roomId)
                     return Rooms[i];
             }
             return null;
@@ -73,11 +92,11 @@ namespace FTL
             switch (roomType)
             {
                 case ERoomType.Weapon:
-                    return facilitySystems[0];
+                    return facilitySystems[(int)ERoomType.Weapon];
                 case ERoomType.Engine:
-                    return facilitySystems[1];
+                    return facilitySystems[(int)ERoomType.Engine];
                 case ERoomType.Shield:
-                    return facilitySystems[2];
+                    return facilitySystems[(int)ERoomType.Shield];
                 default:
                     throw new ArgumentException("Invalid room type");
             }
@@ -97,7 +116,7 @@ namespace FTL
         {
             TakeDamage(damage);
             // 피격당한 room 객체 가져오기
-            Room room = GetRoomByIdOrNull(roomId);
+            RoomData room = GetRoomByIdOrNull(roomId);
             if (room != null &&
                 room.HasFacility)
             {

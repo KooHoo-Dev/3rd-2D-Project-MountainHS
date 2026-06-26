@@ -17,11 +17,11 @@ namespace FTL
             type = ERoomType.Weapon;
             selectedWeapon = null;
             targetData = new SProjectileTargetData(Vector3.zero, -1);
-            targetingController = targetingMono as ITargeting;
-            //if (targetingController == null)
-            //{
-            //    Debug.LogError("WeaponSystem: TargetingMono does not implement ITargeting interface");
-            //}
+            targetingController = targetingMono?.GetComponent<ITargeting>();
+            if (targetingController == null)
+            {
+                Debug.LogWarning($"Gameobject name: {gameObject.name} does not implement ITargeting interface");
+            }
         }
         private void Start()
         {
@@ -39,10 +39,18 @@ namespace FTL
             {
                 if (IsPowered)
                 {
-                    weapons[0].IsPowered = true;
+                    for (int i = 0; i < weapons.Count; i++)
+                    {
+                        weapons[i].IsPowered = true;
+                    }
                 }
                 else
-                    weapons[0].IsPowered = false;
+                {
+                    for (int i = 0; i < weapons.Count; i++)
+                    {
+                        weapons[i].IsPowered = false;
+                    }
+                }
             }
 
             if (targetingController == null)
@@ -67,9 +75,9 @@ namespace FTL
                         weapon.TargetData.IsValid() == false)
                     {
                         // 조준 클래스가 조준 정보 리턴
-                        RoomViewer targetRoom = targetingController.GetTarget();
-                        targetData.RoomId = targetRoom.RoomData.RoomId;
-                        targetData.TargetPosition = targetRoom.transform.position;
+                        RoomData targetRoom = targetingController.GetTarget();
+                        targetData.RoomId = targetRoom.Id;
+                        targetData.TargetPosition = targetRoom.GlobalPosition;
 
                         weapon.SetRoomTarget(targetData);
                     }

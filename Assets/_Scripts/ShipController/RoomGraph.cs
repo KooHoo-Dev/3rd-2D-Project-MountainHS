@@ -9,6 +9,6 @@ namespace FTL
 
         // 두 방을 입력 받고, 두 방이 연결되어있는지 리턴
         // 두 방을 입력 받고, 두 방이 연결 경로 리턴
-        private List<Room> rooms;
+        private List<RoomData> rooms;
     }
 }

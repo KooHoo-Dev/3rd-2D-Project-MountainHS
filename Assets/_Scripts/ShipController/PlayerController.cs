@@ -5,15 +5,23 @@ using Utilities;
 
 namespace FTL
 {
-    public class PlayerController : ShipController, IDamageable
+    public class PlayerController : ShipController
     {
-        [SerializeField] private ERoomType aKeyFacilityType = ERoomType.Shield;
-        [SerializeField] private ERoomType sKeyFacilityType = ERoomType.Engine;
-        [SerializeField] private ERoomType dKeyFacilityType = ERoomType.Weapon;
+        [Header("Player Settings")]
         [SerializeField] private WeaponSystem weaponSystem;
+        [SerializeField] private LayerMask clickableLayer;
+
+        private ERoomType aKeyFacilityType = ERoomType.Shield;
+        private ERoomType sKeyFacilityType = ERoomType.Engine;
+        private ERoomType dKeyFacilityType = ERoomType.Weapon;
         private bool oneShotBool = true;
         private bool oneShotBool2 = true;
-        [SerializeField] private LayerMask clickableLayer;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            weaponSystem = (WeaponSystem) GetFacilitySystemByERoomType(ERoomType.Weapon);
+        }
         private void Update()
         {
             bool isShiftPressed = SimpleInput.GetKey(Key.LeftShift) || SimpleInput.GetKey(Key.RightShift);
@@ -83,7 +91,7 @@ namespace FTL
                     {
                         roomCol = col;
                         room = col.gameObject.GetComponent<RoomViewer>();
-                        roomId = room.RoomData.RoomId;
+                        roomId = room.RoomData.Id;
                         Debug.Log($"Room Clicked: {roomCol.gameObject.name}");
                     }
                     else if (col.CompareTag(Tags.PlayerShip))
@@ -145,7 +153,7 @@ namespace FTL
             oneShotBool = true;
         }
 
-        public IEnumerator DeadCoroutine(float seconds)
+        public override IEnumerator DeadCoroutine(float seconds)
         {
             yield return new WaitForSeconds(seconds);
             GameManager.Instance.HandleBattleResult(EBattleResult.EnemyShipDestroyed);

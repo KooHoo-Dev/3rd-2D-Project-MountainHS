@@ -7,20 +7,20 @@ namespace FTL
     public class RandomTargetingController: MonoBehaviour, ITargeting
     {
         [SerializeField] private ShipController ship;
-        [SerializeField] private List<RoomViewer> roomViewers = new List<RoomViewer>();
+        [SerializeField] private List<RoomData> rooms = new List<RoomData>();
 
         private void Start()
         {
-            for (int i = 0; i < ship.RoomViewers.Count; i++)
+            for (int i = 0; i < ship.Rooms.Count; i++)
             {
-                roomViewers.Add(ship.RoomViewers[i]);
+                rooms.Add(ship.Rooms[i]);
             }
         }
 
-        public RoomViewer GetTarget()
+        public RoomData GetTarget()
         {
-            int randomIndex = Random.Range(0, roomViewers.Count);
-            return roomViewers[randomIndex];
+            int randomIndex = Random.Range(0, rooms.Count);
+            return rooms[randomIndex];
         }
     }
 }
