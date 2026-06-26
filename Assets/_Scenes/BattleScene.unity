@@ -346,14 +346,72 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23e39a164126fea4798f11eb0662a193, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.CrewSystem
-  ship: {fileID: 194710680}
-  isPlayer: 0
+  Ship: {fileID: 0}
   crews: []
+  selectedCrews: []
+  isPlayer: 0
 --- !u!224 &210686066 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8156740593890411459, guid: 7d3deb80250fa8743a224af800aa4c55, type: 3}
   m_PrefabInstance: {fileID: 3986471277170209150}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &231900993
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 703501533}
+    m_Modifications:
+    - target: {fileID: 217437053949938726, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_Name
+      value: Crew (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 38559d697324fa9438b704eef2851029, type: 3}
 --- !u!1001 &264100004
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1606,6 +1664,11 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 10
   m_TargetDisplay: 0
+--- !u!4 &576096121 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+  m_PrefabInstance: {fileID: 231900993}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &615099512 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8652320623278072720, guid: 2363bb96b39eb5645b714a719b2a5a6d, type: 3}
@@ -1967,6 +2030,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1487828353998682368}
+  - {fileID: 576096121}
   m_Father: {fileID: 1051567088}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &719029605
@@ -3246,9 +3310,6 @@ MonoBehaviour:
   clickableLayer:
     serializedVersion: 2
     m_Bits: 328
-  roomLayer:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!114 &1051567090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3368,9 +3429,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23e39a164126fea4798f11eb0662a193, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.CrewSystem
-  ship: {fileID: 1051567089}
-  isPlayer: 1
+  Ship: {fileID: 0}
   crews: []
+  selectedCrews: []
+  isPlayer: 1
 --- !u!1 &1077214604
 GameObject:
   m_ObjectHideFlags: 0

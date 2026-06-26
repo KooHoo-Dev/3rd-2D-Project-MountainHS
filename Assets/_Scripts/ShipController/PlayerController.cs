@@ -43,6 +43,7 @@ namespace FTL
             if (SimpleInput.GetKeyDown(Key.Escape))
             {
                 weaponSystem.ResetSelectedWeapon();
+                crewSystem.ResetSelectedCrews();
             }
 
             // 사용자 클릭 정보 리턴
@@ -83,28 +84,32 @@ namespace FTL
             {
                 Collider2D[] clickCols = Physics2D.OverlapPointAll(worldPoint, clickableLayer);
                 // 해당 콜라이더가 붙은 오브젝트의 태그를 확인해서 이 콜라이더가 플레이어 영역에 있는지, 적 영역에 있는지 확인
+                CrewController crew = null;
                 Collider2D roomCol = null;
-                Collider2D playerShipCol = null;
-                Collider2D enemyShipCol = null;
                 EShipSide shipSide = EShipSide.None;
                 Room room = null;
                 int roomId = -1;
                 LayerMask roomLayer = LayerMask.GetMask(Tags.ROOM_LAYER);
                 LayerMask shipLayer = LayerMask.GetMask(Tags.SHIP_LAYER);
+                LayerMask crewLayer = LayerMask.GetMask(Tags.CREW_LAYER);
 
                 foreach (Collider2D col in clickCols)
                 {
-                    if (roomLayer.Contains(col.gameObject.layer))
+                    int colLayer = col.gameObject.layer;
+                    if (roomLayer.Contains(colLayer))
                     {
                         roomCol = col;
                         Debug.Log($"Room Clicked: {roomCol.gameObject.name}");
                     }
-                    else if (shipLayer.Contains(col.gameObject.layer))
+                    else if (shipLayer.Contains(colLayer))
                     {
                         shipSide = col.GetComponent<ShipOwnership>().ShipSide;
-                        playerShipCol = col;
-                        Debug.Log($"Ship Clicked: {playerShipCol.gameObject.name}");
+                        Debug.Log($"Ship Clicked!");
                     }                           
+                    else if (crewLayer.Contains(colLayer))
+                    {
+                        crew = col.GetComponent<CrewController>();
+                    }
                 }
 
                 bool isEnemyRoomSelected = roomCol != null
@@ -118,7 +123,12 @@ namespace FTL
                     ProjectileTargetData targetData = new ProjectileTargetData(target, roomId);
                     weaponSystem.SetSelectedRoomTarget(targetData);
                 }
-                //TestOverlapPoint(clickCol);
+
+                if (crew != null &&
+                    shipSide == EShipSide.Player)
+                {
+                    crewSystem.AddSelectedCrew(crew);
+                }
             }
         }
 

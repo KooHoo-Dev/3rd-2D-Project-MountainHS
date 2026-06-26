@@ -29,6 +29,7 @@ namespace FTL
         protected WeaponSystem weaponSystem;
         protected List<FacilitySystem> facilitySystems = new List<FacilitySystem>() ;
         protected ShipOwnership shipOwnership;
+        protected CrewSystem crewSystem;
 
         protected virtual void Awake()
         {
@@ -36,6 +37,7 @@ namespace FTL
             facilitySystems.Add(GetComponent<WeaponSystem>());
             facilitySystems.Add(GetComponent<EngineSystem>());
             facilitySystems.Add(GetComponent<ShieldSystem>());
+            crewSystem = GetComponent<CrewSystem>();
 
             shipOwnership = GetComponentInChildren<ShipOwnership>();
 

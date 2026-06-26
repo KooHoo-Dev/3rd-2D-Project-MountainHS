@@ -8,6 +8,7 @@ namespace Utilities
         public const string Room = "Room";
         public const string ROOM_LAYER = "Room";
         public const string SHIP_LAYER = "Ship";
+        public const string CREW_LAYER = "Crew";
         public const string PlayerShip = "PlayerShip";
         public const string EnemyShip = "EnemyShip";
     }
