@@ -12,7 +12,7 @@ namespace FTL
         [SerializeField] private float escapeChargeDuration = 90f;
         [SerializeField] private bool canEscape;
         [SerializeField] private int prevPower;
-        [SerializeField] private float chargeSpeed;
+        [SerializeField] private float chargeSpeed = 1f;
 
         protected override void Awake()
         {
@@ -48,7 +48,7 @@ namespace FTL
                 return;
             }
 
-            chargeSpeed = GetNewChargeSpeed(ref chargeSpeed);
+            chargeSpeed = GetNewChargeSpeed(chargeSpeed);
 
             escapeChargeProgress += Time.deltaTime * chargeSpeed;
             if (escapeChargeProgress >= escapeChargeDuration)
@@ -57,13 +57,8 @@ namespace FTL
             }
         }
 
-        private float GetNewChargeSpeed(ref float chargeSpeed)
+        private float GetNewChargeSpeed(float chargeSpeed)
         {
-            if (prevPower == power)
-            {
-                return chargeSpeed;
-            }
-
             if (power == 0)
             {
                 return 0f;

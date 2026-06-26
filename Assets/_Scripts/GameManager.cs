@@ -33,17 +33,28 @@ namespace FTL
             switch (eBattleResult)
             {
                 case EBattleResult.PlayerShipDestroyed:
+                    Debug.Log("Player ship destroyed");
+                    mainUIController.MoveScene(ESceneIndex.GameOver);
+                    break;
                 case EBattleResult.PlayerAllCrewDead:
                     // 게임오버 화면으로
                     // 어떤 Uicontroller인지 몰라도 얘한테 시켜서 게임오버화면으로 이동
                     mainUIController.MoveScene(ESceneIndex.GameOver);
+                    Debug.Log("Player all crew dead.");
                     break;
                 case EBattleResult.EnemyShipDestroyed:
+                    mainUIController.MoveScene(ESceneIndex.BattlePrepare);
+                    Debug.Log("Enemy ship destroyed.");
+                    break;
                 case EBattleResult.EnemyAllCrewDead:
+                    mainUIController.MoveScene(ESceneIndex.BattlePrepare);
+                    Debug.Log("Enemy all crew dead.");
+                    break;
                 case EBattleResult.PlayerRun:
                     // 전투준비 화면으로 이동
                     // 어떤 Uicontroller인지 몰라도 얘한테 시켜서 전투준비화면으로 이동
                     mainUIController.MoveScene(ESceneIndex.BattlePrepare);
+                    Debug.Log("Player run.");
                     break;
                 case EBattleResult.None:
                 default:

@@ -30,6 +30,7 @@ namespace FTL
             maxPower = maxPowerLimit;
             facilityStatus = EFacilityStatus.Normal;
             totalDamage = 0;
+            UpdateFacilityStatus();
         }
 
         public bool CanAddPower(int amount)
@@ -52,6 +53,7 @@ namespace FTL
             {
                 power += amount;
             }
+            UpdateFacilityStatus();
         }
 
         public void ReducePower(int amount)
@@ -62,6 +64,7 @@ namespace FTL
             }
 
             power = Mathf.Max(power - amount, 0);
+            UpdateFacilityStatus();
         }
 
         public virtual void TakeDamage(int amount)
@@ -75,26 +78,6 @@ namespace FTL
             UpdateFacilityStatus();
         }
 
-        public void UpdateFacilityStatus()
-        {
-            if (totalDamage == 0)
-            {
-                facilityStatus = EFacilityStatus.Normal;
-            }
-            else if (totalDamage < maxPowerLimit)
-            {
-                facilityStatus = EFacilityStatus.Damaged;
-            }
-            else if (totalDamage == maxPowerLimit)
-            {
-                facilityStatus = EFacilityStatus.Broked;
-            }
-            else
-            {
-                facilityStatus = EFacilityStatus.Disabled;
-            }
-        }
-
         public void Repair(int amount)
         {
             // TODO: 시설 수리 처리와 상태 복구 규칙을 구체화한다.
@@ -102,6 +85,26 @@ namespace FTL
 
             maxPower = maxPowerLimit - totalDamage;
             UpdateFacilityStatus();
+        }
+
+        public void UpdateFacilityStatus()
+        {
+            if (totalDamage == maxPowerLimit)
+            {
+                facilityStatus = EFacilityStatus.Broked;
+            }
+            else if (totalDamage > 0 && totalDamage < maxPowerLimit)
+            {
+                facilityStatus = EFacilityStatus.Damaged;
+            }
+            else if (power == 0)
+            {
+                facilityStatus = EFacilityStatus.Disabled;
+            }
+            else if (totalDamage == 0)
+            {
+                facilityStatus = EFacilityStatus.Normal;
+            }
         }
 
         public int HandlePowerOverflow()
@@ -112,7 +115,6 @@ namespace FTL
                 return 0;
             }
 
-            UpdateFacilityStatus();
             return overflowAmount;
         }
 

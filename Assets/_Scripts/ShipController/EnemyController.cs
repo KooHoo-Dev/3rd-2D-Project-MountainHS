@@ -27,7 +27,7 @@ namespace FTL
         {
             yield return new WaitForSeconds(seconds);
             GameManager.Instance.HandleBattleResult(EBattleResult.EnemyShipDestroyed);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }
