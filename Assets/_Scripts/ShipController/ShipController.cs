@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utilities;
@@ -9,7 +10,7 @@ using Utilities;
 namespace FTL
 {
     [DefaultExecutionOrder(1000)]
-    public class ShipController : MonoBehaviour, IDamageable
+    public class ShipController : MonoBehaviour, IDamageable, IDeadable
     {
         public bool IsDead => Hp == 0;
         [field: SerializeField] public ShipData ShipData { get; private set; }
@@ -122,11 +123,9 @@ namespace FTL
             powerSystem.TryDeallocatePower(facilityType);
         }
 
-        public IEnumerator DeadCoroutine(float seconds)
+        public virtual IEnumerator DeadCoroutine(float seconds)
         {
-            yield return new WaitForSeconds(seconds);
-            GameManager.Instance.HandleBattleResult(EBattleResult.EnemyShipDestroyed);
-            Destroy(gameObject);
+            yield break;
         }
     }
 }

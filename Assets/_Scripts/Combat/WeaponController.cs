@@ -1,5 +1,3 @@
-using FTL;
-using System;
 using UnityEngine;
 
 namespace FTL
@@ -14,8 +12,6 @@ namespace FTL
         [SerializeField] private GameObject projectilePrefab;
         [SerializeField] private bool isReady;
         [SerializeField] private bool prevIsPowered = false;
-        //[SerializeField] private Vector3 roomTarget;
-        //[SerializeField] private int targetRoomId;
         public SProjectileTargetData TargetData;
 
         private void Awake()
@@ -31,7 +27,9 @@ namespace FTL
             if (IsPowered)
             {
                 if (prevIsPowered == false)
+                {
                     ChargeProgress = 0f;
+                }
 
                 ChargeProgress = Mathf.Min(ChargeProgress + Time.deltaTime, ChargeDuration);
 
@@ -79,8 +77,8 @@ namespace FTL
 
         public void SetRoomTarget(SProjectileTargetData targetData)
         {
-            this.TargetData.TargetPosition = targetData.TargetPosition;
-            this.TargetData.RoomId = targetData.RoomId;
+            TargetData.TargetPosition = targetData.TargetPosition;
+            TargetData.RoomId = targetData.RoomId;
         }
     }
 }

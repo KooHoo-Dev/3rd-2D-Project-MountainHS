@@ -144,5 +144,13 @@ namespace FTL
             Debug.Log($"n:{a}, o:{b}");
             oneShotBool = true;
         }
+
+        public IEnumerator DeadCoroutine(float seconds)
+        {
+            yield return new WaitForSeconds(seconds);
+            GameManager.Instance.HandleBattleResult(EBattleResult.EnemyShipDestroyed);
+            Destroy(gameObject);
+        }
+
     }
 }

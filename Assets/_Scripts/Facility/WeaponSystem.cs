@@ -8,6 +8,8 @@ namespace FTL
         [SerializeField] private List<WeaponController> weapons;
         [SerializeField] private WeaponController selectedWeapon;
         [SerializeField] private SProjectileTargetData targetData;
+        [SerializeField] private MonoBehaviour targetingMono;
+        private ITargeting targetingController;
 
         protected override void Awake()
         {
@@ -15,6 +17,19 @@ namespace FTL
             type = ERoomType.Weapon;
             selectedWeapon = null;
             targetData = new SProjectileTargetData(Vector3.zero, -1);
+            targetingController = targetingMono as ITargeting;
+            //if (targetingController == null)
+            //{
+            //    Debug.LogError("WeaponSystem: TargetingMono does not implement ITargeting interface");
+            //}
+        }
+        private void Start()
+        {
+            WeaponController[] weapons = GetComponentsInChildren<WeaponController>();
+            for (int i = 0; i < weapons.Length; i++)
+            {
+                this.weapons.Add(weapons[i]);
+            }
         }
 
         private void Update()
@@ -30,24 +45,37 @@ namespace FTL
                     weapons[0].IsPowered = false;
             }
 
-            if (CanUpdateWeapon())
+            if (targetingController == null)
             {
-                selectedWeapon.SetRoomTarget(targetData);
-                selectedWeapon = null;
-                targetData = new SProjectileTargetData(Vector3.zero, -1);
-            }
-
-            // 적함선 로직
-            for (int i = 0; i < weapons.Count; i++)
-            {
-                WeaponController weapon = weapons[i];
-                if (weapon.IsPowered &&
-                    weapon.TargetData.IsValid() == false)
+                if (CanUpdateWeapon())
                 {
-                    // 조준 클래스가 조준 정보 리턴
-
+                    selectedWeapon.SetRoomTarget(targetData);
+                    selectedWeapon = null;
+                    targetData = new SProjectileTargetData(Vector3.zero, -1);
                 }
             }
+            else
+            {
+                // 적 무기 시스템은 플레이어 입력을 받지 않고
+                // 랜덤하게 공격을 해야함
+                // for 문으로 무기중 isPowered이면서 목표 방 정보가 없는 무기는
+                // 조준 클래스의 방 정보 제공
+                for (int i = 0; i < weapons.Count; i++)
+                {
+                    WeaponController weapon = weapons[i];
+                    if (weapon.IsPowered &&
+                        weapon.TargetData.IsValid() == false)
+                    {
+                        // 조준 클래스가 조준 정보 리턴
+                        RoomViewer targetRoom = targetingController.GetTarget();
+                        targetData.RoomId = targetRoom.RoomData.RoomId;
+                        targetData.TargetPosition = targetRoom.transform.position;
+
+                        weapon.SetRoomTarget(targetData);
+                    }
+                }
+            }
+
         }
 
         private bool CanUpdateWeapon()

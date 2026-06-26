@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace FTL
 {
-    public class EnemyController: ShipController, IDamageable
+    public class EnemyController: ShipController    
     {
         public void TestAllocateShieldPower()
         {
@@ -13,6 +13,13 @@ namespace FTL
         public void TestDeallocateShieldPower()
         {
             RequestDeallocatePower(ERoomType.Shield);
+        }
+
+        public override IEnumerator DeadCoroutine(float seconds)
+        {
+            yield return new WaitForSeconds(seconds);
+            GameManager.Instance.HandleBattleResult(EBattleResult.EnemyShipDestroyed);
+            Destroy(gameObject);
         }
     }
 }
