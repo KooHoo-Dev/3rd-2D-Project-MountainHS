@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using Utilities;
@@ -33,13 +32,13 @@ namespace FTL
 
     public class ProjectileController : MonoBehaviour
     {
-        public bool IsArrived => transform.position == target;
+        public bool IsArrived => transform.position == Target;
         public int TargetRoomId => targetRoomId;
         [field: SerializeField] public int Damage { get; private set; }
         [SerializeField] private float speed;
         [field: SerializeField] public Collider2D StartCol { get; private set; }
         [SerializeField] private Collider2D endCol;
-        [field: SerializeField] public Vector3 target { get; private set; } = Vector3.zero;
+        [field: SerializeField] public Vector3 Target { get; private set; } = Vector3.zero;
         [SerializeField] private int targetRoomId;
         [SerializeField] private LayerMask shipLayer;
         [SerializeField] private LayerMask shieldLayer;
@@ -71,14 +70,14 @@ namespace FTL
                 if (isAfterStartCol == false)
                     transform.Translate(Vector3.right * speed * Time.deltaTime);
                 else
-                    transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+                    transform.position = Vector3.MoveTowards(transform.position, Target, speed * Time.deltaTime);
             }
         }
         // SetTarget
 
         public void SetTarget(ProjectileTargetData targetData)
         {
-            target = targetData.TargetPosition;
+            Target = targetData.TargetPosition;
             targetRoomId = targetData.RoomId;
         }
 

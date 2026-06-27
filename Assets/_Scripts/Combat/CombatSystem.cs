@@ -70,7 +70,7 @@ namespace FTL
         public bool HandleRoomCollision(ProjectileController projectile)
         {
             ShipController oppenentShipController = projectile.StartCol.CompareTag(Tags.PlayerShip) ? ships[1] : ships[0];
-            ProjectileTargetData targetData = new ProjectileTargetData(projectile.target, projectile.TargetRoomId);
+            ProjectileTargetData targetData = new ProjectileTargetData(projectile.Target, projectile.TargetRoomId);
 
             // 명중 판정 로직 추가 (추후 구현)
             oppenentShipController.TakeDamageToRoom(projectile.Damage, targetData.RoomId);
