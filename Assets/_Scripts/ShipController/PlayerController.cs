@@ -80,19 +80,22 @@ namespace FTL
         {
             Vector3 mousePosition = SimpleInput.GetMousePosition();
             Vector3 worldPoint = Camera.main.ScreenToWorldPoint(mousePosition);
-            if (SimpleInput.GetMouseButtonDown(SimpleInput.MouseButton.Left))
-            {
-                Collider2D[] clickCols = Physics2D.OverlapPointAll(worldPoint, clickableLayer);
-                // 해당 콜라이더가 붙은 오브젝트의 태그를 확인해서 이 콜라이더가 플레이어 영역에 있는지, 적 영역에 있는지 확인
-                CrewController crew = null;
-                Collider2D roomCol = null;
-                EShipSide shipSide = EShipSide.None;
-                Room room = null;
-                int roomId = -1;
-                LayerMask roomLayer = LayerMask.GetMask(Tags.ROOM_LAYER);
-                LayerMask shipLayer = LayerMask.GetMask(Tags.SHIP_LAYER);
-                LayerMask crewLayer = LayerMask.GetMask(Tags.CREW_LAYER);
 
+            Collider2D[] clickCols = Physics2D.OverlapPointAll(worldPoint, clickableLayer);
+            // 해당 콜라이더가 붙은 오브젝트의 태그를 확인해서 이 콜라이더가 플레이어 영역에 있는지, 적 영역에 있는지 확인
+            CrewController crew = null;
+            Collider2D roomCol = null;
+            EShipSide shipSide = EShipSide.None;
+            int roomId = -1;
+            LayerMask roomLayer = LayerMask.GetMask(Tags.ROOM_LAYER);
+            LayerMask shipLayer = LayerMask.GetMask(Tags.SHIP_LAYER);
+            LayerMask crewLayer = LayerMask.GetMask(Tags.CREW_LAYER);
+
+            bool isLeftMouseClick = SimpleInput.GetMouseButtonDown(SimpleInput.MouseButton.Left);
+            bool isRightMouseClick = SimpleInput.GetMouseButtonDown(SimpleInput.MouseButton.Right);
+
+            if (isLeftMouseClick || isRightMouseClick)
+            {
                 foreach (Collider2D col in clickCols)
                 {
                     int colLayer = col.gameObject.layer;
@@ -105,43 +108,49 @@ namespace FTL
                     {
                         shipSide = col.GetComponent<ShipOwnership>().ShipSide;
                         Debug.Log($"Ship Clicked!");
-                    }                           
+                    }
                     else if (crewLayer.Contains(colLayer))
                     {
                         crew = col.GetComponent<CrewController>();
                     }
                 }
 
-                bool isEnemyRoomSelected = roomCol != null
-                    && shipSide != EShipSide.Player
-                    && shipSide != EShipSide.None;
-                if (isEnemyRoomSelected)
+                if (isLeftMouseClick)
                 {
-                    room = CombatSystem.Instance.GetRoomOrNull(shipSide, roomCol.transform.position);
-                    roomId = room.Id;
-                    Vector2 target = roomCol.bounds.center;
-                    ProjectileTargetData targetData = new ProjectileTargetData(target, roomId);
-                    weaponSystem.SetSelectedRoomTarget(targetData);
+
+                    bool isEnemyRoomSelected = roomCol != null
+                        && shipSide != EShipSide.Player
+                        && shipSide != EShipSide.None;
+                    if (isEnemyRoomSelected)
+                    {
+                        Room room = CombatSystem.Instance.GetRoomOrNull(shipSide, roomCol.transform.position);
+                        roomId = room.Id;
+                        Vector2 target = roomCol.bounds.center;
+                        ProjectileTargetData targetData = new ProjectileTargetData(target, roomId);
+                        weaponSystem.SetSelectedRoomTarget(targetData);
+                    }
+
+                    if (crew != null &&
+                        shipSide == EShipSide.Player)
+                    {
+                        crewSystem.AddSelectedCrew(crew);
+                    }
                 }
 
-                if (crew != null &&
-                    shipSide == EShipSide.Player)
+                if (isRightMouseClick)
                 {
-                    crewSystem.AddSelectedCrew(crew);
+                    if (roomCol != null)
+                    {
+                        Room room = GetRoomByPositionOrNull(roomCol.transform.position);
+                        Debug.Log($"Target Room Id: {room.Id}");
+                        crewSystem.SetTargetRoom(room);
+                    }
+                    else
+                    {
+                        crewSystem.ResetSelectedCrews();
+                    }
                 }
             }
-        }
-
-        private void TestOverlapPoint(Collider2D clickCol)
-        {
-            if (oneShotBool2)
-                StartCoroutine(Coroutine2(clickCol));
-        }
-
-        private void TestMousePosition(Vector3 mousePosition)
-        {
-            if (oneShotBool)
-                StartCoroutine(Coroutine1(mousePosition, mousePosition));
         }
 
         private IEnumerator Coroutine2(Collider2D clickCol)
@@ -175,5 +184,18 @@ namespace FTL
             gameObject.SetActive(false);
         }
 
+        #region Test Method
+        private void TestOverlapPoint(Collider2D clickCol)
+        {
+            if (oneShotBool2)
+                StartCoroutine(Coroutine2(clickCol));
+        }
+
+        private void TestMousePosition(Vector3 mousePosition)
+        {
+            if (oneShotBool)
+                StartCoroutine(Coroutine1(mousePosition, mousePosition));
+        }
+        #endregion
     }
 }

@@ -306,6 +306,7 @@ MonoBehaviour:
   <Rooms>k__BackingField: []
   roomPrefab: {fileID: 4957643729303577055, guid: 2363bb96b39eb5645b714a719b2a5a6d, type: 3}
   roomGroupTransform: {fileID: 1294310476}
+  <Crews>k__BackingField: []
 --- !u!114 &194710682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -346,10 +347,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23e39a164126fea4798f11eb0662a193, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.CrewSystem
-  Ship: {fileID: 0}
+  ship: {fileID: 0}
   crews: []
   selectedCrews: []
   isPlayer: 0
+  targetRoom:
+    neighborRoomIds: 
+    <FacilitySystem>k__BackingField: {fileID: 0}
+    <CrewList>k__BackingField: []
+    <Type>k__BackingField: 0
+    <LocalPosition>k__BackingField: {x: 0, y: 0}
+    <GlobalPosition>k__BackingField: {x: 0, y: 0}
+    <MaxCrewCapacity>k__BackingField: 0
+    <Id>k__BackingField: 0
 --- !u!224 &210686066 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8156740593890411459, guid: 7d3deb80250fa8743a224af800aa4c55, type: 3}
@@ -363,9 +373,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 703501533}
     m_Modifications:
+    - target: {fileID: -9013622898134244166, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: offset.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 217437053949938726, guid: 38559d697324fa9438b704eef2851029, type: 3}
       propertyPath: m_Name
       value: Crew (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 217437053949938726, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
       propertyPath: m_LocalPosition.x
@@ -626,6 +644,71 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 273248381}
   m_CullTransparentMesh: 1
+--- !u!1001 &274036392
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 703501533}
+    m_Modifications:
+    - target: {fileID: -9013622898134244166, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: offset.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 217437053949938726, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_Name
+      value: Crew (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 217437053949938726, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 38559d697324fa9438b704eef2851029, type: 3}
 --- !u!1 &298934446
 GameObject:
   m_ObjectHideFlags: 0
@@ -2031,6 +2114,8 @@ Transform:
   m_Children:
   - {fileID: 1487828353998682368}
   - {fileID: 576096121}
+  - {fileID: 1143073791}
+  - {fileID: 1011782294}
   m_Father: {fileID: 1051567088}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &719029605
@@ -3244,6 +3329,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8652320623278072720, guid: 2363bb96b39eb5645b714a719b2a5a6d, type: 3}
   m_PrefabInstance: {fileID: 978746440}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1011782294 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+  m_PrefabInstance: {fileID: 274036392}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1051567087
 GameObject:
   m_ObjectHideFlags: 0
@@ -3307,6 +3397,7 @@ MonoBehaviour:
   <Rooms>k__BackingField: []
   roomPrefab: {fileID: 4957643729303577055, guid: 2363bb96b39eb5645b714a719b2a5a6d, type: 3}
   roomGroupTransform: {fileID: 80255553}
+  <Crews>k__BackingField: []
   clickableLayer:
     serializedVersion: 2
     m_Bits: 328
@@ -3429,10 +3520,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23e39a164126fea4798f11eb0662a193, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.CrewSystem
-  Ship: {fileID: 0}
+  ship: {fileID: 0}
   crews: []
   selectedCrews: []
   isPlayer: 1
+  targetRoom:
+    neighborRoomIds: 
+    <FacilitySystem>k__BackingField: {fileID: 0}
+    <CrewList>k__BackingField: []
+    <Type>k__BackingField: 0
+    <LocalPosition>k__BackingField: {x: 0, y: 0}
+    <GlobalPosition>k__BackingField: {x: 0, y: 0}
+    <MaxCrewCapacity>k__BackingField: 0
+    <Id>k__BackingField: 0
 --- !u!1 &1077214604
 GameObject:
   m_ObjectHideFlags: 0
@@ -3840,6 +3940,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1107992128}
   m_CullTransparentMesh: 1
+--- !u!4 &1143073791 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+  m_PrefabInstance: {fileID: 1983527624}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1166814562 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8652320623278072720, guid: 2363bb96b39eb5645b714a719b2a5a6d, type: 3}
@@ -6447,6 +6552,71 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cad4df13c9620804d9bab6a7faf0fb9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.GameManager
+--- !u!1001 &1983527624
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 703501533}
+    m_Modifications:
+    - target: {fileID: -9013622898134244166, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: offset.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 217437053949938726, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_Name
+      value: Crew (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 217437053949938726, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 220204472454667731, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 38559d697324fa9438b704eef2851029, type: 3}
 --- !u!1 &1993572344
 GameObject:
   m_ObjectHideFlags: 0
@@ -7570,6 +7740,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 703501533}
     m_Modifications:
+    - target: {fileID: -9013622898134244166, guid: 38559d697324fa9438b704eef2851029, type: 3}
+      propertyPath: offset.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 217437053949938726, guid: 38559d697324fa9438b704eef2851029, type: 3}
       propertyPath: m_Name
       value: Crew

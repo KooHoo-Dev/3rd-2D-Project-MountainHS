@@ -26,6 +26,7 @@ namespace FTL
         [SerializeField] private GameObject roomPrefab;
         [SerializeField] private Transform roomGroupTransform;
 
+        [field: SerializeField] public List<CrewController> Crews { get; private set; } = new List<CrewController>();
         protected WeaponSystem weaponSystem;
         protected List<FacilitySystem> facilitySystems = new List<FacilitySystem>() ;
         protected ShipOwnership shipOwnership;
@@ -41,30 +42,44 @@ namespace FTL
 
             shipOwnership = GetComponentInChildren<ShipOwnership>();
 
-            weaponSystem = (WeaponSystem) GetFacilitySystemByERoomType(ERoomType.Weapon);
+            weaponSystem = (WeaponSystem)GetFacilitySystemByERoomType(ERoomType.Weapon);
 
-            InitRoomObjects();
+            InitRooms();
+            InitCrews();
 
-            void InitRoomObjects()
+            void InitRooms()
             {
                 for (int i = 0; i < ShipData.Rooms.Count; i++)
                 {
                     GameObject roomObject = Instantiate(roomPrefab, roomGroupTransform);
                     RoomViewer roomViewer = roomObject.GetComponent<RoomViewer>();
-                    Room roomData = new Room();
+                    Room room = new Room();
                     // RoomData 초기화 함수 생성
-                    roomData.SetRoomData(ShipData.Rooms[i]);
-                    roomObject.transform.localPosition = roomData.LocalPosition;
-                    roomData.GlobalPosition = roomObject.transform.position;
-                    roomViewer.RoomData = roomData;
+                    room.SetRoomData(ShipData.Rooms[i]);
+                    roomObject.transform.localPosition = room.LocalPosition;
+                    room.GlobalPosition = roomObject.transform.position;
+                    roomViewer.Room = room;
                     roomViewer.SetRoomState();
 
-                    if (roomData.Type != ERoomType.Empty)
+                    if (room.Type != ERoomType.Empty)
                     {
-                        roomData.FacilitySystem = GetFacilitySystemByERoomType(roomData.Type);
+                        room.FacilitySystem = GetFacilitySystemByERoomType(room.Type);
                     }
 
-                    Rooms.Add(roomData);
+                    Rooms.Add(room);
+                }
+            }
+
+            void InitCrews()
+            {
+                CrewController[] crews = GetComponentsInChildren<CrewController>();
+                for (int i = 0; i < crews.Length; i++)
+                {
+                    // 승무원 시작 방 하드 코딩
+                    CrewController crew = crews[i];
+                    Room room = Rooms[i];
+                    Crews.Add(crew);
+                    crew.InitStartRoom(room);
                 }
             }
         }
@@ -95,15 +110,15 @@ namespace FTL
             return null;
         }
 
-        //protected Room GetRoomByPositionOrNull(Vector2 position)
-        //{
-        //    for (int i = 0; i < Rooms.Count; i++)
-        //    {
-        //        if (Rooms[i].GlobalPosition == position)
-        //            return Rooms[i];
-        //    }
-        //    return null;
-        //}
+        protected Room GetRoomByPositionOrNull(Vector2 position)
+        {
+            for (int i = 0; i < Rooms.Count; i++)
+            {
+                if (Rooms[i].GlobalPosition == position)
+                    return Rooms[i];
+            }
+            return null;
+        }
 
         public FacilitySystem GetFacilitySystemByERoomType(ERoomType roomType)
         {

@@ -18,29 +18,39 @@ MonoBehaviour:
     <Type>k__BackingField: -1
     <LocalPosition>k__BackingField: {x: 2, y: 0}
     <GlobalPosition>k__BackingField: {x: 0, y: 0}
-    <FacilitySystem>k__BackingField: {fileID: 0}
+    <MaxCrewCapacity>k__BackingField: 2
+    <CurrentCrewCount>k__BackingField: 0
     neighborRoomIds: 02000000
+    <FacilitySystem>k__BackingField: {fileID: 0}
   - <Id>k__BackingField: 2
     <Type>k__BackingField: 0
     <LocalPosition>k__BackingField: {x: 1, y: 0}
     <GlobalPosition>k__BackingField: {x: 0, y: 0}
-    <FacilitySystem>k__BackingField: {fileID: 0}
+    <MaxCrewCapacity>k__BackingField: 2
+    <CurrentCrewCount>k__BackingField: 0
     neighborRoomIds: 0100000003000000
+    <FacilitySystem>k__BackingField: {fileID: 0}
   - <Id>k__BackingField: 3
     <Type>k__BackingField: 2
     <LocalPosition>k__BackingField: {x: 0, y: 0}
     <GlobalPosition>k__BackingField: {x: 0, y: 0}
-    <FacilitySystem>k__BackingField: {fileID: 0}
+    <MaxCrewCapacity>k__BackingField: 2
+    <CurrentCrewCount>k__BackingField: 0
     neighborRoomIds: 0200000004000000
+    <FacilitySystem>k__BackingField: {fileID: 0}
   - <Id>k__BackingField: 4
     <Type>k__BackingField: -1
     <LocalPosition>k__BackingField: {x: -1, y: 0}
     <GlobalPosition>k__BackingField: {x: 0, y: 0}
-    <FacilitySystem>k__BackingField: {fileID: 0}
+    <MaxCrewCapacity>k__BackingField: 2
+    <CurrentCrewCount>k__BackingField: 0
     neighborRoomIds: 0300000005000000
+    <FacilitySystem>k__BackingField: {fileID: 0}
   - <Id>k__BackingField: 5
     <Type>k__BackingField: 1
     <LocalPosition>k__BackingField: {x: -2, y: 0}
     <GlobalPosition>k__BackingField: {x: 0, y: 0}
-    <FacilitySystem>k__BackingField: {fileID: 0}
+    <MaxCrewCapacity>k__BackingField: 2
+    <CurrentCrewCount>k__BackingField: 0
     neighborRoomIds: 04000000
+    <FacilitySystem>k__BackingField: {fileID: 0}

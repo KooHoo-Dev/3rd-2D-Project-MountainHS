@@ -17,7 +17,7 @@ namespace FTL
             List<Room> rooms = shipController.Rooms;
             for (int i = 0; i < rooms.Count; i++)
             {
-                roomViewers[i].RoomData = rooms[i];
+                roomViewers[i].Room = rooms[i];
                 roomViewers[i].SetRoomState();
             }
         }
