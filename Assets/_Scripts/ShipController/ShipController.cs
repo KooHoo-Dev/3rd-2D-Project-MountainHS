@@ -13,24 +13,29 @@ namespace FTL
     public class ShipController : MonoBehaviour, IDamageable, IDeadable
     {
         public bool IsDead => Hp == 0;
+        [Header("Ship Data")]
         [field: SerializeField] public ShipData ShipData { get; private set; }
 
-        [Header("Ship Hp")]
         [field: SerializeField] public int Hp { get; private set; }
 
         [Header("Power System")]
         [SerializeField] protected ShipPowerController powerSystem;
 
         [Header("Room")]
-        [field: SerializeField] public List<Room> Rooms { get; private set; } = new List<Room>();
         [SerializeField] private GameObject roomPrefab;
         [SerializeField] private Transform roomGroupTransform;
+        [field: SerializeField] public List<Room> Rooms { get; private set; } = new List<Room>();
 
-        [field: SerializeField] public List<CrewController> Crews { get; private set; } = new List<CrewController>();
-        protected WeaponSystem weaponSystem;
+        [Header("Crew")]
+        [SerializeField] private Transform crewGroupTransform;
+        [SerializeField] private GameObject crewPrefab;
+        [SerializeField] protected int crewCount = 3;
+
+        public List<CrewController> Crews { get; private set; } = new List<CrewController>();
         protected List<FacilitySystem> facilitySystems = new List<FacilitySystem>() ;
-        protected ShipOwnership shipOwnership;
         protected CrewSystem crewSystem;
+        protected WeaponSystem weaponSystem;
+        protected ShipOwnership shipOwnership;
 
         protected virtual void Awake()
         {
@@ -72,14 +77,20 @@ namespace FTL
 
             void InitCrews()
             {
-                CrewController[] crews = GetComponentsInChildren<CrewController>();
-                for (int i = 0; i < crews.Length; i++)
+                //CrewController[] crews = GetComponentsInChildren<CrewController>();
+                for (int i = 0; i < crewCount; i++)
                 {
                     // 승무원 시작 방 하드 코딩
-                    CrewController crew = crews[i];
+                    //CrewController crew = crews[i];
+                    //Room room = Rooms[i];
+                    //Crews.Add(crew);
+                    //crew.InitStartRoom(room);
+
+                    GameObject crewObject = Instantiate(crewPrefab, crewGroupTransform);
+                    CrewController crew = crewObject.GetComponent<CrewController>();
                     Room room = Rooms[i];
-                    Crews.Add(crew);
                     crew.InitStartRoom(room);
+                    Crews.Add(crew);
                 }
             }
         }

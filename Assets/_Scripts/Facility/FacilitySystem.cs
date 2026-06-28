@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace FTL
@@ -13,14 +14,14 @@ namespace FTL
         public int Power => power;
         public int TotalDamage => totalDamage;
         public bool IsPowered => power > 0;
-
+        [field: SerializeField] public float RepairDuration { get; set; } = 7.5f;
+        [field: SerializeField] public float RepairProgress { get; set; } = 0f;
         [SerializeField] protected ERoomType type;
-        //[SerializeField] protected int maxHp;
-        //[SerializeField] protected int hp;
         [SerializeField] protected int maxPowerLimit = 3;
         [SerializeField] protected int maxPower;
         [SerializeField] protected int power;
         [SerializeField] protected int totalDamage;
+        [SerializeField] protected bool isAssisted = false;
         protected EFacilityStatus facilityStatus;
 
         protected virtual void Awake()
@@ -69,7 +70,6 @@ namespace FTL
 
         public virtual void TakeDamage(int amount)
         {
-            // TODO: 시설 피해 처리와 상태 변경 규칙을 구체화한다.
             int newDamage = totalDamage + amount;
             newDamage = Mathf.Min(newDamage, maxPowerLimit);
             totalDamage = newDamage;
@@ -80,7 +80,6 @@ namespace FTL
 
         public void Repair(int amount)
         {
-            // TODO: 시설 수리 처리와 상태 복구 규칙을 구체화한다.
             totalDamage = Mathf.Max(totalDamage-amount, 0);
 
             maxPower = maxPowerLimit - totalDamage;
@@ -118,5 +117,38 @@ namespace FTL
             return overflowAmount;
         }
 
+        public virtual void ApplyCrewAssistEffect(bool isApplied)
+        {
+            if (isApplied != isAssisted)
+                Debug.Log($"Apply crew assist! in {this}! before: {isAssisted} after: {isApplied}");
+            isAssisted = isApplied;
+        }
+
+        #region Context Menu Test Function
+        [ContextMenu("Add Power")]
+        public void TestAddPower()
+        {
+            // TODO: 전력 변경 검증 및 변경 후 시설별 효과 갱신 호출을 구체화한다.
+            AddPower(1);
+        }
+
+        [ContextMenu("Reduce Power")]
+        public void TestReducePower()
+        {
+            ReducePower(1);
+        }
+
+        [ContextMenu("Take Damage")]
+        public void TestTakeDamage()
+        {
+            TakeDamage(1);
+        }
+
+        [ContextMenu("Repair")]
+        public void TestRepair()
+        {
+            Repair(1);
+        }
+        #endregion
     }
 }

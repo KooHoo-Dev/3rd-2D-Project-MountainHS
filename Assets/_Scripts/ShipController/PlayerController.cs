@@ -188,13 +188,17 @@ namespace FTL
         private void TestOverlapPoint(Collider2D clickCol)
         {
             if (oneShotBool2)
+            {
                 StartCoroutine(Coroutine2(clickCol));
+            }
         }
 
         private void TestMousePosition(Vector3 mousePosition)
         {
             if (oneShotBool)
+            {
                 StartCoroutine(Coroutine1(mousePosition, mousePosition));
+            }
         }
         #endregion
     }

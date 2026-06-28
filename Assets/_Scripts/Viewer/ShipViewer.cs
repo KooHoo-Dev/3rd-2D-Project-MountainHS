@@ -19,7 +19,16 @@ namespace FTL
         private static FieldInfo neighborRoomIdsField;
         private readonly List<LineRenderer> roomConnectionLines = new List<LineRenderer>();
         private Material roomConnectionMaterial;
+        private GameObject tempLineGroup;
 
+        private void Awake()
+        {
+            if (showRoomConnections)
+            {
+                tempLineGroup = new GameObject("Line Group");
+                tempLineGroup.transform.SetParent(transform, false);
+            }
+        }
         private void Start()
         {
             roomViewers = GetComponentsInChildren<RoomViewer>();
@@ -39,6 +48,7 @@ namespace FTL
             ClearRoomConnectionLines();
         }
 
+        #region Room Connection Visualize
         private void OnDrawGizmos()
         {
             if (showRoomConnections == false)
@@ -99,7 +109,7 @@ namespace FTL
         private LineRenderer CreateRoomConnectionLineRenderer()
         {
             GameObject lineObject = new GameObject("Room Connection Line");
-            lineObject.transform.SetParent(transform, false);
+            lineObject.transform.SetParent(tempLineGroup.transform, false);
 
             LineRenderer lineRenderer = lineObject.AddComponent<LineRenderer>();
             lineRenderer.positionCount = 2;
@@ -183,6 +193,25 @@ namespace FTL
             return shipController.ShipData.Rooms;
         }
 
+
+        private bool IsConnectionAlreadyDrawn(List<Room> rooms, int roomIndex, int neighborRoomId)
+        {
+            Room room = rooms[roomIndex];
+            for (int i = 0; i < roomIndex; i++)
+            {
+                Room previousRoom = rooms[i];
+                if (previousRoom.Id != neighborRoomId)
+                    continue;
+
+                List<int> previousNeighborRoomIds = GetNeighborRoomIds(previousRoom);
+                if (ContainsRoomId(previousNeighborRoomIds, room.Id))
+                    return true;
+            }
+
+            return false;
+        }
+        #endregion
+
         private Vector3 GetRoomLocalPosition(Room room)
         {
             Vector3 worldPosition = GetRoomWorldPosition(room);
@@ -212,23 +241,6 @@ namespace FTL
             }
 
             return null;
-        }
-
-        private bool IsConnectionAlreadyDrawn(List<Room> rooms, int roomIndex, int neighborRoomId)
-        {
-            Room room = rooms[roomIndex];
-            for (int i = 0; i < roomIndex; i++)
-            {
-                Room previousRoom = rooms[i];
-                if (previousRoom.Id != neighborRoomId)
-                    continue;
-
-                List<int> previousNeighborRoomIds = GetNeighborRoomIds(previousRoom);
-                if (ContainsRoomId(previousNeighborRoomIds, room.Id))
-                    return true;
-            }
-
-            return false;
         }
 
         private bool ContainsRoomId(List<int> roomIds, int roomId)

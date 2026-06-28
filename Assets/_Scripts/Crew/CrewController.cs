@@ -12,36 +12,17 @@ namespace FTL
         public bool IsSelected { get; set; } = false;
         [SerializeField] private Vector3 offset = new Vector3(0f, 0.5f, 0f);
         [SerializeField] private float moveSpeed = 3f;
-        [SerializeField] private float repairDuration = 7.5f;
-        [SerializeField] private float repairProgress = 0f;
-        private ECrewStatus crewStatus = ECrewStatus.Idle;
-
+        [SerializeField] private ECrewStatus crewStatus = ECrewStatus.Idle;
 
         private void Update()
         {
-            MoveToTargetRoom();
             UpdateCrewStatus();
-        }
-
-        public void MoveToTargetRoom()
-        {
-            if (TargetRoom?.IsUnintialized() == false)
-            {
-                if ((Vector2)transform.position == TargetRoom.GlobalPosition)
-                {
-                    crewStatus = ECrewStatus.Idle;
-                    TargetRoom = null;
-                }
-                else
-                {
-                    Vector3 targetPosition = TargetRoom.GlobalPosition + (Vector2)(offset * (TargetRoom.CrewList.IndexOf(this)));
-                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-                }
-            }
+            HandleStatus();
         }
 
         public void SetTargetRoom(Room room)
         {
+            AssistFacility(false);
             TargetRoom = room;
             CurrentRoom.ReduceCrew(this);
             TargetRoom.AddCrew(this);
@@ -56,24 +37,27 @@ namespace FTL
             transform.position = room.GlobalPosition;
         }
 
-        public void UpdateCrewStatus()
+        private void UpdateCrewStatus()
         {
-            if (crewStatus == ECrewStatus.Idle)
+            if (crewStatus != ECrewStatus.Moving)
             {
                 FacilitySystem facility = CurrentRoom.FacilitySystem;
-                if (facility != null)
+                if (CurrentRoom.HasFacility)
                 {
                     switch (facility.FacilityStatus)
                     {
                         case EFacilityStatus.Damaged:
                         case EFacilityStatus.Broked:
                             crewStatus = ECrewStatus.Repair;
-                            RepairFacility();
+                            //RepairFacility();
                             break;
                         case EFacilityStatus.Normal:
                             crewStatus = ECrewStatus.Assisting;
-                            AssistFacility();
+                            //AssistFacility();
                             // 시설 보조 로직
+                            break;
+                        case EFacilityStatus.Disabled:
+                            crewStatus = ECrewStatus.Idle;
                             break;
                         default:
                             Debug.LogWarning($"CrewController: UpdateStatus: Unexpected facility status {facility.FacilityStatus} in room {CurrentRoom.Id}");
@@ -83,14 +67,56 @@ namespace FTL
             }
         }
 
-        private void RepairFacility()
+        private void RepairFacilityInRoom()
         {
-            
+            CurrentRoom.RepairFacility();
         }
 
-        private void AssistFacility()
+        private void AssistFacility(bool isAssist)
         {
-
+            if (CurrentRoom.HasFacility)
+                CurrentRoom.ApplyAssistEffectOnFacility(isAssist);
         }
+
+        private void MoveToTargetRoom()
+        {
+            if (TargetRoom?.IsUnintialized() == false)
+            {
+                if (transform.position.x == TargetRoom.GlobalPosition.x)
+                {
+                    crewStatus = ECrewStatus.Idle;
+                    TargetRoom = null;
+                }
+                else
+                {
+                    Vector3 targetPosition = TargetRoom.GlobalPosition + (Vector2)(offset * (TargetRoom.CrewList.IndexOf(this)));
+                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+                }
+            }
+        }
+
+        private void HandleStatus()
+        {
+            switch (crewStatus)
+            {
+                case ECrewStatus.Moving:
+                    AssistFacility(false);
+                    MoveToTargetRoom();
+                    break;
+                case ECrewStatus.Idle:
+                    AssistFacility(false);
+                    break;
+                case ECrewStatus.Repair:
+                    AssistFacility(false);
+                    RepairFacilityInRoom();
+                    break;
+                case ECrewStatus.Assisting:
+                    AssistFacility(true);
+                    break;
+                default:
+                    break;
+            }
+        }
+
     }
 }

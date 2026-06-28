@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace FTL
@@ -41,6 +43,25 @@ namespace FTL
             }
 
             CrewList.Remove(crew);
+        }
+
+        public void RepairFacility()
+        {
+            float repairDuration = FacilitySystem.RepairDuration;
+            float newRepairProgress = FacilitySystem.RepairProgress;
+            newRepairProgress = Mathf.Min(repairDuration, newRepairProgress + Time.deltaTime);
+
+            if (newRepairProgress == repairDuration)
+            {
+                FacilitySystem.Repair(1);
+                newRepairProgress = 0f;
+            }
+            FacilitySystem.RepairProgress = newRepairProgress;
+        }
+
+        public void ApplyAssistEffectOnFacility(bool isApplied)
+        {
+            FacilitySystem.ApplyCrewAssistEffect(isApplied);
         }
 
         [field: SerializeField] private List<int> neighborRoomIds;
