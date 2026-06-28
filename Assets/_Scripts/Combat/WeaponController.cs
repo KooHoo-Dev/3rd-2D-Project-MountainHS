@@ -94,5 +94,19 @@ namespace FTL
             TargetData.RoomId = targetData.RoomId;
         }
 
+        public void ApplyAssistEffectOnWeapon(bool isApplied)
+        {
+            if (IsAssisted != isApplied)
+            {
+                if (isApplied == true)
+                {
+                    float currentRate = chargeProgress / GetRealChargeDuration();
+                    chargeProgress = Mathf.Lerp(0f, chargeDuration, currentRate);
+                }
+                IsAssisted = isApplied;
+                chargeProgress = Mathf.Min(chargeProgress, GetRealChargeDuration());
+            }
+        }
+
     }
 }

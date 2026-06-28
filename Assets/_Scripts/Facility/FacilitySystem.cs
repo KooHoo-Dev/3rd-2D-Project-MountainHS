@@ -14,7 +14,7 @@ namespace FTL
         public bool IsPowered => power > 0;
         [field: SerializeField] public float RepairDuration { get; set; } = 7.5f;
         [field: SerializeField] public float RepairProgress { get; set; } = 0f;
-        [field: SerializeField] public bool IsAssisted { get; private set; } = false;
+        [field: SerializeField] public bool IsAssisted { get; protected set; } = false;
         [SerializeField] protected ERoomType type;
         [SerializeField] protected int maxPowerLimit = 3;
         [SerializeField] protected int maxPower;
@@ -112,11 +112,13 @@ namespace FTL
             return overflowAmount;
         }
 
-        public virtual void ApplyCrewAssistEffect(bool isApplied)
+        public virtual void ApplyAssistEffectOnFacility(bool isApplied)
         {
             if (isApplied != IsAssisted)
+            {
                 Debug.Log($"Apply crew assist! in {this}! before: {IsAssisted} after: {isApplied}");
-            IsAssisted = isApplied;
+                IsAssisted = isApplied;
+            }
         }
 
         #region Context Menu Test Function

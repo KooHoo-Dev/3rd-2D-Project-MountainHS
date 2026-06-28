@@ -120,12 +120,12 @@ namespace FTL
             selectedWeapon = null;
         }
 
-        public override void ApplyCrewAssistEffect(bool isApplied)
+        public override void ApplyAssistEffectOnFacility(bool isApplied)
         {
-            base.ApplyCrewAssistEffect(isApplied);
+            base.ApplyAssistEffectOnFacility(isApplied);
             for (int i = 0; i < weapons.Count; i++)
             {
-                weapons[i].IsAssisted = isApplied;
+                weapons[i].ApplyAssistEffectOnWeapon(isApplied);
             }
         }
     }

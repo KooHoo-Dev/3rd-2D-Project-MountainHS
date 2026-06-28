@@ -45,7 +45,7 @@ namespace FTL
             if (shieldCount < maxShield)
             {
                 chargeProgress += Time.deltaTime;
-                if (chargeProgress >= ChargeDuration)
+                if (chargeProgress >= GetRealChargeDuration())
                 {
                     chargeProgress = 0f;
                     shieldCount++;
@@ -78,6 +78,20 @@ namespace FTL
         public override void TakeDamage(int amount)
         {
             base.TakeDamage(amount);
+        }
+
+        public override void ApplyAssistEffectOnFacility(bool isApplied)
+        {
+            if (IsAssisted != isApplied)
+            {
+                if (isApplied == true)
+                {
+                    float currentRate = chargeProgress / GetRealChargeDuration();
+                    chargeProgress = Mathf.Lerp(0f, chargeDuration, currentRate);
+                }
+                IsAssisted = isApplied;
+                chargeProgress = Mathf.Min(chargeProgress, GetRealChargeDuration());
+            }
         }
 
         public void TakeDamageToShield()
