@@ -14,17 +14,18 @@ namespace FTL
         public bool IsPowered => power > 0;
         [field: SerializeField] public float RepairDuration { get; set; } = 7.5f;
         [field: SerializeField] public float RepairProgress { get; set; } = 0f;
+        [field: SerializeField] public bool IsAssisted { get; private set; } = false;
         [SerializeField] protected ERoomType type;
         [SerializeField] protected int maxPowerLimit = 3;
         [SerializeField] protected int maxPower;
         [SerializeField] protected int power;
         [SerializeField] protected int totalDamage;
-        [SerializeField] protected bool isAssisted = false;
         protected EFacilityStatus facilityStatus;
 
         protected virtual void Awake()
         {
             //hp = maxHp;
+            IsAssisted = false;
             power = 0;
             maxPower = maxPowerLimit;
             facilityStatus = EFacilityStatus.Normal;
@@ -113,9 +114,9 @@ namespace FTL
 
         public virtual void ApplyCrewAssistEffect(bool isApplied)
         {
-            if (isApplied != isAssisted)
-                Debug.Log($"Apply crew assist! in {this}! before: {isAssisted} after: {isApplied}");
-            isAssisted = isApplied;
+            if (isApplied != IsAssisted)
+                Debug.Log($"Apply crew assist! in {this}! before: {IsAssisted} after: {isApplied}");
+            IsAssisted = isApplied;
         }
 
         #region Context Menu Test Function

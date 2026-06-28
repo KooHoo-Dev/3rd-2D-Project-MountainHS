@@ -1,15 +1,17 @@
+using System;
 using UnityEngine;
 
 namespace FTL
 {
     public class ShieldSystem : FacilitySystem
     {
-        public const int maxShieldLimit = 4;
+        private const int MAX_SHIELD_LIMIT = 4;
+        private const float CHARGE_DURATION_ASSIST_MULTIPLIER = 0.75f;
 
-        public int MaxShieldLimit => maxShieldLimit;
+        public int MaxShieldLimit => MAX_SHIELD_LIMIT;
         public int MaxShield => maxShield;
         public int ShieldCount => shieldCount;
-        public float ChargeDuration => chargeDuration;
+        public float ChargeDuration => GetRealChargeDuration();
         public float ChargeProgress => chargeProgress;
 
         [Header("Shield")]
@@ -43,7 +45,7 @@ namespace FTL
             if (shieldCount < maxShield)
             {
                 chargeProgress += Time.deltaTime;
-                if (chargeProgress >= chargeDuration)
+                if (chargeProgress >= ChargeDuration)
                 {
                     chargeProgress = 0f;
                     shieldCount++;
@@ -57,6 +59,11 @@ namespace FTL
             {
                 chargeProgress = 0f;
             }
+        }
+
+        private float GetRealChargeDuration()
+        {
+            return chargeDuration * (IsAssisted ? CHARGE_DURATION_ASSIST_MULTIPLIER : 1f);
         }
 
         /// <summary>
@@ -83,5 +90,7 @@ namespace FTL
 
             shieldCount--;
         }
+
+
     }
 }

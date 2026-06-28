@@ -10,6 +10,7 @@ namespace FTL
         [SerializeField] private GameObject jumpButton;
         [SerializeField] private EngineSystem engineSystem;
         [SerializeField] private Image jumpProgressBar;
+        [SerializeField] private Image assistImage;
 
         private void Awake()
         {
@@ -24,8 +25,8 @@ namespace FTL
 
             bool UpdateChargeBar()
             {
-                float escapeChargeProgress = engineSystem.EscapeChargeProgress;
-                float escapeChargeDuration = engineSystem.EscapeChargeTime;
+                float escapeChargeProgress = engineSystem.ChargeProgress;
+                float escapeChargeDuration = engineSystem.ChargeDuration;
                 float escapeChargeRate = escapeChargeProgress / escapeChargeDuration;
                 bool canJump = engineSystem.CanEscape;
 
@@ -46,6 +47,7 @@ namespace FTL
                     jumpButton.SetActive(false);
                 }
             }
+
         }
     }
 }

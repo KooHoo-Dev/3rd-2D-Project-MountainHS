@@ -4,12 +4,14 @@ namespace FTL
 {
     public class EngineSystem : FacilitySystem
     {
-        public float EscapeChargeProgress => escapeChargeProgress;
-        public float EscapeChargeTime => escapeChargeDuration;
+        private const float CHARGE_SPEED_ASSIST_MULTIPLIER = 1.2f;
+
+        public float ChargeProgress => chargeProgress;
+        public float ChargeDuration => chargeDuration;
         public bool CanEscape => canEscape;
 
-        [SerializeField] private float escapeChargeProgress;
-        [SerializeField] private float escapeChargeDuration = 90f;
+        [SerializeField] private float chargeProgress;
+        [SerializeField] private float chargeDuration = 90f;
         [SerializeField] private bool canEscape;
         [SerializeField] private int prevPower;
         [SerializeField] private float chargeSpeed = 1f;
@@ -29,7 +31,7 @@ namespace FTL
 
         private void UpdateCanEscape()
         {
-            if (escapeChargeProgress == escapeChargeDuration)
+            if (ChargeProgress == chargeDuration)
             {
                 canEscape = true;
             }
@@ -41,20 +43,16 @@ namespace FTL
 
         public void UpdateEscapeCharge()
         {
-            // TODO: 현재 전력에 따른 도망 준비 충전 규칙을 구체화한다.
             if (power == 0)
             {
-                escapeChargeProgress = 0f;
+                chargeProgress = 0f;
                 return;
             }
 
             chargeSpeed = GetNewChargeSpeed(chargeSpeed);
 
-            escapeChargeProgress += Time.deltaTime * chargeSpeed;
-            if (escapeChargeProgress >= escapeChargeDuration)
-            {
-                escapeChargeProgress = escapeChargeDuration;
-            }
+            chargeProgress += Time.deltaTime * chargeSpeed;
+            chargeProgress = Mathf.Min(chargeProgress, chargeDuration);
         }
 
         private float GetNewChargeSpeed(float chargeSpeed)
@@ -64,7 +62,8 @@ namespace FTL
                 return 0f;
             }
 
-            return 1 + 0.5f * (power - 1);
+            return (1 + 0.5f * (power - 1)) 
+                * (IsAssisted ? CHARGE_SPEED_ASSIST_MULTIPLIER : 1f);
         }
     }
 }

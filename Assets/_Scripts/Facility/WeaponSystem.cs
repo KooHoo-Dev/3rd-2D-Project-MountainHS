@@ -29,25 +29,13 @@ namespace FTL
 
         private void Update()
         {
-            // 무기 시스템 전력 상태에 따라 무기 활성화 상태 변화
-            if (weapons.Count > 0)
-            {
-                if (IsPowered)
-                {
-                    for (int i = 0; i < weapons.Count; i++)
-                    {
-                        weapons[i].IsPowered = true;
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < weapons.Count; i++)
-                    {
-                        weapons[i].IsPowered = false;
-                    }
-                }
-            }
+            UpdateWeaponActivation();
 
+            UpdateWeaponTargeting();
+        }
+
+        private void UpdateWeaponTargeting()
+        {
             if (TargetingSystem == null)
             {
                 if (CanUpdateWeapon())
@@ -78,7 +66,28 @@ namespace FTL
                     }
                 }
             }
+        }
 
+        private void UpdateWeaponActivation()
+        {
+            // 무기 시스템 전력 상태에 따라 무기 활성화 상태 변화
+            if (weapons.Count > 0)
+            {
+                if (IsPowered)
+                {
+                    for (int i = 0; i < weapons.Count; i++)
+                    {
+                        weapons[i].IsPowered = true;
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < weapons.Count; i++)
+                    {
+                        weapons[i].IsPowered = false;
+                    }
+                }
+            }
         }
 
         private bool CanUpdateWeapon()
@@ -109,6 +118,15 @@ namespace FTL
         public void ResetSelectedWeapon()
         {
             selectedWeapon = null;
+        }
+
+        public override void ApplyCrewAssistEffect(bool isApplied)
+        {
+            base.ApplyCrewAssistEffect(isApplied);
+            for (int i = 0; i < weapons.Count; i++)
+            {
+                weapons[i].IsAssisted = isApplied;
+            }
         }
     }
 }

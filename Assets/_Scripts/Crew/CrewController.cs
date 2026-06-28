@@ -39,14 +39,12 @@ namespace FTL
 
         private void UpdateCrewStatus()
         {
-            bool isMoving = crewStatus == ECrewStatus.Moving;
-            if (isMoving)
+            if (crewStatus == ECrewStatus.Moving)
             {
                 return;
             }
 
-            bool hasFacility = CurrentRoom.HasFacility;
-            if (hasFacility == false)
+            if (CurrentRoom.HasFacility == false)
             {
                 return;
             }

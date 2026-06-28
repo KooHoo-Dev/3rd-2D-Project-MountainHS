@@ -1,22 +1,31 @@
+using System;
 using UnityEngine;
 
 namespace FTL
 {
     public class WeaponController : MonoBehaviour
     {
+        private const float CHARGE_DURATION_ASSIST_MULTIPLIER = 0.75f;
+
         public bool IsReady => isReady;
         public bool IsPowered { set; get; } = false;
-        [field: SerializeField] public float ChargeProgress { get; private set; } = 0f;
+        public float ChargeProgress => chargeProgress;
+        public float ChargeDuration => GetRealChargeDuration();
 
-        [field: SerializeField] public float ChargeDuration { get; private set; } = 7f;
+        [SerializeField] private float chargeProgress = 0f;
+
+        [SerializeField] private float chargeDuration = 7f;
+
         [SerializeField] private GameObject projectilePrefab;
         [SerializeField] private bool isReady;
         [SerializeField] private bool prevIsPowered = false;
+        [field: SerializeField] public bool IsAssisted { get; set; }
         public ProjectileTargetData TargetData;
 
         private void Awake()
         {
             isReady = false;
+            IsAssisted = false;
             IsPowered = false;
             TargetData.TargetPosition = Vector3.zero;
             TargetData.RoomId = -1;
@@ -28,17 +37,16 @@ namespace FTL
             {
                 if (prevIsPowered == false)
                 {
-                    ChargeProgress = 0f;
+                    chargeProgress = 0f;
                 }
 
-                ChargeProgress = Mathf.Min(ChargeProgress + Time.deltaTime, ChargeDuration);
-
+                chargeProgress = Mathf.Min(chargeProgress + Time.deltaTime, GetRealChargeDuration());
                 // chargeSprites에 있는 스프라이트 수 - 1만큼 간격 검증
             }
             else
             {
                 isReady = false;
-                ChargeProgress = 0f;
+                chargeProgress = 0f;
             }
 
             UpdateIsReady();
@@ -52,10 +60,15 @@ namespace FTL
                 projectileController.SetTarget(TargetData);
                 projectile.transform.rotation = transform.rotation;
                 TargetData.Reset();
-                ChargeProgress = 0f;
+                chargeProgress = 0f;
             }
 
             prevIsPowered = IsPowered;
+        }
+
+        private float GetRealChargeDuration()
+        {
+            return IsAssisted ? chargeDuration * CHARGE_DURATION_ASSIST_MULTIPLIER : chargeDuration;
         }
 
         private bool IsReadyToFire()
@@ -65,7 +78,7 @@ namespace FTL
 
         private void UpdateIsReady()
         {
-            if (ChargeProgress == ChargeDuration)
+            if (chargeProgress == GetRealChargeDuration())
             {
                 isReady = true;
             }
@@ -80,5 +93,6 @@ namespace FTL
             TargetData.TargetPosition = targetData.TargetPosition;
             TargetData.RoomId = targetData.RoomId;
         }
+
     }
 }
