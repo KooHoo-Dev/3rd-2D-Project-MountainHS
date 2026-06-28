@@ -318,7 +318,7 @@ MonoBehaviour:
   <Rooms>k__BackingField: []
   crewGroupTransform: {fileID: 1382025813}
   crewPrefab: {fileID: 217437053949938726, guid: 38559d697324fa9438b704eef2851029, type: 3}
-  crewCount: 0
+  crewCount: 1
 --- !u!114 &194710682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -363,14 +363,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23e39a164126fea4798f11eb0662a193, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.CrewSystem
-  ship: {fileID: 0}
+  ship: {fileID: 194710680}
   crews: []
   selectedCrews: []
   isPlayer: 0
   targetRoom:
     neighborRoomIds: 
     <FacilitySystem>k__BackingField: {fileID: 0}
-    <CrewList>k__BackingField: []
+    <Crews>k__BackingField: []
     <Type>k__BackingField: 0
     <LocalPosition>k__BackingField: {x: 0, y: 0}
     <GlobalPosition>k__BackingField: {x: 0, y: 0}
@@ -3576,14 +3576,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23e39a164126fea4798f11eb0662a193, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.CrewSystem
-  ship: {fileID: 0}
+  ship: {fileID: 1051567089}
   crews: []
   selectedCrews: []
   isPlayer: 1
   targetRoom:
     neighborRoomIds: 
     <FacilitySystem>k__BackingField: {fileID: 0}
-    <CrewList>k__BackingField: []
+    <Crews>k__BackingField: []
     <Type>k__BackingField: 0
     <LocalPosition>k__BackingField: {x: 0, y: 0}
     <GlobalPosition>k__BackingField: {x: 0, y: 0}

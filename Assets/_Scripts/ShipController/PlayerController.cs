@@ -18,7 +18,7 @@ namespace FTL
 
         private void Start()
         {
-            shipOwnership.ShipSide = EShipSide.Player;
+            Ownership.ShipSide = EShipSide.Player;
         }
 
         private void Update()

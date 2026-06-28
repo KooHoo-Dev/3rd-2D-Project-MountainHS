@@ -35,6 +35,7 @@ namespace FTL
         public bool IsArrived => transform.position == Target;
         public int TargetRoomId => targetRoomId;
         [field: SerializeField] public int Damage { get; private set; }
+        [field: SerializeField] public int CrewDamage { get; private set; }
         [SerializeField] private float speed;
         [field: SerializeField] public Collider2D StartCol { get; private set; }
         [SerializeField] private Collider2D endCol;

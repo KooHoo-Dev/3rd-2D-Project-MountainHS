@@ -5,15 +5,22 @@ namespace FTL
 {
     public class CrewController : MonoBehaviour
     {
+        public bool IsSelected { get; set; } = false;
+        public bool IsDead => Hp == 0;
         [field: SerializeField] public Room CurrentRoom { get; set; } = null;
         [field: SerializeField] public Room TargetRoom { get; private set; } = null;
-        public int Hp { get; set; }
-        public string Name { get; set; }
-        public bool IsSelected { get; set; } = false;
+        [field: SerializeField] public int MaxHp { get; set; } = 100;
+        [field: SerializeField] public int Hp { get; set; } = 0;
+        [field: SerializeField] public string Name { get; set; } = "Hans";
         [SerializeField] private ECrewStatus crewStatus = ECrewStatus.Idle;
         [SerializeField] private Vector3 offset = new Vector3(0f, 0.5f, 0f);
         [SerializeField] private float moveSpeed = 3f;
+        public CrewSystem CrewSystem { set; get; }
 
+        private void Awake()
+        {
+            Hp = MaxHp;
+        }
         private void Update()
         {
             UpdateCrewStatus();
@@ -25,7 +32,7 @@ namespace FTL
             TargetRoom = room;
             CurrentRoom.ReduceCrew(this);
             // 이동하기전 보조 정지하고 가야함
-            if (CurrentRoom.CrewList.Count == 0)
+            if (CurrentRoom.Crews.Count == 0)
             {
                 AssistFacility(false);
             }
@@ -80,7 +87,7 @@ namespace FTL
 
         private bool CanMoveToLowPosition()
         {
-            int crewIndexInCurrentRoom = CurrentRoom.CrewList.IndexOf(this);
+            int crewIndexInCurrentRoom = CurrentRoom.Crews.IndexOf(this);
             Vector2 crewOffset = (Vector2)(offset * crewIndexInCurrentRoom);
             Vector3 roomAvailablePosition = CurrentRoom.GlobalPosition + crewOffset;
             bool canMoveToLowPosition = roomAvailablePosition != transform.position;
@@ -104,7 +111,7 @@ namespace FTL
             if (hasValidTargetRoom)
             {
                 //bool hasReachedTargetX = transform.position.x == TargetRoom.GlobalPosition.x;
-                int crewIndexInRoom = TargetRoom.CrewList.IndexOf(this);
+                int crewIndexInRoom = TargetRoom.Crews.IndexOf(this);
                 Vector2 crewOffset = (Vector2)(offset * crewIndexInRoom);
                 Vector3 targetPosition = TargetRoom.GlobalPosition + crewOffset;
                 bool hasReachedTarget = transform.position == targetPosition;
@@ -140,6 +147,24 @@ namespace FTL
                     break;
                 default:
                     break;
+            }
+        }
+
+        public void HealHp(int amount)
+        {
+            Hp = Mathf.Min(MaxHp, Hp + amount);
+        }
+
+        public void TakeDamage(int amount)
+        {
+            Hp = Mathf.Max(0, Hp - amount);
+            if (IsDead)
+            {
+                //CurrentRoom.ReduceCrew(this);
+                //if (CurrentRoom != TargetRoom)
+                //    TargetRoom.ReduceCrew(this);
+                CrewSystem.HandleCrewDeath(this);
+                gameObject.SetActive(false);
             }
         }
 

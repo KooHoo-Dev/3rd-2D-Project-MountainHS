@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -7,7 +8,9 @@ namespace FTL
     public class CrewSystem: MonoBehaviour
     {
 
-        public List<Room> Rooms { get; private set; }
+        public List<Room> Rooms { get; set; }
+        public bool IsAllCrewDead => crews.Count == 0;
+
         [field: SerializeField] private ShipController ship;
         private List<FacilitySystem> facilitySystems = new List<FacilitySystem>();
         [SerializeField] private List<CrewController> crews = new List<CrewController>();
@@ -42,7 +45,7 @@ namespace FTL
         {
             for (int i = 0; i < selectedCrews.Count; i++)
             {
-                bool isTargetRoomFull = targetRoom.MaxCrewCapacity == targetRoom.CrewList.Count;
+                bool isTargetRoomFull = targetRoom.MaxCrewCapacity == targetRoom.Crews.Count;
                 if (isTargetRoomFull)
                 {
                     Debug.LogWarning($"Room {targetRoom.Id} is full. Cannot move crew.");
@@ -87,5 +90,29 @@ namespace FTL
             targetRoom = room;
             SetTargetToCrew();
         }
+
+        public void HandleCrewDeath(CrewController crew)
+        {
+            ship.Crews.Remove(crew);
+            crews.Remove(crew);
+            Room room = null;
+            for (int i = 0; i < Rooms.Count; i++)
+            {
+                if (Rooms[i].Crews.Contains(crew))
+                {
+                    room = Rooms[i];
+                }
+            }
+            room.ReduceCrew(crew);
+
+            if (IsAllCrewDead)
+            {
+                EBattleResult battleResult = (ship.Ownership.ShipSide == EShipSide.Player) 
+                    ? EBattleResult.PlayerAllCrewDead 
+                    : EBattleResult.EnemyAllCrewDead;
+                GameManager.Instance.HandleBattleResult(battleResult);
+            }
+        }
+
     }
 }

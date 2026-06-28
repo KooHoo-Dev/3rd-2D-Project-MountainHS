@@ -11,7 +11,7 @@ namespace FTL
         {
             targetingSystem = new RandomTargeter(CombatSystem.Instance.GetPlayerRooms());
             weaponSystem.TargetingSystem = targetingSystem;
-            shipOwnership.ShipSide = EShipSide.Enemy0;
+            Ownership.ShipSide = EShipSide.Enemy0;
         }
 
         //public void TestAllocateShieldPower()

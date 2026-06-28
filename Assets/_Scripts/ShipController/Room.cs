@@ -12,7 +12,7 @@ namespace FTL
         public bool IsUnintialized() => Id == 0 && MaxCrewCapacity == 0;
         [field: SerializeField] private List<int> neighborRoomIds;
         [field: SerializeField] public FacilitySystem FacilitySystem { get; set; }
-        [field: SerializeField] public List<CrewController> CrewList { get; set; } = new List<CrewController>();
+        [field: SerializeField] public List<CrewController> Crews { get; set; } = new List<CrewController>();
         [field: SerializeField] public ERoomType Type { get; private set; }
         [field: SerializeField] public Vector2 LocalPosition { get; set; }
         [field: SerializeField] public Vector2 GlobalPosition { get; set; }
@@ -30,30 +30,30 @@ namespace FTL
         }
         public void AddCrew(CrewController crew)
         {
-            if (CrewList.Contains(crew))
+            if (Crews.Contains(crew))
             {
                 Debug.LogWarning($"Crew {crew.name} is already in Room {Id}. Cannot add again.");
                 return;
             }
 
             ;
-            if (CrewList.Count == MaxCrewCapacity)
+            if (Crews.Count == MaxCrewCapacity)
             {
                 Debug.LogWarning($"Room {Id} is at full capacity. Cannot add Crew {crew.name}.");
                 return;
             }
 
-            CrewList.Add(crew);
+            Crews.Add(crew);
         }
         public void ReduceCrew(CrewController crew)
         {
-            if (CrewList.Contains(crew) == false)
+            if (Crews.Contains(crew) == false)
             {
                 Debug.LogWarning($"Crew {crew.name} is not in Room {Id}. Cannot remove.");
                 return;
             }
 
-            CrewList.Remove(crew);
+            Crews.Remove(crew);
         }
 
         public void RepairFacility()
@@ -76,5 +76,12 @@ namespace FTL
             FacilitySystem.ApplyAssistEffectOnFacility(isApplied);
         }
 
+        public void TakeDamageToCrews(int crewDamage)
+        {
+            for (int i = 0; i < Crews.Count; i++)
+            {
+                Crews[i].TakeDamage(crewDamage);
+            }
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace FTL
     public class ShipController : MonoBehaviour, IDamageable, IDeadable
     {
         public bool IsDead => Hp == 0;
+        public ShipOwnership Ownership { get; private set; }
         [Header("Ship Data")]
         [field: SerializeField] public ShipData ShipData { get; private set; }
 
@@ -31,11 +32,10 @@ namespace FTL
         [SerializeField] private GameObject crewPrefab;
         [SerializeField] protected int crewCount = 3;
 
-        public List<CrewController> Crews { get; private set; } = new List<CrewController>();
+        public List<CrewController> Crews { get; set; } = new List<CrewController>();
         protected List<FacilitySystem> facilitySystems = new List<FacilitySystem>() ;
         protected CrewSystem crewSystem;
         protected WeaponSystem weaponSystem;
-        protected ShipOwnership shipOwnership;
 
         protected virtual void Awake()
         {
@@ -45,7 +45,7 @@ namespace FTL
             facilitySystems.Add(GetComponent<ShieldSystem>());
             crewSystem = GetComponent<CrewSystem>();
 
-            shipOwnership = GetComponentInChildren<ShipOwnership>();
+            Ownership = GetComponentInChildren<ShipOwnership>();
 
             weaponSystem = (WeaponSystem)GetFacilitySystemByERoomType(ERoomType.Weapon);
 
@@ -73,6 +73,7 @@ namespace FTL
 
                     Rooms.Add(room);
                 }
+                crewSystem.Rooms = Rooms;
             }
 
             void InitCrews()
@@ -90,6 +91,7 @@ namespace FTL
                     CrewController crew = crewObject.GetComponent<CrewController>();
                     Room room = Rooms[i];
                     crew.InitStartRoom(room);
+                    crew.CrewSystem = crewSystem;
                     Crews.Add(crew);
                 }
             }
@@ -168,11 +170,14 @@ namespace FTL
             }
         }
 
-        public void TakeDamageToRoom(int damage, int roomId)
+        public void TakeDamageToRoom(ProjectileController projectile, int roomId)
         {
+            int damage = projectile.Damage;
+            int crewDamage = projectile.CrewDamage;
             TakeDamage(damage);
             // 피격당한 room 객체 가져오기
             Room room = GetRoomByIdOrNull(roomId);
+            room.TakeDamageToCrews(crewDamage);
             bool canDamageFacility = room != null && room.HasFacility;
             if (canDamageFacility)
             {

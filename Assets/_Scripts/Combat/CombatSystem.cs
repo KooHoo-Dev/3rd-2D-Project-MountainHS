@@ -68,7 +68,6 @@ namespace FTL
             return false;
         }
 
-        // 미구현
         public bool HandleRoomCollision(ProjectileController projectile)
         {
             bool isPlayerProjectile = projectile.StartCol.CompareTag(Tags.PlayerShip);
@@ -77,7 +76,7 @@ namespace FTL
             ProjectileTargetData targetData = new ProjectileTargetData(projectile.Target, projectile.TargetRoomId);
 
             // 명중 판정 로직 추가 (추후 구현)
-            oppenentShipController.TakeDamageToRoom(projectile.Damage, targetData.RoomId);
+            oppenentShipController.TakeDamageToRoom(projectile, targetData.RoomId);
             return true;
         }
 
