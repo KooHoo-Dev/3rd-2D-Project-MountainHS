@@ -40,7 +40,9 @@ namespace FTL
             }
 
             if (showRoomConnections)
+            {
                 CreateRoomConnectionLines();
+            }
         }
 
         private void OnDestroy()
@@ -52,7 +54,9 @@ namespace FTL
         private void OnDrawGizmos()
         {
             if (showRoomConnections == false)
+            {
                 return;
+            }
 
             DrawRoomConnectionGizmos();
         }
@@ -93,10 +97,14 @@ namespace FTL
                 {
                     Room neighborRoom = FindRoomById(rooms, neighborRoomIds[j]);
                     if (neighborRoom == null)
+                    {
                         continue;
+                    }
 
                     if (IsConnectionAlreadyDrawn(rooms, i, neighborRoom.Id))
+                    {
                         continue;
+                    }
 
                     LineRenderer lineRenderer = CreateRoomConnectionLineRenderer();
                     lineRenderer.SetPosition(0, GetRoomLocalPosition(room));
@@ -127,11 +135,15 @@ namespace FTL
         private Material GetRoomConnectionMaterial()
         {
             if (roomConnectionMaterial != null)
+            {
                 return roomConnectionMaterial;
+            }
 
             Shader shader = Shader.Find("Sprites/Default");
             if (shader == null)
+            {
                 shader = Shader.Find("Unlit/Color");
+            }
 
             roomConnectionMaterial = new Material(shader);
             roomConnectionMaterial.color = roomConnectionColor;
@@ -143,7 +155,9 @@ namespace FTL
             for (int i = 0; i < roomConnectionLines.Count; i++)
             {
                 if (roomConnectionLines[i] != null)
+                {
                     Destroy(roomConnectionLines[i].gameObject);
+                }
             }
 
             roomConnectionLines.Clear();
@@ -153,7 +167,9 @@ namespace FTL
         {
             List<Room> rooms = GetRoomsForGizmos();
             if (rooms == null)
+            {
                 return;
+            }
 
             Gizmos.color = roomConnectionColor;
 
@@ -162,16 +178,22 @@ namespace FTL
                 Room room = rooms[i];
                 List<int> neighborRoomIds = GetNeighborRoomIds(room);
                 if (neighborRoomIds == null)
+                {
                     continue;
+                }
 
                 for (int j = 0; j < neighborRoomIds.Count; j++)
                 {
                     Room neighborRoom = FindRoomById(rooms, neighborRoomIds[j]);
                     if (neighborRoom == null)
+                    {
                         continue;
+                    }
 
                     if (IsConnectionAlreadyDrawn(rooms, i, neighborRoom.Id))
+                    {
                         continue;
+                    }
 
                     Gizmos.DrawLine(GetRoomWorldPosition(room), GetRoomWorldPosition(neighborRoom));
                 }
@@ -181,14 +203,20 @@ namespace FTL
         private List<Room> GetRoomsForGizmos()
         {
             if (shipController == null)
+            {
                 return null;
+            }
 
             if (shipController.Rooms != null &&
                 shipController.Rooms.Count > 0)
+            {
                 return shipController.Rooms;
+            }
 
             if (shipController.ShipData == null)
+            {
                 return null;
+            }
 
             return shipController.ShipData.Rooms;
         }
@@ -201,11 +229,15 @@ namespace FTL
             {
                 Room previousRoom = rooms[i];
                 if (previousRoom.Id != neighborRoomId)
+                {
                     continue;
+                }
 
                 List<int> previousNeighborRoomIds = GetNeighborRoomIds(previousRoom);
                 if (ContainsRoomId(previousNeighborRoomIds, room.Id))
+                {
                     return true;
+                }
             }
 
             return false;
@@ -223,10 +255,14 @@ namespace FTL
         private Vector3 GetRoomWorldPosition(Room room)
         {
             if (Application.isPlaying)
+            {
                 return new Vector3(room.GlobalPosition.x, room.GlobalPosition.y, transform.position.z + roomConnectionZOffset);
+            }
 
             if (room.GlobalPosition != Vector2.zero)
+            {
                 return new Vector3(room.GlobalPosition.x, room.GlobalPosition.y, transform.position.z + roomConnectionZOffset);
+            }
 
             Vector3 localPosition = new Vector3(room.LocalPosition.x, room.LocalPosition.y, roomConnectionZOffset);
             return transform.TransformPoint(localPosition);
@@ -236,8 +272,11 @@ namespace FTL
         {
             for (int i = 0; i < rooms.Count; i++)
             {
-                if (rooms[i].Id == roomId)
+                bool isMatchingRoom = rooms[i].Id == roomId;
+                if (isMatchingRoom)
+                {
                     return rooms[i];
+                }
             }
 
             return null;
@@ -246,12 +285,17 @@ namespace FTL
         private bool ContainsRoomId(List<int> roomIds, int roomId)
         {
             if (roomIds == null)
+            {
                 return false;
+            }
 
             for (int i = 0; i < roomIds.Count; i++)
             {
-                if (roomIds[i] == roomId)
+                bool isMatchingRoom = roomIds[i] == roomId;
+                if (isMatchingRoom)
+                {
                     return true;
+                }
             }
 
             return false;
@@ -260,13 +304,19 @@ namespace FTL
         private List<int> GetNeighborRoomIds(Room room)
         {
             if (room == null)
+            {
                 return null;
+            }
 
             if (neighborRoomIdsField == null)
+            {
                 neighborRoomIdsField = typeof(Room).GetField("neighborRoomIds", BindingFlags.Instance | BindingFlags.NonPublic);
+            }
 
             if (neighborRoomIdsField == null)
+            {
                 return null;
+            }
 
             return neighborRoomIdsField.GetValue(room) as List<int>;
         }

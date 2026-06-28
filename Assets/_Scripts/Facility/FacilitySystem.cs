@@ -7,8 +7,6 @@ namespace FTL
     {
         public ERoomType Type => type;
         public EFacilityStatus FacilityStatus => facilityStatus;
-        //public int MaxHp => maxHp;
-        //public int Hp => hp;
         public int MaxPowerLimit => maxPowerLimit;
         public int MaxPower => maxPower;
         public int Power => power;
@@ -36,9 +34,6 @@ namespace FTL
 
         public bool CanAddPower(int amount)
         {
-            // TODO: 시설 상태, 체력, 최대 전력에 따른 전력 설정 가능 여부를 구체화한다.
-            //bool isPowerLowerThanMaxPower = power < maxPower;
-            //bool isMaxPowerLowerThanMaxPowerLimit = maxPower < maxPowerLimit;
             if (amount <= 0)
             {
                 return false;
@@ -49,7 +44,6 @@ namespace FTL
 
         public void AddPower(int amount)
         {
-            // TODO: 전력 변경 검증 및 변경 후 시설별 효과 갱신 호출을 구체화한다.
             if (CanAddPower(amount))
             {
                 power += amount;

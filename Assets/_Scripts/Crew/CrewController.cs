@@ -39,31 +39,37 @@ namespace FTL
 
         private void UpdateCrewStatus()
         {
-            if (crewStatus != ECrewStatus.Moving)
+            bool isMoving = crewStatus == ECrewStatus.Moving;
+            if (isMoving)
             {
-                FacilitySystem facility = CurrentRoom.FacilitySystem;
-                if (CurrentRoom.HasFacility)
-                {
-                    switch (facility.FacilityStatus)
-                    {
-                        case EFacilityStatus.Damaged:
-                        case EFacilityStatus.Broked:
-                            crewStatus = ECrewStatus.Repair;
-                            //RepairFacility();
-                            break;
-                        case EFacilityStatus.Normal:
-                            crewStatus = ECrewStatus.Assisting;
-                            //AssistFacility();
-                            // 시설 보조 로직
-                            break;
-                        case EFacilityStatus.Disabled:
-                            crewStatus = ECrewStatus.Idle;
-                            break;
-                        default:
-                            Debug.LogWarning($"CrewController: UpdateStatus: Unexpected facility status {facility.FacilityStatus} in room {CurrentRoom.Id}");
-                            break;
-                    }
-                }
+                return;
+            }
+
+            bool hasFacility = CurrentRoom.HasFacility;
+            if (hasFacility == false)
+            {
+                return;
+            }
+
+            FacilitySystem facility = CurrentRoom.FacilitySystem;
+            switch (facility.FacilityStatus)
+            {
+                case EFacilityStatus.Damaged:
+                case EFacilityStatus.Broked:
+                    crewStatus = ECrewStatus.Repair;
+                    //RepairFacility();
+                    break;
+                case EFacilityStatus.Normal:
+                    crewStatus = ECrewStatus.Assisting;
+                    //AssistFacility();
+                    // 시설 보조 로직
+                    break;
+                case EFacilityStatus.Disabled:
+                    crewStatus = ECrewStatus.Idle;
+                    break;
+                default:
+                    Debug.LogWarning($"CrewController: UpdateStatus: Unexpected facility status {facility.FacilityStatus} in room {CurrentRoom.Id}");
+                    break;
             }
         }
 
@@ -80,17 +86,22 @@ namespace FTL
 
         private void MoveToTargetRoom()
         {
-            if (TargetRoom?.IsUnintialized() == false)
+            bool hasValidTargetRoom = TargetRoom?.IsUnintialized() == false;
+            if (hasValidTargetRoom)
             {
-                if (transform.position.x == TargetRoom.GlobalPosition.x)
+                bool hasReachedTargetX = transform.position.x == TargetRoom.GlobalPosition.x;
+                if (hasReachedTargetX)
                 {
                     crewStatus = ECrewStatus.Idle;
                     TargetRoom = null;
                 }
                 else
                 {
-                    Vector3 targetPosition = TargetRoom.GlobalPosition + (Vector2)(offset * (TargetRoom.CrewList.IndexOf(this)));
-                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+                    int crewIndexInRoom = TargetRoom.CrewList.IndexOf(this);
+                    Vector2 crewOffset = (Vector2)(offset * crewIndexInRoom);
+                    Vector3 targetPosition = TargetRoom.GlobalPosition + crewOffset;
+                    float moveDistance = moveSpeed * Time.deltaTime;
+                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveDistance);
                 }
             }
         }

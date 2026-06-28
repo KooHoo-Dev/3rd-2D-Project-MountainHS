@@ -21,12 +21,15 @@ namespace FTL
         }
         public void AddCrew(CrewController crew)
         {
-            if (CrewList.Contains(crew))
+            bool alreadyInRoom = CrewList.Contains(crew);
+            if (alreadyInRoom)
             {
                 Debug.LogWarning($"Crew {crew.name} is already in Room {Id}. Cannot add again.");
                 return;
             }
-            if (CrewList.Count == MaxCrewCapacity)
+
+            bool isRoomFull = CrewList.Count == MaxCrewCapacity;
+            if (isRoomFull)
             {
                 Debug.LogWarning($"Room {Id} is at full capacity. Cannot add Crew {crew.name}.");
                 return;
@@ -36,7 +39,8 @@ namespace FTL
         }
         public void ReduceCrew(CrewController crew)
         {
-            if (CrewList.Contains(crew) == false)
+            bool isCrewInRoom = CrewList.Contains(crew);
+            if (isCrewInRoom == false)
             {
                 Debug.LogWarning($"Crew {crew.name} is not in Room {Id}. Cannot remove.");
                 return;
@@ -56,6 +60,7 @@ namespace FTL
                 FacilitySystem.Repair(1);
                 newRepairProgress = 0f;
             }
+
             FacilitySystem.RepairProgress = newRepairProgress;
         }
 

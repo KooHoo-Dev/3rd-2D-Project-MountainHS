@@ -68,9 +68,15 @@ namespace FTL
             if (isMoving)
             {
                 if (isAfterStartCol == false)
-                    transform.Translate(Vector3.right * speed * Time.deltaTime);
+                {
+                    Vector3 moveAmount = Vector3.right * speed * Time.deltaTime;
+                    transform.Translate(moveAmount);
+                }
                 else
-                    transform.position = Vector3.MoveTowards(transform.position, Target, speed * Time.deltaTime);
+                {
+                    float moveDistance = speed * Time.deltaTime;
+                    transform.position = Vector3.MoveTowards(transform.position, Target, moveDistance);
+                }
             }
         }
         // SetTarget
@@ -90,16 +96,20 @@ namespace FTL
         private void OnTriggerEnter2D(Collider2D collision)
         {
             // 충돌한 콜라이더가 함선 레이어 콜라이더이면
-            if (StartCol == null)
+            bool hasNoStartCol = StartCol == null;
+            if (hasNoStartCol)
             {
-                if (shipLayer.Contains(collision.gameObject.layer))
+                bool isShipLayer = shipLayer.Contains(collision.gameObject.layer);
+                if (isShipLayer)
                 {
                     StartCol = collision;
                 }
             }
 
             // 충돌한 콜라이더가 실드 레이어 && 태그가 enemyTag라면
-            if (isAfterStartCol && shieldLayer.Contains(collision.gameObject.layer))
+            bool isShieldLayer = shieldLayer.Contains(collision.gameObject.layer);
+            bool canHitShield = isAfterStartCol && isShieldLayer;
+            if (canHitShield)
             {
                 // 전투 시스템 호출
                 bool isShielded = CombatSystem.Instance.HandleShieldCollision(this);
@@ -114,7 +124,8 @@ namespace FTL
         private void OnTriggerExit2D(Collider2D collision)
         {
             // 특정 콜라이더이면 그에 대응되는 EShipArea가 뽑히도록 하면 좋을 거 같은데
-            if (StartCol == collision)
+            bool isLeavingStartCol = StartCol == collision;
+            if (isLeavingStartCol)
             {
                 // 전투 시스템 호출
                 CombatSystem.Instance.MoveToEnemyArea(StartCol, this);
@@ -123,7 +134,8 @@ namespace FTL
                 StartCoroutine(SetProjectileDelay());
             }
             // 종료 콜라이더 벗어나면 삭제
-            if (endCol == collision)
+            bool isLeavingEndCol = endCol == collision;
+            if (isLeavingEndCol)
             {
                 // 전투 시스템 호출
                 Destroy(gameObject);
@@ -141,9 +153,9 @@ namespace FTL
             // 속도 11 ~ 3
             float lerpRate = Mathf.InverseLerp(MAX_SPEED, MIN_SPEED, speed);
             // 목표 시간: 0.5 ~ 2
-            float time = Mathf.Lerp(MIN_TIME, MAX_TIME, lerpRate);
+            float delayTime = Mathf.Lerp(MIN_TIME, MAX_TIME, lerpRate);
 
-            yield return new WaitForSeconds(time);
+            yield return new WaitForSeconds(delayTime);
             isMoving = true;
         }
     }

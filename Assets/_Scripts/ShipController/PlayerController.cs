@@ -86,7 +86,6 @@ namespace FTL
             CrewController crew = null;
             Collider2D roomCol = null;
             EShipSide shipSide = EShipSide.None;
-            int roomId = -1;
             LayerMask roomLayer = LayerMask.GetMask(Tags.ROOM_LAYER);
             LayerMask shipLayer = LayerMask.GetMask(Tags.SHIP_LAYER);
             LayerMask crewLayer = LayerMask.GetMask(Tags.CREW_LAYER);
@@ -98,58 +97,84 @@ namespace FTL
             {
                 foreach (Collider2D col in clickCols)
                 {
-                    int colLayer = col.gameObject.layer;
-                    if (roomLayer.Contains(colLayer))
-                    {
-                        roomCol = col;
-                        Debug.Log($"Room Clicked: {roomCol.gameObject.name}");
-                    }
-                    else if (shipLayer.Contains(colLayer))
-                    {
-                        shipSide = col.GetComponent<ShipOwnership>().ShipSide;
-                        Debug.Log($"Ship Clicked!");
-                    }
-                    else if (crewLayer.Contains(colLayer))
-                    {
-                        crew = col.GetComponent<CrewController>();
-                    }
+                    ReadClickedCollider(col, roomLayer, shipLayer, crewLayer, ref roomCol, ref shipSide, ref crew);
                 }
 
                 if (isLeftMouseClick)
                 {
-
-                    bool isEnemyRoomSelected = roomCol != null
-                        && shipSide != EShipSide.Player
-                        && shipSide != EShipSide.None;
-                    if (isEnemyRoomSelected)
-                    {
-                        Room room = CombatSystem.Instance.GetRoomOrNull(shipSide, roomCol.transform.position);
-                        roomId = room.Id;
-                        Vector2 target = roomCol.bounds.center;
-                        ProjectileTargetData targetData = new ProjectileTargetData(target, roomId);
-                        weaponSystem.SetSelectedRoomTarget(targetData);
-                    }
-
-                    if (crew != null &&
-                        shipSide == EShipSide.Player)
-                    {
-                        crewSystem.AddSelectedCrew(crew);
-                    }
+                    HandleLeftMouseClick(roomCol, shipSide, crew);
                 }
 
                 if (isRightMouseClick)
                 {
-                    if (roomCol != null)
-                    {
-                        Room room = GetRoomByPositionOrNull(roomCol.transform.position);
-                        Debug.Log($"Target Room Id: {room.Id}");
-                        crewSystem.SetTargetRoom(room);
-                    }
-                    else
-                    {
-                        crewSystem.ResetSelectedCrews();
-                    }
+                    HandleRightMouseClick(roomCol);
                 }
+            }
+        }
+
+        private void ReadClickedCollider(
+            Collider2D col,
+            LayerMask roomLayer,
+            LayerMask shipLayer,
+            LayerMask crewLayer,
+            ref Collider2D roomCol,
+            ref EShipSide shipSide,
+            ref CrewController crew)
+        {
+            int colLayer = col.gameObject.layer;
+            bool isRoomLayer = roomLayer.Contains(colLayer);
+            bool isShipLayer = shipLayer.Contains(colLayer);
+            bool isCrewLayer = crewLayer.Contains(colLayer);
+
+            if (isRoomLayer)
+            {
+                roomCol = col;
+                Debug.Log($"Room Clicked: {roomCol.gameObject.name}");
+            }
+            else if (isShipLayer)
+            {
+                shipSide = col.GetComponent<ShipOwnership>().ShipSide;
+                Debug.Log($"Ship Clicked!");
+            }
+            else if (isCrewLayer)
+            {
+                crew = col.GetComponent<CrewController>();
+            }
+        }
+
+        private void HandleLeftMouseClick(Collider2D roomCol, EShipSide shipSide, CrewController crew)
+        {
+            bool hasRoomCol = roomCol != null;
+            bool isEnemyShip = shipSide != EShipSide.Player && shipSide != EShipSide.None;
+            bool isEnemyRoomSelected = hasRoomCol && isEnemyShip;
+
+            if (isEnemyRoomSelected)
+            {
+                Room room = CombatSystem.Instance.GetRoomOrNull(shipSide, roomCol.transform.position);
+                int roomId = room.Id;
+                Vector2 target = roomCol.bounds.center;
+                ProjectileTargetData targetData = new ProjectileTargetData(target, roomId);
+                weaponSystem.SetSelectedRoomTarget(targetData);
+            }
+
+            bool isPlayerCrewSelected = crew != null && shipSide == EShipSide.Player;
+            if (isPlayerCrewSelected)
+            {
+                crewSystem.AddSelectedCrew(crew);
+            }
+        }
+
+        private void HandleRightMouseClick(Collider2D roomCol)
+        {
+            if (roomCol != null)
+            {
+                Room room = GetRoomByPositionOrNull(roomCol.transform.position);
+                Debug.Log($"Target Room Id: {room.Id}");
+                crewSystem.SetTargetRoom(room);
+            }
+            else
+            {
+                crewSystem.ResetSelectedCrews();
             }
         }
 

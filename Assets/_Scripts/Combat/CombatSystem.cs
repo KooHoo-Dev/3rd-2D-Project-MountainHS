@@ -52,7 +52,9 @@ namespace FTL
         public bool HandleShieldCollision(ProjectileController projectile)
         {
             // projectile 주인 확인
-            ShieldSystem oppenentShieldSystem = (ShieldSystem)(projectile.StartCol.CompareTag(Tags.PlayerShip) ? ships[1].GetFacilitySystemByERoomType(ERoomType.Shield) : ships[0].GetFacilitySystemByERoomType(ERoomType.Shield));
+            bool isPlayerProjectile = projectile.StartCol.CompareTag(Tags.PlayerShip);
+            int opponentShipIndex = isPlayerProjectile ? 1 : 0;
+            ShieldSystem oppenentShieldSystem = (ShieldSystem)ships[opponentShipIndex].GetFacilitySystemByERoomType(ERoomType.Shield);
             // 실드 시스템의 현재 실드가 1 이상이면
             // 실드 시스템 TakeDamage 호출
             // return true;
@@ -69,7 +71,9 @@ namespace FTL
         // 미구현
         public bool HandleRoomCollision(ProjectileController projectile)
         {
-            ShipController oppenentShipController = projectile.StartCol.CompareTag(Tags.PlayerShip) ? ships[1] : ships[0];
+            bool isPlayerProjectile = projectile.StartCol.CompareTag(Tags.PlayerShip);
+            int opponentShipIndex = isPlayerProjectile ? 1 : 0;
+            ShipController oppenentShipController = ships[opponentShipIndex];
             ProjectileTargetData targetData = new ProjectileTargetData(projectile.Target, projectile.TargetRoomId);
 
             // 명중 판정 로직 추가 (추후 구현)
@@ -111,9 +115,13 @@ namespace FTL
             List<Room> rooms = ships[(int)shipSide].Rooms;
             for (int i = 0; i < rooms.Count; i++)
             {
-                if (rooms[i].GlobalPosition == position)
+                bool isMatchingPosition = rooms[i].GlobalPosition == position;
+                if (isMatchingPosition)
+                {
                     return rooms[i];
+                }
             }
+
             return null;
         }
     }

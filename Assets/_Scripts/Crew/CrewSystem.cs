@@ -42,11 +42,13 @@ namespace FTL
         {
             for (int i = 0; i < selectedCrews.Count; i++)
             {
-                if (targetRoom.MaxCrewCapacity == targetRoom.CrewList.Count)
+                bool isTargetRoomFull = targetRoom.MaxCrewCapacity == targetRoom.CrewList.Count;
+                if (isTargetRoomFull)
                 {
                     Debug.LogWarning($"Room {targetRoom.Id} is full. Cannot move crew.");
                     break;
                 }
+
                 CrewController crew = selectedCrews[i];
                 crew.SetTargetRoom(targetRoom);
             }
@@ -75,11 +77,13 @@ namespace FTL
 
         public void SetTargetRoom(Room room)
         {
-            if (selectedCrews.Count == 0)
+            bool hasSelectedCrew = selectedCrews.Count > 0;
+            if (hasSelectedCrew == false)
             {
                 Debug.LogWarning($"Must select crew before choosing target room");
                 return;
             }
+
             targetRoom = room;
             SetTargetToCrew();
         }

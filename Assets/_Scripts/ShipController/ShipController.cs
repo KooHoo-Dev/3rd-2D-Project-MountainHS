@@ -98,7 +98,9 @@ namespace FTL
         protected void HandlePowerInput(ERoomType facilityType, bool isRecoverInput)
         {
             if (IsDead)
+            {
                 return;
+            }
 
             if (isRecoverInput)
             {
@@ -115,9 +117,13 @@ namespace FTL
         {
             for (int i = 0; i < Rooms.Count; i++)
             {
-                if (Rooms[i].Id == roomId)
+                bool isMatchingRoom = Rooms[i].Id == roomId;
+                if (isMatchingRoom)
+                {
                     return Rooms[i];
+                }
             }
+
             return null;
         }
 
@@ -125,9 +131,13 @@ namespace FTL
         {
             for (int i = 0; i < Rooms.Count; i++)
             {
-                if (Rooms[i].GlobalPosition == position)
+                bool isMatchingPosition = Rooms[i].GlobalPosition == position;
+                if (isMatchingPosition)
+                {
                     return Rooms[i];
+                }
             }
+
             return null;
         }
 
@@ -149,7 +159,9 @@ namespace FTL
 
         public void TakeDamage(int damage)
         {
-            Hp = (Hp - damage < 0) ? 0 : Hp - damage;
+            int damagedHp = Hp - damage;
+            Hp = damagedHp < 0 ? 0 : damagedHp;
+
             if (IsDead)
             {
                 StartCoroutine(DeadCoroutine(5f));
@@ -161,8 +173,8 @@ namespace FTL
             TakeDamage(damage);
             // 피격당한 room 객체 가져오기
             Room room = GetRoomByIdOrNull(roomId);
-            if (room != null &&
-                room.HasFacility)
+            bool canDamageFacility = room != null && room.HasFacility;
+            if (canDamageFacility)
             {
                 room.FacilitySystem.TakeDamage(damage);
             }
@@ -170,19 +182,32 @@ namespace FTL
 
         public void RestoreHp(int damage)
         {
-            if (IsDead) return;
-            Hp = (Hp + damage > ShipData.MaxHp) ? ShipData.MaxHp : Hp + damage;
+            if (IsDead)
+            {
+                return;
+            }
+
+            int restoredHp = Hp + damage;
+            Hp = restoredHp > ShipData.MaxHp ? ShipData.MaxHp : restoredHp;
         }
 
         public void RequestAllocatePower(ERoomType facilityType)
         {
-            if (IsDead) return;
+            if (IsDead)
+            {
+                return;
+            }
+
             powerSystem.TryAllocatePower(facilityType);
         }
 
         public void RequestDeallocatePower(ERoomType facilityType)
         {
-            if (IsDead) return;
+            if (IsDead)
+            {
+                return;
+            }
+
             powerSystem.TryDeallocatePower(facilityType);
         }
 
