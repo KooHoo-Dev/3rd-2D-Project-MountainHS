@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Utilities;
@@ -7,36 +8,17 @@ namespace FTL
 {
     public class CombatSystem : SingletonBase<CombatSystem>
     {
+        private const string BATTLE_SCENE = "BattleScene";
 
-        [SerializeField] private Collider2D[] shipAreas;
-        [SerializeField] private ShipController[] ships;
+        private ShipController[] ships;
+        private Collider2D[] shipAreas;
+
         private Dictionary<Collider2D, EShipSide> colToNextShipAreaDict = new Dictionary<Collider2D, EShipSide>();
         private Dictionary<EShipSide, Collider2D> shipAreaToColDict = new Dictionary<EShipSide, Collider2D>();
-
-        //protected override void Awake()
-        //{
-        //    if (instance == null)
-        //    {
-        //        instance = this as CombatSystem;
-        //        DontDestroyOnLoad(gameObject);
-
-        //        OnInitialize();
-        //        CombatSystem.isInitialized = true;
-        //    }
-        //    else if (instance != this)
-        //    {
-        //        Debug.LogWarning($"[Singleton] 중복 인스턴스 감지됨: {gameObject.name} 파괴");
-        //        Destroy(gameObject);
-        //    }
-        //}
 
         protected override void OnInitialize()
         {
             base.OnInitialize();
-            shipAreaToColDict.Add(EShipSide.Player, shipAreas[0]);
-            shipAreaToColDict.Add(EShipSide.Enemy0, shipAreas[1]);
-            colToNextShipAreaDict.Add(shipAreas[0], EShipSide.Enemy0);
-            colToNextShipAreaDict.Add(shipAreas[1], EShipSide.Player);
         }
 
         private void OnEnable()
@@ -51,7 +33,62 @@ namespace FTL
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
         {
+            if (scene.name != BATTLE_SCENE)
+                return;
 
+            if (NeedSceneBinding(ships, shipAreas))
+            {
+                BindSceneObjects();
+            }
+        }
+
+        private void BindSceneObjects()
+        {
+            PlayerController player = FindFirstObjectByType<PlayerController>();
+            EnemyController enemy = FindFirstObjectByType<EnemyController>();
+            ShipOwnership playerOwnership = player.Ownership;
+            ShipOwnership enemyOwnership = enemy.Ownership;
+            Collider2D playerCollider = playerOwnership.GetComponent<Collider2D>();
+            Collider2D enemyCollider = enemyOwnership.GetComponent<Collider2D>();
+
+            ships = new ShipController[] { player, enemy };
+            shipAreas = new Collider2D[] { playerCollider, enemyCollider };
+            shipAreaToColDict.Clear();
+            colToNextShipAreaDict.Clear();
+            shipAreaToColDict.Add(EShipSide.Player, shipAreas[0]);
+            shipAreaToColDict.Add(EShipSide.Enemy0, shipAreas[1]);
+            colToNextShipAreaDict.Add(shipAreas[0], EShipSide.Enemy0);
+            colToNextShipAreaDict.Add(shipAreas[1], EShipSide.Player);
+        }
+
+        private bool NeedSceneBinding(ShipController[] ships, Collider2D[] shipAreas)
+        {
+            if (ships == null)
+            {
+                return true;
+            }
+            if (shipAreas == null)
+            {
+                return true;
+            }
+
+            for (int i = 0; i < ships.Length; i++)
+            {
+                if (ships[i] == null)
+                {
+                    return true;
+                }
+            }
+
+            for (int i = 0; i < shipAreas.Length; i++)
+            {
+                if (shipAreas[i] == null)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
