@@ -12,15 +12,18 @@ namespace FTL
         [field: SerializeField] public int MaxHp { get; set; } = 100;
         [field: SerializeField] public int Hp { get; set; } = 0;
         [field: SerializeField] public string Name { get; set; } = "Hans";
-        [SerializeField] private ECrewStatus crewStatus = ECrewStatus.Idle;
-        [SerializeField] private Vector3 offset = new Vector3(0f, 0.5f, 0f);
-        [SerializeField] private float moveSpeed = 3f;
         public CrewSystem CrewSystem { set; get; }
+        [SerializeField] private float moveSpeed = 3f;
+        [SerializeField] private ECrewStatus crewStatus = ECrewStatus.Idle;
+        [field: SerializeField] public static Vector3 Offset { get; private set; } = new Vector3(0f, 0.5f, 0f);
+        private Transform crewSpriteTransform; 
 
         private void Awake()
         {
             Hp = MaxHp;
+            crewSpriteTransform = transform.GetChild(0).transform;
         }
+
         private void Update()
         {
             UpdateCrewStatus();
@@ -46,7 +49,7 @@ namespace FTL
         {
             CurrentRoom = room;
             room.AddCrew(this);
-            transform.position = room.GlobalPosition;
+            crewSpriteTransform.position = room.GlobalPosition;
         }
 
         private void UpdateCrewStatus()
@@ -86,7 +89,7 @@ namespace FTL
 
         private bool CanMoveToLowPosition()
         {
-            Vector3 roomAvailablePosition = CurrentRoom.GetCrewPosition(this, offset);
+            Vector3 roomAvailablePosition = CurrentRoom.GetCrewPosition(this, Offset);
             bool canMoveToLowPosition = roomAvailablePosition != transform.position;
             return canMoveToLowPosition;
         }
@@ -107,9 +110,8 @@ namespace FTL
             bool hasValidTargetRoom = TargetRoom?.IsUnintialized() == false;
             if (hasValidTargetRoom)
             {
-                //bool hasReachedTargetX = transform.position.x == TargetRoom.GlobalPosition.x;
-                Vector3 targetPosition = TargetRoom.GetCrewPosition(this, offset);
-                bool hasReachedTarget = transform.position == targetPosition;
+                Vector3 targetPosition = TargetRoom.GetCrewPosition(this, Offset);
+                bool hasReachedTarget = crewSpriteTransform.position == targetPosition;
                 if (hasReachedTarget)
                 {
                     crewStatus = ECrewStatus.Idle;
@@ -118,7 +120,7 @@ namespace FTL
                 else
                 {
                     float moveDistance = moveSpeed * Time.deltaTime;
-                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveDistance);
+                    crewSpriteTransform.position = Vector3.MoveTowards(crewSpriteTransform.position, targetPosition, moveDistance);
                 }
             }
         }

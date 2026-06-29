@@ -1941,6 +1941,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5214241499719826205, guid: df60b46d7cb61f843abbf24eb769e13a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -18
+      objectReference: {fileID: 0}
+    - target: {fileID: 5214241499719826205, guid: df60b46d7cb61f843abbf24eb769e13a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 627
+      objectReference: {fileID: 0}
     - target: {fileID: 7516951161694609552, guid: df60b46d7cb61f843abbf24eb769e13a, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -24
@@ -3915,12 +3923,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea0f3c04340440c4e98173fb4e211213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.CombatSystem
-  shipAreas:
-  - {fileID: 842322588}
-  - {fileID: 1477667182}
-  ships:
-  - {fileID: 1051567089}
-  - {fileID: 194710680}
 --- !u!4 &1106016009
 Transform:
   m_ObjectHideFlags: 0

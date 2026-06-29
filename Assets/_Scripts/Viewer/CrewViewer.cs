@@ -10,25 +10,51 @@ namespace FTL
         private static readonly int GLOW_EFFECT = Shader.PropertyToID("_Glow");
 
         private CrewController crew;
-        private SpriteRenderer crewSpriteRenderer;
+        private SpriteRenderer crewSprite;
+        private SpriteRenderer crewTargetSprite;
         private MaterialPropertyBlock propertyBlock;
         private TMP_Text text;
         private Image hpBar; 
         private bool isSelected;
+        private Vector3 targetPosition;
 
         private void Awake()
         {
             crew = GetComponent<CrewController>();
-            crewSpriteRenderer = GetComponent<SpriteRenderer>();
+            crewSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
+            crewTargetSprite = transform.GetChild(1).GetComponent<SpriteRenderer>();
             propertyBlock = new MaterialPropertyBlock();
             isSelected = false;
             SetSelectedState(false);
+        }
+
+        private void Start()
+        {
+            crewTargetSprite.enabled = false;
         }
 
         private void LateUpdate()
         {
             SetSelectedState(crew.IsSelected);
             UpdateViewer();
+            UpdateTargetRoom();
+        }
+
+        private void UpdateTargetRoom()
+        {
+            Room targetRoom = crew.TargetRoom;
+            if (targetRoom == null)
+            {
+                crewTargetSprite.enabled = false;
+                return;
+            }
+
+            if (targetRoom != null && crewTargetSprite.enabled == false)
+            {
+                targetPosition = targetRoom.GetCrewPosition(crew, CrewController.Offset);
+                crewTargetSprite.transform.position = targetPosition;
+                crewTargetSprite.enabled = true;
+            }
         }
 
         private void UpdateViewer()
@@ -46,7 +72,7 @@ namespace FTL
             }
 
             isSelected = selected;
-            crewSpriteRenderer.GetPropertyBlock(propertyBlock);
+            crewSprite.GetPropertyBlock(propertyBlock);
 
             if (selected)
             {
@@ -57,7 +83,7 @@ namespace FTL
                 propertyBlock.SetFloat(GLOW_EFFECT, 0f);
             }
 
-            crewSpriteRenderer.SetPropertyBlock(propertyBlock);
+            crewSprite.SetPropertyBlock(propertyBlock);
         }
 
         public void SetText(TMP_Text text)

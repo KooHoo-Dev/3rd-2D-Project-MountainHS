@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 5}
+  m_SizeDelta: {x: 1, y: 0.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &1231506374685575509
 MeshRenderer:
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 690464860144957368, guid: 575f235b47e866d418f7df5e31df7e52, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,7 +83,7 @@ MeshRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &1454421229138301514
@@ -108,8 +108,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 999
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 575f235b47e866d418f7df5e31df7e52, type: 2}
+  m_sharedMaterial: {fileID: 690464860144957368, guid: 575f235b47e866d418f7df5e31df7e52, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -133,11 +133,11 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 6
+  m_fontSize: 4.4
   m_fontSizeBase: 6
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 0
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
@@ -263,7 +263,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -287,11 +287,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bdd167dda6b9614c8d309ff95f69b6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.RoomViewer
-  <RoomData>k__BackingField:
-    <RoomId>k__BackingField: 0
-    <RoomType>k__BackingField: 0
+  <Room>k__BackingField:
     neighborRoomIds: 
     <FacilitySystem>k__BackingField: {fileID: 0}
+    <Crews>k__BackingField: []
+    <Type>k__BackingField: 0
+    <LocalPosition>k__BackingField: {x: 0, y: 0}
+    <GlobalPosition>k__BackingField: {x: 0, y: 0}
+    <MaxCrewCapacity>k__BackingField: 0
+    <Id>k__BackingField: 0
 --- !u!61 &2687124784617255714
 BoxCollider2D:
   m_ObjectHideFlags: 0

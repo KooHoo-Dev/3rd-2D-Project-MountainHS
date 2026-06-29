@@ -82,9 +82,8 @@ namespace FTL
             Vector3 worldPoint = Camera.main.ScreenToWorldPoint(mousePosition);
 
             Collider2D[] clickCols = Physics2D.OverlapPointAll(worldPoint, clickableLayer);
-            // 해당 콜라이더가 붙은 오브젝트의 태그를 확인해서 이 콜라이더가 플레이어 영역에 있는지, 적 영역에 있는지 확인
-            CrewController crew = null;
             Collider2D roomCol = null;
+            CrewController crew = null;
             EShipSide shipSide = EShipSide.None;
             LayerMask roomLayer = LayerMask.GetMask(Tags.ROOM_LAYER);
             LayerMask shipLayer = LayerMask.GetMask(Tags.SHIP_LAYER);
@@ -138,7 +137,7 @@ namespace FTL
             }
             else if (isCrewLayer)
             {
-                crew = col.GetComponent<CrewController>();
+                crew = col.GetComponentInParent<CrewController>();
             }
         }
 
