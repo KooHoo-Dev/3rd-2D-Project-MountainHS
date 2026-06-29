@@ -12,7 +12,7 @@ namespace FTL
         [SerializeField] protected List<UnityEngine.UI.Image> barSprites;
         [SerializeField] protected MonoBehaviour powerSystemMono;
         protected IPowerInfo powerSystem;
-        private ObjectPool<GameObject> barPool;
+        protected ObjectPool<GameObject> barPool;
 
         protected virtual void Awake()
         {

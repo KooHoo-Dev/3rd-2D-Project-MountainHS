@@ -24,7 +24,6 @@ namespace FTL
 
         protected virtual void Awake()
         {
-            //hp = maxHp;
             IsAssisted = false;
             power = 0;
             maxPower = maxPowerLimit;

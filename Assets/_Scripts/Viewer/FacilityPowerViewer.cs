@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,13 +7,22 @@ namespace FTL
     public class FacilityPowerViewer : PowerViewer
     {
         [SerializeField] private Image facilityIcon;
-        [SerializeField] private Image assistImage;
+        [SerializeField] private Image assistIcon;
+        private Image repairBar;
         private FacilitySystem facilitySystem;
 
         protected override void Awake()
         {
             base.Awake();
+            facilityIcon = transform.GetChild(1).GetComponent<Image>();
+            assistIcon = transform.GetChild(2).GetComponent<Image>();
+            repairBar = transform.GetChild(3).GetComponent<Image>();
             facilitySystem = powerSystemMono as FacilitySystem;
+        }
+
+        private void Start()
+        {
+            repairBar.enabled = false;
         }
 
         protected override void SetBarState(int barIndex, EPowerBarStatus status)
@@ -28,8 +38,24 @@ namespace FTL
             int totalDamage = facilitySystem.TotalDamage;
 
             UpdateAssistImage();
-            UpdatePowerBars(maxPower, power, maxPowerLimit, totalDamage);
+            UpdatePowerBars(power, maxPower, maxPowerLimit, totalDamage);
+            UpdateRepairBar();
             UpdateFacilityIcon();
+        }
+
+        private void UpdateRepairBar()
+        {
+            if (repairBar.enabled == false)
+                return;
+
+            float repairDuration = facilitySystem.RepairDuration;
+            float repairProgress = facilitySystem.RepairProgress;
+            float newFillAmount = Mathf.InverseLerp(0f, repairDuration, repairProgress);
+            repairBar.fillAmount = newFillAmount;
+            if (newFillAmount == 1f)
+            {
+                repairBar.enabled = false;
+            }
         }
 
         private void UpdateFacilityIcon()
@@ -55,7 +81,7 @@ namespace FTL
             }
         }
 
-        private void UpdatePowerBars(int maxPower, int power, int maxPowerLimit, int totalDamage)
+        private void UpdatePowerBars(int power, int maxPower, int maxPowerLimit, int totalDamage)
         {
             // 만약 현재 powerBarSprites 수가 실제 totalPower 와 일치하지 않는다면 생성
             if (barSprites.Count < maxPower)
@@ -66,6 +92,7 @@ namespace FTL
                     AddBar();
                 }
             }
+
             for (int i = 0; i < barSprites.Count; i++)
             {
                 if (i < power)
@@ -75,6 +102,13 @@ namespace FTL
                 else if (totalDamage > 0 && i >= maxPowerLimit - totalDamage)
                 {
                     SetBarState(i, EPowerBarStatus.Broken);
+                    if (facilitySystem.RepairProgress > 0f && i == maxPowerLimit - totalDamage)
+                    {
+                        // 해당 PowerBar 위치로 repairBar 이동시키고 SetActive
+                        repairBar.enabled = true;
+                        RectTransform barTransform = barSprites[i].rectTransform;
+                        repairBar.rectTransform.position = barTransform.position; 
+                    }
                 }
                 else
                 {
@@ -85,7 +119,7 @@ namespace FTL
 
         private void UpdateAssistImage()
         {
-            assistImage.enabled = facilitySystem.IsAssisted;
+            assistIcon.enabled = facilitySystem.IsAssisted;
         }
     }
 }
