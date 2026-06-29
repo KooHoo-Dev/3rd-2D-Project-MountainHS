@@ -4,19 +4,16 @@ using UnityEngine.Pool;
 
 namespace FTL
 {
-    public enum EPowerBarStatus { Available, Broken, UnAvailable, }
     public class PowerViewer : MonoBehaviour
     {
         [SerializeField] protected GameObject barPrefab;
         [SerializeField] protected GameObject barGroup;
         [SerializeField] protected List<UnityEngine.UI.Image> barSprites;
-        [SerializeField] protected MonoBehaviour powerSystemMono;
-        protected IPowerInfo powerSystem;
+        [SerializeField] protected FacilitySystem facilitySystem;
         protected ObjectPool<GameObject> barPool;
 
         protected virtual void Awake()
         {
-            powerSystem = powerSystemMono as IPowerInfo;
             barPool = new ObjectPool<GameObject>(CreateBar, OnGetBar, OnReleaseBar, OnDestroyBar);
         }
 
@@ -57,8 +54,8 @@ namespace FTL
         // 현재 전력 상태 (총 용량, 가용 가능한 양 상태에 따라 power bar 업데이트)
         protected virtual void UpdateViewer()
         {
-            int totalPower = powerSystem.MaxPower;
-            int availablePower = powerSystem.Power;
+            int totalPower = facilitySystem.MaxPower;
+            int availablePower = facilitySystem.Power;
             // 만약 현재 powerBarSprites 수가 실제 totalPower 와 일치하지 않는 다면 생성
             if (barSprites.Count < totalPower)
             {

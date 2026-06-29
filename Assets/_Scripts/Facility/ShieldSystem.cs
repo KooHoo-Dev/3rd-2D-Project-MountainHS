@@ -24,13 +24,12 @@ namespace FTL
         {
             base.Awake();
             type = ERoomType.Shield;
-            maxPower = 8;
             chargeProgress = 0f;
         }
 
         private void Update()
         {
-            SetMaxShieldCountByPower(power);
+            SetMaxShieldCountByPower(Power);
             UpdateShield();
         }
 

@@ -1,32 +1,49 @@
 using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using Utilities;
 
 namespace FTL
 {
     /// <summary>
     /// GameManager는 전투 종료, 게임 종료 같은 씬간 정보를 관리
-    /// 싱글톤 써야함
     /// </summary>
     public class GameManager : SingletonBase<GameManager>
     {
-        /// <summary>
-        /// 이것도 이게 맞나...
-        /// 게임 종료 상태를 읽어오는게 아니라
-        /// 특정 조건이면 그냥 다음 화면으로 가는게 맞는거 같은데
-        /// 아 그냥 조건문에 넣을 함수로 쓰는건 ㅇㅈ
-        /// </summary>
-        /// <returns></returns>
+        private const string BATTLE_SCENE = "BattleScene";
+
+        public bool IsGameContextEmpty => gameContext == null;
+        public PlayerController Player;
+
+
         [SerializeField] private MainUIController mainUIController;
         [field: SerializeField] public EBattleResult BattleResult { get; set; }
-
-        private void Update()
-        {
-            //TestHandleBattleResult();
-        }
+        private GameContext gameContext;
         
+        private void OnEnable()
+        {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void OnDisable()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
+        {
+            if (scene.name != BATTLE_SCENE)
+            {
+                return;
+            }
+
+            SceneBinder sceneBinder = FindFirstObjectByType<SceneBinder>();
+            sceneBinder.BindSceneObjects(gameContext);
+        }
+
         public void HandleBattleResult(EBattleResult eBattleResult)
         {
             // 함선이 파괴되면
@@ -43,16 +60,21 @@ namespace FTL
                     Debug.Log("Player all crew dead.");
                     break;
                 case EBattleResult.EnemyShipDestroyed:
+                    SetGameContext(Player);
+                    gameContext.ScrapAmount += 100;
                     mainUIController.MoveScene(ESceneIndex.BattlePrepare);
                     Debug.Log("Enemy ship destroyed.");
                     break;
                 case EBattleResult.EnemyAllCrewDead:
+                    SetGameContext(Player);
+                    gameContext.ScrapAmount += 200;
                     mainUIController.MoveScene(ESceneIndex.BattlePrepare);
                     Debug.Log("Enemy all crew dead.");
                     break;
                 case EBattleResult.PlayerRun:
                     // 전투준비 화면으로 이동
                     // 어떤 Uicontroller인지 몰라도 얘한테 시켜서 전투준비화면으로 이동
+                    SetGameContext(Player);
                     mainUIController.MoveScene(ESceneIndex.BattlePrepare);
                     Debug.Log("Player run.");
                     break;
@@ -68,6 +90,54 @@ namespace FTL
             HandleBattleResult(EBattleResult.PlayerRun);
         }
 
+        public void SetGameContext(List<Room> rooms, List<FacilitySystem> facilities, List<CrewController> crews, int shipHp, int scrapAmount, int shipReactorCapacity)
+        {
+            if (gameContext == null)
+            {
+                gameContext = new GameContext(rooms, facilities, crews, scrapAmount, shipHp, shipReactorCapacity);
+            }
+            else
+            {
+                gameContext.SetGameContext(rooms, facilities, crews, scrapAmount, shipHp, shipReactorCapacity);
+            }
+        }
+
+        public void SetGameContext(PlayerController player)
+        {
+            List<Room> rooms = player.Rooms;
+            List<FacilitySystem> facilities = player.FacilitySystems;
+            List<CrewController> crews = player.Crews;
+            if (gameContext == null)
+            {
+                gameContext = new GameContext(rooms, facilities, crews, player.ScrapAmount, player.Hp, player.PowerSystem.GetReactorMaxPower);
+            }
+            else
+            {
+                gameContext.SetGameContext(rooms, facilities, crews, player.ScrapAmount, player.Hp, player.PowerSystem.GetReactorMaxPower);
+            }
+        }
+
+        //public void AddScrap(int amount = 1)
+        //{
+        //    if (gameContext == null)
+        //    {
+        //        Debug.LogError("GameContext is null. Cannot add scrap.");
+        //        return;
+        //    }
+        //    gameContext.ScrapAmount += amount;
+        //}
+
+        public int GetScrap()
+        {
+            if (gameContext == null)
+            {
+                Debug.LogError("GameContext is null. Cannot get scrap.");
+                return 0;
+            }
+            return gameContext.ScrapAmount;
+        }
+
+        #region
         public void TestHandleBattleResult()
         {
             if (SimpleInput.GetKeyDown(Key.Digit1))
@@ -84,5 +154,6 @@ namespace FTL
                 HandleBattleResult(BattleResult);
 
         }
+        #endregion
     }
 }

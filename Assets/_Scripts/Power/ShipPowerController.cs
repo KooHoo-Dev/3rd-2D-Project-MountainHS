@@ -5,6 +5,7 @@ namespace FTL
 {
     public class ShipPowerController : MonoBehaviour
     {
+        public int GetReactorMaxPower => reactorSystem.MaxPower;
         [SerializeField] protected ReactorSystem reactorSystem;
         [SerializeField] protected List<FacilitySystem> facilities = new List<FacilitySystem>();
         protected readonly Dictionary<ERoomType, int> assignedPowers = new Dictionary<ERoomType, int>();
@@ -108,6 +109,11 @@ namespace FTL
         public void AddReactorPower(int amount)
         {
             reactorSystem.AddMaxPower(amount);
+        }
+
+        public void SetReactorPower(int amount)
+        {
+            reactorSystem.SetMaxPower(amount);
         }
 
         protected FacilitySystem FindFacility(ERoomType facilityType)

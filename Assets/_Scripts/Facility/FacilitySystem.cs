@@ -3,32 +3,29 @@ using UnityEngine;
 
 namespace FTL
 {
-    public class FacilitySystem : MonoBehaviour, IPowerInfo
+    public class FacilitySystem : MonoBehaviour
     {
         public ERoomType Type => type;
         public EFacilityStatus FacilityStatus => facilityStatus;
-        public int MaxPowerLimit => maxPowerLimit;
         public int MaxPower => maxPower;
-        public int Power => power;
-        public int TotalDamage => totalDamage;
-        public bool IsPowered => power > 0;
+        public bool IsPowered => Power > 0;
+        [field: SerializeField] public bool IsAssisted { get; protected set; } = false;
         [field: SerializeField] public float RepairDuration { get; set; } = 7.5f;
         [field: SerializeField] public float RepairProgress { get; set; } = 0f;
-        [field: SerializeField] public bool IsAssisted { get; protected set; } = false;
+        [field: SerializeField] public int MaxPowerLimit { get; set; } = 3;
+        public int TotalDamage;
+        public int Power;
         [SerializeField] protected ERoomType type;
-        [SerializeField] protected int maxPowerLimit = 3;
         [SerializeField] protected int maxPower;
-        [SerializeField] protected int power;
-        [SerializeField] protected int totalDamage;
         protected EFacilityStatus facilityStatus;
 
         protected virtual void Awake()
         {
             IsAssisted = false;
-            power = 0;
-            maxPower = maxPowerLimit;
+            Power = 0;
+            maxPower = MaxPowerLimit;
             facilityStatus = EFacilityStatus.Normal;
-            totalDamage = 0;
+            TotalDamage = 0;
             UpdateFacilityStatus();
         }
 
@@ -39,14 +36,14 @@ namespace FTL
                 return false;
             }
 
-            return power + amount <= maxPower;
+            return Power + amount <= maxPower;
         }
 
         public void AddPower(int amount)
         {
             if (CanAddPower(amount))
             {
-                power += amount;
+                Power += amount;
             }
             UpdateFacilityStatus();
         }
@@ -58,43 +55,43 @@ namespace FTL
                 return;
             }
 
-            power = Mathf.Max(power - amount, 0);
+            Power = Mathf.Max(Power - amount, 0);
             UpdateFacilityStatus();
         }
 
         public virtual void TakeDamage(int amount)
         {
-            int newDamage = totalDamage + amount;
-            newDamage = Mathf.Min(newDamage, maxPowerLimit);
-            totalDamage = newDamage;
-            maxPower = maxPowerLimit - newDamage;
+            int newDamage = TotalDamage + amount;
+            newDamage = Mathf.Min(newDamage, MaxPowerLimit);
+            TotalDamage = newDamage;
+            maxPower = MaxPowerLimit - newDamage;
 
             UpdateFacilityStatus();
         }
 
         public void Repair(int amount)
         {
-            totalDamage = Mathf.Max(totalDamage-amount, 0);
+            TotalDamage = Mathf.Max(TotalDamage-amount, 0);
 
-            maxPower = maxPowerLimit - totalDamage;
+            maxPower = MaxPowerLimit - TotalDamage;
             UpdateFacilityStatus();
         }
 
         public void UpdateFacilityStatus()
         {
-            if (totalDamage == maxPowerLimit)
+            if (TotalDamage == MaxPowerLimit)
             {
                 facilityStatus = EFacilityStatus.Broked;
             }
-            else if (totalDamage > 0 && totalDamage < maxPowerLimit)
+            else if (TotalDamage > 0 && TotalDamage < MaxPowerLimit)
             {
                 facilityStatus = EFacilityStatus.Damaged;
             }
-            else if (power == 0)
+            else if (Power == 0)
             {
                 facilityStatus = EFacilityStatus.Disabled;
             }
-            else if (totalDamage == 0)
+            else if (TotalDamage == 0)
             {
                 facilityStatus = EFacilityStatus.Normal;
             }
@@ -102,7 +99,7 @@ namespace FTL
 
         public int HandlePowerOverflow()
         {
-            int overflowAmount = power - maxPower;
+            int overflowAmount = Power - maxPower;
             if (overflowAmount < 0)
             {
                 return 0;

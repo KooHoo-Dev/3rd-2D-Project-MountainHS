@@ -19,6 +19,15 @@ namespace FTL
         [field: SerializeField] public int MaxCrewCapacity { get; private set; }
         [field: SerializeField] public int Id { get; private set; }
 
+        public Room(Room room)
+        {
+            Id = room.Id;
+            Type = room.Type;
+            LocalPosition = room.LocalPosition;
+            GlobalPosition = room.GlobalPosition;
+            MaxCrewCapacity = room.MaxCrewCapacity;
+            neighborRoomIds = new List<int>(room.neighborRoomIds);
+        }
         public void SetRoomData(Room room)
         {
             Id = room.Id;

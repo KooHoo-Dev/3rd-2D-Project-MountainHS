@@ -21,10 +21,10 @@ namespace FTL
         [Header("Ship Data")]
         [field: SerializeField] public ShipData ShipData { get; private set; }
 
-        [field: SerializeField] public int Hp { get; private set; }
+        [field: SerializeField] public int Hp { get; set; }
 
         [Header("Power System")]
-        [SerializeField] protected ShipPowerController powerSystem;
+        public ShipPowerController PowerSystem;
 
         [Header("Room")]
         [SerializeField] private GameObject roomPrefab;
@@ -39,21 +39,22 @@ namespace FTL
         [SerializeField] protected int crewCount = 3;
 
         public List<CrewController> Crews { get; set; } = new List<CrewController>();
-        protected List<FacilitySystem> facilitySystems = new List<FacilitySystem>() ;
+        public List<FacilitySystem> FacilitySystems = new List<FacilitySystem>() ;
         protected CrewSystem crewSystem;
         protected WeaponSystem weaponSystem;
 
         protected virtual void Awake()
         {
             Hp = ShipData.MaxHp;
-            facilitySystems.Add(GetComponent<WeaponSystem>());
-            facilitySystems.Add(GetComponent<EngineSystem>());
-            facilitySystems.Add(GetComponent<ShieldSystem>());
+            FacilitySystems.Add(GetComponent<WeaponSystem>());
+            FacilitySystems.Add(GetComponent<EngineSystem>());
+            FacilitySystems.Add(GetComponent<ShieldSystem>());
             crewSystem = GetComponent<CrewSystem>();
 
             Ownership = GetComponentInChildren<ShipOwnership>();
 
             weaponSystem = (WeaponSystem)GetFacilitySystemByERoomType(ERoomType.Weapon);
+            PowerSystem = GetComponent<ShipPowerController>();
 
             InitRooms();
             InitCrews();
@@ -64,9 +65,8 @@ namespace FTL
                 {
                     GameObject roomObject = Instantiate(roomPrefab, roomGroupTransform);
                     RoomViewer roomViewer = roomObject.GetComponent<RoomViewer>();
-                    Room room = new Room();
+                    Room room = new Room(ShipData.Rooms[i]);
                     // RoomData 초기화 함수 생성
-                    room.SetRoomData(ShipData.Rooms[i]);
                     roomObject.transform.localPosition = room.LocalPosition;
                     room.GlobalPosition = roomObject.transform.position;
                     roomViewer.Room = room;
@@ -155,11 +155,11 @@ namespace FTL
             switch (roomType)
             {
                 case ERoomType.Weapon:
-                    return facilitySystems[(int)ERoomType.Weapon];
+                    return FacilitySystems[(int)ERoomType.Weapon];
                 case ERoomType.Engine:
-                    return facilitySystems[(int)ERoomType.Engine];
+                    return FacilitySystems[(int)ERoomType.Engine];
                 case ERoomType.Shield:
-                    return facilitySystems[(int)ERoomType.Shield];
+                    return FacilitySystems[(int)ERoomType.Shield];
                 default:
                     throw new ArgumentException("Invalid room type");
             }
@@ -168,8 +168,7 @@ namespace FTL
 
         public void TakeDamage(int damage)
         {
-            int damagedHp = Hp - damage;
-            Hp = damagedHp < 0 ? 0 : damagedHp;
+            Hp = Mathf.Max(0, Hp - damage);
         }
 
         public void TakeDamageToRoom(ProjectileController projectile, int roomId)
@@ -186,18 +185,23 @@ namespace FTL
                 room.TakeDamageToFacility(damage);
             }
 
+            CheckGameOver();
+        }
+
+        private void CheckGameOver()
+        {
             if (crewSystem.IsAllCrewDead)
             {
-                EBattleResult battleResult = (Ownership.ShipSide == EShipSide.Player) 
-                    ? EBattleResult.PlayerAllCrewDead 
+                EBattleResult battleResult = (Ownership.ShipSide == EShipSide.Player)
+                    ? EBattleResult.PlayerAllCrewDead
                     : EBattleResult.EnemyAllCrewDead;
                 StartCoroutine(DeadCoroutine(DEAD_ANIMATION_TIME, battleResult));
             }
 
             if (IsDead)
             {
-                EBattleResult battleResult = (Ownership.ShipSide == EShipSide.Player) 
-                    ? EBattleResult.PlayerShipDestroyed 
+                EBattleResult battleResult = (Ownership.ShipSide == EShipSide.Player)
+                    ? EBattleResult.PlayerShipDestroyed
                     : EBattleResult.EnemyShipDestroyed;
                 StartCoroutine(DeadCoroutine(DEAD_ANIMATION_TIME, battleResult));
             }
@@ -221,7 +225,7 @@ namespace FTL
                 return;
             }
 
-            powerSystem.TryAllocatePower(facilityType);
+            PowerSystem.TryAllocatePower(facilityType);
         }
 
         public void RequestDeallocatePower(ERoomType facilityType)
@@ -231,7 +235,7 @@ namespace FTL
                 return;
             }
 
-            powerSystem.TryDeallocatePower(facilityType);
+            PowerSystem.TryDeallocatePower(facilityType);
         }
 
         public virtual IEnumerator DeadCoroutine(float seconds, EBattleResult result)

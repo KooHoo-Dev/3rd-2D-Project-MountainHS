@@ -9,7 +9,6 @@ namespace FTL
         [SerializeField] private Image facilityIcon;
         [SerializeField] private Image assistIcon;
         private Image repairBar;
-        private FacilitySystem facilitySystem;
 
         protected override void Awake()
         {
@@ -17,7 +16,6 @@ namespace FTL
             facilityIcon = transform.GetChild(1).GetComponent<Image>();
             assistIcon = transform.GetChild(2).GetComponent<Image>();
             repairBar = transform.GetChild(3).GetComponent<Image>();
-            facilitySystem = powerSystemMono as FacilitySystem;
         }
 
         private void Start()
@@ -84,7 +82,7 @@ namespace FTL
         private void UpdatePowerBars(int power, int maxPower, int maxPowerLimit, int totalDamage)
         {
             // 만약 현재 powerBarSprites 수가 실제 totalPower 와 일치하지 않는다면 생성
-            if (barSprites.Count < maxPower)
+            if (barSprites.Count < maxPowerLimit)
             {
                 int n = maxPower - barSprites.Count;
                 for (int i = 0; i < n; i++)

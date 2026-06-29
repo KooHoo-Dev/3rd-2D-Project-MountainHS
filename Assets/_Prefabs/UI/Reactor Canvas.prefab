@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1943346400954111763}
   - component: {fileID: 410578555419080363}
   - component: {fileID: 1133870547235061866}
-  - component: {fileID: 4990871620251436454}
+  - component: {fileID: 7313487476208549096}
   m_Layer: 5
   m_Name: Reactor Canvas
   m_TagString: Untagged
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &4990871620251436454
+--- !u!114 &7313487476208549096
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,13 +112,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 824382629805907467}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d27bbb22a67eb0041947e21ab5dc7a3a, type: 3}
+  m_Script: {fileID: 11500000, guid: 9dc4e55bef2f25e4f8653dc02d16eab2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FTL.PowerViewer
+  m_EditorClassIdentifier: Assembly-CSharp::FTL.ReactorViewer
   barPrefab: {fileID: 4545221981191168617, guid: 4392d3ccb84dd464abe0827b8357f8e7, type: 3}
-  barGroup: {fileID: 6453773325057629454}
+  barGroupTransform: {fileID: 1329070579711730452}
   barSprites: []
-  powerSystemMono: {fileID: 0}
+  reactorSystem: {fileID: 0}
 --- !u!1001 &5897191646992608270
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -244,10 +244,5 @@ PrefabInstance:
 --- !u!224 &1329070579711730452 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4874801523424939802, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
-  m_PrefabInstance: {fileID: 5897191646992608270}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6453773325057629454 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 596551216395628800, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
   m_PrefabInstance: {fileID: 5897191646992608270}
   m_PrefabAsset: {fileID: 0}

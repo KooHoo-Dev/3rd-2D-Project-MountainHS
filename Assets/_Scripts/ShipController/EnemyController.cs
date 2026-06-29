@@ -13,5 +13,6 @@ namespace FTL
             weaponSystem.TargetingSystem = targetingSystem;
             Ownership.ShipSide = EShipSide.Enemy0;
         }
+
     }
 }

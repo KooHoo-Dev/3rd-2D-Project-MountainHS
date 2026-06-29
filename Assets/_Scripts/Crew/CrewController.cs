@@ -90,7 +90,7 @@ namespace FTL
         private bool CanMoveToLowPosition()
         {
             Vector3 roomAvailablePosition = CurrentRoom.GetCrewPosition(this, Offset);
-            bool canMoveToLowPosition = roomAvailablePosition != transform.position;
+            bool canMoveToLowPosition = roomAvailablePosition != crewSpriteTransform.position;
             return canMoveToLowPosition;
         }
 

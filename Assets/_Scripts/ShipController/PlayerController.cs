@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utilities;
@@ -8,6 +10,7 @@ namespace FTL
     public class PlayerController : ShipController
     {
         [Header("Player Settings")]
+        [field: SerializeField] public int ScrapAmount { get; set; }
         [SerializeField] private LayerMask clickableLayer;
 
         private ERoomType aKeyFacilityType = ERoomType.Shield;
@@ -16,6 +19,15 @@ namespace FTL
         private bool oneShotBool = true;
         private bool oneShotBool2 = true;
 
+        protected override void Awake()
+        {
+            base.Awake();
+            GameManager.Instance.Player = this;
+            if (GameManager.Instance.IsGameContextEmpty)
+            {
+                GameManager.Instance.SetGameContext(this);
+            }
+        }
         private void Start()
         {
             Ownership.ShipSide = EShipSide.Player;
@@ -49,31 +61,6 @@ namespace FTL
             // 사용자 클릭 정보 리턴
             HandleMouse();
 
-            void TestIncreaseReactorPower()
-            {
-                if (SimpleInput.GetKeyDown(Key.Space))
-                {
-                    powerSystem.AddReactorPower(1);
-                }
-            }
-
-            void TestHandleFacilityPower(bool isShiftPressed)
-            {
-                if (SimpleInput.GetKeyDown(Key.A))
-                {
-                    HandlePowerInput(aKeyFacilityType, isShiftPressed);
-                }
-
-                if (SimpleInput.GetKeyDown(Key.S))
-                {
-                    HandlePowerInput(sKeyFacilityType, isShiftPressed);
-                }
-
-                if (SimpleInput.GetKeyDown(Key.D))
-                {
-                    HandlePowerInput(dKeyFacilityType, isShiftPressed);
-                }
-            }
         }
 
         private void HandleMouse()
@@ -177,6 +164,44 @@ namespace FTL
             }
         }
 
+        public void IncreaseReactorPower(int amount)
+        {
+            PowerSystem.AddReactorPower(amount);
+        }
+
+        public void SetReactorPower(int amount)
+        {
+            PowerSystem.SetReactorPower(amount);
+        }
+
+        public void SetFacilitySystems(List<FacilityState> facilityStates)
+        {
+            for (ERoomType type = ERoomType.Weapon; type <= ERoomType.Shield; type++)
+            {
+                int index = (int)type;
+                FacilitySystem facility = FacilitySystems[index];
+                FacilityState facilityState = facilityStates[index];
+                facility.TotalDamage = facilityState.TotalDamage;
+                facility.MaxPowerLimit = facilityState.MaxPowerLimit;
+                facility.Power = facilityState.Power;
+            }
+        }
+
+        public void SetCrews(List<CrewState> crewStates)
+        {
+            for (int i = 0; i < Crews.Count; i++)
+            {
+                CrewController crew = Crews[i];
+                CrewState crewState = crewStates[i];
+                Room room = GetRoomByIdOrNull(crewState.LastRoomId);
+                crew.CurrentRoom.ReduceCrew(crew);
+                crew.InitStartRoom(room);
+                crew.Hp = crewState.Hp;
+                crew.Name = crewState.Name;
+            }
+        }
+
+
         #region Test Method
         private void TestOverlapPoint(Collider2D clickCol)
         {
@@ -191,6 +216,32 @@ namespace FTL
             if (oneShotBool)
             {
                 StartCoroutine(Coroutine1(mousePosition, mousePosition));
+            }
+        }
+
+        private void TestIncreaseReactorPower()
+        {
+            if (SimpleInput.GetKeyDown(Key.Space))
+            {
+                IncreaseReactorPower(1);
+            }
+        }
+
+        private void TestHandleFacilityPower(bool isShiftPressed)
+        {
+            if (SimpleInput.GetKeyDown(Key.A))
+            {
+                HandlePowerInput(aKeyFacilityType, isShiftPressed);
+            }
+
+            if (SimpleInput.GetKeyDown(Key.S))
+            {
+                HandlePowerInput(sKeyFacilityType, isShiftPressed);
+            }
+
+            if (SimpleInput.GetKeyDown(Key.D))
+            {
+                HandlePowerInput(dKeyFacilityType, isShiftPressed);
             }
         }
 
@@ -217,6 +268,7 @@ namespace FTL
             oneShotBool2 = true;
             yield break;
         }
+
         #endregion
     }
 }

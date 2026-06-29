@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace FTL
 {
-    public class ReactorSystem : MonoBehaviour, IPowerInfo
+    public class ReactorSystem : MonoBehaviour
     {
         public int MaxPower => maxPower;
         public int Power => power;
@@ -40,6 +40,11 @@ namespace FTL
             }
 
             power = Mathf.Max(power - amount, 0);
+        }
+
+        public void SetMaxPower(int amount)
+        {
+            maxPower = amount;
         }
     }
 }

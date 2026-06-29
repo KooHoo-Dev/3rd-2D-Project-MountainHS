@@ -26,7 +26,7 @@ namespace FTL
         {
             UpdateEscapeCharge();
             UpdateCanEscape();
-            prevPower = power;
+            prevPower = Power;
         }
 
         private void UpdateCanEscape()
@@ -43,7 +43,7 @@ namespace FTL
 
         public void UpdateEscapeCharge()
         {
-            if (power == 0)
+            if (Power == 0)
             {
                 chargeProgress = 0f;
                 return;
@@ -57,12 +57,12 @@ namespace FTL
 
         private float GetNewChargeSpeed(float chargeSpeed)
         {
-            if (power == 0)
+            if (Power == 0)
             {
                 return 0f;
             }
 
-            return (1 + 0.5f * (power - 1)) 
+            return (1 + 0.5f * (Power - 1)) 
                 * (IsAssisted ? CHARGE_SPEED_ASSIST_MULTIPLIER : 1f);
         }
     }
