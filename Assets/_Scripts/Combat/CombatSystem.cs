@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Utilities;
 
 namespace FTL
@@ -13,6 +13,23 @@ namespace FTL
         private Dictionary<Collider2D, EShipSide> colToNextShipAreaDict = new Dictionary<Collider2D, EShipSide>();
         private Dictionary<EShipSide, Collider2D> shipAreaToColDict = new Dictionary<EShipSide, Collider2D>();
 
+        //protected override void Awake()
+        //{
+        //    if (instance == null)
+        //    {
+        //        instance = this as CombatSystem;
+        //        DontDestroyOnLoad(gameObject);
+
+        //        OnInitialize();
+        //        CombatSystem.isInitialized = true;
+        //    }
+        //    else if (instance != this)
+        //    {
+        //        Debug.LogWarning($"[Singleton] 중복 인스턴스 감지됨: {gameObject.name} 파괴");
+        //        Destroy(gameObject);
+        //    }
+        //}
+
         protected override void OnInitialize()
         {
             base.OnInitialize();
@@ -20,6 +37,21 @@ namespace FTL
             shipAreaToColDict.Add(EShipSide.Enemy0, shipAreas[1]);
             colToNextShipAreaDict.Add(shipAreas[0], EShipSide.Enemy0);
             colToNextShipAreaDict.Add(shipAreas[1], EShipSide.Player);
+        }
+
+        private void OnEnable()
+        {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void OnDisable()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
+        {
+
         }
 
         /// <summary>
@@ -123,5 +155,6 @@ namespace FTL
 
             return null;
         }
+
     }
 }
