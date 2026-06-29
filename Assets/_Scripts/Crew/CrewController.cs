@@ -32,7 +32,7 @@ namespace FTL
             TargetRoom = room;
             CurrentRoom.ReduceCrew(this);
             // 이동하기전 보조 정지하고 가야함
-            if (CurrentRoom.Crews.Count == 0)
+            if (CurrentRoom.IsEmptyCrew())
             {
                 AssistFacility(false);
             }
@@ -65,8 +65,7 @@ namespace FTL
 
             if (CurrentRoom.HasFacility)
             {
-                FacilitySystem facility = CurrentRoom.FacilitySystem;
-                switch (facility.FacilityStatus)
+                switch (CurrentRoom.GetFacilityStatus())
                 {
                     case EFacilityStatus.Damaged:
                     case EFacilityStatus.Broked:
@@ -79,7 +78,7 @@ namespace FTL
                         crewStatus = ECrewStatus.Idle;
                         break;
                     default:
-                        Debug.LogWarning($"CrewController: UpdateStatus: Unexpected facility status {facility.FacilityStatus} in room {CurrentRoom.Id}");
+                        Debug.LogWarning($"CrewController: UpdateStatus: Unexpected facility status {CurrentRoom.GetFacilityStatus()} in room {CurrentRoom.Id}");
                         break;
                 }
             }
@@ -87,9 +86,7 @@ namespace FTL
 
         private bool CanMoveToLowPosition()
         {
-            int crewIndexInCurrentRoom = CurrentRoom.Crews.IndexOf(this);
-            Vector2 crewOffset = (Vector2)(offset * crewIndexInCurrentRoom);
-            Vector3 roomAvailablePosition = CurrentRoom.GlobalPosition + crewOffset;
+            Vector3 roomAvailablePosition = CurrentRoom.GetCrewPosition(this, offset);
             bool canMoveToLowPosition = roomAvailablePosition != transform.position;
             return canMoveToLowPosition;
         }
@@ -111,9 +108,7 @@ namespace FTL
             if (hasValidTargetRoom)
             {
                 //bool hasReachedTargetX = transform.position.x == TargetRoom.GlobalPosition.x;
-                int crewIndexInRoom = TargetRoom.Crews.IndexOf(this);
-                Vector2 crewOffset = (Vector2)(offset * crewIndexInRoom);
-                Vector3 targetPosition = TargetRoom.GlobalPosition + crewOffset;
+                Vector3 targetPosition = TargetRoom.GetCrewPosition(this, offset);
                 bool hasReachedTarget = transform.position == targetPosition;
                 if (hasReachedTarget)
                 {

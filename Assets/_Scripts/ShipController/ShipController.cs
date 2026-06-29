@@ -12,6 +12,8 @@ namespace FTL
     [DefaultExecutionOrder(1000)]
     public class ShipController : MonoBehaviour, IDamageable, IDeadable
     {
+        private const float DEAD_ANIMATION_TIME = 5f;
+
         public bool IsDead => Hp == 0;
         public ShipOwnership Ownership { get; private set; }
         [Header("Ship Data")]
@@ -78,20 +80,12 @@ namespace FTL
 
             void InitCrews()
             {
-                //CrewController[] crews = GetComponentsInChildren<CrewController>();
                 for (int i = 0; i < crewCount; i++)
                 {
-                    // 승무원 시작 방 하드 코딩
-                    //CrewController crew = crews[i];
-                    //Room room = Rooms[i];
-                    //Crews.Add(crew);
-                    //crew.InitStartRoom(room);
-
                     GameObject crewObject = Instantiate(crewPrefab, crewGroupTransform);
                     CrewController crew = crewObject.GetComponent<CrewController>();
                     Room room = Rooms[i];
                     crew.InitStartRoom(room);
-                    crew.CrewSystem = crewSystem;
                     Crews.Add(crew);
                 }
             }
@@ -163,11 +157,6 @@ namespace FTL
         {
             int damagedHp = Hp - damage;
             Hp = damagedHp < 0 ? 0 : damagedHp;
-
-            if (IsDead)
-            {
-                StartCoroutine(DeadCoroutine(5f));
-            }
         }
 
         public void TakeDamageToRoom(ProjectileController projectile, int roomId)
@@ -181,7 +170,23 @@ namespace FTL
             bool canDamageFacility = room != null && room.HasFacility;
             if (canDamageFacility)
             {
-                room.FacilitySystem.TakeDamage(damage);
+                room.TakeDamageToFacility(damage);
+            }
+
+            if (crewSystem.IsAllCrewDead)
+            {
+                EBattleResult battleResult = (Ownership.ShipSide == EShipSide.Player) 
+                    ? EBattleResult.PlayerAllCrewDead 
+                    : EBattleResult.EnemyAllCrewDead;
+                StartCoroutine(DeadCoroutine(DEAD_ANIMATION_TIME, battleResult));
+            }
+
+            if (IsDead)
+            {
+                EBattleResult battleResult = (Ownership.ShipSide == EShipSide.Player) 
+                    ? EBattleResult.PlayerShipDestroyed 
+                    : EBattleResult.EnemyShipDestroyed;
+                StartCoroutine(DeadCoroutine(DEAD_ANIMATION_TIME, battleResult));
             }
         }
 
@@ -216,9 +221,19 @@ namespace FTL
             powerSystem.TryDeallocatePower(facilityType);
         }
 
-        public virtual IEnumerator DeadCoroutine(float seconds)
+        public virtual IEnumerator DeadCoroutine(float seconds, EBattleResult result)
         {
-            yield break;
+            yield return new WaitForSeconds(seconds);
+            GameManager.Instance.HandleBattleResult(result);
+            gameObject.SetActive(false);
         }
+
+        #region Test Method
+        [ContextMenu("TakeDamage 1")]
+        public void TestTakeDamage()
+        {
+            TakeDamage(1);
+        }
+        #endregion
     }
 }

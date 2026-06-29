@@ -4,6 +4,6 @@ namespace FTL
 {
     public interface IDeadable
     {
-        public IEnumerator DeadCoroutine(float seconds);
+        public IEnumerator DeadCoroutine(float seconds, EBattleResult result);
     }
 }

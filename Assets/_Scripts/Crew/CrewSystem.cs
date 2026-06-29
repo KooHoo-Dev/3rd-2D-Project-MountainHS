@@ -18,12 +18,14 @@ namespace FTL
         [SerializeField] private bool isPlayer = true;
         [SerializeField] private Room targetRoom = null;
 
-        private void Awake()
+        private void Start()
         {
             CrewController[] crews = GetComponentsInChildren<CrewController>();
             for (int i = 0; i < crews.Length; i++)
             {
-                this.crews.Add(crews[i]);
+                CrewController crew = crews[i];
+                this.crews.Add(crew);
+                crew.CrewSystem = this;
             }
             targetRoom = null;
 
@@ -45,7 +47,7 @@ namespace FTL
         {
             for (int i = 0; i < selectedCrews.Count; i++)
             {
-                bool isTargetRoomFull = targetRoom.MaxCrewCapacity == targetRoom.Crews.Count;
+                bool isTargetRoomFull = targetRoom.IsFull();
                 if (isTargetRoomFull)
                 {
                     Debug.LogWarning($"Room {targetRoom.Id} is full. Cannot move crew.");
@@ -98,20 +100,20 @@ namespace FTL
             Room room = null;
             for (int i = 0; i < Rooms.Count; i++)
             {
-                if (Rooms[i].Crews.Contains(crew))
+                if (Rooms[i].ContainsCrew(crew))
                 {
                     room = Rooms[i];
                 }
             }
             room.ReduceCrew(crew);
 
-            if (IsAllCrewDead)
-            {
-                EBattleResult battleResult = (ship.Ownership.ShipSide == EShipSide.Player) 
-                    ? EBattleResult.PlayerAllCrewDead 
-                    : EBattleResult.EnemyAllCrewDead;
-                GameManager.Instance.HandleBattleResult(battleResult);
-            }
+            //if (IsAllCrewDead)
+            //{
+            //    EBattleResult battleResult = (ship.Ownership.ShipSide == EShipSide.Player) 
+            //        ? EBattleResult.PlayerAllCrewDead 
+            //        : EBattleResult.EnemyAllCrewDead;
+            //    GameManager.Instance.HandleBattleResult(battleResult);
+            //}
         }
 
     }

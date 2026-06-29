@@ -178,37 +178,6 @@ namespace FTL
             }
         }
 
-        private IEnumerator Coroutine2(Collider2D clickCol)
-        {
-            oneShotBool2 = false;
-            yield return new WaitForSeconds(1f);
-            if (clickCol != null)
-            {
-                Debug.Log($"{clickCol.gameObject.name}");
-            }
-            else
-            {
-                Debug.Log($"Nothing is clicked in targetLayer!");
-            }
-            oneShotBool2 = true;
-            yield break;
-        }
-
-        private IEnumerator Coroutine1(Vector3 a, Vector3 b)
-        {
-            oneShotBool = false;
-            yield return new WaitForSeconds(1f);
-            Debug.Log($"n:{a}, o:{b}");
-            oneShotBool = true;
-        }
-
-        public override IEnumerator DeadCoroutine(float seconds)
-        {
-            yield return new WaitForSeconds(seconds);
-            GameManager.Instance.HandleBattleResult(EBattleResult.PlayerShipDestroyed);
-            gameObject.SetActive(false);
-        }
-
         #region Test Method
         private void TestOverlapPoint(Collider2D clickCol)
         {
@@ -224,6 +193,30 @@ namespace FTL
             {
                 StartCoroutine(Coroutine1(mousePosition, mousePosition));
             }
+        }
+
+        private IEnumerator Coroutine1(Vector3 a, Vector3 b)
+        {
+            oneShotBool = false;
+            yield return new WaitForSeconds(1f);
+            Debug.Log($"n:{a}, o:{b}");
+            oneShotBool = true;
+        }
+
+        private IEnumerator Coroutine2(Collider2D clickCol)
+        {
+            oneShotBool2 = false;
+            yield return new WaitForSeconds(1f);
+            if (clickCol != null)
+            {
+                Debug.Log($"{clickCol.gameObject.name}");
+            }
+            else
+            {
+                Debug.Log($"Nothing is clicked in targetLayer!");
+            }
+            oneShotBool2 = true;
+            yield break;
         }
         #endregion
     }

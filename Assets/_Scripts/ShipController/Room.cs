@@ -56,6 +56,33 @@ namespace FTL
             Crews.Remove(crew);
         }
 
+        public bool IsFull()
+        {
+            return Crews.Count == MaxCrewCapacity;
+        }
+
+        public bool IsEmptyCrew()
+        {
+            return Crews.Count == 0;
+        }
+
+        public bool ContainsCrew(CrewController crew)
+        {
+            return Crews.Contains(crew);
+        }
+
+        public Vector3 GetCrewPosition(CrewController crew, Vector3 offset)
+        {
+            int crewIndex = Crews.IndexOf(crew);
+            Vector2 crewOffset = (Vector2)(offset * crewIndex);
+            return GlobalPosition + crewOffset;
+        }
+
+        public EFacilityStatus GetFacilityStatus()
+        {
+            return FacilitySystem.FacilityStatus;
+        }
+
         public void RepairFacility()
         {
             float repairDuration = FacilitySystem.RepairDuration;
@@ -74,6 +101,11 @@ namespace FTL
         public void ApplyAssistEffectOnFacility(bool isApplied)
         {
             FacilitySystem.ApplyAssistEffectOnFacility(isApplied);
+        }
+
+        public void TakeDamageToFacility(int damage)
+        {
+            FacilitySystem.TakeDamage(damage);
         }
 
         public void TakeDamageToCrews(int crewDamage)

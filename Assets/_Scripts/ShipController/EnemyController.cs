@@ -13,22 +13,5 @@ namespace FTL
             weaponSystem.TargetingSystem = targetingSystem;
             Ownership.ShipSide = EShipSide.Enemy0;
         }
-
-        //public void TestAllocateShieldPower()
-        //{
-        //    RequestAllocatePower(ERoomType.Shield);
-        //}
-
-        //public void TestDeallocateShieldPower()
-        //{
-        //    RequestDeallocatePower(ERoomType.Shield);
-        //}
-
-        public override IEnumerator DeadCoroutine(float seconds)
-        {
-            yield return new WaitForSeconds(seconds);
-            GameManager.Instance.HandleBattleResult(EBattleResult.EnemyShipDestroyed);
-            gameObject.SetActive(false);
-        }
     }
 }
