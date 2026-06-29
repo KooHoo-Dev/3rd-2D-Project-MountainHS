@@ -129,7 +129,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 596551216395628800, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
       propertyPath: m_Name
-      value: Power Bar Group
+      value: Reactor Bar Group
       objectReference: {fileID: 0}
     - target: {fileID: 1567121697624850857, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
       propertyPath: m_AnchorMax.y

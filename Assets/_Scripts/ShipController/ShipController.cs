@@ -2,9 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using Utilities;
 
 namespace FTL
@@ -31,7 +33,9 @@ namespace FTL
 
         [Header("Crew")]
         [SerializeField] private Transform crewGroupTransform;
+        [SerializeField] private Transform crewSummaryGroupTransform;
         [SerializeField] private GameObject crewPrefab;
+        [SerializeField] private GameObject crewSummaryPrefab;
         [SerializeField] protected int crewCount = 3;
 
         public List<CrewController> Crews { get; set; } = new List<CrewController>();
@@ -84,7 +88,16 @@ namespace FTL
                 {
                     GameObject crewObject = Instantiate(crewPrefab, crewGroupTransform);
                     CrewController crew = crewObject.GetComponent<CrewController>();
+                    CrewViewer crewViewer = crew.GetComponent<CrewViewer>();
                     Room room = Rooms[i];
+                    GameObject crewSummaryObject = Instantiate(crewSummaryPrefab, crewSummaryGroupTransform);
+                    Image crewHpBar = crewSummaryObject?.GetComponentInChildren<Image>();
+                    TMP_Text crewText = crewSummaryObject?.GetComponentInChildren<TMP_Text>();
+
+                    if (crewHpBar != null)
+                        crewViewer.SetHpBar(crewHpBar);
+                    if (crewText != null)
+                        crewViewer.SetText(crewText);
                     crew.InitStartRoom(room);
                     Crews.Add(crew);
                 }

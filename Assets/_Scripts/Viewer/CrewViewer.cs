@@ -1,4 +1,7 @@
+using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace FTL
 {
@@ -6,34 +9,44 @@ namespace FTL
     {
         private static readonly int GLOW_EFFECT = Shader.PropertyToID("_Glow");
 
-        private CrewController crewController;
-        private SpriteRenderer spriteRenderer;
+        private CrewController crew;
+        private SpriteRenderer crewSpriteRenderer;
         private MaterialPropertyBlock propertyBlock;
+        private TMP_Text text;
+        private Image hpBar; 
         private bool isSelected;
 
         private void Awake()
         {
-            crewController = GetComponent<CrewController>();
-            spriteRenderer = GetComponent<SpriteRenderer>();
+            crew = GetComponent<CrewController>();
+            crewSpriteRenderer = GetComponent<SpriteRenderer>();
             propertyBlock = new MaterialPropertyBlock();
             isSelected = false;
             SetSelectedState(false);
         }
 
-        private void Update()
+        private void LateUpdate()
         {
-            if (isSelected == crewController.IsSelected)
-            {
-                return;
-            }
+            SetSelectedState(crew.IsSelected);
+            UpdateViewer();
+        }
 
-            SetSelectedState(crewController.IsSelected);
+        private void UpdateViewer()
+        {
+            text.SetText(crew.Name);
+            float fillAmount = Mathf.InverseLerp(0f, crew.MaxHp, crew.Hp);
+            hpBar.fillAmount = fillAmount;
         }
 
         private void SetSelectedState(bool selected)
         {
+            if (isSelected == crew.IsSelected)
+            {
+                return;
+            }
+
             isSelected = selected;
-            spriteRenderer.GetPropertyBlock(propertyBlock);
+            crewSpriteRenderer.GetPropertyBlock(propertyBlock);
 
             if (selected)
             {
@@ -44,7 +57,17 @@ namespace FTL
                 propertyBlock.SetFloat(GLOW_EFFECT, 0f);
             }
 
-            spriteRenderer.SetPropertyBlock(propertyBlock);
+            crewSpriteRenderer.SetPropertyBlock(propertyBlock);
+        }
+
+        public void SetText(TMP_Text text)
+        {
+            this.text = text;
+        }
+
+        public void SetHpBar(Image hpBar)
+        {
+            this.hpBar = hpBar;
         }
     }
 }
