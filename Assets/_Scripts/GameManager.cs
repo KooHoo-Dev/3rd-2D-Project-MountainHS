@@ -107,14 +107,20 @@ namespace FTL
             List<Room> rooms = player.Rooms;
             List<FacilitySystem> facilities = player.FacilitySystems;
             List<CrewController> crews = player.Crews;
-            if (gameContext == null)
+
+            List<FacilityState> facilityStates = new List<FacilityState>();
+            for (int i = 0; i < facilities.Count; i++)
             {
-                gameContext = new GameContext(rooms, facilities, crews, player.ScrapAmount, player.Hp, player.PowerSystem.GetReactorMaxPower);
+                facilityStates.Add(new FacilityState(facilities[i]));
             }
-            else
+
+            List<CrewState> crewStates = new List<CrewState>();
+            for (int i = 0; i < crews.Count; i++)
             {
-                gameContext.SetGameContext(rooms, facilities, crews, player.ScrapAmount, player.Hp, player.PowerSystem.GetReactorMaxPower);
+                crewStates.Add(new CrewState(crews[i]));
             }
+
+            gameContext = new GameContext(rooms, facilityStates, crewStates, player.ScrapAmount, player.Hp, player.PowerSystem.GetReactorMaxPower);
         }
 
         //public void AddScrap(int amount = 1)

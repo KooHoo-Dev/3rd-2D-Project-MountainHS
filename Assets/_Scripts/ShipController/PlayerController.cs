@@ -181,9 +181,7 @@ namespace FTL
                 int index = (int)type;
                 FacilitySystem facility = FacilitySystems[index];
                 FacilityState facilityState = facilityStates[index];
-                facility.TotalDamage = facilityState.TotalDamage;
-                facility.MaxPowerLimit = facilityState.MaxPowerLimit;
-                facility.Power = facilityState.Power;
+                facility.ApplyState(facilityState);
             }
         }
 

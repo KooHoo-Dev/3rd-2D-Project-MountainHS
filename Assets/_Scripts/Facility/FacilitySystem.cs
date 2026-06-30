@@ -69,6 +69,21 @@ namespace FTL
             UpdateFacilityStatus();
         }
 
+        public void ApplyState(FacilityState state)
+        {
+            if (state == null)
+            {
+                return;
+            }
+
+            MaxPowerLimit = Mathf.Max(0, state.MaxPowerLimit);
+            TotalDamage = Mathf.Clamp(state.TotalDamage, 0, MaxPowerLimit);
+            maxPower = MaxPowerLimit - TotalDamage;
+            Power = Mathf.Clamp(state.Power, 0, maxPower);
+
+            UpdateFacilityStatus();
+        }
+
         public void Repair(int amount)
         {
             TotalDamage = Mathf.Max(TotalDamage-amount, 0);

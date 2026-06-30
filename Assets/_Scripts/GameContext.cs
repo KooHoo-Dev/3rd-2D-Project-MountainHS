@@ -48,7 +48,7 @@ namespace FTL
             }
             for (int i = 0; i < crews.Count; i++)
             {
-                CrewStates.Add(new CrewState());
+                CrewStates.Add(new CrewState(crews[i]));
             }
 
             ScrapAmount = scrapAmount;
