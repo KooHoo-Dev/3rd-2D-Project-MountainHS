@@ -7,6 +7,11 @@ namespace FTL
     {
         private void MoveScene(int index)
         {
+            if (index == 0)
+            {
+                GameManager.Instance.TurnOffToggleMenu();
+            }
+
             SceneManager.LoadScene(index);
         }
         public void MoveScene(ESceneIndex eSceneIndex)

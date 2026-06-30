@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Utilities;
 
 namespace FTL
@@ -13,16 +14,67 @@ namespace FTL
     /// </summary>
     public class GameManager : SingletonBase<GameManager>
     {
+        private const string MAINMENU_SCENE = "_MainMenu";
         private const string BATTLE_SCENE = "BattleScene";
+        private const string GAMEOVER_SCENE = "GameOver";
+        private const string BATTLE_PREPARE = "BattlePrepare";
 
         public bool IsGameContextEmpty => gameContext == null;
         public PlayerController Player;
-
-
-        [SerializeField] private MainUIController mainUIController;
         [field: SerializeField] public EBattleResult BattleResult { get; set; }
+
+        [SerializeField] private GameObject buttonGroupObject;
+        [SerializeField] private GameObject toggleMenuObject;
+        [SerializeField] private Button startButton;
+        [SerializeField] private Button mainMenuButton;
+        [SerializeField] private Button nextBattleButton;
+        [SerializeField] private MainUIController mainUIController;
+        [SerializeField] private List<Vector2> startButtonPositions = new List<Vector2>();
+        [SerializeField] private List<Vector2> mainMenuPositions = new List<Vector2>();
+        private List<string> sceneNameList = new List<string>();
+        private Dictionary<string, Vector2> startButtonPositionsDict = new Dictionary<string, Vector2>();
+        private Dictionary<string, Vector2> mainMenuPositionsDict = new Dictionary<string, Vector2>();
+
         private GameContext gameContext;
-        
+
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+            buttonGroupObject = transform.GetChild(0).GetChild(0).gameObject;
+            startButton = buttonGroupObject.transform.GetChild(0).GetComponent<Button>();
+            mainMenuButton = buttonGroupObject.transform.GetChild(1).GetComponent<Button>();
+            nextBattleButton = buttonGroupObject.transform.GetChild(2).GetComponent<Button>();
+            toggleMenuObject = transform.GetChild(0).GetChild(1).gameObject; 
+
+            for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
+            {
+                string path = SceneUtility.GetScenePathByBuildIndex(i);
+                string sceneName = System.IO.Path.GetFileNameWithoutExtension(path);
+                sceneNameList.Add(sceneName);
+            }
+
+            for (int i = 0; i < mainMenuPositions.Count; i++)
+            {
+                startButtonPositionsDict.Add(sceneNameList[i], startButtonPositions[i]);
+                mainMenuPositionsDict.Add(sceneNameList[i], mainMenuPositions[i]);
+            }
+
+            nextBattleButton.gameObject.SetActive(false);
+            toggleMenuObject.SetActive(false);
+        }
+
+        private void Update()
+        {
+            if (SimpleInput.GetKeyDown(Key.Escape))
+            {
+                if (SceneManager.GetActiveScene().name != MAINMENU_SCENE)
+                {
+                    bool isToggleMenuActive = toggleMenuObject.activeSelf;
+                    toggleMenuObject.SetActive(!isToggleMenuActive);
+                }
+            }
+        }
+
         private void OnEnable()
         {
             SceneManager.sceneLoaded += OnSceneLoaded;
@@ -35,13 +87,38 @@ namespace FTL
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
         {
-            if (scene.name != BATTLE_SCENE)
-            {
-                return;
-            }
+            RectTransform startRectTransform = startButton.GetComponent<RectTransform>();
+            RectTransform mainMenuRectTransform = mainMenuButton.GetComponent<RectTransform>();
+            int index = sceneNameList.IndexOf(MAINMENU_SCENE);
 
-            SceneBinder sceneBinder = FindFirstObjectByType<SceneBinder>();
-            sceneBinder.BindSceneObjects(gameContext);
+            startButtonPositionsDict.TryGetValue(scene.name, out Vector2 startButtonPos);
+            mainMenuPositionsDict.TryGetValue(scene.name, out Vector2 mainMenuPos);
+            startRectTransform.anchoredPosition = startButtonPos;
+            mainMenuRectTransform.anchoredPosition = mainMenuPos;
+
+            if (scene.name == BATTLE_SCENE)
+            {
+                SceneBinder sceneBinder = FindFirstObjectByType<SceneBinder>();
+                sceneBinder.BindSceneObjects(gameContext);
+                startButton.gameObject.SetActive(false);
+                mainMenuButton.gameObject.SetActive(false);
+            }
+            else if (scene.name == MAINMENU_SCENE)
+            {
+                startButton.gameObject.SetActive(true);
+                mainMenuButton.gameObject.SetActive(true);
+            }
+            else if (scene.name == GAMEOVER_SCENE)
+            {
+                startButton.gameObject.SetActive(false);
+                mainMenuButton.gameObject.SetActive(true);
+            }
+            else if (scene.name == BATTLE_PREPARE)
+            {
+                startButton.gameObject.SetActive(false);
+                mainMenuButton.gameObject.SetActive(false);
+                nextBattleButton.gameObject.SetActive(true);
+            }
         }
 
         public void HandleBattleResult(EBattleResult eBattleResult)
@@ -159,6 +236,11 @@ namespace FTL
             if (SimpleInput.AnyKeyDown())
                 HandleBattleResult(BattleResult);
 
+        }
+
+        public void TurnOffToggleMenu()
+        {
+            toggleMenuObject.SetActive(false);
         }
         #endregion
     }
