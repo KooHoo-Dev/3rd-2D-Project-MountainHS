@@ -12,7 +12,7 @@ namespace FTL
             player.ScrapAmount = gameContext.ScrapAmount;
             player.SetReactorPower(gameContext.ShipReactorCapacity);
             player.SetFacilitySystems(gameContext.FacilityStates);
-            player.SetCrews(gameContext.CrewStates);
+            player.SetCrewsState(gameContext.CrewStates);
             BindCombatSystem(player, enemy);
         }
 

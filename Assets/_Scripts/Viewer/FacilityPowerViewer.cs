@@ -84,7 +84,7 @@ namespace FTL
             // 만약 현재 powerBarSprites 수가 실제 totalPower 와 일치하지 않는다면 생성
             if (barSprites.Count < maxPowerLimit)
             {
-                int n = maxPower - barSprites.Count;
+                int n = maxPowerLimit - barSprites.Count;
                 for (int i = 0; i < n; i++)
                 {
                     AddBar();

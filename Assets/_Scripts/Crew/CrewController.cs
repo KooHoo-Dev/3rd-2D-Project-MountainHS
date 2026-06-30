@@ -128,6 +128,14 @@ namespace FTL
             }
         }
 
+        public void ApplyCrewState(CrewState crewState, Room room)
+        {
+            CurrentRoom.ReduceCrew(this);
+            InitStartRoom(room);
+            Hp = crewState.Hp;
+            Name = crewState.Name;
+        }
+
         private void HandleStatus()
         {
             switch (crewStatus)

@@ -185,17 +185,14 @@ namespace FTL
             }
         }
 
-        public void SetCrews(List<CrewState> crewStates)
+        public void SetCrewsState(List<CrewState> crewStates)
         {
             for (int i = 0; i < Crews.Count; i++)
             {
                 CrewController crew = Crews[i];
                 CrewState crewState = crewStates[i];
                 Room room = GetRoomByIdOrNull(crewState.LastRoomId);
-                crew.CurrentRoom.ReduceCrew(crew);
-                crew.InitStartRoom(room);
-                crew.Hp = crewState.Hp;
-                crew.Name = crewState.Name;
+                crew.ApplyCrewState(crewState, room);
             }
         }
 
