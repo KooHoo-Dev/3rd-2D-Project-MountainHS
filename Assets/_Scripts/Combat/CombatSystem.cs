@@ -19,79 +19,12 @@ namespace FTL
             base.OnInitialize();
         }
 
-        //private void OnEnable()
-        //{
-        //    SceneManager.sceneLoaded += OnSceneLoaded;
-        //}
-
-        //private void OnDisable()
-        //{
-        //    SceneManager.sceneLoaded -= OnSceneLoaded;
-        //}
-
-        //private void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
-        //{
-        //    if (scene.name != BATTLE_SCENE)
-        //        return;
-
-        //    if (NeedSceneBinding(ships, shipAreas))
-        //    {
-        //        BindSceneObjects();
-        //    }
-        //}
-
-        //private void BindSceneObjects()
-        //{
-        //    PlayerController player = FindFirstObjectByType<PlayerController>();
-        //    EnemyController enemy = FindFirstObjectByType<EnemyController>();
-        //    ShipOwnership playerOwnership = player.Ownership;
-        //    ShipOwnership enemyOwnership = enemy.Ownership;
-        //    Collider2D playerCollider = playerOwnership.GetComponent<Collider2D>();
-        //    Collider2D enemyCollider = enemyOwnership.GetComponent<Collider2D>();
-
-        //    ships = new ShipController[] { player, enemy };
-        //    shipAreas = new Collider2D[] { playerCollider, enemyCollider };
-        //    shipAreaToColDict.Clear();
-        //    colToNextShipAreaDict.Clear();
-        //    shipAreaToColDict.Add(EShipSide.Player, shipAreas[0]);
-        //    shipAreaToColDict.Add(EShipSide.Enemy0, shipAreas[1]);
-        //    colToNextShipAreaDict.Add(shipAreas[0], EShipSide.Enemy0);
-        //    colToNextShipAreaDict.Add(shipAreas[1], EShipSide.Player);
-        //}
-
-        //private bool NeedSceneBinding(ShipController[] ships, Collider2D[] shipAreas)
-        //{
-        //    if (ships == null)
-        //    {
-        //        return true;
-        //    }
-        //    if (shipAreas == null)
-        //    {
-        //        return true;
-        //    }
-
-        //    for (int i = 0; i < ships.Length; i++)
-        //    {
-        //        if (ships[i] == null)
-        //        {
-        //            return true;
-        //        }
-        //    }
-
-        //    for (int i = 0; i < shipAreas.Length; i++)
-        //    {
-        //        if (shipAreas[i] == null)
-        //        {
-        //            return true;
-        //        }
-        //    }
-
-        //    return false;
-        //}
         public void InitCombatSystem(PlayerController player, EnemyController enemy)
         {
             if (NeedSceneBinding() == false)
+            {
                 return;
+            }
 
             ShipOwnership playerOwnership = player.Ownership;
             ShipOwnership enemyOwnership = enemy.Ownership;

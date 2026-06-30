@@ -22,6 +22,8 @@ namespace FTL
         {
             Hp = MaxHp;
             crewSpriteTransform = transform.GetChild(0).transform;
+            CurrentRoom = null;
+            TargetRoom = null;
         }
 
         private void Update()
@@ -38,6 +40,7 @@ namespace FTL
             if (CurrentRoom.IsEmptyCrew())
             {
                 AssistFacility(false);
+                ResetRepairProgressOnEmptyRoom(CurrentRoom);
             }
 
             TargetRoom.AddCrew(this);
@@ -130,10 +133,12 @@ namespace FTL
             switch (crewStatus)
             {
                 case ECrewStatus.Moving:
+                    Room roomBeforeMoving = CurrentRoom;
                     MoveToTargetRoom();
                     break;
                 case ECrewStatus.Idle:
                     AssistFacility(false);
+                    ResetRepairProgressOnEmptyRoom(CurrentRoom);
                     break;
                 case ECrewStatus.Repair:
                     AssistFacility(false);
@@ -141,9 +146,18 @@ namespace FTL
                     break;
                 case ECrewStatus.Assisting:
                     AssistFacility(true);
+                    ResetRepairProgressOnEmptyRoom(CurrentRoom);
                     break;
                 default:
                     break;
+            }
+        }
+
+        private static void ResetRepairProgressOnEmptyRoom(Room room)
+        {
+            if (room.IsEmptyCrew() && room.HasFacility)
+            {
+                room.ResetRepairProgress();
             }
         }
 

@@ -124,5 +124,15 @@ namespace FTL
                 Crews[i].TakeDamage(crewDamage);
             }
         }
+
+        public void ResetRepairProgress()
+        {
+            if (HasFacility == false)
+            {
+                Debug.LogWarning($"Room {Id} does not have a facility. Cannot reset repair progress.");
+                return;
+            }
+            FacilitySystem.RepairProgress = 0f;
+        }
     }
 }

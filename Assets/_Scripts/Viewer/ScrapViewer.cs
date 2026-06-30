@@ -9,7 +9,7 @@ namespace FTL
 
         private void Awake()
         {
-            text = GetComponentInChildren<TMP_Text>();
+            text = transform.GetChild(2).GetComponent<TMP_Text>();
         }
 
         private void LateUpdate()
