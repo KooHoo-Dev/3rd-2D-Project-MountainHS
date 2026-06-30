@@ -5,7 +5,7 @@ namespace FTL
 {
     public class MainUIController : MonoBehaviour
     {
-        private void MoveScene(int index)
+        public void MoveScene(int index)
         {
             if (index == 0)
             {

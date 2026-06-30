@@ -102,16 +102,19 @@ namespace FTL
                 sceneBinder.BindSceneObjects(gameContext);
                 startButton.gameObject.SetActive(false);
                 mainMenuButton.gameObject.SetActive(false);
+                nextBattleButton.gameObject.SetActive(false);
             }
             else if (scene.name == MAINMENU_SCENE)
             {
                 startButton.gameObject.SetActive(true);
-                mainMenuButton.gameObject.SetActive(true);
+                mainMenuButton.gameObject.SetActive(false);
+                nextBattleButton.gameObject.SetActive(false);
             }
             else if (scene.name == GAMEOVER_SCENE)
             {
                 startButton.gameObject.SetActive(false);
                 mainMenuButton.gameObject.SetActive(true);
+                nextBattleButton.gameObject.SetActive(false);
             }
             else if (scene.name == BATTLE_PREPARE)
             {
