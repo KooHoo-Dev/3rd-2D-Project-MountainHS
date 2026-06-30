@@ -133,15 +133,15 @@ namespace FTL
             HandleBattleResult(EBattleResult.PlayerRun);
         }
 
-        public void SetGameContext(List<Room> rooms, List<FacilitySystem> facilities, List<CrewController> crews, int shipHp, int scrapAmount, int shipReactorCapacity)
+        public void SetGameContext(List<Room> rooms, List<FacilitySystem> facilities, List<CrewController> crews, int shipHp, int shipMaxHp, int scrapAmount, int shipReactorCapacity)
         {
             if (gameContext == null)
             {
-                gameContext = new GameContext(rooms, facilities, crews, scrapAmount, shipHp, shipReactorCapacity);
+                gameContext = new GameContext(rooms, facilities, crews, scrapAmount, shipHp, shipMaxHp, shipReactorCapacity);
             }
             else
             {
-                gameContext.SetGameContext(rooms, facilities, crews, scrapAmount, shipHp, shipReactorCapacity);
+                gameContext.SetGameContext(rooms, facilities, crews, scrapAmount, shipHp, shipMaxHp, shipReactorCapacity);
             }
         }
 
@@ -163,7 +163,7 @@ namespace FTL
                 crewStates.Add(new CrewState(crews[i]));
             }
 
-            gameContext = new GameContext(rooms, facilityStates, crewStates, player.ScrapAmount, player.Hp, player.PowerSystem.GetReactorMaxPower);
+            gameContext = new GameContext(rooms, facilityStates, crewStates, player.ScrapAmount, player.Hp, player.ShipData.MaxHp, player.PowerSystem.GetReactorMaxPower);
         }
 
         //public void AddScrap(int amount = 1)
@@ -186,6 +186,11 @@ namespace FTL
             return gameContext.ScrapAmount;
         }
 
+        public void IncreaseMaxPowerLimitOfFacility(ERoomType roomType, int amount=1)
+        {
+            gameContext.IncreaseMaxPowerLimitOfFacility(roomType, amount);
+        }
+
         public void ExitGame()
         {
 #if UNITY_EDITOR
@@ -195,7 +200,43 @@ namespace FTL
 #endif
         }
 
-        #region
+        public void IncreaseReactorMaxPower(int amount = 1)
+        {
+            gameContext.IncreaseReactorMaxPower(amount);
+        }
+
+        public int GetCrewHp(int crewIndex)
+        {
+            return gameContext.GetCrewHp(crewIndex);
+        }
+
+        public int GetCrewMaxHp(int crewIndex)
+        {
+            return gameContext.GetCrewMaxHp(crewIndex);
+        }
+
+        public void AddCrewHp(int crewIndex, int realIncrease)
+        {
+            gameContext.AddCrewHp(crewIndex, realIncrease);
+        }
+
+        public int GetShipHp()
+        {
+            return gameContext.ShipHp;
+        }
+
+        public int GetShipMaxHp()
+        {
+            return gameContext.ShipMaxHp;
+        }
+
+
+        public void AddShipHp(int amount)
+        {
+            gameContext.AddShipHp(amount);
+        }
+
+        #region Test Method
         public void TestHandleBattleResult()
         {
             if (SimpleInput.GetKeyDown(Key.Digit1))
@@ -217,6 +258,12 @@ namespace FTL
         {
             toggleMenuObject.SetActive(false);
         }
+
+        public void ReduceScrap(int v)
+        {
+            gameContext.ReduceScrap(v);
+        }
+
         #endregion
     }
 }

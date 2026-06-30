@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace FTL
@@ -10,10 +11,11 @@ namespace FTL
         public List<FacilityState> FacilityStates;
         public List<CrewState> CrewStates;
         public int ScrapAmount;
+        public int ShipMaxHp;
         public int ShipHp;
         public int ShipReactorCapacity;
 
-        public GameContext(List<Room> rooms, List<FacilitySystem> facilitySystems, List<CrewController> crews, int scrapAmount, int shipHp, int shipReactorCapacity)
+        public GameContext(List<Room> rooms, List<FacilitySystem> facilitySystems, List<CrewController> crews, int scrapAmount, int shipHp, int shipMaxHp, int shipReactorCapacity)
         {
 
             FacilityStates = new List<FacilityState>();
@@ -30,10 +32,11 @@ namespace FTL
             Rooms = new List<Room>(rooms);
             ScrapAmount = scrapAmount;
             ShipHp = shipHp;
+            ShipMaxHp = shipMaxHp;
             ShipReactorCapacity = shipReactorCapacity;
         }
 
-        public GameContext(List<Room> rooms, List<FacilityState> facilities, List<CrewState> crews, int scrapAmount, int shipHp, int shipReactorCapacity)
+        public GameContext(List<Room> rooms, List<FacilityState> facilities, List<CrewState> crews, int scrapAmount, int shipHp, int shipMaxHp, int shipReactorCapacity)
         {
             Rooms = new List<Room>();
             FacilityStates = new List<FacilityState>();
@@ -53,6 +56,7 @@ namespace FTL
 
             ScrapAmount = scrapAmount;
             ShipHp = shipHp;
+            ShipMaxHp = shipMaxHp;
             ShipReactorCapacity = shipReactorCapacity;
         }
 
@@ -83,7 +87,7 @@ namespace FTL
 
         //}
 
-        public void SetGameContext(List<Room> rooms, List<FacilitySystem> facilitySystems, List<CrewController> crews, int scrapAmount, int shipHp, int shipReactorCapacity)
+        public void SetGameContext(List<Room> rooms, List<FacilitySystem> facilitySystems, List<CrewController> crews, int scrapAmount, int shipHp, int shipMaxHp, int shipReactorCapacity)
         {
             Rooms = new List<Room>();
             FacilityStates = new List<FacilityState>();
@@ -102,8 +106,45 @@ namespace FTL
             }
 
             ShipHp = shipHp;
+            ShipMaxHp = shipMaxHp;
             ScrapAmount = scrapAmount;
             ShipReactorCapacity = shipReactorCapacity;
+        }
+
+        public void IncreaseMaxPowerLimitOfFacility(ERoomType roomType, int amount = 1)
+        {
+            int index = (int)roomType;
+            FacilityStates[index].MaxPowerLimit += amount;
+        }
+
+        public void IncreaseReactorMaxPower(int amount)
+        {
+            ShipReactorCapacity+= amount;
+        }
+
+        public int GetCrewHp(int crewIndex)
+        {
+            return CrewStates[crewIndex].Hp;
+        }
+
+        public int GetCrewMaxHp(int crewIndex)
+        {
+            return CrewStates[crewIndex].MaxHp;
+        }
+
+        public void AddCrewHp(int crewIndex, int realIncrease)
+        {
+            CrewStates[crewIndex].Hp += realIncrease;
+        }
+
+        public void AddShipHp(int amount)
+        {
+            ShipHp = Math.Min(ShipMaxHp, ShipHp + amount);
+        }
+
+        public void ReduceScrap(int v)
+        {
+            ScrapAmount -= v;
         }
     }
 }

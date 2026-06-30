@@ -14,6 +14,7 @@ namespace FTL
 
             SceneManager.LoadScene(index);
         }
+
         public void MoveScene(ESceneIndex eSceneIndex)
         {
             MoveScene((int)eSceneIndex);

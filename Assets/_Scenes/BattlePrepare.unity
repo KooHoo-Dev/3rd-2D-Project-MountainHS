@@ -422,7 +422,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 194288444}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 310518860}
+        m_TargetAssemblyTypeName: FTL.ShopManager, Assembly-CSharp
+        m_MethodName: IncreaseReactorMaxPower
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &194288444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -590,6 +602,54 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7287047998701885657, guid: 0fa77c8ddec48d649babb532462aaecb, type: 3}
   m_PrefabInstance: {fileID: 262707787}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &310518859
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 310518861}
+  - component: {fileID: 310518860}
+  m_Layer: 0
+  m_Name: ShopManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &310518860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310518859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7c0509c5975983488e5fec2fc25b4b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FTL.ShopManager
+  shipUpgradeSwitchButton: {fileID: 797184304}
+  restoreSwitchButton: {fileID: 627769357}
+  upgradeUIRoot: {fileID: 191929861}
+  restoreUIRoot: {fileID: 1761266875}
+--- !u!4 &310518861
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310518859}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &314240515
 GameObject:
   m_ObjectHideFlags: 0
@@ -1208,7 +1268,7 @@ GameObject:
   - component: {fileID: 627769358}
   - component: {fileID: 627769357}
   m_Layer: 5
-  m_Name: Repair Heal Switch
+  m_Name: Restore Switch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1277,7 +1337,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 627769358}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 310518860}
+        m_TargetAssemblyTypeName: FTL.ShopManager, Assembly-CSharp
+        m_MethodName: TurnRestoreUIOn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &627769358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1429,6 +1501,38 @@ PrefabInstance:
     - target: {fileID: 1453926482833720139, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
       propertyPath: m_Name
       value: Weapon Facility Upgrade UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148661366335399339, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148661366335399339, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148661366335399339, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 310518860}
+    - target: {fileID: 2148661366335399339, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148661366335399339, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: IncreaseMaxPowerLimitOnWeaponFacility
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148661366335399339, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: FTL.ShopManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148661366335399339, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148661366335399339, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2964162418781667548, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2088,7 +2192,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 797184305}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 310518860}
+        m_TargetAssemblyTypeName: FTL.ShopManager, Assembly-CSharp
+        m_MethodName: TurnShipUpgradeUIOn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &797184305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2425,7 +2541,7 @@ GameObject:
   m_Component:
   - component: {fileID: 933677417}
   m_Layer: 5
-  m_Name: Player Ship Restore Group
+  m_Name: Player Crew Group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3434,6 +3550,38 @@ PrefabInstance:
     - target: {fileID: 1453926482833720139, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
       propertyPath: m_Name
       value: Engine Facility Upgrade UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148661366335399339, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148661366335399339, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148661366335399339, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 310518860}
+    - target: {fileID: 2148661366335399339, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148661366335399339, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: IncreaseMaxPowerLimtOnEngineFacility
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148661366335399339, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: FTL.ShopManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148661366335399339, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148661366335399339, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2964162418781667548, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4569,7 +4717,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2084758695}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 310518860}
+        m_TargetAssemblyTypeName: FTL.ShopManager, Assembly-CSharp
+        m_MethodName: Repair
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2084758695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4871,6 +5031,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shield Facility Upgrade UI
       objectReference: {fileID: 0}
+    - target: {fileID: 2148661366335399339, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148661366335399339, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148661366335399339, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 310518860}
+    - target: {fileID: 2148661366335399339, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148661366335399339, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: IncreaseMaxPowerLimitOnShieldFacility
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148661366335399339, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: FTL.ShopManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148661366335399339, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2148661366335399339, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2964162418781667548, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -5115,4 +5307,5 @@ SceneRoots:
   - {fileID: 742640271}
   - {fileID: 525332872}
   - {fileID: 1464900055}
+  - {fileID: 310518861}
   - {fileID: 314240518}
