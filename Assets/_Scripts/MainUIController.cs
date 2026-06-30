@@ -17,7 +17,11 @@ namespace FTL
         public void MoveScene(ESceneIndex eSceneIndex)
         {
             MoveScene((int)eSceneIndex);
-            //SceneManager.LoadScene((int)eSceneIndex);
+        }
+
+        public void ExitGame()
+        {
+            GameManager.Instance.ExitGame();
         }
     }
 }
