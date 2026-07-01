@@ -104,13 +104,13 @@ namespace FTL
                     break;
                 case EBattleResult.EnemyShipDestroyed:
                     SetGameContext(Player);
-                    gameContext.ScrapAmount += 100;
+                    gameContext.AddScrap(100);
                     mainUIController.MoveScene(ESceneIndex.BattlePrepare);
                     Debug.Log("Enemy ship destroyed.");
                     break;
                 case EBattleResult.EnemyAllCrewDead:
                     SetGameContext(Player);
-                    gameContext.ScrapAmount += 200;
+                    gameContext.AddScrap(200);
                     mainUIController.MoveScene(ESceneIndex.BattlePrepare);
                     Debug.Log("Enemy all crew dead.");
                     break;
@@ -215,6 +215,16 @@ namespace FTL
             return gameContext.GetCrewMaxHp(crewIndex);
         }
 
+        public int GetCrewCount()
+        {
+            return gameContext.GetCrewCount();
+        }
+
+        public string GetCrewName(int crewIndex)
+        {
+            return gameContext.GetCrewName(crewIndex);
+        }
+
         public void AddCrewHp(int crewIndex, int realIncrease)
         {
             gameContext.AddCrewHp(crewIndex, realIncrease);
@@ -228,6 +238,16 @@ namespace FTL
         public int GetShipMaxHp()
         {
             return gameContext.ShipMaxHp;
+        }
+
+        public int GetShipReactorCapacity()
+        {
+            return gameContext.ShipReactorCapacity;
+        }
+
+        public int GetFacilityMaxPowerLimit(ERoomType roomType)
+        {
+            return gameContext.GetFacilityMaxPowerLimit(roomType);
         }
 
 

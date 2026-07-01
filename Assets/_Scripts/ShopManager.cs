@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ namespace FTL
     public class ShopManager: SingletonBase<ShopManager>
     {
         private const int REACTOR_UPGRADE_MAX = 10;
+        private const int FACILITY_UPGRADE_MAX = 10;
         // switch 두개 등록
         [SerializeField] private Button shipUpgradeSwitchButton;
         [SerializeField] private Button restoreSwitchButton;
@@ -27,6 +29,70 @@ namespace FTL
         // 회복 ui
         // 승무원 회복
         // 함선 수리
+
+        protected override void Awake()
+        {
+            base.Awake();
+            InitFacilityUpgradeCounts();
+            InitCrewHealViewers();
+        }
+
+        private void InitFacilityUpgradeCounts()
+        {
+            facilityUpgradeCount.Clear();
+            facilityUpgradeMax.Clear();
+
+            for (int i = 0; i < 3; i++)
+            {
+                facilityUpgradeCount.Add(0);
+                facilityUpgradeMax.Add(FACILITY_UPGRADE_MAX);
+            }
+        }
+
+        private void InitCrewHealViewers()
+        {
+            Transform[] children = restoreUIRoot.GetComponentsInChildren<Transform>(true);
+            int crewIndex = 0;
+            for (int i = 0; i < children.Length; i++)
+            {
+                //Transform child = children[i];
+                //if (child.name != "Crew Summary")
+                //{
+                //    continue;
+                //}
+
+                //TMP_Text crewNameText = GetChildText(child, "Name");
+                //Image hpBar = GetChildImage(child, "Hp Bar");
+                //if (crewNameText == null || hpBar == null)
+                //{
+                //    continue;
+                //}
+                // 직접 crewStates 보고 crew summary를 만들어줘야함
+
+                //CrewViewer crewViewer = child.GetComponent<CrewViewer>();
+                //if (crewViewer == null)
+                //{
+                //    crewViewer = child.gameObject.AddComponent<CrewViewer>();
+                //}
+
+                //crewViewer.SetGameContextCrew(crewIndex, crewNameText, hpBar);
+                //crewIndex++;
+            }
+        }
+
+        private TMP_Text GetChildText(Transform root, string childName)
+        {
+            Transform child = root.Find(childName);
+
+            return child.GetComponent<TMP_Text>();
+        }
+
+        private Image GetChildImage(Transform root, string childName)
+        {
+            Transform child = root.Find(childName);
+
+            return child.GetComponent<Image>();
+        }
 
         // 함선 업그레이드
         // 시설 최대 전력 한계 증가

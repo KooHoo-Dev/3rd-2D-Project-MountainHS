@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.UI;
 
 namespace FTL
 {
@@ -8,7 +9,7 @@ namespace FTL
     {
         [SerializeField] protected GameObject barPrefab;
         [SerializeField] protected GameObject barGroup;
-        [SerializeField] protected List<UnityEngine.UI.Image> barSprites;
+        [SerializeField] protected List<Image> barSprites = new List<Image>();
         [SerializeField] protected FacilitySystem facilitySystem;
         protected ObjectPool<GameObject> barPool;
 
@@ -32,7 +33,7 @@ namespace FTL
                 return;
             }
 
-            UnityEngine.UI.Image image = barSprites[barIndex];
+            Image image = barSprites[barIndex];
             // 스프라이트 상태 변경
             switch (status)
             {

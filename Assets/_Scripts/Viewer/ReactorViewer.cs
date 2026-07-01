@@ -55,8 +55,22 @@ namespace FTL
         // 현재 전력 상태 (총 용량, 가용 가능한 양 상태에 따라 power bar 업데이트)
         protected virtual void UpdateViewer()
         {
-            int totalPower = reactorSystem.MaxPower;
-            int availablePower = reactorSystem.Power;
+            int totalPower = 0;
+            int availablePower = 0;
+            if (reactorSystem != null)
+            {
+                totalPower = reactorSystem.MaxPower;
+                availablePower = reactorSystem.Power;
+            }
+            else if (TryGetGameContextReactorCapacity(out totalPower) == false)
+            {
+                return;
+            }
+            else
+            {
+                availablePower = totalPower;
+            }
+
             // 만약 현재 powerBarSprites 수가 실제 totalPower 와 일치하지 않는 다면 생성
             if (barSprites.Count < totalPower)
             {
@@ -77,6 +91,27 @@ namespace FTL
                     SetBarState(i, EPowerBarStatus.UnAvailable);
                 }
             }
+        }
+
+        private bool TryGetGameContextReactorCapacity(out int reactorCapacity)
+        {
+            reactorCapacity = 0;
+
+            if (GameManager.IsInitialized == false)
+            {
+                Debug.LogError($"{gameObject.name}: GameManager is not Initialized to use!");
+                return false;
+            }
+
+            GameManager gameManager = GameManager.Instance;
+            if (gameManager.IsGameContextEmpty)
+            {
+                Debug.LogError($"{gameObject.name}: GameManager's GameContext is empty to use!");
+                return false;
+            }
+
+            reactorCapacity = gameManager.GetShipReactorCapacity();
+            return true;
         }
 
         // 반응로 전력 추가

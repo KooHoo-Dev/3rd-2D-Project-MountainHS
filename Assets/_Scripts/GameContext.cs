@@ -1,19 +1,18 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace FTL
 {
     public class GameContext
     {
-        public List<Room> Rooms;
-
-        // 시설 상태, 전력 상태 저장용
-        public List<FacilityState> FacilityStates;
-        public List<CrewState> CrewStates;
-        public int ScrapAmount;
-        public int ShipMaxHp;
-        public int ShipHp;
-        public int ShipReactorCapacity;
+        public List<Room> Rooms { get; private set; }
+        public List<FacilityState> FacilityStates { get; private set; }
+        public List<CrewState> CrewStates { get; private set; }
+        public int ScrapAmount { get; private set; }
+        public int ShipMaxHp { get; private set; }
+        public int ShipHp { get; private set; }
+        public int ShipReactorCapacity { get; private set; }
 
         public GameContext(List<Room> rooms, List<FacilitySystem> facilitySystems, List<CrewController> crews, int scrapAmount, int shipHp, int shipMaxHp, int shipReactorCapacity)
         {
@@ -132,6 +131,28 @@ namespace FTL
             return CrewStates[crewIndex].MaxHp;
         }
 
+        public int GetCrewCount()
+        {
+            return CrewStates.Count;
+        }
+
+        public string GetCrewName(int crewIndex)
+        {
+            return CrewStates[crewIndex].Name;
+        }
+
+        public int GetFacilityMaxPowerLimit(ERoomType roomType)
+        {
+            int index = (int)roomType;
+
+            return FacilityStates[index].MaxPowerLimit;
+        }
+
+        //public int GetShipReactorCapacity()
+        //{
+        //    return ShipReactorCapacity;
+        //}
+
         public void AddCrewHp(int crewIndex, int realIncrease)
         {
             CrewStates[crewIndex].Hp += realIncrease;
@@ -144,7 +165,18 @@ namespace FTL
 
         public void ReduceScrap(int v)
         {
+            if (ScrapAmount - v < 0)
+            {
+                Debug.LogError($"Cannot Reduce scrap. current scrap: {ScrapAmount}, reduce amount: {v}");
+                return;
+            }
+
             ScrapAmount -= v;
+        }
+
+        public void AddScrap(int v)
+        {
+            ScrapAmount += v;
         }
     }
 }

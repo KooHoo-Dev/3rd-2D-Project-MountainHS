@@ -13,16 +13,25 @@ namespace FTL
         private SpriteRenderer crewSprite;
         private SpriteRenderer crewTargetSprite;
         private MaterialPropertyBlock propertyBlock;
-        private TMP_Text text;
-        private Image hpBar; 
+        [SerializeField] private TMP_Text text;
+        [SerializeField] private Image hpBar;
+        [SerializeField] private bool useGameContext;
+        [SerializeField] private int crewIndex;
         private bool isSelected;
         private Vector3 targetPosition;
 
         private void Awake()
         {
             crew = GetComponent<CrewController>();
+            if (crew == null)
+            {
+                useGameContext = true;
+                return;
+            }
+
             crewSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
             crewTargetSprite = transform.GetChild(1).GetComponent<SpriteRenderer>();
+
             propertyBlock = new MaterialPropertyBlock();
             isSelected = false;
             SetSelectedState(false);
@@ -35,6 +44,12 @@ namespace FTL
 
         private void LateUpdate()
         {
+            if (useGameContext)
+            {
+                UpdateGameContextViewer();
+                return;
+            }
+
             SetSelectedState(crew.IsSelected);
             UpdateViewer();
             UpdateTargetRoom();
@@ -84,6 +99,36 @@ namespace FTL
             }
 
             crewSprite.SetPropertyBlock(propertyBlock);
+        }
+
+        private void UpdateGameContextViewer()
+        {
+            if (GameManager.IsInitialized == false)
+            {
+                Debug.LogError($"{gameObject.name}: GameManager is not Initialized to use!");
+                return;
+            }
+
+            GameManager gameManager = GameManager.Instance;
+            if (gameManager.IsGameContextEmpty)
+            {
+                Debug.LogError($"{gameObject.name}: GameManager doesn't have gameContext");
+                return;
+            }
+
+            text.SetText(gameManager.GetCrewName(crewIndex));
+            int hp = gameManager.GetCrewHp(crewIndex);
+            int maxHp = gameManager.GetCrewMaxHp(crewIndex);
+
+            hpBar.fillAmount = Mathf.InverseLerp(0f, maxHp, hp);
+        }
+
+        public void SetGameContextCrew(int crewIndex, TMP_Text text, Image hpBar)
+        {
+            useGameContext = true;
+            this.crewIndex = crewIndex;
+            this.text = text;
+            this.hpBar = hpBar;
         }
 
         public void SetText(TMP_Text text)

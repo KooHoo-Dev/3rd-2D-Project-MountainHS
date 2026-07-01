@@ -8,14 +8,18 @@ namespace FTL
     {
         [SerializeField] private Image facilityIcon;
         [SerializeField] private Image assistIcon;
+        [SerializeField] private ERoomType contextFacilityType = ERoomType.Weapon;
         private Image repairBar;
 
         protected override void Awake()
         {
             base.Awake();
+            barGroup = transform.GetChild(0).gameObject;
             facilityIcon = transform.GetChild(1).GetComponent<Image>();
             assistIcon = transform.GetChild(2).GetComponent<Image>();
             repairBar = transform.GetChild(3).GetComponent<Image>();
+
+            CacheBarSpritesFromChildren();
         }
 
         private void Start()
@@ -30,6 +34,12 @@ namespace FTL
 
         protected override void UpdateViewer()
         {
+            if (facilitySystem == null)
+            {
+                UpdateGameContextViewer();
+                return;
+            }
+
             int maxPower = facilitySystem.MaxPower;
             int power = facilitySystem.Power;
             int maxPowerLimit = facilitySystem.MaxPowerLimit;
@@ -43,6 +53,10 @@ namespace FTL
 
         private void UpdateRepairBar()
         {
+            // 수리바는 상점 씬에서는 필요가 없음
+            if (repairBar == null)
+                return;
+
             if (repairBar.enabled == false)
                 return;
 
@@ -58,6 +72,9 @@ namespace FTL
 
         private void UpdateFacilityIcon()
         {
+            if (facilityIcon == null)
+                return;
+
             // 만약 할당된 전력이 0이라면 시설 아이콘 색깔 비활성화
             switch (facilitySystem.FacilityStatus)
             {
@@ -117,7 +134,116 @@ namespace FTL
 
         private void UpdateAssistImage()
         {
+            if (assistIcon == null)
+                return;
+
             assistIcon.enabled = facilitySystem.IsAssisted;
+        }
+
+        private void UpdateGameContextViewer()
+        {
+            int maxPowerLimit = 0;
+            if (TryGetGameContextFacilityMaxPowerLimit(out maxPowerLimit) == false)
+            {
+                return;
+            }
+
+            assistIcon.enabled = false;
+            repairBar.enabled = false;
+            facilityIcon.color = Color.green;
+            UpdateGameContextPowerBars(maxPowerLimit);
+        }
+
+        private void UpdateGameContextPowerBars(int maxPowerLimit)
+        {
+            if (barSprites.Count < maxPowerLimit && barPrefab != null && barGroup != null)
+            {
+                int n = maxPowerLimit - barSprites.Count;
+                for (int i = 0; i < n; i++)
+                {
+                    AddBar();
+                }
+            }
+
+            for (int i = 0; i < barSprites.Count; i++)
+            {
+                if (i < maxPowerLimit)
+                {
+                    SetBarState(i, EPowerBarStatus.Available);
+                }
+                else
+                {
+                    SetBarState(i, EPowerBarStatus.UnAvailable);
+                }
+            }
+        }
+
+        private bool TryGetGameContextFacilityMaxPowerLimit(out int maxPowerLimit)
+        {
+            maxPowerLimit = 0;
+
+            if (GameManager.IsInitialized == false)
+            {
+                Debug.LogError($"{gameObject.name}: GameManager is not Initialized to use!");
+                return false;
+            }
+
+            GameManager gameManager = GameManager.Instance;
+            if (gameManager.IsGameContextEmpty)
+            {
+                Debug.LogError($"{gameObject.name}: GameContext is Empty to use!");
+                return false;
+            }
+
+            // 문자열 기반 탐색은 절대 안됨 (무조건 고칠것)
+            //ERoomType roomType = GetContextFacilityType();
+            //maxPowerLimit = gameManager.GetFacilityMaxPowerLimit(roomType);
+            return true;
+        }
+
+        private ERoomType GetContextFacilityType()
+        {
+            Transform current = transform;
+            for (int i = 0; i < 4; i++)
+            {
+                if (current == null)
+                {
+                    break;
+                }
+
+                string objectName = current.name;
+                if (objectName.Contains("Weapon"))
+                {
+                    return ERoomType.Weapon;
+                }
+
+                if (objectName.Contains("Engine"))
+                {
+                    return ERoomType.Engine;
+                }
+
+                if (objectName.Contains("Shield"))
+                {
+                    return ERoomType.Shield;
+                }
+
+                current = current.parent;
+            }
+
+            return contextFacilityType;
+        }
+
+        private void CacheBarSpritesFromChildren()
+        {
+            Image[] images = barGroup.GetComponentsInChildren<Image>(true);
+            for (int i = 0; i < images.Length; i++)
+            {
+                if (barSprites.Contains(images[i]) == false)
+                {
+                    barSprites.Add(images[i]);
+                    images[i].gameObject.SetActive(false);
+                }
+            }
         }
     }
 }

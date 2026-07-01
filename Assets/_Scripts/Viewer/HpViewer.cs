@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.UI;
 
 namespace FTL
 {
@@ -10,15 +10,14 @@ namespace FTL
     {
         [SerializeField] private GameObject barPrefab;
         [SerializeField] private GameObject barGroup;
-        [SerializeField] private List<UnityEngine.UI.Image> barSprites;
+        [SerializeField] private List<Image> barSprites = new List<Image>();
         [SerializeField] private ShipController playerSystem;
         [SerializeField] private int prevHp;
-        //protected ShipData powerSystem;
         private ObjectPool<GameObject> barPool;
 
         private void Awake()
         {
-            //powerSystem = systemMono as IPowerInfo;
+            prevHp = -1;
             barPool = new ObjectPool<GameObject>(CreateBar, OnGetBar, OnReleaseBar, OnDestroyBar);
         }
 
@@ -37,7 +36,7 @@ namespace FTL
                 return;
             }
 
-            UnityEngine.UI.Image image = barSprites[barIndex];
+            Image image = barSprites[barIndex];
             // 스프라이트 상태 변경
             switch (status)
             {
@@ -55,15 +54,18 @@ namespace FTL
         {
             int hp = playerSystem.Hp;
             int maxHp = playerSystem.ShipData.MaxHp;
+            if (TryGetGameContextHp(out hp, out maxHp) == false)
+            {
+                return;
+            }
             
-            if (hp == prevHp)
+            if (hp == prevHp && barSprites.Count >= maxHp)
             {
                 return;
             }
 
             if (barSprites.Count < maxHp)
             {
-
                 int n = maxHp - barSprites.Count ;
                 for (int i = 0; i < n; i++)
                 {
@@ -85,11 +87,34 @@ namespace FTL
             prevHp = hp;
         }
 
+        private bool TryGetGameContextHp(out int hp, out int maxHp)
+        {
+            hp = 0;
+            maxHp = 0;
+
+            if (GameManager.IsInitialized == false)
+            {
+                Debug.LogError($"{gameObject.name}: GameManager is not Initialized to use!");
+                return false;
+            }
+
+            GameManager gameManager = GameManager.Instance;
+            if (gameManager.IsGameContextEmpty)
+            {
+                Debug.LogError($"{gameObject.name}: GameManager's GameContext is empty to use!");
+                return false;
+            }
+
+            hp = gameManager.GetShipHp();
+            maxHp = gameManager.GetShipMaxHp();
+            return true;
+        }
+
         // 반응로 전력 추가
         public void AddBar()
         {
             GameObject powerBar = barPool.Get();
-            barSprites.Add(powerBar.GetComponent<UnityEngine.UI.Image>());
+            barSprites.Add(powerBar.GetComponent<Image>());
             SetBarState(barSprites.Count - 1, EHpBarStatus.Available);
         }
 
