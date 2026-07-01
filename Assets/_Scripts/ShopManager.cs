@@ -43,11 +43,12 @@ namespace FTL
         private void Awake()
         {
             InitMainGameObject();
+            InitFacilityUpgradeCounts();
+            GameManager.Instance.EnsureBattlePrepareTestGameContext();
         }
 
         private void Start()
         {
-            InitFacilityUpgradeCounts();
             InitCrewSummaries();
         }
 

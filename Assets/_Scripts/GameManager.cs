@@ -160,6 +160,28 @@ namespace FTL
             gameContext = new GameContext(rooms, facilityStates, crewStates, player.ScrapAmount, player.Hp, player.ShipData.MaxHp, player.PowerSystem.GetReactorMaxPower, player.PowerSystem.GetPower);
         }
 
+        public void EnsureBattlePrepareTestGameContext()
+        {
+            if (IsGameContextEmpty == false)
+            {
+                return;
+            }
+
+            List<Room> rooms = new List<Room>();
+
+            List<FacilityState> facilityStates = new List<FacilityState>();
+            facilityStates.Add(new FacilityState(0, 3, 1, ERoomType.Weapon));
+            facilityStates.Add(new FacilityState(0, 3, 1, ERoomType.Engine));
+            facilityStates.Add(new FacilityState(0, 3, 2, ERoomType.Shield));
+
+            List<CrewState> crewStates = new List<CrewState>();
+            crewStates.Add(new CrewState(100, 100, "Hans", 0));
+            crewStates.Add(new CrewState(100, 100, "Tom", 1));
+            crewStates.Add(new CrewState(100, 100, "Jane", 2));
+
+            gameContext = new GameContext(rooms, facilityStates, crewStates, 100, 30, 30, 6, 2);
+        }
+
         //public void AddScrap(int amount = 1)
         //{
         //    if (gameContext == null)
