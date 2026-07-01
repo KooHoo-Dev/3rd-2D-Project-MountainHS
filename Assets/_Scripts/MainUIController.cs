@@ -20,6 +20,12 @@ namespace FTL
             MoveScene((int)eSceneIndex);
         }
 
+        public void ReturnToMainMenu()
+        {
+            GameManager.Instance.ResetGameContext();
+            MoveScene(ESceneIndex.MainMenu);
+        }
+
         public void ExitGame()
         {
             GameManager.Instance.ExitGame();

@@ -185,6 +185,11 @@ namespace FTL
             gameContext.IncreaseMaxPowerLimitOfFacility(roomType, amount);
         }
 
+        public void ResetGameContext()
+        {
+            gameContext = null;
+        }
+
         public void ExitGame()
         {
 #if UNITY_EDITOR
