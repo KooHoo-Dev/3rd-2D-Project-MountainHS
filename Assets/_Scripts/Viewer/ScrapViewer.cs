@@ -14,7 +14,8 @@ namespace FTL
 
         private void LateUpdate()
         {
-            text.SetText($"{GameManager.Instance.GetScrap()}");
+            int currentScrap = GameManager.Instance.GetScrap();
+            text.SetText($"{currentScrap}");
         }
     }
 }

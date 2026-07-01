@@ -88,15 +88,15 @@ namespace FTL
                 {
                     GameObject crewObject = Instantiate(crewPrefab, crewGroupTransform);
                     CrewController crew = crewObject.GetComponent<CrewController>();
-                    CrewViewer crewViewer = crew.GetComponent<CrewViewer>();
                     Room room = Rooms[i];
                     GameObject crewSummaryObject = Instantiate(crewSummaryPrefab, crewSummaryGroupTransform);
-                    Image crewHpBar = crewSummaryObject.transform.Find("Hp Bar").GetComponent<Image>();
-                    
-                    TMP_Text crewText = crewSummaryObject.transform.Find("Name").GetComponentInChildren<TMP_Text>();
+                    CrewViewer crewViewer = crewSummaryObject.GetComponent<CrewViewer>();
+                    SpriteRenderer crewSprite = crewObject.transform.Find("Crew Sprite").GetComponent<SpriteRenderer>();
+                    SpriteRenderer crewTargetSprite = crewObject.transform.Find("Target Room").GetComponent<SpriteRenderer>();
 
-                    crewViewer.SetHpBar(crewHpBar);
-                    crewViewer.SetText(crewText);
+                    crewViewer.SetCrewSprite(crewSprite);
+                    crewViewer.SetCrewTargetSpite(crewTargetSprite);
+                    crewViewer.SetCrewController(crew);
                     crew.InitStartRoom(room);
                     Crews.Add(crew);
                 }

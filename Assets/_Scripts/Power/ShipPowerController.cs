@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ namespace FTL
     public class ShipPowerController : MonoBehaviour
     {
         public int GetReactorMaxPower => reactorSystem.MaxPower;
+        public int GetPower => reactorSystem.Power;
         [SerializeField] protected ReactorSystem reactorSystem;
         [SerializeField] protected List<FacilitySystem> facilities = new List<FacilitySystem>();
         protected readonly Dictionary<ERoomType, int> assignedPowers = new Dictionary<ERoomType, int>();
@@ -111,9 +113,14 @@ namespace FTL
             reactorSystem.AddMaxPower(amount);
         }
 
-        public void SetReactorPower(int amount)
+        public void SetReactorMaxPower(int amount)
         {
             reactorSystem.SetMaxPower(amount);
+        }
+
+        public void SetReactorPower(int amount)
+        {
+            reactorSystem.SetPower(amount);
         }
 
         protected FacilitySystem FindFacility(ERoomType facilityType)
@@ -177,5 +184,11 @@ namespace FTL
             }
         }
 
+        public void ApplyState(FacilityState facilityState)
+        {
+            ERoomType type = facilityState.Type;
+            int power = facilityState.Power;
+            SetAssignedPower(type, power);
+        }
     }
 }

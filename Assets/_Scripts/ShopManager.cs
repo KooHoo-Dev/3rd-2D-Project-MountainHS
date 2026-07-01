@@ -48,14 +48,13 @@ namespace FTL
         private void Start()
         {
             InitFacilityUpgradeCounts();
-            InitCrewHealViewers();
+            InitCrewSummaries();
         }
 
         private void InitMainGameObject()
         {
             upgradeUIRoot = GameObject.Find(UPGRADE_UI_ROOT);
             restoreUIRoot = GameObject.Find(RESTORE_UI_ROOT);
-            crewGroupRoot = GameObject.Find(CREW_GROUP_ROOT);
             upgradeUIRoot.SetActive(true);
             restoreUIRoot.SetActive(false);
         }
@@ -72,12 +71,18 @@ namespace FTL
             }
         }
 
-        public void InitCrewHealViewers()
+        public void InitCrewSummaries()
         {
             int crewSummaryCount = GameManager.Instance.GetCrewCount();
             for (int i = 0; i < crewSummaryCount; i++)
             {
                 GameObject crewSummary = Instantiate(crewSummaryPrefab, crewGroupRoot.transform);
+                CrewViewer crewViewer = crewSummary.GetComponent<CrewViewer>();
+                Button button = crewViewer.HealButton;
+                int index = i;
+                button.onClick.RemoveAllListeners();
+                button.onClick.AddListener(() => HealCrew(index));
+                crewViewer.CrewIndex = i;
             }
         }
 

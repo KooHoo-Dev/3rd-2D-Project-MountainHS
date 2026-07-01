@@ -10,7 +10,8 @@ namespace FTL
             EnemyController enemy = FindFirstObjectByType<EnemyController>();
             player.Hp = gameContext.ShipHp;
             player.ScrapAmount = gameContext.ScrapAmount;
-            player.SetReactorPower(gameContext.ShipReactorCapacity);
+            player.SetReactorMaxPower(gameContext.ShipReactorCapacity);
+            player.SetReactorPower(gameContext.ShipPower);
             player.SetFacilitySystems(gameContext.FacilityStates);
             player.SetCrewsState(gameContext.CrewStates);
             BindCombatSystem(player, enemy);

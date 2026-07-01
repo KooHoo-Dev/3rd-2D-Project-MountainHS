@@ -17,9 +17,10 @@ namespace FTL
         [field: SerializeField] public int ShipMaxHp { get; private set; }
         [field: SerializeField] public int ShipHp { get; private set; }
         [field: SerializeField] public int ShipReactorCapacity { get; private set; }
+        [field: SerializeField] public int ShipPower { get; private set; }
         [field: SerializeField] public int ReactorUpgradeCount { get; private set; }
 
-        public GameContext(List<Room> rooms, List<FacilitySystem> facilitySystems, List<CrewController> crews, int scrapAmount, int shipHp, int shipMaxHp, int shipReactorCapacity)
+        public GameContext(List<Room> rooms, List<FacilitySystem> facilitySystems, List<CrewController> crews, int scrapAmount, int shipHp, int shipMaxHp, int shipReactorCapacity, int shipPower)
         {
 
             FacilityStates = new List<FacilityState>();
@@ -38,9 +39,10 @@ namespace FTL
             ShipHp = shipHp;
             ShipMaxHp = shipMaxHp;
             ShipReactorCapacity = shipReactorCapacity;
+            ShipPower = shipPower;
         }
 
-        public GameContext(List<Room> rooms, List<FacilityState> facilities, List<CrewState> crews, int scrapAmount, int shipHp, int shipMaxHp, int shipReactorCapacity)
+        public GameContext(List<Room> rooms, List<FacilityState> facilities, List<CrewState> crews, int scrapAmount, int shipHp, int shipMaxHp, int shipReactorCapacity, int shipPower)
         {
             Rooms = new List<Room>();
             FacilityStates = new List<FacilityState>();
@@ -62,36 +64,10 @@ namespace FTL
             ShipHp = shipHp;
             ShipMaxHp = shipMaxHp;
             ShipReactorCapacity = shipReactorCapacity;
+            ShipPower = shipPower;
         }
 
-        //public void SetGameContext(List<Room> rooms,
-        //    List<FacilityState> facilities,
-        //    List<CrewState> crews,
-        //    int shipHp, int scrapAmount, int shipReactorCapacity)
-        //{
-        //    Rooms = new List<Room>();
-        //    FacilityStates = new List<FacilityState>();
-        //    CrewStates = new List<CrewState>();
-        //    for (int i = 0; i < rooms.Count; i++)
-        //    {
-        //        Rooms.Add(new Room(rooms[i]));
-        //    }
-        //    for (int i = 0; i < facilities.Count; i++)
-        //    {
-        //        FacilityStates.Add(new FacilityState(facilities[i]));
-        //    }
-        //    for (int i = 0; i < crews.Count; i++)
-        //    {
-        //        CrewStates.Add(new CrewState(crews[i]));
-        //    }
-
-        //    ShipHp = shipHp;
-        //    ScrapAmount = scrapAmount;
-        //    ShipReactorCapacity = shipReactorCapacity;
-
-        //}
-
-        public void SetGameContext(List<Room> rooms, List<FacilitySystem> facilitySystems, List<CrewController> crews, int scrapAmount, int shipHp, int shipMaxHp, int shipReactorCapacity)
+        public void SetGameContext(List<Room> rooms, List<FacilitySystem> facilitySystems, List<CrewController> crews, int scrapAmount, int shipHp, int shipMaxHp, int shipReactorCapacity, int shipPower)
         {
             Rooms = new List<Room>();
             FacilityStates = new List<FacilityState>();
@@ -113,6 +89,7 @@ namespace FTL
             ShipMaxHp = shipMaxHp;
             ScrapAmount = scrapAmount;
             ShipReactorCapacity = shipReactorCapacity;
+            ShipPower = shipPower;
         }
 
         public void SetGameContext(List<int> facilityUpgradeCount, int reactorUpgradeCount)
@@ -135,6 +112,7 @@ namespace FTL
         public void IncreaseReactorMaxPower(int amount)
         {
             ShipReactorCapacity+= amount;
+            ShipPower += amount;
         }
 
         public int GetCrewHp(int crewIndex)

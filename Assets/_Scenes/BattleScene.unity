@@ -1588,9 +1588,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1928696837}
-        m_TargetAssemblyTypeName: FTL.GameManager, Assembly-CSharp
-        m_MethodName: PlayerRun
+      - m_Target: {fileID: 879722722}
+        m_TargetAssemblyTypeName: FTL.MainUIController, Assembly-CSharp
+        m_MethodName: HandlePlayerRun
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2828,6 +2828,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8652320623278072720, guid: 2363bb96b39eb5645b714a719b2a5a6d, type: 3}
   m_PrefabInstance: {fileID: 877969129}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &879722722 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6621138031242369581, guid: 019e019a54fdc0b459e56b7f7c328b28, type: 3}
+  m_PrefabInstance: {fileID: 2135072299}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bca644f12426bc84a9a8ad7aab988365, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FTL.MainUIController
 --- !u!1 &905794680
 GameObject:
   m_ObjectHideFlags: 0
@@ -7204,17 +7215,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8688111303903617806, guid: ecda4b0ed48be1a47ab4ddf3f93a394a, type: 3}
   m_PrefabInstance: {fileID: 1914232203}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1928696837 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7721907674501863978, guid: df60b46d7cb61f843abbf24eb769e13a, type: 3}
-  m_PrefabInstance: {fileID: 661604335}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cad4df13c9620804d9bab6a7faf0fb9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FTL.GameManager
 --- !u!1001 &1983527624
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -5,8 +5,8 @@ namespace FTL
 {
     public class CrewController : MonoBehaviour
     {
-        public bool IsSelected { get; set; } = false;
         public bool IsDead => Hp == 0;
+        [field: SerializeField] public bool IsSelected { get; set; } = false;
         [field: SerializeField] public Room CurrentRoom { get; set; } = null;
         [field: SerializeField] public Room TargetRoom { get; private set; } = null;
         [field: SerializeField] public int MaxHp { get; set; } = 100;

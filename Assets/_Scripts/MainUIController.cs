@@ -24,5 +24,10 @@ namespace FTL
         {
             GameManager.Instance.ExitGame();
         }
+
+        public void HandlePlayerRun()
+        {
+            GameManager.Instance.HandleBattleResult(EBattleResult.PlayerRun);
+        }
     }
 }

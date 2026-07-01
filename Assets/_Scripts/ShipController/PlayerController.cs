@@ -169,9 +169,9 @@ namespace FTL
             PowerSystem.AddReactorPower(amount);
         }
 
-        public void SetReactorPower(int amount)
+        public void SetReactorMaxPower(int amount)
         {
-            PowerSystem.SetReactorPower(amount);
+            PowerSystem.SetReactorMaxPower(amount);
         }
 
         public void SetFacilitySystems(List<FacilityState> facilityStates)
@@ -182,6 +182,7 @@ namespace FTL
                 FacilitySystem facility = FacilitySystems[index];
                 FacilityState facilityState = facilityStates[index];
                 facility.ApplyState(facilityState);
+                PowerSystem.ApplyState(facilityState);
             }
         }
 
@@ -262,6 +263,11 @@ namespace FTL
             }
             oneShotBool2 = true;
             yield break;
+        }
+
+        public void SetReactorPower(int shipPower)
+        {
+            PowerSystem.SetReactorPower(shipPower);
         }
 
         #endregion

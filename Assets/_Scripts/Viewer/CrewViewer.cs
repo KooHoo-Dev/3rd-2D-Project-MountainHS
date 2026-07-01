@@ -9,37 +9,37 @@ namespace FTL
     {
         private static readonly int GLOW_EFFECT = Shader.PropertyToID("_Glow");
 
-        private CrewController crew;
-        private SpriteRenderer crewSprite;
-        private SpriteRenderer crewTargetSprite;
-        private MaterialPropertyBlock propertyBlock;
+        public int CrewIndex;
+
         [SerializeField] private TMP_Text text;
         [SerializeField] private Image hpBar;
+        [SerializeField] private SpriteRenderer crewSprite;
+        [SerializeField] private SpriteRenderer crewTargetSprite;
+        [field: SerializeField] public Button HealButton { get; private set; }
+        [SerializeField] private CrewController crew;
         [SerializeField] private bool useGameContext;
-        [SerializeField] private int crewIndex;
+        private MaterialPropertyBlock propertyBlock;
         private bool isSelected;
         private Vector3 targetPosition;
 
         private void Awake()
         {
-            crew = GetComponent<CrewController>();
-            if (crew == null)
-            {
-                useGameContext = true;
-                return;
-            }
-
-            crewSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
-            crewTargetSprite = transform.GetChild(1).GetComponent<SpriteRenderer>();
-
             propertyBlock = new MaterialPropertyBlock();
-            isSelected = false;
-            SetSelectedState(false);
         }
 
         private void Start()
         {
+            if (crew == null)
+            {
+                useGameContext = true;
+                HealButton.gameObject.SetActive(true);
+                return;
+            }
+
+            useGameContext = false;
             crewTargetSprite.enabled = false;
+            HealButton.gameObject.SetActive(false);
+            SetSelectedState(false);
         }
 
         private void LateUpdate()
@@ -116,9 +116,9 @@ namespace FTL
                 return;
             }
 
-            text.SetText(gameManager.GetCrewName(crewIndex));
-            int hp = gameManager.GetCrewHp(crewIndex);
-            int maxHp = gameManager.GetCrewMaxHp(crewIndex);
+            text.SetText(gameManager.GetCrewName(CrewIndex));
+            int hp = gameManager.GetCrewHp(CrewIndex);
+            int maxHp = gameManager.GetCrewMaxHp(CrewIndex);
 
             hpBar.fillAmount = Mathf.InverseLerp(0f, maxHp, hp);
         }
@@ -126,7 +126,7 @@ namespace FTL
         public void SetGameContextCrew(int crewIndex, TMP_Text text, Image hpBar)
         {
             useGameContext = true;
-            this.crewIndex = crewIndex;
+            this.CrewIndex = crewIndex;
             this.text = text;
             this.hpBar = hpBar;
         }
@@ -139,6 +139,21 @@ namespace FTL
         public void SetHpBar(Image hpBar)
         {
             this.hpBar = hpBar;
+        }
+
+        public void SetCrewSprite (SpriteRenderer crewSprite)
+        {
+            this.crewSprite = crewSprite;
+        }
+
+        public void SetCrewTargetSpite(SpriteRenderer crewTargetSprite)
+        {
+            this.crewTargetSprite = crewTargetSprite;
+        }
+
+        public void SetCrewController(CrewController crew)
+        {
+            this.crew = crew;
         }
     }
 }

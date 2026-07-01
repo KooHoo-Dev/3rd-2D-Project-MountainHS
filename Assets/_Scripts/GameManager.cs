@@ -30,29 +30,9 @@ namespace FTL
 
         [SerializeField] private GameContext gameContext;
 
-        protected override void OnInitialize()
-        {
-            base.OnInitialize();
-
-            // 더 보완해야함. 적당히 빈 facilityState, room, crew 를 만들어줘야한다...
-            //if (gameContext == null || gameContext.IsEmpty)
-            //{
-            //    List<Room> rooms = new List<Room>();
-            //    List<FacilityState> facilityStates = new List<FacilityState>();
-            //    List<CrewState> crewStates = new List<CrewState>();
-            //    facilityStates.Add(new FacilityState(0, 1, 0, ERoomType.Weapon));
-            //    facilityStates.Add(new FacilityState(0, 1, 0, ERoomType.Engine));
-            //    facilityStates.Add(new FacilityState(0, 1, 0, ERoomType.Shield));
-            //    gameContext = new GameContext(rooms, facilityStates, crewStates, 0, 20, 30, 8);
-            //}
-
-        }
-
         private void Start()
         {
             InitUIObject();
-            if (toggleMenuObject != null)
-                toggleMenuObject.SetActive(false);
         }
 
         private void InitUIObject()
@@ -147,15 +127,15 @@ namespace FTL
             HandleBattleResult(EBattleResult.PlayerRun);
         }
 
-        public void SetGameContext(List<Room> rooms, List<FacilitySystem> facilities, List<CrewController> crews, int shipHp, int shipMaxHp, int scrapAmount, int shipReactorCapacity)
+        public void SetGameContext(List<Room> rooms, List<FacilitySystem> facilities, List<CrewController> crews, int shipHp, int shipMaxHp, int scrapAmount, int shipReactorCapacity, int shipPower)
         {
             if (gameContext == null)
             {
-                gameContext = new GameContext(rooms, facilities, crews, scrapAmount, shipHp, shipMaxHp, shipReactorCapacity);
+                gameContext = new GameContext(rooms, facilities, crews, scrapAmount, shipHp, shipMaxHp, shipReactorCapacity, shipPower);
             }
             else
             {
-                gameContext.SetGameContext(rooms, facilities, crews, scrapAmount, shipHp, shipMaxHp, shipReactorCapacity);
+                gameContext.SetGameContext(rooms, facilities, crews, scrapAmount, shipHp, shipMaxHp, shipReactorCapacity, shipPower);
             }
         }
 
@@ -177,7 +157,7 @@ namespace FTL
                 crewStates.Add(new CrewState(crews[i]));
             }
 
-            gameContext = new GameContext(rooms, facilityStates, crewStates, player.ScrapAmount, player.Hp, player.ShipData.MaxHp, player.PowerSystem.GetReactorMaxPower);
+            gameContext = new GameContext(rooms, facilityStates, crewStates, player.ScrapAmount, player.Hp, player.ShipData.MaxHp, player.PowerSystem.GetReactorMaxPower, player.PowerSystem.GetPower);
         }
 
         //public void AddScrap(int amount = 1)

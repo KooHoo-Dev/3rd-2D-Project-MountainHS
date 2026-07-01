@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace FTL
@@ -45,6 +46,11 @@ namespace FTL
         public void SetMaxPower(int amount)
         {
             maxPower = amount;
+        }
+
+        public void SetPower(int amount)
+        {
+            power = amount;
         }
     }
 }
