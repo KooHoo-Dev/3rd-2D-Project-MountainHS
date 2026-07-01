@@ -14,17 +14,22 @@ namespace FTL
         protected override void Awake()
         {
             base.Awake();
-            barGroup = transform.GetChild(0).gameObject;
-            facilityIcon = transform.GetChild(1).GetComponent<Image>();
-            assistIcon = transform.GetChild(2).GetComponent<Image>();
-            repairBar = transform.GetChild(3).GetComponent<Image>();
+            barGroup = transform.Find("Power Bar Group").gameObject;
+            facilityIcon = transform.Find("Facility Icon").GetComponent<Image>();
+            Transform assistIconTransform = transform.Find("Assist Icon");
+            Transform repairBarTransform = transform.Find("Repair Bar");
+            if (assistIconTransform != null)
+                assistIcon = assistIconTransform.GetComponent<Image>();
+            if (repairBarTransform != null)
+                repairBar = repairBarTransform.GetComponent<Image>();
 
             CacheBarSpritesFromChildren();
         }
 
         private void Start()
         {
-            repairBar.enabled = false;
+            if (repairBar != null)
+                repairBar.enabled = false;
         }
 
         protected override void SetBarState(int barIndex, EPowerBarStatus status)
@@ -145,11 +150,12 @@ namespace FTL
             int maxPowerLimit = 0;
             if (TryGetGameContextFacilityMaxPowerLimit(out maxPowerLimit) == false)
             {
+                Debug.LogError($"{gameObject.name}: Failed to get facility max power limit!");
                 return;
             }
 
-            assistIcon.enabled = false;
-            repairBar.enabled = false;
+            //assistIcon.enabled = false;
+            //repairBar.enabled = false;
             facilityIcon.color = Color.green;
             UpdateGameContextPowerBars(maxPowerLimit);
         }
@@ -196,41 +202,8 @@ namespace FTL
             }
 
             // 문자열 기반 탐색은 절대 안됨 (무조건 고칠것)
-            //ERoomType roomType = GetContextFacilityType();
-            //maxPowerLimit = gameManager.GetFacilityMaxPowerLimit(roomType);
+            maxPowerLimit = gameManager.GetFacilityMaxPowerLimit(contextFacilityType);
             return true;
-        }
-
-        private ERoomType GetContextFacilityType()
-        {
-            Transform current = transform;
-            for (int i = 0; i < 4; i++)
-            {
-                if (current == null)
-                {
-                    break;
-                }
-
-                string objectName = current.name;
-                if (objectName.Contains("Weapon"))
-                {
-                    return ERoomType.Weapon;
-                }
-
-                if (objectName.Contains("Engine"))
-                {
-                    return ERoomType.Engine;
-                }
-
-                if (objectName.Contains("Shield"))
-                {
-                    return ERoomType.Shield;
-                }
-
-                current = current.parent;
-            }
-
-            return contextFacilityType;
         }
 
         private void CacheBarSpritesFromChildren()

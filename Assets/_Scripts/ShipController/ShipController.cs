@@ -91,13 +91,12 @@ namespace FTL
                     CrewViewer crewViewer = crew.GetComponent<CrewViewer>();
                     Room room = Rooms[i];
                     GameObject crewSummaryObject = Instantiate(crewSummaryPrefab, crewSummaryGroupTransform);
-                    Image crewHpBar = crewSummaryObject?.GetComponentInChildren<Image>();
-                    TMP_Text crewText = crewSummaryObject?.GetComponentInChildren<TMP_Text>();
+                    Image crewHpBar = crewSummaryObject.transform.Find("Hp Bar").GetComponent<Image>();
+                    
+                    TMP_Text crewText = crewSummaryObject.transform.Find("Name").GetComponentInChildren<TMP_Text>();
 
-                    if (crewHpBar != null)
-                        crewViewer.SetHpBar(crewHpBar);
-                    if (crewText != null)
-                        crewViewer.SetText(crewText);
+                    crewViewer.SetHpBar(crewHpBar);
+                    crewViewer.SetText(crewText);
                     crew.InitStartRoom(room);
                     Crews.Add(crew);
                 }
@@ -175,7 +174,6 @@ namespace FTL
         {
             int damage = projectile.Damage;
             int crewDamage = projectile.CrewDamage;
-            TakeDamage(damage);
             // 피격당한 room 객체 가져오기
             Room room = GetRoomByIdOrNull(roomId);
             room.TakeDamageToCrews(crewDamage);
@@ -184,6 +182,7 @@ namespace FTL
             {
                 room.TakeDamageToFacility(damage);
             }
+            TakeDamage(damage);
 
             CheckGameOver();
         }
@@ -250,6 +249,7 @@ namespace FTL
         public void TestTakeDamage()
         {
             TakeDamage(1);
+            CheckGameOver();
         }
         #endregion
     }

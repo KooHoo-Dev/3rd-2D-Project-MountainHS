@@ -20,40 +20,48 @@ namespace FTL
         private const string BATTLE_PREPARE = "BattlePrepare";
         private const string MAIN_UI_TAG = "Main UI";
 
-        public bool IsGameContextEmpty => gameContext == null;
+        public bool IsGameContextEmpty => gameContext == null || gameContext.IsEmpty;
         public PlayerController Player;
         [field: SerializeField] public EBattleResult BattleResult { get; set; }
 
-        [SerializeField] private GameObject mainUIRoot;
         [SerializeField] private GameObject buttonGroupObject;
         [SerializeField] private GameObject toggleMenuObject;
-        [SerializeField] private Button startButton;
-        [SerializeField] private Button exitButton;
-        [SerializeField] private Button mainMenuButton;
-        [SerializeField] private Button nextBattleButton;
         private MainUIController mainUIController;
-        private List<string> sceneNameList = new List<string>();
 
-        private GameContext gameContext;
+        [SerializeField] private GameContext gameContext;
 
         protected override void OnInitialize()
         {
             base.OnInitialize();
-            InitUIObject();
-            mainUIController = mainUIRoot.GetComponent<MainUIController>();
 
-            toggleMenuObject.SetActive(false);
+            // 더 보완해야함. 적당히 빈 facilityState, room, crew 를 만들어줘야한다...
+            //if (gameContext == null || gameContext.IsEmpty)
+            //{
+            //    List<Room> rooms = new List<Room>();
+            //    List<FacilityState> facilityStates = new List<FacilityState>();
+            //    List<CrewState> crewStates = new List<CrewState>();
+            //    facilityStates.Add(new FacilityState(0, 1, 0, ERoomType.Weapon));
+            //    facilityStates.Add(new FacilityState(0, 1, 0, ERoomType.Engine));
+            //    facilityStates.Add(new FacilityState(0, 1, 0, ERoomType.Shield));
+            //    gameContext = new GameContext(rooms, facilityStates, crewStates, 0, 20, 30, 8);
+            //}
+
+        }
+
+        private void Start()
+        {
+            InitUIObject();
+            if (toggleMenuObject != null)
+                toggleMenuObject.SetActive(false);
         }
 
         private void InitUIObject()
         {
-            mainUIRoot = GameObject.FindWithTag(MAIN_UI_TAG);
-            buttonGroupObject = mainUIRoot.transform.GetChild(0).gameObject;
-            toggleMenuObject = mainUIRoot.transform.GetChild(1).gameObject;
-            startButton = buttonGroupObject.transform.GetChild(0).GetComponent<Button>();
-            mainMenuButton = buttonGroupObject.transform.GetChild(1).GetComponent<Button>();
-            exitButton = buttonGroupObject.transform.GetChild(2).GetComponent<Button>();
-            nextBattleButton = buttonGroupObject.transform.GetChild(3).GetComponent<Button>();
+            mainUIController = FindFirstObjectByType<MainUIController>();
+            if (mainUIController == null)
+                return;
+
+            toggleMenuObject = mainUIController.transform.GetChild(1).gameObject;
         }
 
         private void Update()
@@ -80,10 +88,16 @@ namespace FTL
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
         {
+            InitUIObject();
             if (scene.name == BATTLE_SCENE)
             {
                 SceneBinder sceneBinder = FindFirstObjectByType<SceneBinder>();
                 sceneBinder.BindSceneObjects(gameContext);
+            }
+            else if (scene.name == BATTLE_PREPARE)
+            {
+                ShopManager shopManager = FindFirstObjectByType<ShopManager>();
+                shopManager.ApplyGameContext(gameContext);
             }
         }
 
@@ -250,10 +264,15 @@ namespace FTL
             return gameContext.GetFacilityMaxPowerLimit(roomType);
         }
 
-
         public void AddShipHp(int amount)
         {
             gameContext.AddShipHp(amount);
+        }
+
+        [ContextMenu("AddScrap100")]
+        public void AddScrap100()
+        {
+            gameContext.AddScrap(100);
         }
 
         #region Test Method

@@ -11,7 +11,7 @@ namespace FTL
         [SerializeField] private GameObject barPrefab;
         [SerializeField] private GameObject barGroup;
         [SerializeField] private List<Image> barSprites = new List<Image>();
-        [SerializeField] private ShipController playerSystem;
+        [SerializeField] private ShipController ship;
         [SerializeField] private int prevHp;
         private ObjectPool<GameObject> barPool;
 
@@ -52,9 +52,14 @@ namespace FTL
         // 현재 전력 상태 (총 용량, 가용 가능한 양 상태에 따라 power bar 업데이트)
         private void UpdateViewer()
         {
-            int hp = playerSystem.Hp;
-            int maxHp = playerSystem.ShipData.MaxHp;
-            if (TryGetGameContextHp(out hp, out maxHp) == false)
+            int hp = 0;
+            int maxHp = 0;
+            if (ship != null)
+            {
+                hp = ship.Hp;
+                maxHp = ship.ShipData.MaxHp;
+            }
+            else if (TryGetGameContextHp(out hp, out maxHp) == false)
             {
                 return;
             }

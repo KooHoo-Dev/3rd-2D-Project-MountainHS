@@ -83,7 +83,7 @@ namespace FTL
         public void AddBar()
         {
             GameObject powerBar = barPool.Get();
-            barSprites.Add(powerBar.GetComponent<UnityEngine.UI.Image>());
+            barSprites.Add(powerBar.GetComponent<Image>());
             SetBarState(barSprites.Count - 1, EPowerBarStatus.Available);
         }
 

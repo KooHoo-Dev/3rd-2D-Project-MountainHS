@@ -4,15 +4,20 @@ using UnityEngine;
 
 namespace FTL
 {
+    [Serializable]
     public class GameContext
     {
+        public bool IsEmpty => Rooms == null || FacilityStates == null || CrewStates == null;
+
         public List<Room> Rooms { get; private set; }
         public List<FacilityState> FacilityStates { get; private set; }
         public List<CrewState> CrewStates { get; private set; }
-        public int ScrapAmount { get; private set; }
-        public int ShipMaxHp { get; private set; }
-        public int ShipHp { get; private set; }
-        public int ShipReactorCapacity { get; private set; }
+        [field: SerializeField] public List<int> FacilityUpgradeCount { get; private set; } = new List<int>();
+        [field: SerializeField] public int ScrapAmount { get; private set; }
+        [field: SerializeField] public int ShipMaxHp { get; private set; }
+        [field: SerializeField] public int ShipHp { get; private set; }
+        [field: SerializeField] public int ShipReactorCapacity { get; private set; }
+        [field: SerializeField] public int ReactorUpgradeCount { get; private set; }
 
         public GameContext(List<Room> rooms, List<FacilitySystem> facilitySystems, List<CrewController> crews, int scrapAmount, int shipHp, int shipMaxHp, int shipReactorCapacity)
         {
@@ -109,6 +114,17 @@ namespace FTL
             ScrapAmount = scrapAmount;
             ShipReactorCapacity = shipReactorCapacity;
         }
+
+        public void SetGameContext(List<int> facilityUpgradeCount, int reactorUpgradeCount)
+        {
+            for (int i = 0; i < FacilityUpgradeCount.Count; i++)
+            {
+                FacilityUpgradeCount[i] = facilityUpgradeCount[i];
+            }
+
+            ReactorUpgradeCount = reactorUpgradeCount;
+        }
+
 
         public void IncreaseMaxPowerLimitOfFacility(ERoomType roomType, int amount = 1)
         {

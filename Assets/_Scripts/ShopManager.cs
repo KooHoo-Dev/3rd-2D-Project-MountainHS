@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -8,16 +9,25 @@ using Utilities;
 
 namespace FTL
 {
-    public class ShopManager: SingletonBase<ShopManager>
+    public class ShopManager: MonoBehaviour
     {
         private const int REACTOR_UPGRADE_MAX = 10;
-        private const int FACILITY_UPGRADE_MAX = 10;
+        private const int FACILITY_UPGRADE_MAX = 5;
+        private const string SHIP_UPGRADE_SWITCH = "Ship Upgrade Switch";
+        private const string RESTORE_SWITCH = "Restore Switch";
+        private const string UPGRADE_UI_ROOT = "Upgrade UI Root";
+        private const string RESTORE_UI_ROOT = "Restore UI Root";
+        private const string CREW_GROUP_ROOT = "Crew Group Root";
+
         // switch 두개 등록
         [SerializeField] private Button shipUpgradeSwitchButton;
         [SerializeField] private Button restoreSwitchButton;
         // 업그레이드 ui, 회복 ui
+        [SerializeField] private Transform uiRoot;
         [SerializeField] private GameObject upgradeUIRoot;
         [SerializeField] private GameObject restoreUIRoot;
+        [SerializeField] private GameObject crewSummaryPrefab;
+        [SerializeField] private GameObject crewGroupRoot;
 
         // 함선 업그레이드
         // 시설 최대 전력 한계 증가
@@ -30,11 +40,24 @@ namespace FTL
         // 승무원 회복
         // 함선 수리
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
+            InitMainGameObject();
+        }
+
+        private void Start()
+        {
             InitFacilityUpgradeCounts();
             InitCrewHealViewers();
+        }
+
+        private void InitMainGameObject()
+        {
+            upgradeUIRoot = GameObject.Find(UPGRADE_UI_ROOT);
+            restoreUIRoot = GameObject.Find(RESTORE_UI_ROOT);
+            crewGroupRoot = GameObject.Find(CREW_GROUP_ROOT);
+            upgradeUIRoot.SetActive(true);
+            restoreUIRoot.SetActive(false);
         }
 
         private void InitFacilityUpgradeCounts()
@@ -49,49 +72,13 @@ namespace FTL
             }
         }
 
-        private void InitCrewHealViewers()
+        public void InitCrewHealViewers()
         {
-            Transform[] children = restoreUIRoot.GetComponentsInChildren<Transform>(true);
-            int crewIndex = 0;
-            for (int i = 0; i < children.Length; i++)
+            int crewSummaryCount = GameManager.Instance.GetCrewCount();
+            for (int i = 0; i < crewSummaryCount; i++)
             {
-                //Transform child = children[i];
-                //if (child.name != "Crew Summary")
-                //{
-                //    continue;
-                //}
-
-                //TMP_Text crewNameText = GetChildText(child, "Name");
-                //Image hpBar = GetChildImage(child, "Hp Bar");
-                //if (crewNameText == null || hpBar == null)
-                //{
-                //    continue;
-                //}
-                // 직접 crewStates 보고 crew summary를 만들어줘야함
-
-                //CrewViewer crewViewer = child.GetComponent<CrewViewer>();
-                //if (crewViewer == null)
-                //{
-                //    crewViewer = child.gameObject.AddComponent<CrewViewer>();
-                //}
-
-                //crewViewer.SetGameContextCrew(crewIndex, crewNameText, hpBar);
-                //crewIndex++;
+                GameObject crewSummary = Instantiate(crewSummaryPrefab, crewGroupRoot.transform);
             }
-        }
-
-        private TMP_Text GetChildText(Transform root, string childName)
-        {
-            Transform child = root.Find(childName);
-
-            return child.GetComponent<TMP_Text>();
-        }
-
-        private Image GetChildImage(Transform root, string childName)
-        {
-            Transform child = root.Find(childName);
-
-            return child.GetComponent<Image>();
         }
 
         // 함선 업그레이드
@@ -235,6 +222,16 @@ namespace FTL
         {
             upgradeUIRoot.SetActive(false);
             restoreUIRoot.SetActive(true);
+        }
+
+        public void ApplyGameContext(GameContext gameContext)
+        {
+
+            for (int i = 0; i < gameContext.FacilityUpgradeCount.Count; i++)
+            {
+                facilityUpgradeCount[i] = gameContext.FacilityUpgradeCount[i];
+            }
+            reactorUpgradeCount = gameContext.ReactorUpgradeCount;
         }
     }
 }
