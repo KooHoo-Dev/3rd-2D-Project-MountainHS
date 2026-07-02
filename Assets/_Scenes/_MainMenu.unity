@@ -438,6 +438,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 15002513040831302, guid: 019e019a54fdc0b459e56b7f7c328b28, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 344262768572098259, guid: 019e019a54fdc0b459e56b7f7c328b28, type: 3}
       propertyPath: m_Camera
       value: 
@@ -589,6 +593,18 @@ PrefabInstance:
     - target: {fileID: 4079353547752243558, guid: 019e019a54fdc0b459e56b7f7c328b28, type: 3}
       propertyPath: m_fontSize
       value: 21.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4079353547752243558, guid: 019e019a54fdc0b459e56b7f7c328b28, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 575f235b47e866d418f7df5e31df7e52, type: 2}
+    - target: {fileID: 4079353547752243558, guid: 019e019a54fdc0b459e56b7f7c328b28, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 690464860144957368, guid: 575f235b47e866d418f7df5e31df7e52, type: 2}
+    - target: {fileID: 4079353547752243558, guid: 019e019a54fdc0b459e56b7f7c328b28, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4277357257370678041, guid: 019e019a54fdc0b459e56b7f7c328b28, type: 3}
       propertyPath: m_Name
