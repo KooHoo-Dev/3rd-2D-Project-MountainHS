@@ -14,6 +14,7 @@ namespace FTL
             player.SetReactorPower(gameContext.ShipPower);
             player.SetFacilitySystems(gameContext.FacilityStates);
             player.SetCrewsState(gameContext.CrewStates);
+            player.SetWeaponTypes(gameContext.WeaponTypes);
             BindCombatSystem(player, enemy);
         }
 

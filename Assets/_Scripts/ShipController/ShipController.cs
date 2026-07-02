@@ -1,13 +1,8 @@
-using System;
+    using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using Utilities;
 
 namespace FTL
 {
@@ -18,6 +13,11 @@ namespace FTL
 
         public bool IsDead => Hp == 0;
         public ShipOwnership Ownership { get; private set; }
+        [Header("Start Weapon Types")]
+        [field: SerializeField] public List<EWeaponType> WeaponTypes { get; private set; } = new List<EWeaponType>();
+        [SerializeField] protected GameObject weaponChargeStatusPrefab;
+        [SerializeField] protected List<WeaponTransformData> weaponTransformList;
+
         [Header("Ship Data")]
         [field: SerializeField] public ShipData ShipData { get; private set; }
 
@@ -34,12 +34,14 @@ namespace FTL
         [Header("Crew")]
         [SerializeField] private Transform crewGroupTransform;
         [SerializeField] private Transform crewSummaryGroupTransform;
+        [SerializeField] protected Transform weaponGroupTransform;
+        [SerializeField] protected Transform weaponChargeGroupTransform;
         [SerializeField] private GameObject crewPrefab;
         [SerializeField] private GameObject crewSummaryPrefab;
         [SerializeField] protected int crewCount = 3;
 
         public List<CrewController> Crews { get; set; } = new List<CrewController>();
-        public List<FacilitySystem> FacilitySystems = new List<FacilitySystem>() ;
+        public List<FacilitySystem> FacilitySystems = new List<FacilitySystem>();
         protected CrewSystem crewSystem;
         protected WeaponSystem weaponSystem;
 
@@ -58,6 +60,7 @@ namespace FTL
 
             InitRooms();
             InitCrews();
+            InitWeapons();
 
             void InitRooms()
             {
@@ -101,7 +104,41 @@ namespace FTL
                     Crews.Add(crew);
                 }
             }
+
+            void InitWeapons()
+            {
+                for (int i = 0; i < WeaponTypes.Count; i++)
+                {
+                    EWeaponType weaponType = WeaponTypes[i];
+                    WeaponDatabase weaponDatabase = GameManager.Instance.WeaponDatabase;
+                    GameObject weaponPrefab = weaponDatabase.GetPrefab(weaponType);
+                    GameObject weaponObject = Instantiate(weaponPrefab, weaponGroupTransform);
+                    GameObject weaponChargeObject = Instantiate(weaponChargeStatusPrefab, weaponChargeGroupTransform);
+                    WeaponViewer weaponViewer = weaponObject.GetComponent<WeaponViewer>();
+                    WeaponController weapon = weaponObject.GetComponent<WeaponController>();
+                    Image chargeImage = weaponChargeObject.transform.GetChild(1)
+                        .GetChild(1)
+                        .GetComponent<Image>();
+                    Button weaponButton = weaponChargeObject.GetComponentInChildren<Button>();
+                    SpriteRenderer weaponSprite = weaponObject.GetComponentInChildren<SpriteRenderer>();
+                    Vector3 weaponOffset = weaponTransformList[i].WeaponOffset;
+                    Vector3 weaponRotation = weaponTransformList[i].WeaponRotation;
+                    bool isFlipX = weaponTransformList[i].isFlipX;
+                    bool isFlipY = weaponTransformList[i].isFlipY;
+                    int index = i;
+
+                    weaponButton.onClick.RemoveAllListeners();
+                    weaponButton.onClick.AddListener(() => weaponSystem.SetSelectedWeapon(index));
+                    weaponObject.transform.localPosition += weaponOffset;
+                    weaponSprite.transform.Rotate(weaponRotation);
+                    weaponSprite.flipX = isFlipX;
+                    weaponSprite.flipY = isFlipY;
+                    weaponViewer.SetChargeBar(chargeImage);
+                    weaponSystem.AddWeapon(weapon);
+                }
+            }
         }
+
 
         protected void HandlePowerInput(ERoomType facilityType, bool isRecoverInput)
         {
@@ -163,6 +200,16 @@ namespace FTL
                     throw new ArgumentException("Invalid room type");
             }
 
+        }
+
+        public void SetWeaponTypes(List<EWeaponType> weaponTypes)
+        {
+            WeaponTypes = new List<EWeaponType>();
+
+            for (int i = 0; i < weaponTypes.Count; i++)
+            {
+                WeaponTypes.Add(weaponTypes[i]);
+            }
         }
 
         public void TakeDamage(int damage)

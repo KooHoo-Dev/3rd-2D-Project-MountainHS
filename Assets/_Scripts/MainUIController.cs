@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -5,6 +6,17 @@ namespace FTL
 {
     public class MainUIController : MonoBehaviour
     {
+        private bool HasViewer => brViewer != null;
+        [SerializeField] private BattleResultViewer brViewer;
+
+        private void Start()
+        {
+            if (HasViewer)
+            {
+                brViewer.gameObject.SetActive(false);
+            }
+        }
+
         public void MoveScene(int index)
         {
             if (index == 0)
@@ -34,6 +46,19 @@ namespace FTL
         public void HandlePlayerRun()
         {
             GameManager.Instance.HandleBattleResult(EBattleResult.PlayerRun);
+        }
+
+        public void SetBattleResult(EBattleResult battleResult, int reward)
+        {
+            if (HasViewer)
+            {
+                brViewer.SetBattleResult(battleResult, reward);
+                brViewer.gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.LogWarning("BattleResultViewer is not assigned in MainUIController. Cannot display battle result.");
+            }
         }
     }
 }

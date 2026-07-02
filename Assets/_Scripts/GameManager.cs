@@ -1,10 +1,7 @@
-using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using Utilities;
 
 namespace FTL
@@ -14,21 +11,20 @@ namespace FTL
     /// </summary>
     public class GameManager : SingletonBase<GameManager>
     {
-        private const string MAINMENU_SCENE = "_MainMenu";
         private const string BATTLE_SCENE = "BattleScene";
-        private const string GAMEOVER_SCENE = "GameOver";
         private const string BATTLE_PREPARE = "BattlePrepare";
         private const string MAIN_UI_TAG = "Main UI";
+        private const string GAMEOVER_SCENE = "GameOver";
+        private const string MAINMENU_SCENE = "_MainMenu";
 
         public bool IsGameContextEmpty => gameContext == null || gameContext.IsEmpty;
         public PlayerController Player;
         [field: SerializeField] public EBattleResult BattleResult { get; set; }
 
-        [SerializeField] private GameObject buttonGroupObject;
         [SerializeField] private GameObject toggleMenuObject;
-        private MainUIController mainUIController;
-
         [SerializeField] private GameContext gameContext;
+        [field: SerializeField] public WeaponDatabase WeaponDatabase { get; private set; }
+        private MainUIController mainUIController;
 
         private void Start()
         {
@@ -39,7 +35,9 @@ namespace FTL
         {
             mainUIController = FindFirstObjectByType<MainUIController>();
             if (mainUIController == null)
+            {
                 return;
+            }
 
             toggleMenuObject = mainUIController.transform.GetChild(1).gameObject;
         }
@@ -48,7 +46,8 @@ namespace FTL
         {
             if (SimpleInput.GetKeyDown(Key.Escape))
             {
-                if (SceneManager.GetActiveScene().name != MAINMENU_SCENE)
+                string sceneName = SceneManager.GetActiveScene().name;
+                if (sceneName == BATTLE_PREPARE || sceneName == BATTLE_SCENE)
                 {
                     bool isToggleMenuActive = toggleMenuObject.activeSelf;
                     toggleMenuObject.SetActive(!isToggleMenuActive);
@@ -72,7 +71,9 @@ namespace FTL
             if (scene.name == BATTLE_SCENE)
             {
                 SceneBinder sceneBinder = FindFirstObjectByType<SceneBinder>();
+                BackgroundController backgroundController = FindFirstObjectByType<BackgroundController>();
                 sceneBinder.BindSceneObjects(gameContext);
+                backgroundController.SetRandomBackground();
             }
             else if (scene.name == BATTLE_PREPARE)
             {
@@ -81,37 +82,67 @@ namespace FTL
             }
         }
 
-        public void HandleBattleResult(EBattleResult eBattleResult)
+        public void HandleBattleResult(EBattleResult battleResult)
         {
             // 함선이 파괴되면
-            switch (eBattleResult)
+            switch (battleResult)
             {
                 case EBattleResult.PlayerShipDestroyed:
                     Debug.Log("Player ship destroyed");
-                    mainUIController.MoveScene(ESceneIndex.GameOver);
+                    mainUIController.SetBattleResult(battleResult, 0);
                     break;
                 case EBattleResult.PlayerAllCrewDead:
                     // 게임오버 화면으로
                     // 어떤 Uicontroller인지 몰라도 얘한테 시켜서 게임오버화면으로 이동
-                    mainUIController.MoveScene(ESceneIndex.GameOver);
+                    mainUIController.SetBattleResult(battleResult, 0);
                     Debug.Log("Player all crew dead.");
                     break;
                 case EBattleResult.EnemyShipDestroyed:
                     SetGameContext(Player);
                     gameContext.AddScrap(100);
-                    mainUIController.MoveScene(ESceneIndex.BattlePrepare);
+                    mainUIController.SetBattleResult(battleResult, 100);
                     Debug.Log("Enemy ship destroyed.");
                     break;
                 case EBattleResult.EnemyAllCrewDead:
                     SetGameContext(Player);
                     gameContext.AddScrap(200);
-                    mainUIController.MoveScene(ESceneIndex.BattlePrepare);
+                    mainUIController.SetBattleResult(battleResult, 200);
                     Debug.Log("Enemy all crew dead.");
                     break;
                 case EBattleResult.PlayerRun:
                     // 전투준비 화면으로 이동
                     // 어떤 Uicontroller인지 몰라도 얘한테 시켜서 전투준비화면으로 이동
                     SetGameContext(Player);
+                    mainUIController.SetBattleResult(battleResult, 0);
+                    Debug.Log("Player run.");
+                    break;
+                case EBattleResult.None:
+                default:
+                    Debug.LogError("Unknown EBattleResult");
+                    break;
+            }
+        }
+
+        public void MoveSceneByBattleResult(EBattleResult battleResult) 
+        {
+            switch (battleResult)
+            {
+                case EBattleResult.PlayerShipDestroyed:
+                    mainUIController.MoveScene(ESceneIndex.GameOver);
+                    break;
+                case EBattleResult.PlayerAllCrewDead:
+                    mainUIController.MoveScene(ESceneIndex.GameOver);
+                    Debug.Log("Player all crew dead.");
+                    break;
+                case EBattleResult.EnemyShipDestroyed:
+                    mainUIController.MoveScene(ESceneIndex.BattlePrepare);
+                    Debug.Log("Enemy ship destroyed.");
+                    break;
+                case EBattleResult.EnemyAllCrewDead:
+                    mainUIController.MoveScene(ESceneIndex.BattlePrepare);
+                    Debug.Log("Enemy all crew dead.");
+                    break;
+                case EBattleResult.PlayerRun:
                     mainUIController.MoveScene(ESceneIndex.BattlePrepare);
                     Debug.Log("Player run.");
                     break;
@@ -127,17 +158,17 @@ namespace FTL
             HandleBattleResult(EBattleResult.PlayerRun);
         }
 
-        public void SetGameContext(List<Room> rooms, List<FacilitySystem> facilities, List<CrewController> crews, int shipHp, int shipMaxHp, int scrapAmount, int shipReactorCapacity, int shipPower)
-        {
-            if (gameContext == null)
-            {
-                gameContext = new GameContext(rooms, facilities, crews, scrapAmount, shipHp, shipMaxHp, shipReactorCapacity, shipPower);
-            }
-            else
-            {
-                gameContext.SetGameContext(rooms, facilities, crews, scrapAmount, shipHp, shipMaxHp, shipReactorCapacity, shipPower);
-            }
-        }
+        //public void SetGameContext(List<Room> rooms, List<FacilitySystem> facilities, List<CrewController> crews, int shipHp, int shipMaxHp, int scrapAmount, int shipReactorCapacity, int shipPower)
+        //{
+        //    if (gameContext == null)
+        //    {
+        //        gameContext = new GameContext(rooms, facilities, crews, scrapAmount, shipHp, shipMaxHp, shipReactorCapacity, shipPower);
+        //    }
+        //    else
+        //    {
+        //        gameContext.SetGameContext(rooms, facilities, crews, scrapAmount, shipHp, shipMaxHp, shipReactorCapacity, shipPower);
+        //    }
+        //}
 
         public void SetGameContext(PlayerController player)
         {
@@ -158,6 +189,33 @@ namespace FTL
             }
 
             gameContext = new GameContext(rooms, facilityStates, crewStates, player.ScrapAmount, player.Hp, player.ShipData.MaxHp, player.PowerSystem.GetReactorMaxPower, player.PowerSystem.GetPower);
+            gameContext.SetWeaponTypes(player.WeaponTypes);
+        }
+
+        public void EnsureBattlePrepareTestGameContext()
+        {
+            if (IsGameContextEmpty == false)
+            {
+                return;
+            }
+
+            List<Room> rooms = new List<Room>();
+
+            List<FacilityState> facilityStates = new List<FacilityState>
+            {
+                new FacilityState(0, 3, 1, ERoomType.Weapon),
+                new FacilityState(0, 3, 1, ERoomType.Engine),
+                new FacilityState(0, 3, 2, ERoomType.Shield)
+            };
+
+            List<CrewState> crewStates = new List<CrewState>
+            {
+                new CrewState(100, 100, "Hans", 0),
+                new CrewState(100, 100, "Tom", 1),
+                new CrewState(100, 100, "Jane", 2)
+            };
+
+            gameContext = new GameContext(rooms, facilityStates, crewStates, 100, 30, 30, 6, 2);
         }
 
         //public void AddScrap(int amount = 1)
@@ -180,7 +238,7 @@ namespace FTL
             return gameContext.ScrapAmount;
         }
 
-        public void IncreaseMaxPowerLimitOfFacility(ERoomType roomType, int amount=1)
+        public void IncreaseMaxPowerLimitOfFacility(ERoomType roomType, int amount = 1)
         {
             gameContext.IncreaseMaxPowerLimitOfFacility(roomType, amount);
         }
@@ -253,29 +311,38 @@ namespace FTL
         {
             gameContext.AddShipHp(amount);
         }
-
-        [ContextMenu("AddScrap100")]
-        public void AddScrap100()
-        {
-            gameContext.AddScrap(100);
-        }
-
         #region Test Method
         public void TestHandleBattleResult()
         {
             if (SimpleInput.GetKeyDown(Key.Digit1))
+            {
                 BattleResult = EBattleResult.PlayerShipDestroyed;
-            if (SimpleInput.GetKeyDown(Key.Digit2))
-                BattleResult = EBattleResult.PlayerAllCrewDead;
-            if (SimpleInput.GetKeyDown(Key.Digit3))
-                BattleResult = EBattleResult.PlayerRun;
-            if (SimpleInput.GetKeyDown(Key.Digit4))
-                BattleResult = EBattleResult.EnemyAllCrewDead;
-            if (SimpleInput.GetKeyDown(Key.Digit5))
-                BattleResult = EBattleResult.EnemyShipDestroyed;
-            if (SimpleInput.AnyKeyDown())
-                HandleBattleResult(BattleResult);
+            }
 
+            if (SimpleInput.GetKeyDown(Key.Digit2))
+            {
+                BattleResult = EBattleResult.PlayerAllCrewDead;
+            }
+
+            if (SimpleInput.GetKeyDown(Key.Digit3))
+            {
+                BattleResult = EBattleResult.PlayerRun;
+            }
+
+            if (SimpleInput.GetKeyDown(Key.Digit4))
+            {
+                BattleResult = EBattleResult.EnemyAllCrewDead;
+            }
+
+            if (SimpleInput.GetKeyDown(Key.Digit5))
+            {
+                BattleResult = EBattleResult.EnemyShipDestroyed;
+            }
+
+            if (SimpleInput.AnyKeyDown())
+            {
+                HandleBattleResult(BattleResult);
+            }
         }
 
         public void TurnOffToggleMenu()
@@ -288,6 +355,23 @@ namespace FTL
             gameContext.ReduceScrap(v);
         }
 
+        [ContextMenu("AddScrap100")]
+        public void AddScrap100()
+        {
+            gameContext.AddScrap(100);
+        }
+
+        [ContextMenu("Change Background")]
+        public void ChangeBackground()
+        {
+            string sceneName = SceneManager.GetActiveScene().name;
+            if (sceneName == BATTLE_SCENE)
+            {
+                BackgroundController backgroundController = FindFirstObjectByType<BackgroundController>();
+                backgroundController.SetRandomBackground();
+            }
+
+        }
         #endregion
     }
 }
