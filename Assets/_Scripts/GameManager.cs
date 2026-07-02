@@ -48,7 +48,8 @@ namespace FTL
         {
             if (SimpleInput.GetKeyDown(Key.Escape))
             {
-                if (SceneManager.GetActiveScene().name != MAINMENU_SCENE)
+                string sceneName = SceneManager.GetActiveScene().name;
+                if (sceneName == BATTLE_PREPARE || sceneName == BATTLE_SCENE)
                 {
                     bool isToggleMenuActive = toggleMenuObject.activeSelf;
                     toggleMenuObject.SetActive(!isToggleMenuActive);
@@ -72,7 +73,9 @@ namespace FTL
             if (scene.name == BATTLE_SCENE)
             {
                 SceneBinder sceneBinder = FindFirstObjectByType<SceneBinder>();
+                BackgroundController backgroundController = FindFirstObjectByType<BackgroundController>();
                 sceneBinder.BindSceneObjects(gameContext);
+                backgroundController.SetRandomBackground();
             }
             else if (scene.name == BATTLE_PREPARE)
             {
@@ -276,11 +279,6 @@ namespace FTL
             gameContext.AddShipHp(amount);
         }
 
-        [ContextMenu("AddScrap100")]
-        public void AddScrap100()
-        {
-            gameContext.AddScrap(100);
-        }
 
         #region Test Method
         public void TestHandleBattleResult()
@@ -310,6 +308,23 @@ namespace FTL
             gameContext.ReduceScrap(v);
         }
 
+        [ContextMenu("AddScrap100")]
+        public void AddScrap100()
+        {
+            gameContext.AddScrap(100);
+        }
+
+        [ContextMenu("Change Background")]
+        public void ChangeBackground()
+        {
+            string sceneName = SceneManager.GetActiveScene().name;
+            if (sceneName == BATTLE_SCENE)
+            {
+                BackgroundController backgroundController = FindFirstObjectByType<BackgroundController>();
+                backgroundController.SetRandomBackground();
+            }
+
+        }
         #endregion
     }
 }

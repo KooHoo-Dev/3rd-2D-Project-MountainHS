@@ -165,7 +165,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4874801523424939802, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.074
       objectReference: {fileID: 0}
     - target: {fileID: 4874801523424939802, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
       propertyPath: m_AnchorMax.y
@@ -173,7 +173,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4874801523424939802, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.020520834
       objectReference: {fileID: 0}
     - target: {fileID: 4874801523424939802, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
       propertyPath: m_AnchorMin.y
@@ -181,7 +181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4874801523424939802, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: -41
       objectReference: {fileID: 0}
     - target: {fileID: 4874801523424939802, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
       propertyPath: m_SizeDelta.y
@@ -217,11 +217,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4874801523424939802, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 50
+      value: -20.5
       objectReference: {fileID: 0}
     - target: {fileID: 4874801523424939802, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 272.5
+      value: 261
       objectReference: {fileID: 0}
     - target: {fileID: 4874801523424939802, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -233,6 +233,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4874801523424939802, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5851228429016832214, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
+      propertyPath: m_Spacing.y
+      value: -59.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 5851228429016832214, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
+      propertyPath: m_CellSize.y
+      value: 85
+      objectReference: {fileID: 0}
+    - target: {fileID: 5851228429016832214, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
+      propertyPath: m_Padding.m_Left
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

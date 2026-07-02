@@ -343,9 +343,10 @@ MonoBehaviour:
   barPrefab: {fileID: 0}
   barGroup: {fileID: 0}
   barSprites: []
-  powerSystemMono: {fileID: 0}
+  facilitySystem: {fileID: 0}
   facilityIcon: {fileID: 8276855172059264865}
   assistIcon: {fileID: 0}
+  contextFacilityType: 0
 --- !u!1001 &1218317798359183097
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -471,6 +472,14 @@ PrefabInstance:
       value: -60
       objectReference: {fileID: 0}
     - target: {fileID: 5851228429016832214, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
+      propertyPath: m_CellSize.x
+      value: 85
+      objectReference: {fileID: 0}
+    - target: {fileID: 5851228429016832214, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
+      propertyPath: m_ChildAlignment
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5851228429016832214, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
       propertyPath: m_Padding.m_Left
       value: 0
       objectReference: {fileID: 0}
@@ -518,7 +527,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4222426309724447085, guid: 4392d3ccb84dd464abe0827b8357f8e7, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 4222426309724447085, guid: 4392d3ccb84dd464abe0827b8357f8e7, type: 3}
       propertyPath: m_SizeDelta.y

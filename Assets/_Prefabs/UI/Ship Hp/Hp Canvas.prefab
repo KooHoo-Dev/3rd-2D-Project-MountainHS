@@ -118,7 +118,7 @@ MonoBehaviour:
   barPrefab: {fileID: 5568492707274099720, guid: a7f4a9d277a4fb549a147ce788c9f53a, type: 3}
   barGroup: {fileID: 3883041367849490568}
   barSprites: []
-  playerSystem: {fileID: 0}
+  ship: {fileID: 0}
   prevHp: 0
 --- !u!1001 &4441734122482067848
 PrefabInstance:
@@ -146,7 +146,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4874801523424939802, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0.9686669
       objectReference: {fileID: 0}
     - target: {fileID: 4874801523424939802, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
       propertyPath: m_AnchorMin.x
@@ -154,7 +154,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4874801523424939802, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0.892
       objectReference: {fileID: 0}
     - target: {fileID: 4874801523424939802, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
       propertyPath: m_SizeDelta.x
@@ -162,7 +162,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4874801523424939802, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -84
       objectReference: {fileID: 0}
     - target: {fileID: 4874801523424939802, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
       propertyPath: m_LocalPosition.x
@@ -198,7 +198,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4874801523424939802, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -124.99997
+      value: -91.99997
       objectReference: {fileID: 0}
     - target: {fileID: 4874801523424939802, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
