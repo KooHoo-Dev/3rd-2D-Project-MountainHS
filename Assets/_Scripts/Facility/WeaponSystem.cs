@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,11 +21,11 @@ namespace FTL
 
         private void Start()
         {
-            WeaponController[] weapons = GetComponentsInChildren<WeaponController>();
-            for (int i = 0; i < weapons.Length; i++)
-            {
-                this.weapons.Add(weapons[i]);
-            }
+            //WeaponController[] weapons = GetComponentsInChildren<WeaponController>();
+            //for (int i = 0; i < weapons.Length; i++)
+            //{
+            //    this.weapons.Add(weapons[i]);
+            //}
         }
 
         private void Update()
@@ -127,6 +128,12 @@ namespace FTL
             {
                 weapons[i].ApplyAssistEffectOnWeapon(isApplied);
             }
+        }
+
+        public void AddWeapon(WeaponController weapon)
+        {
+            //weapons 초기화 해야함
+            weapons.Add(weapon);
         }
     }
 }

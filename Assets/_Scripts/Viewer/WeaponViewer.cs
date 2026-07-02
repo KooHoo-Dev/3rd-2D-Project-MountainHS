@@ -25,5 +25,10 @@ namespace FTL
             int spriteIndex = Mathf.FloorToInt((chargeRate) * (chargeSprites.Length - 1));
             spriteRenderer.sprite = chargeSprites[spriteIndex];
         }
+
+        public void SetChargeBar(Image chargeBar)
+        {
+            weaponChargeBar = chargeBar;
+        }
     }
 }

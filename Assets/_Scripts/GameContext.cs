@@ -7,7 +7,7 @@ namespace FTL
     [Serializable]
     public class GameContext
     {
-        public bool IsEmpty => Rooms == null || FacilityStates == null || CrewStates == null;
+        public bool IsEmpty => Rooms == null || FacilityStates == null || CrewStates == null || WeaponTypes == null;
 
         public List<Room> Rooms { get; private set; }
         public List<FacilityState> FacilityStates { get; private set; }
@@ -19,29 +19,30 @@ namespace FTL
         [field: SerializeField] public int ShipReactorCapacity { get; private set; }
         [field: SerializeField] public int ShipPower { get; private set; }
         [field: SerializeField] public int ReactorUpgradeCount { get; private set; }
+        [field: SerializeField] public List<EWeaponType> WeaponTypes { get; private set; } = new List<EWeaponType>();
 
-        public GameContext(List<Room> rooms, List<FacilitySystem> facilitySystems, List<CrewController> crews, int scrapAmount, int shipHp, int shipMaxHp, int shipReactorCapacity, int shipPower)
-        {
+        //public GameContext(List<Room> rooms, List<FacilitySystem> facilitySystems, List<CrewController> crews, int scrapAmount, int shipHp, int shipMaxHp, int shipReactorCapacity, int shipPower)
+        //{
 
-            FacilityStates = new List<FacilityState>();
-            CrewStates = new List<CrewState>();
-            for (int i = 0; i < facilitySystems.Count; i++)
-            {
-                FacilityStates.Add(new FacilityState(facilitySystems[i]));
-            }
-            for (int i = 0; i < crews.Count; i++)
-            {
-                CrewStates.Add(new CrewState(crews[i]));
-            }
+        //    FacilityStates = new List<FacilityState>();
+        //    CrewStates = new List<CrewState>();
+        //    for (int i = 0; i < facilitySystems.Count; i++)
+        //    {
+        //        FacilityStates.Add(new FacilityState(facilitySystems[i]));
+        //    }
+        //    for (int i = 0; i < crews.Count; i++)
+        //    {
+        //        CrewStates.Add(new CrewState(crews[i]));
+        //    }
             
-            Rooms = new List<Room>(rooms);
-            ScrapAmount = scrapAmount;
-            ShipHp = shipHp;
-            ShipMaxHp = shipMaxHp;
-            ShipReactorCapacity = shipReactorCapacity;
-            ShipPower = shipPower;
-            InitFacilityUpgradeCount();
-        }
+        //    Rooms = new List<Room>(rooms);
+        //    ScrapAmount = scrapAmount;
+        //    ShipHp = shipHp;
+        //    ShipMaxHp = shipMaxHp;
+        //    ShipReactorCapacity = shipReactorCapacity;
+        //    ShipPower = shipPower;
+        //    InitFacilityUpgradeCount();
+        //}
 
         public GameContext(List<Room> rooms, List<FacilityState> facilities, List<CrewState> crews, int scrapAmount, int shipHp, int shipMaxHp, int shipReactorCapacity, int shipPower)
         {
@@ -69,30 +70,18 @@ namespace FTL
             InitFacilityUpgradeCount();
         }
 
-        public void SetGameContext(List<Room> rooms, List<FacilitySystem> facilitySystems, List<CrewController> crews, int scrapAmount, int shipHp, int shipMaxHp, int shipReactorCapacity, int shipPower)
+        public void SetWeaponTypes(List<EWeaponType> weaponTypes)
         {
-            Rooms = new List<Room>();
-            FacilityStates = new List<FacilityState>();
-            CrewStates = new List<CrewState>();
-            for (int i = 0; i < rooms.Count; i++)
+            WeaponTypes = new List<EWeaponType>();
+            if (weaponTypes == null)
             {
-                Rooms.Add(new Room(rooms[i]));
-            }
-            for (int i = 0; i < facilitySystems.Count; i++)
-            {
-                FacilityStates.Add(new FacilityState(facilitySystems[i]));
-            }
-            for (int i = 0; i < crews.Count; i++)
-            {
-                CrewStates.Add(new CrewState(crews[i]));
+                return;
             }
 
-            ShipHp = shipHp;
-            ShipMaxHp = shipMaxHp;
-            ScrapAmount = scrapAmount;
-            ShipReactorCapacity = shipReactorCapacity;
-            ShipPower = shipPower;
-            InitFacilityUpgradeCount();
+            for (int i = 0; i < weaponTypes.Count; i++)
+            {
+                WeaponTypes.Add(weaponTypes[i]);
+            }
         }
 
         private void InitFacilityUpgradeCount()

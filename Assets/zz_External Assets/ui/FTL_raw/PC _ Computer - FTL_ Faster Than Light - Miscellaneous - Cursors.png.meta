@@ -1,0 +1,924 @@
+fileFormatVersion: 2
+guid: 2447f58ee9473a5428b122d1f702529b
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 198
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d645453280c237e459d7a6f308e6df39
+      internalID: -93302088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_1
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 198
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77241c7f4bf1b714e94977703f024307
+      internalID: 339405626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_2
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 198
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f876dacce3b44ce4284dbe9477b9703d
+      internalID: 56547816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_3
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 198
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f115db90504eb8645b819a2da80feafd
+      internalID: 792960165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_4
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 198
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc824c3d93c25a745a7f434caa70a06c
+      internalID: -339550155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 165
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 201082802e5eb124991aea8ed6abb82c
+      internalID: 1287236576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_6
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 165
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02cba8d225111af489b8942de74c46c2
+      internalID: 603412948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_7
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 165
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8d4d6e9f355efe43ac8f3fcded3a6c6
+      internalID: 1179131827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_8
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 165
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4cd328c7d8469454d92cba45ba476c0c
+      internalID: 787444595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_9
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 165
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2e7a684588a5834cb8baa0652e17081
+      internalID: 1257903136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 132
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ed826eb41f723b4ba417057cb205799
+      internalID: 2046049829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_11
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 132
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11d395000475c2646ae4e0f7224e0128
+      internalID: 1907240305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_12
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 132
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 844b1d5726b3f7f4ab9f8f432514a516
+      internalID: -2142365238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_13
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 132
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 703b0293354fcfa4eb4448c15b89bb53
+      internalID: 675567851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_14
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 132
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a540b597791bc249a73af9ca2287fe2
+      internalID: -2105498271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 99
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4704b16a90ddbe4e958a331246789e0
+      internalID: -1061381230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_16
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 99
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5c5c2ac04f152f4bb6ebd26ba635fcb
+      internalID: -305496074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_17
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 99
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82208fb5350392748a72493ca4dd4010
+      internalID: 1731180673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_18
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 99
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e0cec286955daa449f79afe7e521707
+      internalID: -236211759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_19
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 99
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2ab566f9cd41534db5ba33f4c63ca72
+      internalID: -1077070115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 66
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1cb7a2553f3818b4dbd91614e7399b59
+      internalID: 1805763745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_21
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 66
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01163a49efe768348879c5d36ef47345
+      internalID: -268109152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_22
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 66
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3d59b9f59fb72842b0a9eef7b5638ca
+      internalID: 1088314556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_23
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 66
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3335231c145534439f3419534a8ca7f
+      internalID: 1925034985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_24
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 66
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1d074d9511009845a04d0e631a76af7
+      internalID: 1023944211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 33
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c2fbc439c1df1244a044539f5d298b6
+      internalID: 612426182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_26
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 33
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3aa07dc52855f4049b0b1df058556c89
+      internalID: -570365219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_27
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 33
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48d0ab4feafb8ec4bbf5e250c0de7c05
+      internalID: 1255143257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_28
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 33
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe069c7435c04c343a787124839ea0c8
+      internalID: -302508593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_29
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 33
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7dde63e2e9e034e4eabd1bb9d1baa10b
+      internalID: -925388722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_30
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5f90ff5af74d1642ae0eea62a526051
+      internalID: 1381050403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_31
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8fca863ac5a2c35418e42bba2361212b
+      internalID: -57128381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_32
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afbd712eb33f16a4c944752a3013ae10
+      internalID: 639773526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_33
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1672665218e20e439026d0dba6477bf
+      internalID: 984092160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_34
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7854030d9b8a82f45a620ee2606427be
+      internalID: -503393835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 73b431b8ebb3d754d9bd878a6a6fca6c
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":5.0,"y":7.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":1.0,"y":1.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_0: -93302088
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_1: 339405626
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_10: 2046049829
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_11: 1907240305
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_12: -2142365238
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_13: 675567851
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_14: -2105498271
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_15: -1061381230
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_16: -305496074
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_17: 1731180673
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_18: -236211759
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_19: -1077070115
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_2: 56547816
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_20: 1805763745
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_21: -268109152
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_22: 1088314556
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_23: 1925034985
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_24: 1023944211
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_25: 612426182
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_26: -570365219
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_27: 1255143257
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_28: -302508593
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_29: -925388722
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_3: 792960165
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_30: 1381050403
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_31: -57128381
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_32: 639773526
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_33: 984092160
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_34: -503393835
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_4: -339550155
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_5: 1287236576
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_6: 603412948
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_7: 1179131827
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_8: 787444595
+      PC _ Computer - FTL_ Faster Than Light - Miscellaneous - Cursors_9: 1257903136
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -11,21 +11,20 @@ namespace FTL
     /// </summary>
     public class GameManager : SingletonBase<GameManager>
     {
-        private const string MAINMENU_SCENE = "_MainMenu";
         private const string BATTLE_SCENE = "BattleScene";
-        private const string GAMEOVER_SCENE = "GameOver";
         private const string BATTLE_PREPARE = "BattlePrepare";
         private const string MAIN_UI_TAG = "Main UI";
+        private const string GAMEOVER_SCENE = "GameOver";
+        private const string MAINMENU_SCENE = "_MainMenu";
 
         public bool IsGameContextEmpty => gameContext == null || gameContext.IsEmpty;
         public PlayerController Player;
         [field: SerializeField] public EBattleResult BattleResult { get; set; }
 
-        [SerializeField] private GameObject buttonGroupObject;
         [SerializeField] private GameObject toggleMenuObject;
-        private MainUIController mainUIController;
-
         [SerializeField] private GameContext gameContext;
+        [field: SerializeField] public WeaponDatabase WeaponDatabase { get; private set; }
+        private MainUIController mainUIController;
 
         private void Start()
         {
@@ -159,17 +158,17 @@ namespace FTL
             HandleBattleResult(EBattleResult.PlayerRun);
         }
 
-        public void SetGameContext(List<Room> rooms, List<FacilitySystem> facilities, List<CrewController> crews, int shipHp, int shipMaxHp, int scrapAmount, int shipReactorCapacity, int shipPower)
-        {
-            if (gameContext == null)
-            {
-                gameContext = new GameContext(rooms, facilities, crews, scrapAmount, shipHp, shipMaxHp, shipReactorCapacity, shipPower);
-            }
-            else
-            {
-                gameContext.SetGameContext(rooms, facilities, crews, scrapAmount, shipHp, shipMaxHp, shipReactorCapacity, shipPower);
-            }
-        }
+        //public void SetGameContext(List<Room> rooms, List<FacilitySystem> facilities, List<CrewController> crews, int shipHp, int shipMaxHp, int scrapAmount, int shipReactorCapacity, int shipPower)
+        //{
+        //    if (gameContext == null)
+        //    {
+        //        gameContext = new GameContext(rooms, facilities, crews, scrapAmount, shipHp, shipMaxHp, shipReactorCapacity, shipPower);
+        //    }
+        //    else
+        //    {
+        //        gameContext.SetGameContext(rooms, facilities, crews, scrapAmount, shipHp, shipMaxHp, shipReactorCapacity, shipPower);
+        //    }
+        //}
 
         public void SetGameContext(PlayerController player)
         {
@@ -190,6 +189,7 @@ namespace FTL
             }
 
             gameContext = new GameContext(rooms, facilityStates, crewStates, player.ScrapAmount, player.Hp, player.ShipData.MaxHp, player.PowerSystem.GetReactorMaxPower, player.PowerSystem.GetPower);
+            gameContext.SetWeaponTypes(player.WeaponTypes);
         }
 
         public void EnsureBattlePrepareTestGameContext()

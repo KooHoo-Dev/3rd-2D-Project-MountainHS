@@ -247,7 +247,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -118}
+  m_AnchoredPosition: {x: 0, y: -76.1}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8508396844437561648
@@ -345,7 +345,7 @@ MonoBehaviour:
   barSprites: []
   facilitySystem: {fileID: 0}
   facilityIcon: {fileID: 8276855172059264865}
-  assistIcon: {fileID: 0}
+  assistIcon: {fileID: 573394896232456623}
   contextFacilityType: 0
 --- !u!1001 &1218317798359183097
 PrefabInstance:
@@ -453,7 +453,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4874801523424939802, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 290
+      value: 262
       objectReference: {fileID: 0}
     - target: {fileID: 4874801523424939802, guid: 10cf4a82b7c9f44449f4e283554df090, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
