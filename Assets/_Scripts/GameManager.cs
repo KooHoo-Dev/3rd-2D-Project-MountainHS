@@ -68,6 +68,7 @@ namespace FTL
         private void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
         {
             InitUIObject();
+            CursorController.Instance.ResetMouseSprite();
             if (scene.name == BATTLE_SCENE)
             {
                 SceneBinder sceneBinder = FindFirstObjectByType<SceneBinder>();

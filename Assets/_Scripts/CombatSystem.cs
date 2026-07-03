@@ -86,8 +86,9 @@ namespace FTL
         {
             EShipSide nextShipArea = colToNextShipAreaDict[col];
             Collider2D nextShipCol = shipAreaToColDict[nextShipArea];
+            float seed = projectile.RandomSeed;
 
-            Vector3 spawnPos = GetRandomPositionOnColliderEdge(nextShipCol, projectile.transform.position.z);
+            Vector3 spawnPos = GetRandomPositionOnColliderEdge(nextShipCol, projectile.transform.position.z, seed);
             Vector3 targetPos = projectile.TargetPos;
 
             // 스폰장소 - 목표 콜라이더 중심 바라보게 회전시키기 right 이용
@@ -129,7 +130,7 @@ namespace FTL
             return true;
         }
 
-        private Vector3 GetRandomPositionOnColliderEdge(Collider2D col, float z)
+        private Vector3 GetRandomPositionOnColliderEdge(Collider2D col, float z, float seed)
         {
             Bounds bounds = col.bounds;
             Vector3[] colFaceStarts = new Vector3[4];
@@ -144,8 +145,11 @@ namespace FTL
             colFaceEnds[3] = new Vector3(bounds.min.x, bounds.min.y); // bottom-left
 
             // 선택한 면에서 선택할 위치 (보간, 비율) 구하기
-            int randIndex = Random.Range(0, 4);
-            float lerpRate = Random.Range(0.0f, 1.0f);
+            // 실수의 정수 부분, 소수점 값을 어떻게 구분하지? (Mathf 클래스에 api 있을 거 같은데)
+            int randIndex = Mathf.FloorToInt(seed);
+            float lerpRate = seed - randIndex;
+            //int randIndex = Random.Range(0, 4);
+            //float lerpRate = Random.Range(0.0f, 1.0f);
             Vector3 spawnPos = Vector3.Lerp(colFaceStarts[randIndex], colFaceEnds[randIndex], lerpRate);
             spawnPos.z = z;
 

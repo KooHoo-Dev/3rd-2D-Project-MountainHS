@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using Utilities;
 
@@ -30,6 +29,7 @@ namespace FTL
         }
     }
 
+    [RequireComponent(typeof(SpriteRenderer))]
     public class ProjectileController : MonoBehaviour
     {
         public bool IsArrived => transform.position == TargetPos;
@@ -40,11 +40,15 @@ namespace FTL
         [field: SerializeField] public Collider2D StartCol { get; private set; }
         [SerializeField] private Collider2D endCol;
         [field: SerializeField] public Vector3 TargetPos { get; private set; } = Vector3.zero;
-        [SerializeField] private int targetRoomId;
+        [field: SerializeField] public float RandomSeed { get; private set; } = 0f;
+
         [SerializeField] private LayerMask shipLayer;
         [SerializeField] private LayerMask shieldLayer;
+        [SerializeField] private int targetRoomId;
         [SerializeField] private bool isAfterStartCol = false;
         [SerializeField] private bool isMoving = true;
+
+        private SpriteRenderer renderer;
 
         private void Awake()
         {
@@ -52,6 +56,7 @@ namespace FTL
             endCol = null;
             targetRoomId = -1;
             isAfterStartCol = false;
+            renderer = GetComponent<SpriteRenderer>();
         }
 
         private void Update()
@@ -93,6 +98,10 @@ namespace FTL
             this.endCol = endCol;
         }
 
+        public void SetRandomSeed(float seed)
+        {
+            RandomSeed = seed;
+        }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
@@ -155,8 +164,10 @@ namespace FTL
             float lerpRate = Mathf.InverseLerp(MAX_SPEED, MIN_SPEED, speed);
             // 목표 시간: 0.5 ~ 2
             float delayTime = Mathf.Lerp(MIN_TIME, MAX_TIME, lerpRate);
+            renderer.enabled = false;
 
             yield return new WaitForSeconds(delayTime);
+            renderer.enabled = true;
             isMoving = true;
         }
     }

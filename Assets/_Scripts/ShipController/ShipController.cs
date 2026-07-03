@@ -39,11 +39,13 @@ namespace FTL
         [SerializeField] private GameObject crewPrefab;
         [SerializeField] private GameObject crewSummaryPrefab;
         [SerializeField] protected int crewCount = 3;
+        [SerializeField] protected bool isPlayer = false;
 
         public List<CrewController> Crews { get; set; } = new List<CrewController>();
         public List<FacilitySystem> FacilitySystems = new List<FacilitySystem>();
         protected CrewSystem crewSystem;
         protected WeaponSystem weaponSystem;
+        protected bool isDeadCoroutineActivated;
 
         protected virtual void Awake()
         {
@@ -57,6 +59,7 @@ namespace FTL
 
             weaponSystem = (WeaponSystem)GetFacilitySystemByERoomType(ERoomType.Weapon);
             PowerSystem = GetComponent<ShipPowerController>();
+            isDeadCoroutineActivated = false;
 
             InitRooms();
             InitCrews();
@@ -127,8 +130,11 @@ namespace FTL
                     bool isFlipY = weaponTransformList[i].isFlipY;
                     int index = i;
 
-                    weaponButton.onClick.RemoveAllListeners();
-                    weaponButton.onClick.AddListener(() => weaponSystem.SetSelectedWeapon(index));
+                    if (isPlayer)
+                    {
+                        weaponButton.onClick.RemoveAllListeners();
+                        weaponButton.onClick.AddListener(() => weaponSystem.SetSelectedWeapon(index));
+                    }
                     weaponObject.transform.localPosition += weaponOffset;
                     weaponObject.transform.Rotate(weaponRotation);
                     weaponSprite.flipX = isFlipX;
@@ -136,6 +142,7 @@ namespace FTL
                     weaponViewer.SetChargeBar(chargeImage);
                     weaponSystem.AddWeapon(weapon);
                 }
+                weaponSystem.SetWeaponSystemOfWeapons();
             }
         }
 
@@ -236,21 +243,27 @@ namespace FTL
 
         private void CheckGameOver()
         {
-            if (crewSystem.IsAllCrewDead)
+            EBattleResult battleResult = EBattleResult.None;
+            bool isGameOver = IsDead || crewSystem.IsAllCrewDead;
+            if (isGameOver == false || isDeadCoroutineActivated == true)
             {
-                EBattleResult battleResult = (Ownership.ShipSide == EShipSide.Player)
-                    ? EBattleResult.PlayerAllCrewDead
-                    : EBattleResult.EnemyAllCrewDead;
-                StartCoroutine(DeadCoroutine(DEAD_ANIMATION_TIME, battleResult));
+                return;
             }
 
+            if (crewSystem.IsAllCrewDead)
+            {
+                battleResult = (Ownership.ShipSide == EShipSide.Player)
+                    ? EBattleResult.PlayerAllCrewDead
+                    : EBattleResult.EnemyAllCrewDead;
+            }
             if (IsDead)
             {
-                EBattleResult battleResult = (Ownership.ShipSide == EShipSide.Player)
+                battleResult = (Ownership.ShipSide == EShipSide.Player)
                     ? EBattleResult.PlayerShipDestroyed
                     : EBattleResult.EnemyShipDestroyed;
-                StartCoroutine(DeadCoroutine(DEAD_ANIMATION_TIME, battleResult));
             }
+
+            StartCoroutine(DeadCoroutine(DEAD_ANIMATION_TIME, battleResult));
         }
 
         public void RestoreHp(int damage)
@@ -286,6 +299,7 @@ namespace FTL
 
         public virtual IEnumerator DeadCoroutine(float seconds, EBattleResult result)
         {
+            isDeadCoroutineActivated = true;
             yield return new WaitForSeconds(seconds);
             GameManager.Instance.HandleBattleResult(result);
             gameObject.SetActive(false);

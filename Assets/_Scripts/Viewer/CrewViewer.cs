@@ -50,6 +50,10 @@ namespace FTL
                 return;
             }
 
+            if (crew.IsDead)
+            {
+                gameObject.SetActive(false);
+            }
             SetSelectedState(crew.IsSelected);
             UpdateViewer();
             UpdateTargetRoom();

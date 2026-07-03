@@ -160,12 +160,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec5eab4e1a57a204ebcad9653938c3aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
+  <IsAssisted>k__BackingField: 0
+  projectilePrefab: {fileID: 1379425515071318416, guid: ff24f25d241ce424c86c8ecb1a49d417, type: 3}
   chargeProgress: 0
   chargeDuration: 7
-  projectilePrefab: {fileID: 1379425515071318416, guid: ff24f25d241ce424c86c8ecb1a49d417, type: 3}
+  fireDelay: 0.25
   isReady: 0
   prevIsPowered: 0
-  <IsAssisted>k__BackingField: 0
+  fireCount: 3
   TargetData:
     TargetPosition: {x: 0, y: 0, z: 0}
     RoomId: 0
