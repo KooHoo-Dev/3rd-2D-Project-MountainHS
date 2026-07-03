@@ -26,6 +26,7 @@ namespace FTL
         public ProjectileTargetData TargetData;
         private WeaponSystem weaponSystem;
         private ITargeting targetingSystem = null;
+        private float reduceSpeed = 4f;
 
         private void Awake()
         {
@@ -40,18 +41,18 @@ namespace FTL
         {
             if (IsPowered)
             {
-                if (prevIsPowered == false)
-                {
-                    chargeProgress = 0f;
-                }
+                //if (prevIsPowered == false)
+                //{
+                //    chargeProgress = 0f;
+                //}
 
                 chargeProgress = Mathf.Min(chargeProgress + Time.deltaTime, GetRealChargeDuration());
                 // chargeSprites에 있는 스프라이트 수 - 1만큼 간격 검증
             }
             else
             {
-                isReady = false;
-                chargeProgress = 0f;
+                //isReady = false;
+                chargeProgress = Mathf.Max(chargeProgress - Time.deltaTime*reduceSpeed, 0);
             }
 
             UpdateIsReady();
@@ -79,7 +80,7 @@ namespace FTL
                 chargeProgress = 0f;
             }
 
-            prevIsPowered = IsPowered;
+            //prevIsPowered = IsPowered;
         }
 
         private IEnumerator FireCoroutine(ProjectileTargetData targetData, float seed)

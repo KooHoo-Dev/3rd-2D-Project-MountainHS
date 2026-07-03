@@ -905,7 +905,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8269868011295628949, guid: d8d3b464a2027774ab63a18b16e74e86, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 615702489}
   m_SourcePrefab: {fileID: 100100000, guid: d8d3b464a2027774ab63a18b16e74e86, type: 3}
 --- !u!1 &445683556
 GameObject:
@@ -1140,11 +1143,36 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df60b46d7cb61f843abbf24eb769e13a, type: 3}
+--- !u!1 &579163744 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8269868011295628949, guid: d8d3b464a2027774ab63a18b16e74e86, type: 3}
+  m_PrefabInstance: {fileID: 409204120}
+  m_PrefabAsset: {fileID: 0}
 --- !u!20 &615702484 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 2384570758386221113, guid: d8d3b464a2027774ab63a18b16e74e86, type: 3}
   m_PrefabInstance: {fileID: 409204120}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &615702489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579163744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3317e59048a30224698896a35383a986, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FTL.CameraShakeController
+  xRange: 2
+  yRange: 2
+  cameraStartRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
 --- !u!1 &627769355
 GameObject:
   m_ObjectHideFlags: 0
@@ -1602,26 +1630,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6038096161622814932, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7594338050639317687, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
-      propertyPath: m_text
-      value: Weapon
-      objectReference: {fileID: 0}
-    - target: {fileID: 7594338050639317687, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
-      propertyPath: m_fontSize
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 7594338050639317687, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 575f235b47e866d418f7df5e31df7e52, type: 2}
-    - target: {fileID: 7594338050639317687, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 690464860144957368, guid: 575f235b47e866d418f7df5e31df7e52, type: 2}
-    - target: {fileID: 7594338050639317687, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
-      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7851322500729467756, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
@@ -3058,7 +3066,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7594338050639317687, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
       propertyPath: m_fontSize
-      value: 18
+      value: 16.5
       objectReference: {fileID: 0}
     - target: {fileID: 7594338050639317687, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
       propertyPath: m_fontAsset
@@ -4016,7 +4024,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7594338050639317687, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
       propertyPath: m_fontSize
-      value: 18
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 7594338050639317687, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
       propertyPath: m_fontAsset

@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,9 +11,15 @@ namespace FTL
         [SerializeField] private Image shieldChargeBar;
         [SerializeField] private SpriteRenderer shieldMainSprite;
         [SerializeField] private ShieldSystem shieldSystem;
-        [SerializeField] private int prevShieldCount;
         [SerializeField] private Color color;
+        [SerializeField] private Vector3 startLocalScale;
+        [SerializeField] private float shieldUpDelay;
+        [SerializeField] private int prevShieldCount;
 
+        private void Awake()
+        {
+            startLocalScale = shieldMainSprite.transform.localScale;
+        }
         // 실드 시스템의 최대 실드 개수, 실드 개수에 따라 실드 ui 표시
         private void LateUpdate()
         {
@@ -61,9 +69,33 @@ namespace FTL
 
             void UpdateMainShield(int shieldCount, int maxShieldLimit)
             {
+                if (prevShieldCount == 0 && shieldCount == 1)
+                {
+                    // 스케일 값 0으로 설정
+                    shieldMainSprite.transform.localScale = Vector2.zero;
+                    // 0.25초동안 스케일 커지기 (1로 커지기)
+                    StartCoroutine(ShieldUpCoroutine());
+                }
                 Color newMainColor = Color.white;
                 newMainColor.a = (float)shieldCount / maxShieldLimit;
                 shieldMainSprite.color = newMainColor;
+                prevShieldCount = shieldCount;
+            }
+        }
+
+        private IEnumerator ShieldUpCoroutine()
+        {
+            float inverseShieldUpDelay = 1 / shieldUpDelay;
+            Vector3 deltaScale = new Vector3(startLocalScale.x, startLocalScale.y, 0) * inverseShieldUpDelay * Time.deltaTime;
+            Transform shieldMainSpriteTransform = shieldMainSprite.transform;
+            while (true)
+            {
+                Vector3 localScale = shieldMainSpriteTransform.localScale;
+                if (localScale.x >= startLocalScale.x && localScale.y >= startLocalScale.y)
+                    yield break;
+
+                shieldMainSpriteTransform.localScale += deltaScale;
+                yield return null;
             }
         }
     }

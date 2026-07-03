@@ -21,29 +21,6 @@ namespace FTL
         [field: SerializeField] public int ReactorUpgradeCount { get; private set; }
         [field: SerializeField] public List<EWeaponType> WeaponTypes { get; private set; } = new List<EWeaponType>();
 
-        //public GameContext(List<Room> rooms, List<FacilitySystem> facilitySystems, List<CrewController> crews, int scrapAmount, int shipHp, int shipMaxHp, int shipReactorCapacity, int shipPower)
-        //{
-
-        //    FacilityStates = new List<FacilityState>();
-        //    CrewStates = new List<CrewState>();
-        //    for (int i = 0; i < facilitySystems.Count; i++)
-        //    {
-        //        FacilityStates.Add(new FacilityState(facilitySystems[i]));
-        //    }
-        //    for (int i = 0; i < crews.Count; i++)
-        //    {
-        //        CrewStates.Add(new CrewState(crews[i]));
-        //    }
-            
-        //    Rooms = new List<Room>(rooms);
-        //    ScrapAmount = scrapAmount;
-        //    ShipHp = shipHp;
-        //    ShipMaxHp = shipMaxHp;
-        //    ShipReactorCapacity = shipReactorCapacity;
-        //    ShipPower = shipPower;
-        //    InitFacilityUpgradeCount();
-        //}
-
         public GameContext(List<Room> rooms, List<FacilityState> facilities, List<CrewState> crews, int scrapAmount, int shipHp, int shipMaxHp, int shipReactorCapacity, int shipPower)
         {
             Rooms = new List<Room>();

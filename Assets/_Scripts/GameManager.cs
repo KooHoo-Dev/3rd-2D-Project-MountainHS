@@ -13,9 +13,6 @@ namespace FTL
     {
         private const string BATTLE_SCENE = "BattleScene";
         private const string BATTLE_PREPARE = "BattlePrepare";
-        private const string MAIN_UI_TAG = "Main UI";
-        private const string GAMEOVER_SCENE = "GameOver";
-        private const string MAINMENU_SCENE = "_MainMenu";
 
         public bool IsGameContextEmpty => gameContext == null || gameContext.IsEmpty;
         public PlayerController Player;

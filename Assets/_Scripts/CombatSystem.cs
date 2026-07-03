@@ -10,6 +10,7 @@ namespace FTL
     {
         private ShipController[] ships;
         private Collider2D[] shipAreas;
+        private CameraShakeController shakeController;
 
         private Dictionary<Collider2D, EShipSide> colToNextShipAreaDict = new Dictionary<Collider2D, EShipSide>();
         private Dictionary<EShipSide, Collider2D> shipAreaToColDict = new Dictionary<EShipSide, Collider2D>();
@@ -26,6 +27,7 @@ namespace FTL
                 return;
             }
 
+            shakeController = FindFirstObjectByType<CameraShakeController>();
             ShipOwnership playerOwnership = player.Ownership;
             ShipOwnership enemyOwnership = enemy.Ownership;
             Collider2D playerCollider = playerOwnership.GetComponent<Collider2D>();
@@ -127,7 +129,14 @@ namespace FTL
 
             // 명중 판정 로직 추가 (추후 구현)
             oppenentShipController.TakeDamageToRoom(projectile, targetData.RoomId);
+            if (isPlayerProjectile == false)
+                shakeController.ShakeCamera();
             return true;
+        }
+
+        public void SetShakeController(CameraShakeController shakeController)
+        {
+            this.shakeController = shakeController;
         }
 
         private Vector3 GetRandomPositionOnColliderEdge(Collider2D col, float z, float seed)

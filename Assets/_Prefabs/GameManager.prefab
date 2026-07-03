@@ -46,10 +46,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FTL.GameManager
   Player: {fileID: 0}
   <BattleResult>k__BackingField: 0
-  mainUIRoot: {fileID: 0}
-  buttonGroupObject: {fileID: 0}
   toggleMenuObject: {fileID: 0}
-  startButton: {fileID: 0}
-  exitButton: {fileID: 0}
-  mainMenuButton: {fileID: 0}
-  nextBattleButton: {fileID: 0}
+  gameContext:
+    <FacilityUpgradeCount>k__BackingField: 
+    <ScrapAmount>k__BackingField: 0
+    <ShipMaxHp>k__BackingField: 0
+    <ShipHp>k__BackingField: 0
+    <ShipReactorCapacity>k__BackingField: 0
+    <ShipPower>k__BackingField: 0
+    <ReactorUpgradeCount>k__BackingField: 0
+    <WeaponTypes>k__BackingField: 
+  <WeaponDatabase>k__BackingField: {fileID: 11400000, guid: a043e17626bf0524fbe34cc98ad8aac2, type: 2}
