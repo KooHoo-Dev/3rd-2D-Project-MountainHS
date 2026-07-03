@@ -18,6 +18,7 @@ namespace FTL
         [field: SerializeField] public Vector2 GlobalPosition { get; set; }
         [field: SerializeField] public int MaxCrewCapacity { get; private set; }
         [field: SerializeField] public int Id { get; private set; }
+        [field: SerializeField] public bool IsHit { get; set; } = false;
 
         public Room(Room room)
         {
@@ -133,6 +134,11 @@ namespace FTL
                 return;
             }
             FacilitySystem.RepairProgress = 0f;
+        }
+
+        public void SetIsHit(bool isHit)
+        {
+            IsHit = isHit;
         }
     }
 }

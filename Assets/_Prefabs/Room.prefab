@@ -192,6 +192,7 @@ GameObject:
   - component: {fileID: 8652320623278072720}
   - component: {fileID: 9048426243508189710}
   - component: {fileID: 6276313992324847139}
+  - component: {fileID: 4066123455624566}
   - component: {fileID: 2687124784617255714}
   m_Layer: 3
   m_Name: Room
@@ -296,6 +297,25 @@ MonoBehaviour:
     <GlobalPosition>k__BackingField: {x: 0, y: 0}
     <MaxCrewCapacity>k__BackingField: 0
     <Id>k__BackingField: 0
+    <IsHit>k__BackingField: 0
+--- !u!114 &4066123455624566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4957643729303577055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31dd9362c2ff1eb45b0f168903e3a251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FTL.SpriteShakeController
+  xRange: 0.1
+  yRange: 0.1
+  shakeStrengthOffset: 0.02
+  <IsShaked>k__BackingField: 0
+  spriteParentTransform: {fileID: 0}
+  spriteRenderer: {fileID: 0}
 --- !u!61 &2687124784617255714
 BoxCollider2D:
   m_ObjectHideFlags: 0

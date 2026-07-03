@@ -10,9 +10,12 @@ namespace FTL
     {
         private ShipController[] ships;
         private Collider2D[] shipAreas;
+        private CameraShakeController cameraShakeController;
+        private SpriteShakeController[] spriteShakeControllers;
 
         private Dictionary<Collider2D, EShipSide> colToNextShipAreaDict = new Dictionary<Collider2D, EShipSide>();
-        private Dictionary<EShipSide, Collider2D> shipAreaToColDict = new Dictionary<EShipSide, Collider2D>();
+        private Dictionary<EShipSide, Collider2D> shipSideToColDict = new Dictionary<EShipSide, Collider2D>();
+        private Dictionary<EShipSide, SpriteShakeController> shipSideToSpriteShake = new Dictionary<EShipSide, SpriteShakeController>();
 
         protected override void OnInitialize()
         {
@@ -26,19 +29,26 @@ namespace FTL
                 return;
             }
 
+            cameraShakeController = FindFirstObjectByType<CameraShakeController>();
             ShipOwnership playerOwnership = player.Ownership;
             ShipOwnership enemyOwnership = enemy.Ownership;
             Collider2D playerCollider = playerOwnership.GetComponent<Collider2D>();
             Collider2D enemyCollider = enemyOwnership.GetComponent<Collider2D>();
+            SpriteShakeController playerShaker = player.GetComponent<SpriteShakeController>();
+            SpriteShakeController enemyShaker = enemy.GetComponent<SpriteShakeController>();
 
             ships = new ShipController[] { player, enemy };
             shipAreas = new Collider2D[] { playerCollider, enemyCollider };
-            shipAreaToColDict.Clear();
+            spriteShakeControllers = new SpriteShakeController[] { playerShaker, enemyShaker };
+            shipSideToColDict.Clear();
             colToNextShipAreaDict.Clear();
-            shipAreaToColDict.Add(EShipSide.Player, shipAreas[0]);
-            shipAreaToColDict.Add(EShipSide.Enemy0, shipAreas[1]);
+            shipSideToSpriteShake.Clear();
+            shipSideToColDict.Add(EShipSide.Player, shipAreas[0]);
+            shipSideToColDict.Add(EShipSide.Enemy0, shipAreas[1]);
             colToNextShipAreaDict.Add(shipAreas[0], EShipSide.Enemy0);
             colToNextShipAreaDict.Add(shipAreas[1], EShipSide.Player);
+            shipSideToSpriteShake.Add(EShipSide.Player, playerShaker);
+            shipSideToSpriteShake.Add(EShipSide.Enemy0, enemyShaker);
         }
 
         public bool NeedSceneBinding()
@@ -85,14 +95,16 @@ namespace FTL
         public void MoveToEnemyArea(Collider2D col, ProjectileController projectile)
         {
             EShipSide nextShipArea = colToNextShipAreaDict[col];
-            Collider2D nextShipCol = shipAreaToColDict[nextShipArea];
+            Collider2D nextShipCol = shipSideToColDict[nextShipArea];
+            float seed = projectile.RandomSeed;
 
-            Vector3 spawnPos = GetRandomPositionOnColliderEdge(nextShipCol, projectile.transform.position.z);
+            Vector3 spawnPos = GetRandomPositionOnColliderEdge(nextShipCol, projectile.transform.position.z, seed);
+            Vector3 targetPos = projectile.TargetPos;
 
             // 스폰장소 - 목표 콜라이더 중심 바라보게 회전시키기 right 이용
             projectile.SetEndCol(nextShipCol);
             projectile.transform.position = spawnPos;
-            Vector3 direction = nextShipCol.bounds.center - spawnPos;
+            Vector3 direction = targetPos - spawnPos;
             direction.z = projectile.transform.position.z;
             projectile.transform.right = direction;
         }
@@ -121,14 +133,23 @@ namespace FTL
             bool isPlayerProjectile = projectile.StartCol.CompareTag(Tags.PlayerShip);
             int opponentShipIndex = isPlayerProjectile ? 1 : 0;
             ShipController oppenentShipController = ships[opponentShipIndex];
-            ProjectileTargetData targetData = new ProjectileTargetData(projectile.Target, projectile.TargetRoomId);
+            SpriteShakeController oppenentSpriteShaker = spriteShakeControllers[opponentShipIndex];
+            ProjectileTargetData targetData = new ProjectileTargetData(projectile.TargetPos, projectile.TargetRoomId);
 
             // 명중 판정 로직 추가 (추후 구현)
             oppenentShipController.TakeDamageToRoom(projectile, targetData.RoomId);
+            oppenentSpriteShaker.ShakeSprite();
+            //if (isPlayerProjectile == false)
+            //    cameraShakeController.ShakeCamera();
             return true;
         }
 
-        private Vector3 GetRandomPositionOnColliderEdge(Collider2D col, float z)
+        public void SetShakeController(CameraShakeController shakeController)
+        {
+            this.cameraShakeController = shakeController;
+        }
+
+        private Vector3 GetRandomPositionOnColliderEdge(Collider2D col, float z, float seed)
         {
             Bounds bounds = col.bounds;
             Vector3[] colFaceStarts = new Vector3[4];
@@ -143,8 +164,11 @@ namespace FTL
             colFaceEnds[3] = new Vector3(bounds.min.x, bounds.min.y); // bottom-left
 
             // 선택한 면에서 선택할 위치 (보간, 비율) 구하기
-            int randIndex = Random.Range(0, 4);
-            float lerpRate = Random.Range(0.0f, 1.0f);
+            // 실수의 정수 부분, 소수점 값을 어떻게 구분하지? (Mathf 클래스에 api 있을 거 같은데)
+            int randIndex = Mathf.FloorToInt(seed);
+            float lerpRate = seed - randIndex;
+            //int randIndex = Random.Range(0, 4);
+            //float lerpRate = Random.Range(0.0f, 1.0f);
             Vector3 spawnPos = Vector3.Lerp(colFaceStarts[randIndex], colFaceEnds[randIndex], lerpRate);
             spawnPos.z = z;
 

@@ -44,12 +44,12 @@ namespace FTL
             if (SimpleInput.GetKeyDown(Key.Digit5))
             {
                 // 무기 시스템의 선택한 무기를 1번 무기로 교체
-                weaponSystem.SetSelectedWeapon(1);
+                weaponSystem.SetSelectedWeapon(0);
             }
             if (SimpleInput.GetKeyDown(Key.Digit6))
             {
                 // 무기 시스템의 선택한 무기를 1번 무기로 교체
-                weaponSystem.SetSelectedWeapon(2);
+                weaponSystem.SetSelectedWeapon(1);
             }
 
             if (SimpleInput.GetKeyDown(Key.Escape))
