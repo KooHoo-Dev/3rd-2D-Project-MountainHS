@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -7,13 +8,23 @@ namespace FTL
     {
         [field: SerializeField] public Room Room { get; set; }
         private SpriteRenderer spriteRenderer;
+        private SpriteShakeController spriteShaker;
         private TMP_Text text;
 
         private void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
+            spriteShaker = GetComponent<SpriteShakeController>();
             text = GetComponentInChildren<TMP_Text>();
             SetRoomState(Room);
+        }
+
+        private void Update()
+        {
+            if (Room.IsHit && spriteShaker.IsShaked == false)
+            {
+                spriteShaker.ShakeSprite();
+            }
         }
 
         /// <summary>

@@ -231,6 +231,7 @@ namespace FTL
             // 피격당한 room 객체 가져오기
             Room room = GetRoomByIdOrNull(roomId);
             room.TakeDamageToCrews(crewDamage);
+            StartCoroutine(ShakeRoom(room));
             bool canDamageFacility = room != null && room.HasFacility;
             if (canDamageFacility)
             {
@@ -239,6 +240,13 @@ namespace FTL
             TakeDamage(damage);
 
             CheckGameOver();
+        }
+
+        private IEnumerator ShakeRoom(Room room)
+        {
+            room.SetIsHit(true);
+            yield return new WaitForSeconds(0.25f);
+            room.SetIsHit(false);
         }
 
         private void CheckGameOver()

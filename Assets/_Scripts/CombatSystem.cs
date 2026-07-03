@@ -10,10 +10,12 @@ namespace FTL
     {
         private ShipController[] ships;
         private Collider2D[] shipAreas;
-        private CameraShakeController shakeController;
+        private CameraShakeController cameraShakeController;
+        private SpriteShakeController[] spriteShakeControllers;
 
         private Dictionary<Collider2D, EShipSide> colToNextShipAreaDict = new Dictionary<Collider2D, EShipSide>();
-        private Dictionary<EShipSide, Collider2D> shipAreaToColDict = new Dictionary<EShipSide, Collider2D>();
+        private Dictionary<EShipSide, Collider2D> shipSideToColDict = new Dictionary<EShipSide, Collider2D>();
+        private Dictionary<EShipSide, SpriteShakeController> shipSideToSpriteShake = new Dictionary<EShipSide, SpriteShakeController>();
 
         protected override void OnInitialize()
         {
@@ -27,20 +29,26 @@ namespace FTL
                 return;
             }
 
-            shakeController = FindFirstObjectByType<CameraShakeController>();
+            cameraShakeController = FindFirstObjectByType<CameraShakeController>();
             ShipOwnership playerOwnership = player.Ownership;
             ShipOwnership enemyOwnership = enemy.Ownership;
             Collider2D playerCollider = playerOwnership.GetComponent<Collider2D>();
             Collider2D enemyCollider = enemyOwnership.GetComponent<Collider2D>();
+            SpriteShakeController playerShaker = player.GetComponent<SpriteShakeController>();
+            SpriteShakeController enemyShaker = enemy.GetComponent<SpriteShakeController>();
 
             ships = new ShipController[] { player, enemy };
             shipAreas = new Collider2D[] { playerCollider, enemyCollider };
-            shipAreaToColDict.Clear();
+            spriteShakeControllers = new SpriteShakeController[] { playerShaker, enemyShaker };
+            shipSideToColDict.Clear();
             colToNextShipAreaDict.Clear();
-            shipAreaToColDict.Add(EShipSide.Player, shipAreas[0]);
-            shipAreaToColDict.Add(EShipSide.Enemy0, shipAreas[1]);
+            shipSideToSpriteShake.Clear();
+            shipSideToColDict.Add(EShipSide.Player, shipAreas[0]);
+            shipSideToColDict.Add(EShipSide.Enemy0, shipAreas[1]);
             colToNextShipAreaDict.Add(shipAreas[0], EShipSide.Enemy0);
             colToNextShipAreaDict.Add(shipAreas[1], EShipSide.Player);
+            shipSideToSpriteShake.Add(EShipSide.Player, playerShaker);
+            shipSideToSpriteShake.Add(EShipSide.Enemy0, enemyShaker);
         }
 
         public bool NeedSceneBinding()
@@ -87,7 +95,7 @@ namespace FTL
         public void MoveToEnemyArea(Collider2D col, ProjectileController projectile)
         {
             EShipSide nextShipArea = colToNextShipAreaDict[col];
-            Collider2D nextShipCol = shipAreaToColDict[nextShipArea];
+            Collider2D nextShipCol = shipSideToColDict[nextShipArea];
             float seed = projectile.RandomSeed;
 
             Vector3 spawnPos = GetRandomPositionOnColliderEdge(nextShipCol, projectile.transform.position.z, seed);
@@ -125,18 +133,20 @@ namespace FTL
             bool isPlayerProjectile = projectile.StartCol.CompareTag(Tags.PlayerShip);
             int opponentShipIndex = isPlayerProjectile ? 1 : 0;
             ShipController oppenentShipController = ships[opponentShipIndex];
+            SpriteShakeController oppenentSpriteShaker = spriteShakeControllers[opponentShipIndex];
             ProjectileTargetData targetData = new ProjectileTargetData(projectile.TargetPos, projectile.TargetRoomId);
 
             // 명중 판정 로직 추가 (추후 구현)
             oppenentShipController.TakeDamageToRoom(projectile, targetData.RoomId);
-            if (isPlayerProjectile == false)
-                shakeController.ShakeCamera();
+            oppenentSpriteShaker.ShakeSprite();
+            //if (isPlayerProjectile == false)
+            //    cameraShakeController.ShakeCamera();
             return true;
         }
 
         public void SetShakeController(CameraShakeController shakeController)
         {
-            this.shakeController = shakeController;
+            this.cameraShakeController = shakeController;
         }
 
         private Vector3 GetRandomPositionOnColliderEdge(Collider2D col, float z, float seed)
