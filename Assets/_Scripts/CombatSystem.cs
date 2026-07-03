@@ -88,11 +88,12 @@ namespace FTL
             Collider2D nextShipCol = shipAreaToColDict[nextShipArea];
 
             Vector3 spawnPos = GetRandomPositionOnColliderEdge(nextShipCol, projectile.transform.position.z);
+            Vector3 targetPos = projectile.TargetPos;
 
             // 스폰장소 - 목표 콜라이더 중심 바라보게 회전시키기 right 이용
             projectile.SetEndCol(nextShipCol);
             projectile.transform.position = spawnPos;
-            Vector3 direction = nextShipCol.bounds.center - spawnPos;
+            Vector3 direction = targetPos - spawnPos;
             direction.z = projectile.transform.position.z;
             projectile.transform.right = direction;
         }
@@ -121,7 +122,7 @@ namespace FTL
             bool isPlayerProjectile = projectile.StartCol.CompareTag(Tags.PlayerShip);
             int opponentShipIndex = isPlayerProjectile ? 1 : 0;
             ShipController oppenentShipController = ships[opponentShipIndex];
-            ProjectileTargetData targetData = new ProjectileTargetData(projectile.Target, projectile.TargetRoomId);
+            ProjectileTargetData targetData = new ProjectileTargetData(projectile.TargetPos, projectile.TargetRoomId);
 
             // 명중 판정 로직 추가 (추후 구현)
             oppenentShipController.TakeDamageToRoom(projectile, targetData.RoomId);

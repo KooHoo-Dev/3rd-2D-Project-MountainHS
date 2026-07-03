@@ -130,7 +130,7 @@ namespace FTL
                     weaponButton.onClick.RemoveAllListeners();
                     weaponButton.onClick.AddListener(() => weaponSystem.SetSelectedWeapon(index));
                     weaponObject.transform.localPosition += weaponOffset;
-                    weaponSprite.transform.Rotate(weaponRotation);
+                    weaponObject.transform.Rotate(weaponRotation);
                     weaponSprite.flipX = isFlipX;
                     weaponSprite.flipY = isFlipY;
                     weaponViewer.SetChargeBar(chargeImage);
