@@ -1,13 +1,21 @@
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Pool;
 using UnityEngine.SceneManagement;
 using Utilities;
 
 namespace FTL
 {
+    public enum EDamageType
+    {
+        Shield, Room, Crew
+    }
     public class CombatSystem : SingletonBase<CombatSystem>
     {
+        private Transform floatingTextGroupTransform;
+
         private ShipController[] ships;
         private Collider2D[] shipAreas;
         private CameraShakeController cameraShakeController;
@@ -16,10 +24,16 @@ namespace FTL
         private Dictionary<Collider2D, EShipSide> colToNextShipAreaDict = new Dictionary<Collider2D, EShipSide>();
         private Dictionary<EShipSide, Collider2D> shipSideToColDict = new Dictionary<EShipSide, Collider2D>();
         private Dictionary<EShipSide, SpriteShakeController> shipSideToSpriteShake = new Dictionary<EShipSide, SpriteShakeController>();
+        private ObjectPool<GameObject> floatingTextPool;
+        [SerializeField] private GameObject floatingTextPrefab;
 
         protected override void OnInitialize()
         {
             base.OnInitialize();
+            floatingTextPool = new ObjectPool<GameObject>(CreateBar, OnGetBar, OnReleaseBar, OnDestroyBar);
+            GameObject floatingTextGroup = new GameObject("Floating Text Group");
+            floatingTextGroupTransform = floatingTextGroup.transform;
+            floatingTextGroupTransform.SetParent(gameObject.transform);
         }
 
         public void InitCombatSystem(PlayerController player, EnemyController enemy)
@@ -123,6 +137,7 @@ namespace FTL
             if (oppenentShieldSystem.ShieldCount > 0)
             {
                 oppenentShieldSystem.TakeDamageToShield();
+                SetFloatingText(projectile, EDamageType.Shield);
                 return true;
             }
             return false;
@@ -139,6 +154,7 @@ namespace FTL
             // 명중 판정 로직 추가 (추후 구현)
             oppenentShipController.TakeDamageToRoom(projectile, targetData.RoomId);
             oppenentSpriteShaker.ShakeSprite();
+            SetFloatingText(projectile, EDamageType.Room);
             //if (isPlayerProjectile == false)
             //    cameraShakeController.ShakeCamera();
             return true;
@@ -147,6 +163,60 @@ namespace FTL
         public void SetShakeController(CameraShakeController shakeController)
         {
             this.cameraShakeController = shakeController;
+        }
+
+        public List<Room> GetPlayerRooms()
+        {
+            // Implementation for getting player rooms
+            return ships[0].Rooms;
+        }
+
+        public Room GetRoomOrNull(EShipSide shipSide, Vector2 position)
+        {
+            List<Room> rooms = ships[(int)shipSide].Rooms;
+            for (int i = 0; i < rooms.Count; i++)
+            {
+                bool isMatchingPosition = rooms[i].GlobalPosition == position;
+                if (isMatchingPosition)
+                {
+                    return rooms[i];
+                }
+            }
+
+            return null;
+        }
+
+        private GameObject CreateBar()
+        {
+            return Instantiate(floatingTextPrefab, floatingTextGroupTransform.transform);
+        }
+
+        private void OnGetBar(GameObject text)
+        {
+            text.transform.SetParent(floatingTextGroupTransform);
+            text.SetActive(true);
+        }
+
+        private void OnReleaseBar(GameObject text)
+        {
+            text.SetActive(false);
+        }
+
+        private void OnDestroyBar(GameObject text)
+        {
+            Destroy(text);
+        }
+
+        private void SetFloatingText(ProjectileController projectile, EDamageType type)
+        {
+            GameObject floatingTextObject = floatingTextPool.Get();
+            FloatingTextController floatingText = floatingTextObject.GetComponent<FloatingTextController>();
+            Color color = type.GetColorFromDamageType();
+
+            floatingText.transform.SetParent(floatingTextGroupTransform);
+            floatingTextObject.transform.position = projectile.transform.position;
+            floatingText.SetText($"{type.GetDamageFromDamageType(projectile)}");
+            floatingText.SetTextColor(color);
         }
 
         private Vector3 GetRandomPositionOnColliderEdge(Collider2D col, float z, float seed)
@@ -175,26 +245,6 @@ namespace FTL
             return spawnPos;
         }
 
-        public List<Room> GetPlayerRooms()
-        {
-            // Implementation for getting player rooms
-            return ships[0].Rooms;
-        }
-
-        public Room GetRoomOrNull(EShipSide shipSide, Vector2 position)
-        {
-            List<Room> rooms = ships[(int)shipSide].Rooms;
-            for (int i = 0; i < rooms.Count; i++)
-            {
-                bool isMatchingPosition = rooms[i].GlobalPosition == position;
-                if (isMatchingPosition)
-                {
-                    return rooms[i];
-                }
-            }
-
-            return null;
-        }
-
     }
 }
+

@@ -11,6 +11,7 @@ namespace FTL
         [SerializeField] private Image shieldChargeBar;
         [SerializeField] private SpriteRenderer shieldMainSprite;
         [SerializeField] private ShieldSystem shieldSystem;
+        [SerializeField] private Collider2D col;
         [SerializeField] private Color color;
         [SerializeField] private Vector3 startLocalScale;
         [SerializeField] private float shieldUpDelay;
@@ -19,6 +20,7 @@ namespace FTL
         private void Awake()
         {
             startLocalScale = shieldMainSprite.transform.localScale;
+            col = shieldMainSprite.GetComponent<Collider2D>();
         }
         // 실드 시스템의 최대 실드 개수, 실드 개수에 따라 실드 ui 표시
         private void LateUpdate()
