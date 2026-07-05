@@ -8,6 +8,8 @@ TagManager:
   - PlayerShip
   - Room
   - Main UI
+  - Enemy Crew Summary Group
+  - Enemy Weapon Charge Group
   layers:
   - Default
   - TransparentFX
