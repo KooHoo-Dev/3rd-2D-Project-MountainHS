@@ -180,6 +180,24 @@ namespace FTL
             return ships[0].Rooms;
         }
 
+        public ShipController GetShip(EShipSide shipSide)
+        {
+            if (ships == null)
+            {
+                Debug.LogError("CombatSystem: ships are not initialized.");
+                return null;
+            }
+
+            int shipIndex = (int)shipSide;
+            if (shipIndex < 0 || shipIndex >= ships.Length)
+            {
+                Debug.LogError($"CombatSystem: Invalid ship side {shipSide}.");
+                return null;
+            }
+
+            return ships[shipIndex];
+        }
+
         public Room GetRoomOrNull(EShipSide shipSide, Vector2 position)
         {
             List<Room> rooms = ships[(int)shipSide].Rooms;
