@@ -346,6 +346,7 @@ MonoBehaviour:
   facilitySystem: {fileID: 0}
   facilityIcon: {fileID: 8276855172059264865}
   assistIcon: {fileID: 573394896232456623}
+  iconText: {fileID: 2134123620619634493}
   contextFacilityType: 0
 --- !u!1001 &1218317798359183097
 PrefabInstance:

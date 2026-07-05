@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,8 @@ namespace FTL
     {
         [SerializeField] private Image facilityIcon;
         [SerializeField] private Image assistIcon;
-        [SerializeField] private ERoomType contextFacilityType = ERoomType.Weapon;
+        [SerializeField] private TMP_Text iconText;
+        [SerializeField] private ERoomType contextFacilityType = ERoomType.Empty;
         private Image repairBar;
 
         protected override void Awake()
@@ -30,6 +32,11 @@ namespace FTL
         {
             if (repairBar != null)
                 repairBar.enabled = false;
+
+            if (contextFacilityType == ERoomType.Empty)
+                contextFacilityType = facilitySystem.Type;
+
+            iconText.SetText(contextFacilityType.ToRoomTypeName());
         }
 
         protected override void SetBarState(int barIndex, EPowerBarStatus status)

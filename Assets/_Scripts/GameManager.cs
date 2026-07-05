@@ -208,9 +208,9 @@ namespace FTL
 
             List<CrewState> crewStates = new List<CrewState>
             {
-                new CrewState(100, 100, "Hans", 0),
-                new CrewState(100, 100, "Tom", 1),
-                new CrewState(100, 100, "Jane", 2)
+                new CrewState(100, 100, "Hans", 1),
+                new CrewState(100, 100, "Tom", 2),
+                new CrewState(100, 100, "Jane", 3)
             };
 
             gameContext = new GameContext(rooms, facilityStates, crewStates, 100, 30, 30, 6, 2);

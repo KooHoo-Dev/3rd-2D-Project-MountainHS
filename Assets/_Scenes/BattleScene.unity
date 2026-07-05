@@ -4096,6 +4096,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.CombatSystem
   floatingTextPrefab: {fileID: 2549896306912946942, guid: bf7ccc287233c0041afd76e1bf998d04, type: 3}
+  explosionPrefab: {fileID: 4634351026754589126, guid: fb4b339b0c1705c4bb61b7712f0b2e91, type: 3}
 --- !u!4 &1106016009
 Transform:
   m_ObjectHideFlags: 0
@@ -5827,6 +5828,10 @@ PrefabInstance:
       propertyPath: powerSystemMono
       value: 
       objectReference: {fileID: 194710678}
+    - target: {fileID: 8063106063177134070, guid: 686557181a17823428dbf8f37e383dc7, type: 3}
+      propertyPath: contextFacilityType
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 8342989124855021775, guid: 686557181a17823428dbf8f37e383dc7, type: 3}
@@ -7599,6 +7604,10 @@ PrefabInstance:
       propertyPath: powerSystemMono
       value: 
       objectReference: {fileID: 1051567092}
+    - target: {fileID: 3970829046710834215, guid: 686557181a17823428dbf8f37e383dc7, type: 3}
+      propertyPath: contextFacilityType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4122381597434813997, guid: 686557181a17823428dbf8f37e383dc7, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -7815,6 +7824,10 @@ PrefabInstance:
       propertyPath: powerSystemMono
       value: 
       objectReference: {fileID: 1051567091}
+    - target: {fileID: 8063106063177134070, guid: 686557181a17823428dbf8f37e383dc7, type: 3}
+      propertyPath: contextFacilityType
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 8342989124855021775, guid: 686557181a17823428dbf8f37e383dc7, type: 3}
@@ -8950,6 +8963,10 @@ PrefabInstance:
     - target: {fileID: 9048763948030492052, guid: 0fa77c8ddec48d649babb532462aaecb, type: 3}
       propertyPath: m_Name
       value: Hp Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 9080087593416173202, guid: 0fa77c8ddec48d649babb532462aaecb, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -92
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

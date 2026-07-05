@@ -69,6 +69,8 @@ namespace FTL
                 // 회피이면 무시
                 // 명중이면 삭제
                 CombatSystem.Instance.HandleRoomCollision(this);
+                GameObject explosionObject = CombatSystem.Instance.GetExplosionObject();
+                explosionObject.transform.position = transform.position;
                 Destroy(gameObject);
             }
 

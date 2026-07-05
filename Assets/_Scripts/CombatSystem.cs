@@ -25,16 +25,25 @@ namespace FTL
         private Dictionary<EShipSide, Collider2D> shipSideToColDict = new Dictionary<EShipSide, Collider2D>();
         private Dictionary<EShipSide, SpriteShakeController> shipSideToSpriteShake = new Dictionary<EShipSide, SpriteShakeController>();
         private ObjectPool<GameObject> floatingTextPool;
+        private ObjectPool<GameObject> explosionPool;
         [SerializeField] private GameObject floatingTextPrefab;
+        [SerializeField] private GameObject explosionPrefab;
+
+        #region Unity Method
 
         protected override void OnInitialize()
         {
             base.OnInitialize();
             floatingTextPool = new ObjectPool<GameObject>(CreateBar, OnGetBar, OnReleaseBar, OnDestroyBar);
+            explosionPool = new ObjectPool<GameObject>(CreateExplostion, OnGetExplosion, OnReleaseExplosion, OnDestroyExplosion);
             GameObject floatingTextGroup = new GameObject("Floating Text Group");
             floatingTextGroupTransform = floatingTextGroup.transform;
             floatingTextGroupTransform.SetParent(gameObject.transform);
         }
+
+        #endregion
+
+        #region Public Method
 
         public void InitCombatSystem(PlayerController player, EnemyController enemy)
         {
@@ -186,6 +195,16 @@ namespace FTL
             return null;
         }
 
+        public GameObject GetExplosionObject()
+        {
+            GameObject explosionObject = explosionPool.Get();
+            return explosionObject;
+        }
+
+        #endregion
+
+        #region Private Method
+
         private GameObject CreateBar()
         {
             return Instantiate(floatingTextPrefab, floatingTextGroupTransform.transform);
@@ -205,6 +224,29 @@ namespace FTL
         private void OnDestroyBar(GameObject text)
         {
             Destroy(text);
+        }
+
+        private GameObject CreateExplostion()
+        {
+            //Debug.Assert(explosionPrefabs != null, "Explosion prefabs are not assigned.");
+
+            return Instantiate(explosionPrefab, transform);
+        }
+
+        private void OnGetExplosion(GameObject explosion)
+        {
+            explosion.transform.SetParent(transform);
+            explosion.SetActive(true);
+        }
+
+        private void OnReleaseExplosion(GameObject explosion)
+        {
+            explosion.SetActive(false);
+        }
+
+        private void OnDestroyExplosion(GameObject explosion)
+        {
+            Destroy(explosion);
         }
 
         private void SetFloatingText(ProjectileController projectile, EDamageType type)
@@ -245,6 +287,7 @@ namespace FTL
             return spawnPos;
         }
 
+        #endregion
+
     }
 }
-
