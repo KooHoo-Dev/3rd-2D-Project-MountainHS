@@ -13,5 +13,13 @@ MonoBehaviour:
   m_Name: WeaponDatabase
   m_EditorClassIdentifier: Assembly-CSharp::FTL.WeaponDatabase
   entries:
+  - weaponType: 0
+    prefab: {fileID: 6234409087433620314, guid: 493bb1e0b42c690458068f104c8241f5, type: 3}
   - weaponType: 1
+    prefab: {fileID: 6234409087433620314, guid: ae6d797c6fcdce041a4f4e5d320f6257, type: 3}
+  - weaponType: 2
     prefab: {fileID: 6234409087433620314, guid: 771612d40693bcf48bf613449e6194d0, type: 3}
+  - weaponType: 3
+    prefab: {fileID: 6234409087433620314, guid: 8b7cd860adbb0bf4eab61b4faba0a746, type: 3}
+  - weaponType: 4
+    prefab: {fileID: 6234409087433620314, guid: 58f6d9b4905690543889773e211bf5fa, type: 3}

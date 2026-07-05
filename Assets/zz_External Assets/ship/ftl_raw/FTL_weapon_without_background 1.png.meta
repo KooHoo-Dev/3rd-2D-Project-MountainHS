@@ -1,0 +1,4765 @@
+fileFormatVersion: 2
+guid: 3fd1b3326f18d6445a4f3070590354c4
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4420837759220139476
+    second: FTL_weapon_without_background_0
+  - first:
+      213: -3275229664588919890
+    second: FTL_weapon_without_background_1
+  - first:
+      213: 8038682494771148392
+    second: FTL_weapon_without_background_2
+  - first:
+      213: -7602412581634508273
+    second: FTL_weapon_without_background_3
+  - first:
+      213: -8054921990947637509
+    second: FTL_weapon_without_background_4
+  - first:
+      213: -1980824598122139359
+    second: FTL_weapon_without_background_5
+  - first:
+      213: 1403914132945108799
+    second: FTL_weapon_without_background_6
+  - first:
+      213: -3514209573006147860
+    second: FTL_weapon_without_background_7
+  - first:
+      213: 7236042144537399005
+    second: FTL_weapon_without_background_8
+  - first:
+      213: -7131764062947398534
+    second: FTL_weapon_without_background_9
+  - first:
+      213: -3546667591286106333
+    second: FTL_weapon_without_background_10
+  - first:
+      213: 6941393134500167384
+    second: FTL_weapon_without_background_11
+  - first:
+      213: -6961289782898692443
+    second: FTL_weapon_without_background_12
+  - first:
+      213: -9118531307238688685
+    second: FTL_weapon_without_background_13
+  - first:
+      213: 5718738539234679128
+    second: FTL_weapon_without_background_14
+  - first:
+      213: -5114891971406846723
+    second: FTL_weapon_without_background_15
+  - first:
+      213: 4348551247565595188
+    second: FTL_weapon_without_background_16
+  - first:
+      213: 3932145781943347144
+    second: FTL_weapon_without_background_17
+  - first:
+      213: -12662688424529808
+    second: FTL_weapon_without_background_18
+  - first:
+      213: -8494714123894015008
+    second: FTL_weapon_without_background_19
+  - first:
+      213: -7621424449657338249
+    second: FTL_weapon_without_background_20
+  - first:
+      213: -4580887156898282669
+    second: FTL_weapon_without_background_21
+  - first:
+      213: -8095016839497495087
+    second: FTL_weapon_without_background_22
+  - first:
+      213: -2268398028571360272
+    second: FTL_weapon_without_background_23
+  - first:
+      213: 1755374949227156156
+    second: FTL_weapon_without_background_24
+  - first:
+      213: -414803298908081734
+    second: FTL_weapon_without_background_25
+  - first:
+      213: 8636741791016220166
+    second: FTL_weapon_without_background_26
+  - first:
+      213: -8968476571179445588
+    second: FTL_weapon_without_background_27
+  - first:
+      213: -8734517919648770833
+    second: FTL_weapon_without_background_28
+  - first:
+      213: -6674688460131147008
+    second: FTL_weapon_without_background_29
+  - first:
+      213: 9191711283006364741
+    second: FTL_weapon_without_background_30
+  - first:
+      213: 6459173122611021399
+    second: FTL_weapon_without_background_31
+  - first:
+      213: -3773132141129977578
+    second: FTL_weapon_without_background_32
+  - first:
+      213: 8847070267665330591
+    second: FTL_weapon_without_background_33
+  - first:
+      213: -5542860714240360921
+    second: FTL_weapon_without_background_34
+  - first:
+      213: 2030251987130425037
+    second: FTL_weapon_without_background_35
+  - first:
+      213: -4680310036466889847
+    second: FTL_weapon_without_background_36
+  - first:
+      213: -6289676440876286136
+    second: FTL_weapon_without_background_37
+  - first:
+      213: -5927413868963985488
+    second: FTL_weapon_without_background_38
+  - first:
+      213: 4248021324911001115
+    second: FTL_weapon_without_background_39
+  - first:
+      213: -7503024678956118320
+    second: FTL_weapon_without_background_40
+  - first:
+      213: -5997176472836700326
+    second: FTL_weapon_without_background_41
+  - first:
+      213: -5401023346167746619
+    second: FTL_weapon_without_background_42
+  - first:
+      213: 8309115439057017917
+    second: FTL_weapon_without_background_43
+  - first:
+      213: 6006174285718775816
+    second: FTL_weapon_without_background_44
+  - first:
+      213: 4114061473488815302
+    second: FTL_weapon_without_background_45
+  - first:
+      213: 1218107103515501896
+    second: FTL_weapon_without_background_46
+  - first:
+      213: 6792826305529644728
+    second: FTL_weapon_without_background_47
+  - first:
+      213: -6044780523863417700
+    second: FTL_weapon_without_background_48
+  - first:
+      213: 3843930174581811199
+    second: FTL_weapon_without_background_49
+  - first:
+      213: 3724652330561794220
+    second: FTL_weapon_without_background_50
+  - first:
+      213: -5162737167249366912
+    second: FTL_weapon_without_background_51
+  - first:
+      213: -2164860740132399966
+    second: FTL_weapon_without_background_52
+  - first:
+      213: 3726413059932244566
+    second: FTL_weapon_without_background_53
+  - first:
+      213: 7842347799266449816
+    second: FTL_weapon_without_background_54
+  - first:
+      213: -4603061398104921500
+    second: FTL_weapon_without_background_55
+  - first:
+      213: -4384678745292568860
+    second: FTL_weapon_without_background_56
+  - first:
+      213: -3111365368021575785
+    second: FTL_weapon_without_background_57
+  - first:
+      213: -4732705947202840587
+    second: FTL_weapon_without_background_58
+  - first:
+      213: 5715824391978125794
+    second: FTL_weapon_without_background_59
+  - first:
+      213: 6098617842021141155
+    second: FTL_weapon_without_background_60
+  - first:
+      213: -1550278081585412003
+    second: FTL_weapon_without_background_61
+  - first:
+      213: 584952165856845504
+    second: FTL_weapon_without_background_62
+  - first:
+      213: -6447731374243006702
+    second: FTL_weapon_without_background_63
+  - first:
+      213: -2776863260680792112
+    second: FTL_weapon_without_background_64
+  - first:
+      213: 5051387415222444900
+    second: FTL_weapon_without_background_65
+  - first:
+      213: 7432694904036203405
+    second: FTL_weapon_without_background_66
+  - first:
+      213: 5054114454238460985
+    second: FTL_weapon_without_background_67
+  - first:
+      213: -7716211410233132022
+    second: FTL_weapon_without_background_68
+  - first:
+      213: -7420286336040520982
+    second: FTL_weapon_without_background_69
+  - first:
+      213: -3467364336009485351
+    second: FTL_weapon_without_background_70
+  - first:
+      213: -3378465316886091271
+    second: FTL_weapon_without_background_71
+  - first:
+      213: 3625044847911599992
+    second: FTL_weapon_without_background_72
+  - first:
+      213: 7706479270123628278
+    second: FTL_weapon_without_background_73
+  - first:
+      213: -6012216366897875434
+    second: FTL_weapon_without_background_74
+  - first:
+      213: 919230994102199833
+    second: FTL_weapon_without_background_75
+  - first:
+      213: -2899732377545334631
+    second: FTL_weapon_without_background_76
+  - first:
+      213: 2764996199627327001
+    second: FTL_weapon_without_background_77
+  - first:
+      213: 7708959597165293397
+    second: FTL_weapon_without_background_78
+  - first:
+      213: 4395033382988150657
+    second: FTL_weapon_without_background_79
+  - first:
+      213: 3334476978560420522
+    second: FTL_weapon_without_background_80
+  - first:
+      213: 7120790278724047285
+    second: FTL_weapon_without_background_81
+  - first:
+      213: 4997198426995887255
+    second: FTL_weapon_without_background_82
+  - first:
+      213: 1095554027607786081
+    second: FTL_weapon_without_background_83
+  - first:
+      213: -5799212406558581371
+    second: FTL_weapon_without_background_84
+  - first:
+      213: -2108386306628356880
+    second: FTL_weapon_without_background_85
+  - first:
+      213: 941926898767722214
+    second: FTL_weapon_without_background_86
+  - first:
+      213: -1117491950802149281
+    second: FTL_weapon_without_background_87
+  - first:
+      213: 2438918747856638974
+    second: FTL_weapon_without_background_88
+  - first:
+      213: -7958239997159407057
+    second: FTL_weapon_without_background_89
+  - first:
+      213: 6765996052960449395
+    second: FTL_weapon_without_background_90
+  - first:
+      213: 6459735430171038469
+    second: FTL_weapon_without_background_91
+  - first:
+      213: 4940086352322045589
+    second: FTL_weapon_without_background_92
+  - first:
+      213: 7333955543219271530
+    second: FTL_weapon_without_background_93
+  - first:
+      213: 3022735837425123201
+    second: FTL_weapon_without_background_94
+  - first:
+      213: -843258984114145228
+    second: FTL_weapon_without_background_95
+  - first:
+      213: -4196219546438376363
+    second: FTL_weapon_without_background_96
+  - first:
+      213: -3687485302241599120
+    second: FTL_weapon_without_background_97
+  - first:
+      213: -8661580010657632055
+    second: FTL_weapon_without_background_98
+  - first:
+      213: -6479933320380760407
+    second: FTL_weapon_without_background_99
+  - first:
+      213: -3741156777126487225
+    second: FTL_weapon_without_background_100
+  - first:
+      213: 7555140954363222527
+    second: FTL_weapon_without_background_101
+  - first:
+      213: -1904856640011879437
+    second: FTL_weapon_without_background_102
+  - first:
+      213: -3263770137421803043
+    second: FTL_weapon_without_background_103
+  - first:
+      213: 6561751792819679232
+    second: FTL_weapon_without_background_104
+  - first:
+      213: 5212054155595807479
+    second: FTL_weapon_without_background_105
+  - first:
+      213: 1103983394400389497
+    second: FTL_weapon_without_background_106
+  - first:
+      213: 6989532190288263406
+    second: FTL_weapon_without_background_107
+  - first:
+      213: 5170997986056667441
+    second: FTL_weapon_without_background_108
+  - first:
+      213: 5204793548869511052
+    second: FTL_weapon_without_background_109
+  - first:
+      213: 6352420201609738237
+    second: FTL_weapon_without_background_110
+  - first:
+      213: 4698315381974533468
+    second: FTL_weapon_without_background_111
+  - first:
+      213: 838931894198202498
+    second: FTL_weapon_without_background_112
+  - first:
+      213: -5476747360922033494
+    second: FTL_weapon_without_background_113
+  - first:
+      213: -949815672246511418
+    second: FTL_weapon_without_background_114
+  - first:
+      213: 8230593449345686019
+    second: FTL_weapon_without_background_115
+  - first:
+      213: -3978334386074662049
+    second: FTL_weapon_without_background_116
+  - first:
+      213: 1673517464452999854
+    second: FTL_weapon_without_background_117
+  - first:
+      213: 7830214786393484235
+    second: FTL_weapon_without_background_118
+  - first:
+      213: -1957048050578349167
+    second: FTL_weapon_without_background_119
+  - first:
+      213: -7127233797656469106
+    second: FTL_weapon_without_background_120
+  - first:
+      213: 8026982162507109747
+    second: FTL_weapon_without_background_121
+  - first:
+      213: -375847178123909053
+    second: FTL_weapon_without_background_122
+  - first:
+      213: 5244465460372852050
+    second: FTL_weapon_without_background_123
+  - first:
+      213: 5502518190680668128
+    second: FTL_weapon_without_background_124
+  - first:
+      213: -6182268856047081965
+    second: FTL_weapon_without_background_125
+  - first:
+      213: 8024204545684447922
+    second: FTL_weapon_without_background_126
+  - first:
+      213: -2412584919014989040
+    second: FTL_weapon_without_background_127
+  - first:
+      213: -5023891189646613142
+    second: FTL_weapon_without_background_128
+  - first:
+      213: -4634444516804820641
+    second: FTL_weapon_without_background_129
+  - first:
+      213: -1787187088223777728
+    second: FTL_weapon_without_background_130
+  - first:
+      213: 7507761395922942272
+    second: FTL_weapon_without_background_131
+  - first:
+      213: -1970177876147998994
+    second: FTL_weapon_without_background_132
+  - first:
+      213: -7596940341881628554
+    second: FTL_weapon_without_background_133
+  - first:
+      213: -6135251241292254832
+    second: FTL_weapon_without_background_134
+  - first:
+      213: 956928104657950096
+    second: FTL_weapon_without_background_135
+  - first:
+      213: 9089476842033012344
+    second: FTL_weapon_without_background_136
+  - first:
+      213: -6358501782306251036
+    second: FTL_weapon_without_background_137
+  - first:
+      213: 5478598241976603815
+    second: FTL_weapon_without_background_138
+  - first:
+      213: 62166886972544779
+    second: FTL_weapon_without_background_139
+  - first:
+      213: 1861886345708354124
+    second: FTL_weapon_without_background_140
+  - first:
+      213: -4866457116515926877
+    second: FTL_weapon_without_background_141
+  - first:
+      213: 3018285168369905833
+    second: FTL_weapon_without_background_142
+  - first:
+      213: -4001114382408043094
+    second: FTL_weapon_without_background_143
+  - first:
+      213: 206628508720346057
+    second: FTL_weapon_without_background_144
+  - first:
+      213: -2852510365811191037
+    second: FTL_weapon_without_background_145
+  - first:
+      213: -2290256597669131063
+    second: FTL_weapon_without_background_146
+  - first:
+      213: 8966912513568114658
+    second: FTL_weapon_without_background_147
+  - first:
+      213: -5809493008025279412
+    second: FTL_weapon_without_background_148
+  - first:
+      213: -5435789608989231374
+    second: FTL_weapon_without_background_149
+  - first:
+      213: -848826399910337174
+    second: FTL_weapon_without_background_150
+  - first:
+      213: 3911918833079230426
+    second: FTL_weapon_without_background_151
+  - first:
+      213: -2650162801115420050
+    second: FTL_weapon_without_background_152
+  - first:
+      213: 8804050387552667492
+    second: FTL_weapon_without_background_153
+  - first:
+      213: 5226355932374573882
+    second: FTL_weapon_without_background_154
+  - first:
+      213: 5710044883428594117
+    second: FTL_weapon_without_background_155
+  - first:
+      213: 4619184459572046490
+    second: FTL_weapon_without_background_156
+  - first:
+      213: -7647783721655984246
+    second: FTL_weapon_without_background_157
+  - first:
+      213: -73578374057148408
+    second: FTL_weapon_without_background_158
+  - first:
+      213: -1012786534814609227
+    second: FTL_weapon_without_background_159
+  - first:
+      213: 917586627220138092
+    second: FTL_weapon_without_background_160
+  - first:
+      213: -3618795470054460738
+    second: FTL_weapon_without_background_161
+  - first:
+      213: -2884550186279903331
+    second: FTL_weapon_without_background_162
+  - first:
+      213: -2294946731086490453
+    second: FTL_weapon_without_background_163
+  - first:
+      213: 8059756272447102989
+    second: FTL_weapon_without_background_164
+  - first:
+      213: 1945226769760245876
+    second: FTL_weapon_without_background_165
+  - first:
+      213: -402126319605386193
+    second: FTL_weapon_without_background_166
+  - first:
+      213: 7751979861826153504
+    second: FTL_weapon_without_background_167
+  - first:
+      213: 7342863987820656829
+    second: FTL_weapon_without_background_168
+  - first:
+      213: -1266094107311816855
+    second: FTL_weapon_without_background_169
+  - first:
+      213: -272382369335323281
+    second: FTL_weapon_without_background_170
+  - first:
+      213: 3208424337504341683
+    second: FTL_weapon_without_background_171
+  - first:
+      213: -4509370397896713368
+    second: FTL_weapon_without_background_172
+  - first:
+      213: -5959982733133186779
+    second: FTL_weapon_without_background_173
+  - first:
+      213: 2883288048134404203
+    second: FTL_weapon_without_background_174
+  - first:
+      213: -7183644666626237152
+    second: FTL_weapon_without_background_175
+  - first:
+      213: -9070953232037056749
+    second: FTL_weapon_without_background_176
+  - first:
+      213: 2542191908243663334
+    second: FTL_weapon_without_background_177
+  - first:
+      213: 691681496249128003
+    second: FTL_weapon_without_background_178
+  - first:
+      213: -540531759884914740
+    second: FTL_weapon_without_background_179
+  - first:
+      213: 4744234559047002235
+    second: FTL_weapon_without_background_180
+  - first:
+      213: -5801444803704676933
+    second: FTL_weapon_without_background_181
+  - first:
+      213: -5701001155117931727
+    second: FTL_weapon_without_background_182
+  - first:
+      213: 1536320254442097899
+    second: FTL_weapon_without_background_183
+  - first:
+      213: -4786257268605350731
+    second: FTL_weapon_without_background_184
+  - first:
+      213: -4063556622968155370
+    second: FTL_weapon_without_background_185
+  - first:
+      213: 2861000174052039398
+    second: FTL_weapon_without_background_186
+  - first:
+      213: -6734325545235868365
+    second: FTL_weapon_without_background_187
+  - first:
+      213: -4484232001463432919
+    second: FTL_weapon_without_background_188
+  - first:
+      213: -4676092864640943693
+    second: FTL_weapon_without_background_189
+  - first:
+      213: 4632072280733525423
+    second: FTL_weapon_without_background_190
+  - first:
+      213: 5908062987911372255
+    second: FTL_weapon_without_background_191
+  - first:
+      213: 5515101136100692797
+    second: FTL_weapon_without_background_192
+  - first:
+      213: 5673933717838530388
+    second: FTL_weapon_without_background_193
+  - first:
+      213: 5282773923238467805
+    second: FTL_weapon_without_background_194
+  - first:
+      213: -6066882256954709282
+    second: FTL_weapon_without_background_195
+  - first:
+      213: -1572815869361813120
+    second: FTL_weapon_without_background_196
+  - first:
+      213: -1067154677335756581
+    second: FTL_weapon_without_background_197
+  - first:
+      213: 8509966658914409546
+    second: FTL_weapon_without_background_198
+  - first:
+      213: -3028323123089066284
+    second: FTL_weapon_without_background_199
+  - first:
+      213: -4645314889414478245
+    second: FTL_weapon_without_background_200
+  - first:
+      213: 1768044882972736684
+    second: FTL_weapon_without_background_201
+  - first:
+      213: 6096466810038157221
+    second: FTL_weapon_without_background_202
+  - first:
+      213: -4666919126674859807
+    second: FTL_weapon_without_background_203
+  - first:
+      213: -4649555518948755799
+    second: FTL_weapon_without_background_204
+  - first:
+      213: 4489442483292010347
+    second: FTL_weapon_without_background_205
+  - first:
+      213: -4214156898655362743
+    second: FTL_weapon_without_background_206
+  - first:
+      213: -1198362145909563867
+    second: FTL_weapon_without_background_207
+  - first:
+      213: -53868251859721122
+    second: FTL_weapon_without_background_208
+  - first:
+      213: -3899006232419007638
+    second: FTL_weapon_without_background_209
+  - first:
+      213: -8332288689741111751
+    second: FTL_weapon_without_background_210
+  - first:
+      213: -1334130946065954535
+    second: FTL_weapon_without_background_211
+  - first:
+      213: -5624554350548433783
+    second: FTL_weapon_without_background_212
+  - first:
+      213: -3396241757938344704
+    second: FTL_weapon_without_background_213
+  - first:
+      213: -8120425767111187663
+    second: FTL_weapon_without_background_214
+  - first:
+      213: 7077914506966875456
+    second: FTL_weapon_without_background_215
+  - first:
+      213: 2539454270748559654
+    second: FTL_weapon_without_background_216
+  - first:
+      213: 7242077161329005225
+    second: FTL_weapon_without_background_217
+  - first:
+      213: -1278740283913476400
+    second: FTL_weapon_without_background_218
+  - first:
+      213: -1085970844701797900
+    second: FTL_weapon_without_background_219
+  - first:
+      213: -536675384180384360
+    second: FTL_weapon_without_background_220
+  - first:
+      213: -8203833050532780822
+    second: FTL_weapon_without_background_221
+  - first:
+      213: 2796946620131729599
+    second: FTL_weapon_without_background_222
+  - first:
+      213: 6265035586806244064
+    second: FTL_weapon_without_background_223
+  - first:
+      213: -1382442671093632646
+    second: FTL_weapon_without_background_224
+  - first:
+      213: 174708438523001744
+    second: FTL_weapon_without_background_225
+  - first:
+      213: 1348635637816554192
+    second: FTL_weapon_without_background_226
+  - first:
+      213: -8776534542396742693
+    second: FTL_weapon_without_background_227
+  - first:
+      213: 3521339200967593158
+    second: FTL_weapon_without_background_228
+  - first:
+      213: 5661835737448163248
+    second: FTL_weapon_without_background_229
+  - first:
+      213: 645147593766081755
+    second: FTL_weapon_without_background_230
+  - first:
+      213: -7533867852636417856
+    second: FTL_weapon_without_background_231
+  - first:
+      213: -1681204440920709385
+    second: FTL_weapon_without_background_232
+  - first:
+      213: -1391245268420457998
+    second: FTL_weapon_without_background_233
+  - first:
+      213: -6179016522617918357
+    second: FTL_weapon_without_background_234
+  - first:
+      213: 2222187740362798654
+    second: FTL_weapon_without_background_235
+  - first:
+      213: 7375569997150697
+    second: FTL_weapon_without_background_236
+  - first:
+      213: 7538599409619793718
+    second: FTL_weapon_without_background_237
+  - first:
+      213: 5381197423119914385
+    second: FTL_weapon_without_background_238
+  - first:
+      213: -656266103379071699
+    second: FTL_weapon_without_background_239
+  - first:
+      213: -2891623664968052924
+    second: FTL_weapon_without_background_240
+  - first:
+      213: -2352379079033376930
+    second: FTL_weapon_without_background_241
+  - first:
+      213: -7757547662626256098
+    second: FTL_weapon_without_background_242
+  - first:
+      213: 8360855480644315850
+    second: FTL_weapon_without_background_243
+  - first:
+      213: 4898719050583794552
+    second: FTL_weapon_without_background_244
+  - first:
+      213: -6782443663121312140
+    second: FTL_weapon_without_background_245
+  - first:
+      213: 865215572831028830
+    second: FTL_weapon_without_background_246
+  - first:
+      213: -2203159277311982152
+    second: FTL_weapon_without_background_247
+  - first:
+      213: 5679243214787669143
+    second: FTL_weapon_without_background_248
+  - first:
+      213: -3807786300418486296
+    second: FTL_weapon_without_background_249
+  - first:
+      213: 8629162184563267889
+    second: FTL_weapon_without_background_250
+  - first:
+      213: 1305337740915665065
+    second: FTL_weapon_without_background_251
+  - first:
+      213: 2374906305175100136
+    second: FTL_weapon_without_background_252
+  - first:
+      213: -3407418441659853914
+    second: FTL_weapon_without_background_253
+  - first:
+      213: -2386096691550151107
+    second: FTL_weapon_without_background_254
+  - first:
+      213: -8241280056326821532
+    second: FTL_weapon_without_background_255
+  - first:
+      213: -8292166668697955641
+    second: FTL_weapon_without_background_256
+  - first:
+      213: -595810928345856583
+    second: FTL_weapon_without_background_257
+  - first:
+      213: -7058331778354163272
+    second: FTL_weapon_without_background_258
+  - first:
+      213: 2569189903326579363
+    second: FTL_weapon_without_background_259
+  - first:
+      213: 888948478942890524
+    second: FTL_weapon_without_background_260
+  - first:
+      213: -3172501242740726353
+    second: FTL_weapon_without_background_261
+  - first:
+      213: -1614360718191004988
+    second: FTL_weapon_without_background_262
+  - first:
+      213: 3829394957198354259
+    second: FTL_weapon_without_background_263
+  - first:
+      213: 8791413999940392588
+    second: FTL_weapon_without_background_264
+  - first:
+      213: 3027671151034825096
+    second: FTL_weapon_without_background_265
+  - first:
+      213: -6240958068514237489
+    second: FTL_weapon_without_background_266
+  - first:
+      213: -7978048696381256145
+    second: FTL_weapon_without_background_267
+  - first:
+      213: -4625775692117589665
+    second: FTL_weapon_without_background_268
+  - first:
+      213: 3805248465860995051
+    second: FTL_weapon_without_background_269
+  - first:
+      213: -6491330923217958200
+    second: FTL_weapon_without_background_270
+  - first:
+      213: 811922730917587847
+    second: FTL_weapon_without_background_271
+  - first:
+      213: -7645767372161047935
+    second: FTL_weapon_without_background_272
+  - first:
+      213: -2383421388014969043
+    second: FTL_weapon_without_background_273
+  - first:
+      213: -8586716848291126048
+    second: FTL_weapon_without_background_274
+  - first:
+      213: 350708732157743871
+    second: FTL_weapon_without_background_275
+  - first:
+      213: 1376698829356377546
+    second: FTL_weapon_without_background_276
+  - first:
+      213: 8400670800821613751
+    second: FTL_weapon_without_background_277
+  - first:
+      213: 6935431001035293886
+    second: FTL_weapon_without_background_278
+  - first:
+      213: 6900981480867315918
+    second: FTL_weapon_without_background_279
+  - first:
+      213: 3159680856758643202
+    second: FTL_weapon_without_background_280
+  - first:
+      213: -453226142539891961
+    second: FTL_weapon_without_background_281
+  - first:
+      213: -3263710572210708968
+    second: FTL_weapon_without_background_282
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 1032
+        width: 3
+        height: 1
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2abc080b7706a2c0800000000000000
+      internalID: -4420837759220139476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_3
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 51
+        width: 50
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0af6bb490ece7690800000000000000
+      internalID: -7602412581634508273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 965
+        width: 17
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dde48e40ef59b6460800000000000000
+      internalID: 7236042144537399005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_27
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 889
+        width: 17
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca29f665312998380800000000000000
+      internalID: -8968476571179445588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_37
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 815
+        width: 23
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84ffc65e99496b8a0800000000000000
+      internalID: -6289676440876286136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_39
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 815
+        width: 23
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1eba9553e004fa30800000000000000
+      internalID: 4248021324911001115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_40
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 815
+        width: 23
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0dec4d5aec6efd790800000000000000
+      internalID: -7503024678956118320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_41
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 815
+        width: 23
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a570d39b5cfb5cca0800000000000000
+      internalID: -5997176472836700326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_42
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 815
+        width: 23
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5cf641ce1e5bb05b0800000000000000
+      internalID: -5401023346167746619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_43
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 815
+        width: 24
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3c15bed778ef4370800000000000000
+      internalID: 8309115439057017917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_44
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 815
+        width: 24
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8086a57d0b73a5350800000000000000
+      internalID: 6006174285718775816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_45
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 815
+        width: 24
+        height: 56
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c4cb67ec15181930800000000000000
+      internalID: 4114061473488815302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_46
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 815
+        width: 24
+        height: 53
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 845eb63f4f597e010800000000000000
+      internalID: 1218107103515501896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_47
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 815
+        width: 24
+        height: 56
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b60602f887f44e50800000000000000
+      internalID: 6792826305529644728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_48
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 815
+        width: 24
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9cdbe1e320ac1ca0800000000000000
+      internalID: -6044780523863417700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_49
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 815
+        width: 24
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff7aa55b022685530800000000000000
+      internalID: 3843930174581811199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_59
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 733
+        width: 24
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e98e523000b25f40800000000000000
+      internalID: 5715824391978125794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_61
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 733
+        width: 25
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d58070c6c4e4c7ae0800000000000000
+      internalID: -1550278081585412003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_62
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 733
+        width: 25
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ce1e7845ea2e1800800000000000000
+      internalID: 584952165856845504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_63
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 733
+        width: 25
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 217ba170a7e0586a0800000000000000
+      internalID: -6447731374243006702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_64
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 733
+        width: 25
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d7d94da3999679d0800000000000000
+      internalID: -2776863260680792112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_65
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 733
+        width: 25
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 463663b37122a1640800000000000000
+      internalID: 5051387415222444900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_66
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 733
+        width: 25
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8b1fe692ac362760800000000000000
+      internalID: 7432694904036203405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_67
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 733
+        width: 25
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93cfc0b7152d32640800000000000000
+      internalID: 5054114454238460985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_68
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 733
+        width: 25
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0cfc39ca928ae490800000000000000
+      internalID: -7716211410233132022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_69
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 733
+        width: 25
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae2be9844e8d50990800000000000000
+      internalID: -7420286336040520982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_70
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 733
+        width: 25
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d3eb4dd18271efc0800000000000000
+      internalID: -3467364336009485351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_71
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 733
+        width: 25
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f9e605b1b74d11d0800000000000000
+      internalID: -3378465316886091271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_72
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 654
+        width: 210
+        height: 75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87f71a6351fbe4230800000000000000
+      internalID: 3625044847911599992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_100
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 672
+        width: 15
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74b94529bbdb41cc0800000000000000
+      internalID: -3741156777126487225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_101
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 568
+        width: 226
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff953dc4ba049d860800000000000000
+      internalID: 7555140954363222527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_114
+      rect:
+        serializedVersion: 2
+        x: 242
+        y: 611
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c8d5adada391d2f0800000000000000
+      internalID: -949815672246511418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_115
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 589
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30a18e67221f83270800000000000000
+      internalID: 8230593449345686019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_116
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 589
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5b4c4834fd1ac8c0800000000000000
+      internalID: -3978334386074662049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_117
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 486
+        width: 178
+        height: 81
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eaa222a6447893710800000000000000
+      internalID: 1673517464452999854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_128
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 521
+        width: 8
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6526eaa49d874ab0800000000000000
+      internalID: -5023891189646613142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_137
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 422
+        width: 24
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ee92f9515012c7a0800000000000000
+      internalID: -6358501782306251036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_138
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 422
+        width: 24
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a458100314e70c40800000000000000
+      internalID: 5478598241976603815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_139
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 422
+        width: 24
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b075ace447cdcd000800000000000000
+      internalID: 62166886972544779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_140
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 422
+        width: 24
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4ab81844cfb6d910800000000000000
+      internalID: 1861886345708354124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_141
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 422
+        width: 24
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ac756f390fd67cb0800000000000000
+      internalID: -4866457116515926877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_142
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 422
+        width: 24
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a0b48b7e5a13e920800000000000000
+      internalID: 3018285168369905833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_143
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 422
+        width: 24
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa5bcd20baf2978c0800000000000000
+      internalID: -4001114382408043094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_144
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 422
+        width: 24
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c3bebea8871ed200800000000000000
+      internalID: 206628508720346057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_145
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 422
+        width: 24
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30354bf7fe8d968d0800000000000000
+      internalID: -2852510365811191037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_146
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 422
+        width: 24
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9cccf6b32cf5730e0800000000000000
+      internalID: -2290256597669131063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_147
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 422
+        width: 24
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e78b3f1c6fd07c70800000000000000
+      internalID: 8966912513568114658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_148
+      rect:
+        serializedVersion: 2
+        x: 291
+        y: 424
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c44a983a3e8806fa0800000000000000
+      internalID: -5809493008025279412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_149
+      rect:
+        serializedVersion: 2
+        x: 316
+        y: 424
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f6ff6296223094b0800000000000000
+      internalID: -5435789608989231374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_150
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 424
+        width: 12
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a65ee55f2ec5834f0800000000000000
+      internalID: -848826399910337174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_160
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 340
+        width: 30
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c68ea160d2cebbc00800000000000000
+      internalID: 917586627220138092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_161
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 340
+        width: 30
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb27c9471b477cdc0800000000000000
+      internalID: -3618795470054460738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_162
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 340
+        width: 30
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9fdff973e408f7d0800000000000000
+      internalID: -2884550186279903331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_163
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 340
+        width: 30
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba455237b16b620e0800000000000000
+      internalID: -2294946731086490453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_164
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 340
+        width: 30
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d00af6b90a10adf60800000000000000
+      internalID: 8059756272447102989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_165
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 340
+        width: 30
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 478d32bd075defa10800000000000000
+      internalID: 1945226769760245876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_166
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 340
+        width: 30
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f24f51d2e3c5b6af0800000000000000
+      internalID: -402126319605386193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_167
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 340
+        width: 30
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02c2122dc90949b60800000000000000
+      internalID: 7751979861826153504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_168
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 340
+        width: 30
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db8fe0c84e717e560800000000000000
+      internalID: 7342863987820656829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_169
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 340
+        width: 30
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96fb6711e1eed6ee0800000000000000
+      internalID: -1266094107311816855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_170
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 344
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6550b0adad483cf0800000000000000
+      internalID: -272382369335323281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_171
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 344
+        width: 12
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3be0aad9fec968c20800000000000000
+      internalID: 3208424337504341683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_172
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 344
+        width: 12
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86b54b8c38f7b61c0800000000000000
+      internalID: -4509370397896713368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_173
+      rect:
+        serializedVersion: 2
+        x: 438
+        y: 344
+        width: 12
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52972241843e94da0800000000000000
+      internalID: -5959982733133186779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_174
+      rect:
+        serializedVersion: 2
+        x: 470
+        y: 344
+        width: 12
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b683e26143f730820800000000000000
+      internalID: 2883288048134404203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_184
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 276
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bc85257f5cc39db0800000000000000
+      internalID: -4786257268605350731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_185
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 276
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6131c43f7c85b97c0800000000000000
+      internalID: -4063556622968155370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_186
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 276
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ead3b4008054b720800000000000000
+      internalID: 2861000174052039398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_187
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 276
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 335906ab89eda82a0800000000000000
+      internalID: -6734325545235868365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_188
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 276
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 929455ec0cec4c1c0800000000000000
+      internalID: -4484232001463432919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_189
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 276
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b9765a805e2b1fb0800000000000000
+      internalID: -4676092864640943693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_190
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 276
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa52e03923d684040800000000000000
+      internalID: 4632072280733525423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_191
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 276
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdd17193cf7adf150800000000000000
+      internalID: 5908062987911372255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_192
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 276
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3392a55343998c40800000000000000
+      internalID: 5515101136100692797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_193
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 276
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45780e297acddbe40800000000000000
+      internalID: 5673933717838530388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_194
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 276
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd85353d4ee205940800000000000000
+      internalID: 5282773923238467805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_195
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 276
+        width: 29
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eda28142bba1ecba0800000000000000
+      internalID: -6066882256954709282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_196
+      rect:
+        serializedVersion: 2
+        x: 343
+        y: 309
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0898799cc4c3c2ae0800000000000000
+      internalID: -1572815869361813120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_197
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 309
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd071099974b031f0800000000000000
+      internalID: -1067154677335756581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_198
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 309
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4cd20ba699791670800000000000000
+      internalID: 8509966658914409546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_209
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 213
+        width: 37
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6381ab4d72f3e9c0800000000000000
+      internalID: -3899006232419007638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_212
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 213
+        width: 39
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 984ceab4e9191f1b0800000000000000
+      internalID: -5624554350548433783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_213
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 213
+        width: 39
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00d9cbe7d102ed0d0800000000000000
+      internalID: -3396241757938344704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_214
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 213
+        width: 39
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 133a866e9c37e4f80800000000000000
+      internalID: -8120425767111187663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_215
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 213
+        width: 39
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04d38526ebdc93260800000000000000
+      internalID: 7077914506966875456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_216
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 213
+        width: 39
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62901536434fd3320800000000000000
+      internalID: 2539454270748559654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_217
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 213
+        width: 39
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a21cfcdec6018460800000000000000
+      internalID: 7242077161329005225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_218
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 213
+        width: 39
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d6ea51ac70014ee0800000000000000
+      internalID: -1278740283913476400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_219
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 213
+        width: 39
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f15e1d354bdde0f0800000000000000
+      internalID: -1085970844701797900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_220
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 213
+        width: 39
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89d5b3ed4985d88f0800000000000000
+      internalID: -536675384180384360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_221
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 213
+        width: 39
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae4626a6e41262e80800000000000000
+      internalID: -8203833050532780822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_222
+      rect:
+        serializedVersion: 2
+        x: 418
+        y: 213
+        width: 39
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb06ea4d120c0d620800000000000000
+      internalID: 2796946620131729599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_223
+      rect:
+        serializedVersion: 2
+        x: 456
+        y: 213
+        width: 39
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e264c03ca0e1f650800000000000000
+      internalID: 6265035586806244064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_224
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 213
+        width: 39
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a713f1317b390dce0800000000000000
+      internalID: -1382442671093632646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_225
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 213
+        width: 39
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09b3d613660bc6200800000000000000
+      internalID: 174708438523001744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_226
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 213
+        width: 39
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d2fc7b97f057b210800000000000000
+      internalID: 1348635637816554192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_227
+      rect:
+        serializedVersion: 2
+        x: 608
+        y: 213
+        width: 39
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd32f71755c733680800000000000000
+      internalID: -8776534542396742693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_228
+      rect:
+        serializedVersion: 2
+        x: 646
+        y: 213
+        width: 39
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ccc45fa85f4ed030800000000000000
+      internalID: 3521339200967593158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_229
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 195
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b7a5330b91e29e40800000000000000
+      internalID: 5661835737448163248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_230
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 195
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd41022815604f800800000000000000
+      internalID: 645147593766081755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_231
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 195
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c01fdaaa13527790800000000000000
+      internalID: -7533867852636417856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_232
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 195
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f6ac18e7792ba8e0800000000000000
+      internalID: -1681204440920709385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_233
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 195
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f90b5caccd41bce0800000000000000
+      internalID: -1391245268420457998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_234
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 195
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6ce614e539bf3aa0800000000000000
+      internalID: -6179016522617918357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_235
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 195
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e367d88e9fbc6de10800000000000000
+      internalID: 2222187740362798654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_236
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 195
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e932b5ba043a1000800000000000000
+      internalID: 7375569997150697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_237
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 195
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6377b5ac83c7e9860800000000000000
+      internalID: 7538599409619793718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_238
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 195
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1955f47ab8addaa40800000000000000
+      internalID: 5381197423119914385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_247
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 84
+        width: 31
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b586346f4ecc61e0800000000000000
+      internalID: -2203159277311982152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_248
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 84
+        width: 31
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79c677a2d99b0de40800000000000000
+      internalID: 5679243214787669143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_249
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 84
+        width: 31
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ef05f6c886082bc0800000000000000
+      internalID: -3807786300418486296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_250
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 84
+        width: 31
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1399020a941f0c770800000000000000
+      internalID: 8629162184563267889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_251
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 84
+        width: 31
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a8603762cd7d1210800000000000000
+      internalID: 1305337740915665065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_252
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 84
+        width: 31
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ea1cc6a3bc55f020800000000000000
+      internalID: 2374906305175100136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_253
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 84
+        width: 31
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a3dfb70bfa66b0d0800000000000000
+      internalID: -3407418441659853914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_254
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 84
+        width: 31
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3e1b6c73b1e2eed0800000000000000
+      internalID: -2386096691550151107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_255
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 84
+        width: 31
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 469e024f37711ad80800000000000000
+      internalID: -8241280056326821532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_256
+      rect:
+        serializedVersion: 2
+        x: 299
+        y: 84
+        width: 31
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c29ced395e4cec80800000000000000
+      internalID: -8292166668697955641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_257
+      rect:
+        serializedVersion: 2
+        x: 332
+        y: 84
+        width: 31
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b546ae0e114bb7f0800000000000000
+      internalID: -595810928345856583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_258
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 84
+        width: 31
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b1595ce4a4cb0e90800000000000000
+      internalID: -7058331778354163272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_269
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 51
+        width: 49
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be7aeb19155fec430800000000000000
+      internalID: 3805248465860995051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_270
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 52
+        width: 53
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8cac51afae82ae5a0800000000000000
+      internalID: -6491330923217958200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_271
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 52
+        width: 48
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78b68690c67844b00800000000000000
+      internalID: 811922730917587847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_272
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 51
+        width: 49
+        height: 18
+      alignment: 5
+      pivot: {x: 1, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 182a1138517c4e590800000000000000
+      internalID: -7645767372161047935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_273
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 51
+        width: 47
+        height: 18
+      alignment: 5
+      pivot: {x: 1, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2f9c4120e26ceed0800000000000000
+      internalID: -2383421388014969043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_274
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 51
+        width: 50
+        height: 18
+      alignment: 5
+      pivot: {x: 1, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e4eeb6558ad5d880800000000000000
+      internalID: -8586716848291126048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_275
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 51
+        width: 47
+        height: 18
+      alignment: 5
+      pivot: {x: 1, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff2d3e7dbb7fdd400800000000000000
+      internalID: 350708732157743871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_278
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 9
+        width: 35
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb4c0fcffb99f3060800000000000000
+      internalID: 6935431001035293886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_279
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 9
+        width: 40
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec045a8081635cf50800000000000000
+      internalID: 6900981480867315918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_280
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 9
+        width: 40
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20a63be9ff079db20800000000000000
+      internalID: 3159680856758643202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_281
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 9
+        width: 37
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70b3df28931d5b9f0800000000000000
+      internalID: -453226142539891961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background_282
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 14
+        width: 31
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81e91b5c688f4b2d0800000000000000
+      internalID: -3263710572210708968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_0
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 889
+        width: 16
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24902af73a3123b4d94b6d856d11d11b
+      internalID: 1970942606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_1
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 889
+        width: 16
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 865b9f707b272534ab23fb213fec806b
+      internalID: -1795214778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_2
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 889
+        width: 16
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b73ec816e355e0a4f85614306a31e0a3
+      internalID: -935349956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_3
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 889
+        width: 16
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01c2159a55cb9d94f9ab107e9be8358b
+      internalID: -1925113089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_4
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 889
+        width: 16
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 930d73093ff29f847a258fbee2367360
+      internalID: -133818805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_5
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 965
+        width: 16
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad1635ea7da223a42a4a423d220f9991
+      internalID: -156429211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_6
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 965
+        width: 16
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d0f7a5a017d7c2479c2d4c5948a101d
+      internalID: -142370321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_7
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 965
+        width: 16
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3672bcd6d89b479418f3d9c97ddd7811
+      internalID: 637756016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_8
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 965
+        width: 16
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: deb6ef7f2c6c4264cacb0c3a66100962
+      internalID: -2084720287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_9
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 965
+        width: 16
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: beb3b29997937384aaddfeeb1d730657
+      internalID: 866206709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_10
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 965
+        width: 16
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9b2690ae40a913469bc57dccb6dfdf0
+      internalID: 1808179807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_11
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 965
+        width: 16
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f6588cb34f71ac4e8981edd3768b916
+      internalID: 501342449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_12
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 965
+        width: 16
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0964aa846a83f534faa36af77b8a5a23
+      internalID: -1184268118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_13
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 965
+        width: 16
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c9e135c241329a4182d5318d08ee416
+      internalID: 1266323508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_14
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 965
+        width: 16
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2211a72e351cd4f4eb7734bc98b7ebd1
+      internalID: -1812833818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_15
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 965
+        width: 16
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c68bb34c945428a4aacf6d45746115e0
+      internalID: -245965288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_16
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 889
+        width: 16
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd99fb88e02babc47a800d5c0926d801
+      internalID: 1731042796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_17
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 889
+        width: 16
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6878240ea599d74ba5df4151b6a0a71
+      internalID: -707030810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_18
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 889
+        width: 16
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42de728ff7709e343974c6d971d53c09
+      internalID: -1466796133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_19
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 889
+        width: 16
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69bbb5ccbc298c74aac6045c2e4fe59b
+      internalID: -49249699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_20
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 889
+        width: 16
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c88b23e7aee43c40a03bb1ce1bdb563
+      internalID: 323743394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_21
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 889
+        width: 16
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0ccd77c35ee69d419bb5e6e7050d557
+      internalID: 381489600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_22
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 51
+        width: 47
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6c1b429d592ce04a81ef3cd76931b1f
+      internalID: -1868769561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_23
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 51
+        width: 46
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b1c60c57376d7e48ad2992b8e8e4d16
+      internalID: 1465440465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_24
+      rect:
+        serializedVersion: 2
+        x: 508
+        y: 51
+        width: 43
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5f2041ee391c764095606230968f773
+      internalID: 879863945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FTL_weapon_without_background 1_25
+      rect:
+        serializedVersion: 2
+        x: 552
+        y: 51
+        width: 49
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee0904f85e689754e845ec50a11582c5
+      internalID: 1922003999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 3cdba3912df79714ab5c7b979c7994b6
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      FTL_weapon_without_background 1_0: 1970942606
+      FTL_weapon_without_background 1_1: -1795214778
+      FTL_weapon_without_background 1_10: 1808179807
+      FTL_weapon_without_background 1_11: 501342449
+      FTL_weapon_without_background 1_12: -1184268118
+      FTL_weapon_without_background 1_13: 1266323508
+      FTL_weapon_without_background 1_14: -1812833818
+      FTL_weapon_without_background 1_15: -245965288
+      FTL_weapon_without_background 1_16: 1731042796
+      FTL_weapon_without_background 1_17: -707030810
+      FTL_weapon_without_background 1_18: -1466796133
+      FTL_weapon_without_background 1_19: -49249699
+      FTL_weapon_without_background 1_2: -935349956
+      FTL_weapon_without_background 1_20: 323743394
+      FTL_weapon_without_background 1_21: 381489600
+      FTL_weapon_without_background 1_22: -1868769561
+      FTL_weapon_without_background 1_23: 1465440465
+      FTL_weapon_without_background 1_24: 879863945
+      FTL_weapon_without_background 1_25: 1922003999
+      FTL_weapon_without_background 1_3: -1925113089
+      FTL_weapon_without_background 1_4: -133818805
+      FTL_weapon_without_background 1_5: -156429211
+      FTL_weapon_without_background 1_6: -142370321
+      FTL_weapon_without_background 1_7: 637756016
+      FTL_weapon_without_background 1_8: -2084720287
+      FTL_weapon_without_background 1_9: 866206709
+      FTL_weapon_without_background_0: -4420837759220139476
+      FTL_weapon_without_background_1: -3275229664588919890
+      FTL_weapon_without_background_10: -3546667591286106333
+      FTL_weapon_without_background_100: -3741156777126487225
+      FTL_weapon_without_background_101: 7555140954363222527
+      FTL_weapon_without_background_102: -1904856640011879437
+      FTL_weapon_without_background_103: -3263770137421803043
+      FTL_weapon_without_background_104: 6561751792819679232
+      FTL_weapon_without_background_105: 5212054155595807479
+      FTL_weapon_without_background_106: 1103983394400389497
+      FTL_weapon_without_background_107: 6989532190288263406
+      FTL_weapon_without_background_108: 5170997986056667441
+      FTL_weapon_without_background_109: 5204793548869511052
+      FTL_weapon_without_background_11: 6941393134500167384
+      FTL_weapon_without_background_110: 6352420201609738237
+      FTL_weapon_without_background_111: 4698315381974533468
+      FTL_weapon_without_background_112: 838931894198202498
+      FTL_weapon_without_background_113: -5476747360922033494
+      FTL_weapon_without_background_114: -949815672246511418
+      FTL_weapon_without_background_115: 8230593449345686019
+      FTL_weapon_without_background_116: -3978334386074662049
+      FTL_weapon_without_background_117: 1673517464452999854
+      FTL_weapon_without_background_118: 7830214786393484235
+      FTL_weapon_without_background_119: -1957048050578349167
+      FTL_weapon_without_background_12: -6961289782898692443
+      FTL_weapon_without_background_120: -7127233797656469106
+      FTL_weapon_without_background_121: 8026982162507109747
+      FTL_weapon_without_background_122: -375847178123909053
+      FTL_weapon_without_background_123: 5244465460372852050
+      FTL_weapon_without_background_124: 5502518190680668128
+      FTL_weapon_without_background_125: -6182268856047081965
+      FTL_weapon_without_background_126: 8024204545684447922
+      FTL_weapon_without_background_127: -2412584919014989040
+      FTL_weapon_without_background_128: -5023891189646613142
+      FTL_weapon_without_background_129: -4634444516804820641
+      FTL_weapon_without_background_13: -9118531307238688685
+      FTL_weapon_without_background_130: -1787187088223777728
+      FTL_weapon_without_background_131: 7507761395922942272
+      FTL_weapon_without_background_132: -1970177876147998994
+      FTL_weapon_without_background_133: -7596940341881628554
+      FTL_weapon_without_background_134: -6135251241292254832
+      FTL_weapon_without_background_135: 956928104657950096
+      FTL_weapon_without_background_136: 9089476842033012344
+      FTL_weapon_without_background_137: -6358501782306251036
+      FTL_weapon_without_background_138: 5478598241976603815
+      FTL_weapon_without_background_139: 62166886972544779
+      FTL_weapon_without_background_14: 5718738539234679128
+      FTL_weapon_without_background_140: 1861886345708354124
+      FTL_weapon_without_background_141: -4866457116515926877
+      FTL_weapon_without_background_142: 3018285168369905833
+      FTL_weapon_without_background_143: -4001114382408043094
+      FTL_weapon_without_background_144: 206628508720346057
+      FTL_weapon_without_background_145: -2852510365811191037
+      FTL_weapon_without_background_146: -2290256597669131063
+      FTL_weapon_without_background_147: 8966912513568114658
+      FTL_weapon_without_background_148: -5809493008025279412
+      FTL_weapon_without_background_149: -5435789608989231374
+      FTL_weapon_without_background_15: -5114891971406846723
+      FTL_weapon_without_background_150: -848826399910337174
+      FTL_weapon_without_background_151: 3911918833079230426
+      FTL_weapon_without_background_152: -2650162801115420050
+      FTL_weapon_without_background_153: 8804050387552667492
+      FTL_weapon_without_background_154: 5226355932374573882
+      FTL_weapon_without_background_155: 5710044883428594117
+      FTL_weapon_without_background_156: 4619184459572046490
+      FTL_weapon_without_background_157: -7647783721655984246
+      FTL_weapon_without_background_158: -73578374057148408
+      FTL_weapon_without_background_159: -1012786534814609227
+      FTL_weapon_without_background_16: 4348551247565595188
+      FTL_weapon_without_background_160: 917586627220138092
+      FTL_weapon_without_background_161: -3618795470054460738
+      FTL_weapon_without_background_162: -2884550186279903331
+      FTL_weapon_without_background_163: -2294946731086490453
+      FTL_weapon_without_background_164: 8059756272447102989
+      FTL_weapon_without_background_165: 1945226769760245876
+      FTL_weapon_without_background_166: -402126319605386193
+      FTL_weapon_without_background_167: 7751979861826153504
+      FTL_weapon_without_background_168: 7342863987820656829
+      FTL_weapon_without_background_169: -1266094107311816855
+      FTL_weapon_without_background_17: 3932145781943347144
+      FTL_weapon_without_background_170: -272382369335323281
+      FTL_weapon_without_background_171: 3208424337504341683
+      FTL_weapon_without_background_172: -4509370397896713368
+      FTL_weapon_without_background_173: -5959982733133186779
+      FTL_weapon_without_background_174: 2883288048134404203
+      FTL_weapon_without_background_175: -7183644666626237152
+      FTL_weapon_without_background_176: -9070953232037056749
+      FTL_weapon_without_background_177: 2542191908243663334
+      FTL_weapon_without_background_178: 691681496249128003
+      FTL_weapon_without_background_179: -540531759884914740
+      FTL_weapon_without_background_18: -12662688424529808
+      FTL_weapon_without_background_180: 4744234559047002235
+      FTL_weapon_without_background_181: -5801444803704676933
+      FTL_weapon_without_background_182: -5701001155117931727
+      FTL_weapon_without_background_183: 1536320254442097899
+      FTL_weapon_without_background_184: -4786257268605350731
+      FTL_weapon_without_background_185: -4063556622968155370
+      FTL_weapon_without_background_186: 2861000174052039398
+      FTL_weapon_without_background_187: -6734325545235868365
+      FTL_weapon_without_background_188: -4484232001463432919
+      FTL_weapon_without_background_189: -4676092864640943693
+      FTL_weapon_without_background_19: -8494714123894015008
+      FTL_weapon_without_background_190: 4632072280733525423
+      FTL_weapon_without_background_191: 5908062987911372255
+      FTL_weapon_without_background_192: 5515101136100692797
+      FTL_weapon_without_background_193: 5673933717838530388
+      FTL_weapon_without_background_194: 5282773923238467805
+      FTL_weapon_without_background_195: -6066882256954709282
+      FTL_weapon_without_background_196: -1572815869361813120
+      FTL_weapon_without_background_197: -1067154677335756581
+      FTL_weapon_without_background_198: 8509966658914409546
+      FTL_weapon_without_background_199: -3028323123089066284
+      FTL_weapon_without_background_2: 8038682494771148392
+      FTL_weapon_without_background_20: -7621424449657338249
+      FTL_weapon_without_background_200: -4645314889414478245
+      FTL_weapon_without_background_201: 1768044882972736684
+      FTL_weapon_without_background_202: 6096466810038157221
+      FTL_weapon_without_background_203: -4666919126674859807
+      FTL_weapon_without_background_204: -4649555518948755799
+      FTL_weapon_without_background_205: 4489442483292010347
+      FTL_weapon_without_background_206: -4214156898655362743
+      FTL_weapon_without_background_207: -1198362145909563867
+      FTL_weapon_without_background_208: -53868251859721122
+      FTL_weapon_without_background_209: -3899006232419007638
+      FTL_weapon_without_background_21: -4580887156898282669
+      FTL_weapon_without_background_210: -8332288689741111751
+      FTL_weapon_without_background_211: -1334130946065954535
+      FTL_weapon_without_background_212: -5624554350548433783
+      FTL_weapon_without_background_213: -3396241757938344704
+      FTL_weapon_without_background_214: -8120425767111187663
+      FTL_weapon_without_background_215: 7077914506966875456
+      FTL_weapon_without_background_216: 2539454270748559654
+      FTL_weapon_without_background_217: 7242077161329005225
+      FTL_weapon_without_background_218: -1278740283913476400
+      FTL_weapon_without_background_219: -1085970844701797900
+      FTL_weapon_without_background_22: -8095016839497495087
+      FTL_weapon_without_background_220: -536675384180384360
+      FTL_weapon_without_background_221: -8203833050532780822
+      FTL_weapon_without_background_222: 2796946620131729599
+      FTL_weapon_without_background_223: 6265035586806244064
+      FTL_weapon_without_background_224: -1382442671093632646
+      FTL_weapon_without_background_225: 174708438523001744
+      FTL_weapon_without_background_226: 1348635637816554192
+      FTL_weapon_without_background_227: -8776534542396742693
+      FTL_weapon_without_background_228: 3521339200967593158
+      FTL_weapon_without_background_229: 5661835737448163248
+      FTL_weapon_without_background_23: -2268398028571360272
+      FTL_weapon_without_background_230: 645147593766081755
+      FTL_weapon_without_background_231: -7533867852636417856
+      FTL_weapon_without_background_232: -1681204440920709385
+      FTL_weapon_without_background_233: -1391245268420457998
+      FTL_weapon_without_background_234: -6179016522617918357
+      FTL_weapon_without_background_235: 2222187740362798654
+      FTL_weapon_without_background_236: 7375569997150697
+      FTL_weapon_without_background_237: 7538599409619793718
+      FTL_weapon_without_background_238: 5381197423119914385
+      FTL_weapon_without_background_239: -656266103379071699
+      FTL_weapon_without_background_24: 1755374949227156156
+      FTL_weapon_without_background_240: -2891623664968052924
+      FTL_weapon_without_background_241: -2352379079033376930
+      FTL_weapon_without_background_242: -7757547662626256098
+      FTL_weapon_without_background_243: 8360855480644315850
+      FTL_weapon_without_background_244: 4898719050583794552
+      FTL_weapon_without_background_245: -6782443663121312140
+      FTL_weapon_without_background_246: 865215572831028830
+      FTL_weapon_without_background_247: -2203159277311982152
+      FTL_weapon_without_background_248: 5679243214787669143
+      FTL_weapon_without_background_249: -3807786300418486296
+      FTL_weapon_without_background_25: -414803298908081734
+      FTL_weapon_without_background_250: 8629162184563267889
+      FTL_weapon_without_background_251: 1305337740915665065
+      FTL_weapon_without_background_252: 2374906305175100136
+      FTL_weapon_without_background_253: -3407418441659853914
+      FTL_weapon_without_background_254: -2386096691550151107
+      FTL_weapon_without_background_255: -8241280056326821532
+      FTL_weapon_without_background_256: -8292166668697955641
+      FTL_weapon_without_background_257: -595810928345856583
+      FTL_weapon_without_background_258: -7058331778354163272
+      FTL_weapon_without_background_259: 2569189903326579363
+      FTL_weapon_without_background_26: 8636741791016220166
+      FTL_weapon_without_background_260: 888948478942890524
+      FTL_weapon_without_background_261: -3172501242740726353
+      FTL_weapon_without_background_262: -1614360718191004988
+      FTL_weapon_without_background_263: 3829394957198354259
+      FTL_weapon_without_background_264: 8791413999940392588
+      FTL_weapon_without_background_265: 3027671151034825096
+      FTL_weapon_without_background_266: -6240958068514237489
+      FTL_weapon_without_background_267: -7978048696381256145
+      FTL_weapon_without_background_268: -4625775692117589665
+      FTL_weapon_without_background_269: 3805248465860995051
+      FTL_weapon_without_background_27: -8968476571179445588
+      FTL_weapon_without_background_270: -6491330923217958200
+      FTL_weapon_without_background_271: 811922730917587847
+      FTL_weapon_without_background_272: -7645767372161047935
+      FTL_weapon_without_background_273: -2383421388014969043
+      FTL_weapon_without_background_274: -8586716848291126048
+      FTL_weapon_without_background_275: 350708732157743871
+      FTL_weapon_without_background_276: 1376698829356377546
+      FTL_weapon_without_background_277: 8400670800821613751
+      FTL_weapon_without_background_278: 6935431001035293886
+      FTL_weapon_without_background_279: 6900981480867315918
+      FTL_weapon_without_background_28: -8734517919648770833
+      FTL_weapon_without_background_280: 3159680856758643202
+      FTL_weapon_without_background_281: -453226142539891961
+      FTL_weapon_without_background_282: -3263710572210708968
+      FTL_weapon_without_background_283: -325246851
+      FTL_weapon_without_background_29: -6674688460131147008
+      FTL_weapon_without_background_3: -7602412581634508273
+      FTL_weapon_without_background_30: 9191711283006364741
+      FTL_weapon_without_background_31: 6459173122611021399
+      FTL_weapon_without_background_32: -3773132141129977578
+      FTL_weapon_without_background_33: 8847070267665330591
+      FTL_weapon_without_background_34: -5542860714240360921
+      FTL_weapon_without_background_35: 2030251987130425037
+      FTL_weapon_without_background_36: -4680310036466889847
+      FTL_weapon_without_background_37: -6289676440876286136
+      FTL_weapon_without_background_38: -5927413868963985488
+      FTL_weapon_without_background_39: 4248021324911001115
+      FTL_weapon_without_background_4: -8054921990947637509
+      FTL_weapon_without_background_40: -7503024678956118320
+      FTL_weapon_without_background_41: -5997176472836700326
+      FTL_weapon_without_background_42: -5401023346167746619
+      FTL_weapon_without_background_43: 8309115439057017917
+      FTL_weapon_without_background_44: 6006174285718775816
+      FTL_weapon_without_background_45: 4114061473488815302
+      FTL_weapon_without_background_46: 1218107103515501896
+      FTL_weapon_without_background_47: 6792826305529644728
+      FTL_weapon_without_background_48: -6044780523863417700
+      FTL_weapon_without_background_49: 3843930174581811199
+      FTL_weapon_without_background_5: -1980824598122139359
+      FTL_weapon_without_background_50: 3724652330561794220
+      FTL_weapon_without_background_51: -5162737167249366912
+      FTL_weapon_without_background_52: -2164860740132399966
+      FTL_weapon_without_background_53: 3726413059932244566
+      FTL_weapon_without_background_54: 7842347799266449816
+      FTL_weapon_without_background_55: -4603061398104921500
+      FTL_weapon_without_background_56: -4384678745292568860
+      FTL_weapon_without_background_57: -3111365368021575785
+      FTL_weapon_without_background_58: -4732705947202840587
+      FTL_weapon_without_background_59: 5715824391978125794
+      FTL_weapon_without_background_6: 1403914132945108799
+      FTL_weapon_without_background_60: 6098617842021141155
+      FTL_weapon_without_background_61: -1550278081585412003
+      FTL_weapon_without_background_62: 584952165856845504
+      FTL_weapon_without_background_63: -6447731374243006702
+      FTL_weapon_without_background_64: -2776863260680792112
+      FTL_weapon_without_background_65: 5051387415222444900
+      FTL_weapon_without_background_66: 7432694904036203405
+      FTL_weapon_without_background_67: 5054114454238460985
+      FTL_weapon_without_background_68: -7716211410233132022
+      FTL_weapon_without_background_69: -7420286336040520982
+      FTL_weapon_without_background_7: -3514209573006147860
+      FTL_weapon_without_background_70: -3467364336009485351
+      FTL_weapon_without_background_71: -3378465316886091271
+      FTL_weapon_without_background_72: 3625044847911599992
+      FTL_weapon_without_background_73: 7706479270123628278
+      FTL_weapon_without_background_74: -6012216366897875434
+      FTL_weapon_without_background_75: 919230994102199833
+      FTL_weapon_without_background_76: -2899732377545334631
+      FTL_weapon_without_background_77: 2764996199627327001
+      FTL_weapon_without_background_78: 7708959597165293397
+      FTL_weapon_without_background_79: 4395033382988150657
+      FTL_weapon_without_background_8: 7236042144537399005
+      FTL_weapon_without_background_80: 3334476978560420522
+      FTL_weapon_without_background_81: 7120790278724047285
+      FTL_weapon_without_background_82: 4997198426995887255
+      FTL_weapon_without_background_83: 1095554027607786081
+      FTL_weapon_without_background_84: -5799212406558581371
+      FTL_weapon_without_background_85: -2108386306628356880
+      FTL_weapon_without_background_86: 941926898767722214
+      FTL_weapon_without_background_87: -1117491950802149281
+      FTL_weapon_without_background_88: 2438918747856638974
+      FTL_weapon_without_background_89: -7958239997159407057
+      FTL_weapon_without_background_9: -7131764062947398534
+      FTL_weapon_without_background_90: 6765996052960449395
+      FTL_weapon_without_background_91: 6459735430171038469
+      FTL_weapon_without_background_92: 4940086352322045589
+      FTL_weapon_without_background_93: 7333955543219271530
+      FTL_weapon_without_background_94: 3022735837425123201
+      FTL_weapon_without_background_95: -843258984114145228
+      FTL_weapon_without_background_96: -4196219546438376363
+      FTL_weapon_without_background_97: -3687485302241599120
+      FTL_weapon_without_background_98: -8661580010657632055
+      FTL_weapon_without_background_99: -6479933320380760407
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

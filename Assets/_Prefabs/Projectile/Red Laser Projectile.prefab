@@ -130,18 +130,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.ProjectileController
   <Damage>k__BackingField: 1
+  <ShieldDamage>k__BackingField: 1
   <CrewDamage>k__BackingField: 20
-  speed: 10
+  speed: 8
   <StartCol>k__BackingField: {fileID: 0}
   endCol: {fileID: 0}
-  <Target>k__BackingField: {x: 0, y: 0, z: 0}
-  targetRoomId: 0
+  <TargetPos>k__BackingField: {x: 0, y: 0, z: 0}
+  <RandomSeed>k__BackingField: 0
   shipLayer:
     serializedVersion: 2
     m_Bits: 64
   shieldLayer:
     serializedVersion: 2
     m_Bits: 128
+  targetRoomId: 0
   isAfterStartCol: 0
   isMoving: 1
 --- !u!61 &1258286948456330032

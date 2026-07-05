@@ -145,7 +145,7 @@ namespace FTL
             // return false
             if (oppenentShieldSystem.ShieldCount > 0)
             {
-                oppenentShieldSystem.TakeDamageToShield();
+                oppenentShieldSystem.TakeDamageToShield(projectile.ShieldDamage);
                 SetFloatingText(projectile, EDamageType.Shield);
                 return true;
             }

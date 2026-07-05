@@ -161,9 +161,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
   <IsAssisted>k__BackingField: 0
-  projectilePrefab: {fileID: 1379425515071318416, guid: ff24f25d241ce424c86c8ecb1a49d417, type: 3}
+  projectilePrefab: {fileID: 7829847260830507346, guid: d684f7db0f6c9cd46a80f703409f591c, type: 3}
   chargeProgress: 0
-  chargeDuration: 7
+  chargeDuration: 12
   fireDelay: 0.25
   isReady: 0
   prevIsPowered: 0

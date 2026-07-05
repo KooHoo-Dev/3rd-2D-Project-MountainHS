@@ -2,6 +2,6 @@ namespace FTL
 {
     public enum EWeaponType
     {
-        BaseLaser1, BurstLaser2, Missile1
+        BasicLaser1, BurstLaser1,BurstLaser2,BurstLaser3, Missile1
     }
 }

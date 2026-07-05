@@ -29,7 +29,6 @@ namespace FTL
         }
     }
 
-    [RequireComponent(typeof(SpriteRenderer))]
     public class ProjectileController : MonoBehaviour
     {
         public bool IsArrived => transform.position == TargetPos;
@@ -49,7 +48,7 @@ namespace FTL
         [SerializeField] private bool isAfterStartCol = false;
         [SerializeField] private bool isMoving = true;
 
-        private SpriteRenderer renderer;
+        private SpriteRenderer spriteRenderer;
 
         private void Awake()
         {
@@ -57,7 +56,14 @@ namespace FTL
             endCol = null;
             targetRoomId = -1;
             isAfterStartCol = false;
-            renderer = GetComponent<SpriteRenderer>();
+            if (TryGetComponent<SpriteRenderer>(out spriteRenderer) == false)
+            {
+                if (transform.GetChild(0).TryGetComponent<SpriteRenderer>(out spriteRenderer) == false)
+                {
+                    Debug.LogError("ProjectileController: SpriteRenderer component is missing. must be in Prefab root or child.");
+                    return;
+                }
+            }
         }
 
         private void Update()
@@ -167,10 +173,10 @@ namespace FTL
             float lerpRate = Mathf.InverseLerp(MAX_SPEED, MIN_SPEED, speed);
             // 목표 시간: 0.5 ~ 2
             float delayTime = Mathf.Lerp(MIN_TIME, MAX_TIME, lerpRate);
-            renderer.enabled = false;
+            spriteRenderer.enabled = false;
 
             yield return new WaitForSeconds(delayTime);
-            renderer.enabled = true;
+            spriteRenderer.enabled = true;
             isMoving = true;
         }
     }

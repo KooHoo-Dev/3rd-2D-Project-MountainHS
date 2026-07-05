@@ -104,6 +104,20 @@ namespace FTL
             shieldCount--;
         }
 
+        public int TakeDamageToShield(int amount)
+        {
+            int newShieldCount = Mathf.Max(0, shieldCount - amount);
+            int realDamage = shieldCount - newShieldCount;
+            if (shieldCount == 0)
+            {
+                Debug.Log("ShieldCount is zero, damage to Hull");
+                return -1;
+            }
+
+            shieldCount -= realDamage;
+            return realDamage;
+        }
+
 
     }
 }

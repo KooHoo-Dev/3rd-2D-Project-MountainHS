@@ -755,7 +755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ddf885e28e6d4c4facf22f0460c1068, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.EnemyController
-  <WeaponTypes>k__BackingField: 010000000100000001000000
+  <WeaponTypes>k__BackingField: 00000000000000000000000000000000
   weaponChargeStatusPrefab: {fileID: 989575095297274148, guid: aaa42232579ab2d42b73dc996c4002c0, type: 3}
   weaponTransformList:
   - <WeaponOffset>k__BackingField: {x: 2, y: -1.5, z: 0}
@@ -3606,7 +3606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 781044405423442ab2ced773cae2c571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.PlayerSystem
-  <WeaponTypes>k__BackingField: 0100000001000000
+  <WeaponTypes>k__BackingField: 0300000000000000
   weaponChargeStatusPrefab: {fileID: 989575095297274148, guid: aaa42232579ab2d42b73dc996c4002c0, type: 3}
   weaponTransformList:
   - <WeaponOffset>k__BackingField: {x: 1.5, y: 1, z: 0}
@@ -4256,6 +4256,10 @@ PrefabInstance:
     - target: {fileID: 5444768094151187083, guid: 5dc2b581dd5fa1c4590e18a16aee8941, type: 3}
       propertyPath: m_TagString
       value: EnemyShip
+      objectReference: {fileID: 0}
+    - target: {fileID: 7183629645037882104, guid: 5dc2b581dd5fa1c4590e18a16aee8941, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
