@@ -115,9 +115,14 @@ namespace FTL
 
                 Room room = rooms[roomIndex];
                 if (isAsteroidStage)
+                {
                     SpawnAsteroidAttack(room, startCol, endCol);
+                }
                 else if (isSunStage)
+                {
                     ship.TakeDamageToRoom(roomDamage, crewDamage, room.Id);
+                    CombatSystem.Instance.SetFloatingText(room, EDamageType.Room, roomDamage);
+                }
             }
         }
 

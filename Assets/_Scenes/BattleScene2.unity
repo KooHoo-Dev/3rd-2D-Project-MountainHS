@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 80255553}
   m_Layer: 0
   m_Name: Room Group
-  m_TagString: Untagged
+  m_TagString: Room Group
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1411,6 +1411,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 194710679}
     - target: {fileID: 7313487476208549096, guid: 7d3deb80250fa8743a224af800aa4c55, type: 3}
+      propertyPath: isEnemy
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7313487476208549096, guid: 7d3deb80250fa8743a224af800aa4c55, type: 3}
       propertyPath: reactorSystem
       value: 
       objectReference: {fileID: 194710679}
@@ -2250,7 +2254,7 @@ GameObject:
   - component: {fileID: 703501533}
   m_Layer: 0
   m_Name: Crew Group
-  m_TagString: Untagged
+  m_TagString: Crew Group
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2394,6 +2398,10 @@ PrefabInstance:
       propertyPath: ship
       value: 
       objectReference: {fileID: 194710680}
+    - target: {fileID: 8734471271323035388, guid: 0fa77c8ddec48d649babb532462aaecb, type: 3}
+      propertyPath: isEnemy
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8734471271323035388, guid: 0fa77c8ddec48d649babb532462aaecb, type: 3}
       propertyPath: playerSystem
       value: 
@@ -2634,7 +2642,7 @@ GameObject:
   - component: {fileID: 850063298}
   m_Layer: 0
   m_Name: Weapon Group
-  m_TagString: Untagged
+  m_TagString: Weapon Group
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4697,9 +4705,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 1491522296}
     m_Modifications:
     - target: {fileID: 3970829046710834215, guid: 686557181a17823428dbf8f37e383dc7, type: 3}
+      propertyPath: isEnemy
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3970829046710834215, guid: 686557181a17823428dbf8f37e383dc7, type: 3}
       propertyPath: assistImage
       value: 
       objectReference: {fileID: 1377803122}
+    - target: {fileID: 3970829046710834215, guid: 686557181a17823428dbf8f37e383dc7, type: 3}
+      propertyPath: facilityType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3970829046710834215, guid: 686557181a17823428dbf8f37e383dc7, type: 3}
       propertyPath: facilitySystem
       value: 
@@ -4789,9 +4805,17 @@ PrefabInstance:
       value: 131
       objectReference: {fileID: 0}
     - target: {fileID: 5465445680502806130, guid: 686557181a17823428dbf8f37e383dc7, type: 3}
+      propertyPath: isEnemy
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5465445680502806130, guid: 686557181a17823428dbf8f37e383dc7, type: 3}
       propertyPath: assistImage
       value: 
       objectReference: {fileID: 1428349916}
+    - target: {fileID: 5465445680502806130, guid: 686557181a17823428dbf8f37e383dc7, type: 3}
+      propertyPath: facilityType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5465445680502806130, guid: 686557181a17823428dbf8f37e383dc7, type: 3}
       propertyPath: facilitySystem
       value: 
@@ -4925,9 +4949,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2013749297}
     - target: {fileID: 8063106063177134070, guid: 686557181a17823428dbf8f37e383dc7, type: 3}
+      propertyPath: isEnemy
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8063106063177134070, guid: 686557181a17823428dbf8f37e383dc7, type: 3}
       propertyPath: assistImage
       value: 
       objectReference: {fileID: 1041205599}
+    - target: {fileID: 8063106063177134070, guid: 686557181a17823428dbf8f37e383dc7, type: 3}
+      propertyPath: facilityType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8063106063177134070, guid: 686557181a17823428dbf8f37e383dc7, type: 3}
       propertyPath: facilitySystem
       value: 

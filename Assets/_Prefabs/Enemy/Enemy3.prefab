@@ -475,11 +475,11 @@ MonoBehaviour:
   <IsAssisted>k__BackingField: 0
   <RepairDuration>k__BackingField: 7.5
   <RepairProgress>k__BackingField: 0
-  <MaxPowerLimit>k__BackingField: 3
+  <MaxPowerLimit>k__BackingField: 6
   TotalDamage: 0
   Power: 0
   type: 2
-  maxPower: 8
+  maxPower: 7
   maxShield: 0
   shieldCount: 0
   chargeDuration: 3
@@ -524,7 +524,7 @@ MonoBehaviour:
   <IsAssisted>k__BackingField: 0
   <RepairDuration>k__BackingField: 7.5
   <RepairProgress>k__BackingField: 0
-  <MaxPowerLimit>k__BackingField: 3
+  <MaxPowerLimit>k__BackingField: 6
   TotalDamage: 0
   Power: 0
   type: 0

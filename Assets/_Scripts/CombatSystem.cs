@@ -241,6 +241,32 @@ namespace FTL
 
         }
 
+        public void SetFloatingText(ProjectileController projectile, EDamageType type)
+        {
+            GameObject floatingTextObject = floatingTextPool.Get();
+            FloatingTextController floatingText = floatingTextObject.GetComponent<FloatingTextController>();
+            Color color = type.GetColorFromDamageType();
+
+            floatingText.transform.SetParent(floatingTextGroupTransform);
+            floatingTextObject.transform.position = projectile.transform.position;
+            floatingText.SetText($"{type.GetDamageFromDamageType(projectile)}");
+            floatingText.SetTextColor(color);
+        }
+
+        public void SetFloatingText(Room room, EDamageType type, int damage)
+        {
+            GameObject floatingTextObject = floatingTextPool.Get();
+            FloatingTextController floatingText = floatingTextObject.GetComponent<FloatingTextController>();
+            Color color = type.GetColorFromDamageType();
+
+            floatingText.transform.SetParent(floatingTextGroupTransform);
+            floatingTextObject.transform.position = room.GlobalPosition;
+            floatingText.SetText($"{damage}");
+            floatingText.SetTextColor(color);
+        }
+
+
+
         #endregion
 
         #region Private Method
@@ -287,18 +313,6 @@ namespace FTL
         private void OnDestroyExplosion(GameObject explosion)
         {
             Destroy(explosion);
-        }
-
-        private void SetFloatingText(ProjectileController projectile, EDamageType type)
-        {
-            GameObject floatingTextObject = floatingTextPool.Get();
-            FloatingTextController floatingText = floatingTextObject.GetComponent<FloatingTextController>();
-            Color color = type.GetColorFromDamageType();
-
-            floatingText.transform.SetParent(floatingTextGroupTransform);
-            floatingTextObject.transform.position = projectile.transform.position;
-            floatingText.SetText($"{type.GetDamageFromDamageType(projectile)}");
-            floatingText.SetTextColor(color);
         }
 
         private Vector3 GetRandomPositionOnColliderEdge(Collider2D col, float z, float seed)

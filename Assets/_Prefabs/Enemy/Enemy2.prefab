@@ -524,7 +524,7 @@ MonoBehaviour:
   <IsAssisted>k__BackingField: 0
   <RepairDuration>k__BackingField: 7.5
   <RepairProgress>k__BackingField: 0
-  <MaxPowerLimit>k__BackingField: 3
+  <MaxPowerLimit>k__BackingField: 4
   TotalDamage: 0
   Power: 0
   type: 0
