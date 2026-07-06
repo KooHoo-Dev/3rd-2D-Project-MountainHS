@@ -19,6 +19,7 @@ namespace FTL
 
         [Header("Asteroid Object")]
         [SerializeField] private GameObject asteroidAttackPrefab;
+        [SerializeField] private SolarFlareController solarFlareController;
         [SerializeField] private Transform asteroidGroupTransform;
         [SerializeField] private float asteroidLifetime = 1.5f;
         [SerializeField] private bool isAsteroidStage = false;
@@ -66,8 +67,25 @@ namespace FTL
         {
             while (true)
             {
-                yield return new WaitForSeconds(effectInterval);
-                ApplyEnvironmentEffect();
+                if (GameManager.Instance.CanRunCombat == false)
+                {
+                    StopEnvironmentEffects();
+                    break;
+                }
+
+                if (isSunStage)
+                {
+                    float solarFlareDuration = solarFlareController.FlareDuration;
+                    yield return new WaitForSeconds(effectInterval-solarFlareDuration);
+                    solarFlareController.ApplyFlareEffect();
+                    yield return new WaitForSeconds(solarFlareDuration);
+                    ApplyEnvironmentEffect();
+                }
+                else
+                {
+                    yield return new WaitForSeconds(effectInterval);
+                    ApplyEnvironmentEffect();
+                }
             }
         }
 
@@ -108,7 +126,6 @@ namespace FTL
             int roomHitCount = Random.Range(minHitCount, maxHitCount + 1);
             roomHitCount = Mathf.Clamp(roomHitCount, 1, rooms.Count);
 
-            List<int> selectedIndexes = new List<int>();
             for (int i = 0; i < roomHitCount; i++)
             {
                 int roomIndex = Random.Range(0, rooms.Count);

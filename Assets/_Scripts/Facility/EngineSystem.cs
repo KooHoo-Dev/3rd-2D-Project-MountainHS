@@ -24,6 +24,11 @@ namespace FTL
 
         private void Update()
         {
+            if (CanRunFacilityLogic() == false)
+            {
+                return;
+            }
+
             UpdateEscapeCharge();
             UpdateCanEscape();
             prevPower = Power;

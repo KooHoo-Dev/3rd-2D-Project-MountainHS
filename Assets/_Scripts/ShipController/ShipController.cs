@@ -12,6 +12,7 @@ namespace FTL
         private const float DEAD_ANIMATION_TIME = 5f;
 
         public bool IsDead => Hp == 0;
+        public bool IsCombatStopped => isCombatStopped;
         public ShipOwnership Ownership { get; private set; }
         [Header("Start Weapon Types")]
         [field: SerializeField] public List<EWeaponType> WeaponTypes { get; private set; } = new List<EWeaponType>();
@@ -47,6 +48,7 @@ namespace FTL
         protected WeaponSystem weaponSystem;
         protected bool isDeadCoroutineActivated;
         protected bool isShipInitialized;
+        private bool isCombatStopped;
 
         protected virtual void Awake()
         {
@@ -87,6 +89,7 @@ namespace FTL
             weaponGroupTransform = FindDirectChildWithTag(transform, "Weapon Group").transform;
             isDeadCoroutineActivated = false;
             isShipInitialized = false;
+            isCombatStopped = false;
         }
 
         private void TryInitializeShip(bool shouldLogError)
@@ -215,7 +218,7 @@ namespace FTL
 
         protected void HandlePowerInput(ERoomType facilityType, bool isRecoverInput)
         {
-            if (IsDead)
+            if (CanControlShip() == false)
             {
                 return;
             }
@@ -335,6 +338,8 @@ namespace FTL
                 return;
             }
 
+            StopCombatFunctions();
+
             if (crewSystem.IsAllCrewDead)
             {
                 battleResult = (Ownership.ShipSide == EShipSide.Player)
@@ -348,7 +353,18 @@ namespace FTL
                     : EBattleResult.EnemyShipDestroyed;
             }
 
+            GameManager.Instance.StopBattle();
+
             StartCoroutine(DeadCoroutine(DEAD_ANIMATION_TIME, battleResult));
+        }
+
+        public void StopCombatFunctions()
+        {
+            isCombatStopped = true;
+            if (weaponSystem != null)
+            {
+                weaponSystem.ResetSelectedWeapon();
+            }
         }
 
         private GameObject FindDirectChildWithTag(Transform parent, string tag)
@@ -375,7 +391,7 @@ namespace FTL
 
         public void RequestAllocatePower(ERoomType facilityType)
         {
-            if (IsDead)
+            if (CanControlShip() == false)
             {
                 return;
             }
@@ -385,12 +401,19 @@ namespace FTL
 
         public void RequestDeallocatePower(ERoomType facilityType)
         {
-            if (IsDead)
+            if (CanControlShip() == false)
             {
                 return;
             }
 
             PowerSystem.TryDeallocatePower(facilityType);
+        }
+
+        protected bool CanControlShip()
+        {
+            return IsDead == false &&
+                IsCombatStopped == false &&
+                GameManager.Instance.CanRunCombat;
         }
 
         public virtual IEnumerator DeadCoroutine(float seconds, EBattleResult result)

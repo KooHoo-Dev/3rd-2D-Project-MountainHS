@@ -29,6 +29,11 @@ namespace FTL
 
         private void Update()
         {
+            if (CanRunFacilityLogic() == false)
+            {
+                return;
+            }
+
             SetMaxShieldCountByPower(Power);
             UpdateShield();
         }

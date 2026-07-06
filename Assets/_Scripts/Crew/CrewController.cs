@@ -28,6 +28,11 @@ namespace FTL
 
         private void Update()
         {
+            if (CrewSystem == null || CrewSystem.CanRunCrewLogic() == false)
+            {
+                return;
+            }
+
             UpdateCrewStatus();
             HandleStatus();
         }

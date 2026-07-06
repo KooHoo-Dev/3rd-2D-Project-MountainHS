@@ -35,6 +35,17 @@ namespace FTL
 
         private void Update()
         {
+            if (SimpleInput.GetKeyDown(Key.Escape))
+            {
+                weaponSystem.ResetSelectedWeapon();
+                crewSystem.ResetSelectedCrews();
+            }
+
+            if (CanControlShip() == false)
+            {
+                return;
+            }
+
             bool isShiftPressed = SimpleInput.GetKey(Key.LeftShift) || SimpleInput.GetKey(Key.RightShift);
 
             TestHandleFacilityPower(isShiftPressed);
@@ -50,12 +61,6 @@ namespace FTL
             {
                 // 무기 시스템의 선택한 무기를 1번 무기로 교체
                 weaponSystem.SetSelectedWeapon(1);
-            }
-
-            if (SimpleInput.GetKeyDown(Key.Escape))
-            {
-                weaponSystem.ResetSelectedWeapon();
-                crewSystem.ResetSelectedCrews();
             }
 
             // 사용자 클릭 정보 리턴
@@ -161,6 +166,7 @@ namespace FTL
             else
             {
                 crewSystem.ResetSelectedCrews();
+                weaponSystem.ResetSelectedWeapon();
             }
         }
 

@@ -18,6 +18,9 @@ namespace FTL
         private const string BATTLE_PREPARE = "BattlePrepare";
 
         public bool IsGameContextEmpty => gameContext == null || gameContext.IsEmpty;
+        public bool IsCombatPaused => isCombatPaused;
+        public bool IsBattleStopped => isBattleStopped;
+        public bool CanRunCombat => isCombatPaused == false && isBattleStopped == false;
         public PlayerController Player;
         [field: SerializeField] public EBattleResult BattleResult { get; set; }
 
@@ -26,6 +29,8 @@ namespace FTL
         [SerializeField] private GameObject toggleMenuObject;
         [SerializeField] private GameContext gameContext;
         private MainUIController mainUIController;
+        private bool isCombatPaused;
+        private bool isBattleStopped;
 
         private void Start()
         {
@@ -48,10 +53,9 @@ namespace FTL
             if (SimpleInput.GetKeyDown(Key.Escape))
             {
                 string sceneName = SceneManager.GetActiveScene().name;
-                if (sceneName == BATTLE_PREPARE || sceneName == BATTLE_SCENE)
+                if (sceneName == BATTLE_PREPARE || IsBattleScene(sceneName))
                 {
-                    bool isToggleMenuActive = toggleMenuObject.activeSelf;
-                    toggleMenuObject.SetActive(!isToggleMenuActive);
+                    ToggleMenu(sceneName);
                 }
             }
         }
@@ -68,6 +72,8 @@ namespace FTL
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
         {
+            isBattleStopped = false;
+            SetCombatPaused(false);
             InitUIObject();
             CursorController.Instance.ResetMouseSprite();
             if (scene.name == BATTLE_SCENE)
@@ -119,6 +125,7 @@ namespace FTL
 
         public void HandleBattleResult(EBattleResult battleResult)
         {
+            StopBattle();
             // 함선이 파괴되면
             switch (battleResult)
             {
@@ -191,6 +198,59 @@ namespace FTL
         public void PlayerRun()
         {
             HandleBattleResult(EBattleResult.PlayerRun);
+        }
+
+        public void SetCombatPaused(bool isPaused)
+        {
+            if (isBattleStopped && isPaused)
+            {
+                return;
+            }
+
+            isCombatPaused = isPaused;
+            Time.timeScale = isPaused ? 0f : 1f;
+        }
+
+        public void StopBattle()
+        {
+            isBattleStopped = true;
+            if (toggleMenuObject != null)
+            {
+                toggleMenuObject.SetActive(false);
+            }
+
+            SetCombatPaused(false);
+        }
+
+        private void ToggleMenu(string sceneName)
+        {
+            if (isBattleStopped)
+            {
+                return;
+            }
+
+            if (toggleMenuObject == null)
+            {
+                Debug.LogError("GameManager: toggleMenuObject is not assigned.");
+                return;
+            }
+
+            bool isToggleMenuActive = toggleMenuObject.activeSelf;
+            bool shouldOpenMenu = isToggleMenuActive == false;
+            toggleMenuObject.SetActive(shouldOpenMenu);
+
+            if (IsBattleScene(sceneName))
+            {
+                SetCombatPaused(shouldOpenMenu);
+            }
+        }
+
+        private bool IsBattleScene(string sceneName)
+        {
+            return sceneName == BATTLE_SCENE ||
+                sceneName == BATTLE_SCENE1 ||
+                sceneName == BATTLE_SCENE2 ||
+                sceneName == BATTLE_SCENE3;
         }
 
         //public void SetGameContext(List<Room> rooms, List<FacilitySystem> facilities, List<CrewController> crews, int shipHp, int shipMaxHp, int scrapAmount, int shipReactorCapacity, int shipPower)
@@ -382,7 +442,12 @@ namespace FTL
 
         public void TurnOffToggleMenu()
         {
-            toggleMenuObject.SetActive(false);
+            if (toggleMenuObject != null)
+            {
+                toggleMenuObject.SetActive(false);
+            }
+
+            SetCombatPaused(false);
         }
 
         public void ReduceScrap(int v)
