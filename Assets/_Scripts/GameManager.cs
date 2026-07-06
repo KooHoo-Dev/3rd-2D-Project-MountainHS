@@ -16,7 +16,7 @@ namespace FTL
         private const string BATTLE_SCENE2 = "BattleScene2";
         private const string BATTLE_SCENE3 = "BattleScene3";
         private const string BATTLE_PREPARE = "BattlePrepare";
-        private const string VICTORY_SCENE = "VictoryScene";
+        private const string VICTORY_SCENE = "Victory";
 
         public bool IsGameContextEmpty => gameContext == null || gameContext.IsEmpty;
         public bool IsCombatPaused => isCombatPaused;

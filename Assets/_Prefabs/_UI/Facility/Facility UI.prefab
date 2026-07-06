@@ -317,8 +317,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6002897794513953251}
   - {fileID: 4128751070600332259}
+  - {fileID: 6002897794513953251}
   - {fileID: 3908607325415634083}
   - {fileID: 5681528602035887667}
   m_Father: {fileID: 0}
@@ -347,7 +347,8 @@ MonoBehaviour:
   facilityIcon: {fileID: 8276855172059264865}
   assistIcon: {fileID: 573394896232456623}
   iconText: {fileID: 2134123620619634493}
-  contextFacilityType: 0
+  facilityType: -1
+  isEnemy: 0
 --- !u!1001 &1218317798359183097
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -3196,7 +3196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 781044405423442ab2ced773cae2c571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.PlayerSystem
-  <WeaponTypes>k__BackingField: 0300000000000000
+  <WeaponTypes>k__BackingField: 0200000002000000
   weaponChargeStatusPrefab: {fileID: 989575095297274148, guid: aaa42232579ab2d42b73dc996c4002c0, type: 3}
   weaponTransformList:
   - <WeaponOffset>k__BackingField: {x: 1.5, y: 1, z: 0}
@@ -3256,6 +3256,7 @@ MonoBehaviour:
   targetData:
     TargetPosition: {x: 0, y: 0, z: 0}
     RoomId: 0
+  chargeSpeedMultiplier: 0
 --- !u!114 &1051567091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3271,7 +3272,7 @@ MonoBehaviour:
   <IsAssisted>k__BackingField: 0
   <RepairDuration>k__BackingField: 7.5
   <RepairProgress>k__BackingField: 0
-  <MaxPowerLimit>k__BackingField: 8
+  <MaxPowerLimit>k__BackingField: 5
   TotalDamage: 0
   Power: 0
   type: 2
@@ -4232,7 +4233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38fa89bbab2049848bb1841c3e1190b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.StageEnvironmentController
-  effectInterval: 3
+  effectInterval: 6
   minRoomHitCount: 1
   maxRoomHitCount: 3
   roomDamage: 1

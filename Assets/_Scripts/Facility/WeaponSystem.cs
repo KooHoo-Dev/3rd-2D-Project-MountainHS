@@ -10,6 +10,7 @@ namespace FTL
         [SerializeField] private WeaponController selectedWeapon;
         [SerializeField] private List<GameObject> targetSpriteObjects;
         [SerializeField] private ProjectileTargetData targetData;
+        [SerializeField] private float chargeSpeedMultiplier = 0f;
         public ITargeting TargetingSystem { get; set; }
 
         protected override void Awake()
@@ -87,6 +88,7 @@ namespace FTL
             if (weapons.Count > 0)
             {
                 float chargeSpeedMultiplier = GetChargeSpeedMultiplierByPower();
+                this.chargeSpeedMultiplier = chargeSpeedMultiplier;
                 if (IsPowered)
                 {
                     for (int i = 0; i < weapons.Count; i++)
