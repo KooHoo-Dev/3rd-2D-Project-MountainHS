@@ -20,6 +20,7 @@ namespace FTL
         [field: SerializeField] public int ShipPower { get; private set; }
         [field: SerializeField] public int ReactorUpgradeCount { get; private set; }
         [field: SerializeField] public List<EWeaponType> WeaponTypes { get; private set; } = new List<EWeaponType>();
+        [field: SerializeField] public EEnemyType EnemyType { get; private set; } = EEnemyType.None;
 
         public GameContext(List<Room> rooms, List<FacilityState> facilities, List<CrewState> crews, int scrapAmount, int shipHp, int shipMaxHp, int shipReactorCapacity, int shipPower)
         {
@@ -143,6 +144,11 @@ namespace FTL
         public void AddScrap(int v)
         {
             ScrapAmount += v;
+        }
+
+        public void SetEnemyType(EEnemyType enemyType)
+        {
+            EnemyType = enemyType;
         }
     }
 }

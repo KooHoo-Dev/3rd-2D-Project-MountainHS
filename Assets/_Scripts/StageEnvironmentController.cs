@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace FTL
 {
-    public class StageEnvironmentController : MonoBehaviour
+    public class EnvironmentController : MonoBehaviour
     {
         [Header("Timing")]
         [SerializeField] private float effectInterval = 10f;
@@ -21,14 +21,14 @@ namespace FTL
         [SerializeField] private GameObject asteroidAttackPrefab;
         [SerializeField] private Transform asteroidGroupTransform;
         [SerializeField] private float asteroidLifetime = 1.5f;
+        [SerializeField] private bool isAsteroidStage = false;
+        [SerializeField] private bool isSunStage = false;
 
-        private CombatSystem combatSystem;
         private Coroutine environmentCoroutine;
         private bool hasLoggedMissingAsteroidPrefab;
 
-        public void InitStageEnvironment(CombatSystem combatSystem)
+        public void InitStageEnvironment()
         {
-            this.combatSystem = combatSystem;
             hasLoggedMissingAsteroidPrefab = false;
             StartEnvironmentEffects();
         }
@@ -41,12 +41,6 @@ namespace FTL
         private void StartEnvironmentEffects()
         {
             StopEnvironmentEffects();
-
-            if (combatSystem == null)
-            {
-                Debug.LogError("StageEnvironmentController: CombatSystem is not assigned.");
-                return;
-            }
 
             if (effectInterval <= 0f)
             {
@@ -79,6 +73,7 @@ namespace FTL
 
         private void ApplyEnvironmentEffect()
         {
+            CombatSystem combatSystem = CombatSystem.Instance;
             if (applyToPlayer)
             {
                 ApplyEnvironmentEffectToShip(combatSystem.GetShip(EShipSide.Player));
@@ -104,6 +99,10 @@ namespace FTL
                 return;
             }
 
+            EShipSide startShipSide = ship.Ownership.ShipSide;
+            EShipSide endShipSide = CombatSystem.Instance.GetOpponentShipSide(startShipSide);
+            Collider2D startCol = CombatSystem.Instance.GetColliderByShipSide(endShipSide);
+            Collider2D endCol = CombatSystem.Instance.GetColliderByShipSide(startShipSide);
             int minHitCount = Mathf.Max(1, minRoomHitCount);
             int maxHitCount = Mathf.Max(minHitCount, maxRoomHitCount);
             int roomHitCount = Random.Range(minHitCount, maxHitCount + 1);
@@ -112,12 +111,13 @@ namespace FTL
             List<int> selectedIndexes = new List<int>();
             for (int i = 0; i < roomHitCount; i++)
             {
-                int roomIndex = GetRandomRoomIndex(rooms.Count, selectedIndexes);
-                selectedIndexes.Add(roomIndex);
+                int roomIndex = Random.Range(0, rooms.Count);
 
                 Room room = rooms[roomIndex];
-                SpawnAsteroidAttack(room);
-                ship.TakeDamageToRoom(roomDamage, crewDamage, room.Id);
+                if (isAsteroidStage)
+                    SpawnAsteroidAttack(room, startCol, endCol);
+                else if (isSunStage)
+                    ship.TakeDamageToRoom(roomDamage, crewDamage, room.Id);
             }
         }
 
@@ -143,7 +143,7 @@ namespace FTL
             return 0;
         }
 
-        private void SpawnAsteroidAttack(Room room)
+        private void SpawnAsteroidAttack(Room room, Collider2D startCol, Collider2D endCol)
         {
             if (asteroidAttackPrefab == null)
             {
@@ -157,10 +157,25 @@ namespace FTL
             }
 
             GameObject asteroidObject = Instantiate(asteroidAttackPrefab, room.GlobalPosition, Quaternion.identity, asteroidGroupTransform);
-            if (asteroidLifetime > 0f)
-            {
-                Destroy(asteroidObject, asteroidLifetime);
-            }
+            ProjectileController projectile = asteroidObject.GetComponent<ProjectileController>();
+            ProjectileTargetData targetData;
+            float seed = Random.Range(0f, 4f);
+
+            targetData.TargetPosition = room.GlobalPosition;
+            targetData.RoomId = room.Id;
+            projectile.SetIsAfterStartCol(true);
+            projectile.SetTarget(targetData);
+            projectile.SetStartCol(startCol);
+            projectile.SetEndCol(endCol);
+            projectile.SetIsMoving(true);
+
+            seed = seed == 4f ? 0f : seed;
+            projectile.SetRandomSeed(seed);
+            CombatSystem.Instance.MoveToEnemyArea(startCol, projectile);
+            //if (asteroidLifetime > 0f)
+            //{
+            //    Destroy(asteroidObject, asteroidLifetime);
+            //}
         }
     }
 }

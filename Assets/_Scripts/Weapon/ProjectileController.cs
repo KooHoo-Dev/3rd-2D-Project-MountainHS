@@ -5,30 +5,6 @@ using Utilities;
 
 namespace FTL
 {
-    [Serializable]
-    public struct ProjectileTargetData
-    {
-        public Vector3 TargetPosition;
-        public int RoomId;
-
-        public ProjectileTargetData(Vector3 targetPosition, int roomId)
-        {
-            TargetPosition = targetPosition;
-            RoomId = roomId;
-        }
-
-        public void Reset()
-        {
-            TargetPosition = Vector3.zero;
-            RoomId = -1;
-        }
-
-        public bool IsValid()
-        {
-            return TargetPosition != Vector3.zero && RoomId >= 0;
-        }
-    }
-
     public class ProjectileController : MonoBehaviour
     {
         public bool IsArrived => transform.position == TargetPos;
@@ -38,14 +14,14 @@ namespace FTL
         [field: SerializeField] public int CrewDamage { get; private set; }
         [SerializeField] private float speed;
         [field: SerializeField] public Collider2D StartCol { get; private set; }
-        [SerializeField] private Collider2D endCol;
         [field: SerializeField] public Vector3 TargetPos { get; private set; } = Vector3.zero;
         [field: SerializeField] public float RandomSeed { get; private set; } = 0f;
+        [field: SerializeField] public bool IsAfterStartCol { get; private set; } = false;
 
+        [SerializeField] private Collider2D endCol;
         [SerializeField] private LayerMask shipLayer;
         [SerializeField] private LayerMask shieldLayer;
         [SerializeField] private int targetRoomId;
-        [SerializeField] private bool isAfterStartCol = false;
         [SerializeField] private bool isMoving = true;
 
         private SpriteRenderer spriteRenderer;
@@ -55,7 +31,7 @@ namespace FTL
             StartCol = null;
             endCol = null;
             targetRoomId = -1;
-            isAfterStartCol = false;
+            IsAfterStartCol = false;
             if (TryGetComponent<SpriteRenderer>(out spriteRenderer) == false)
             {
                 if (transform.GetChild(0).TryGetComponent<SpriteRenderer>(out spriteRenderer) == false)
@@ -82,7 +58,7 @@ namespace FTL
 
             if (isMoving)
             {
-                if (isAfterStartCol == false)
+                if (IsAfterStartCol == false)
                 {
                     Vector3 moveAmount = Vector3.right * speed * Time.deltaTime;
                     transform.Translate(moveAmount);
@@ -102,9 +78,24 @@ namespace FTL
             targetRoomId = targetData.RoomId;
         }
 
+        public void SetStartCol(Collider2D startCol)
+        {
+            StartCol = startCol;
+        }
+
         public void SetEndCol(Collider2D endCol)
         {
             this.endCol = endCol;
+        }
+
+        public void SetIsAfterStartCol(bool isAfterStartCol)
+        {
+            IsAfterStartCol = isAfterStartCol;
+        }
+
+        public void SetIsMoving(bool isMoving)
+        {
+            this.isMoving = isMoving;
         }
 
         public void SetRandomSeed(float seed)
@@ -127,7 +118,7 @@ namespace FTL
 
             // 충돌한 콜라이더가 실드 레이어 && 태그가 enemyTag라면
             bool isShieldLayer = shieldLayer.Contains(collision.gameObject.layer);
-            bool canHitShield = isAfterStartCol && isShieldLayer;
+            bool canHitShield = IsAfterStartCol && isShieldLayer;
             if (canHitShield)
             {
                 // 전투 시스템 호출
@@ -148,7 +139,7 @@ namespace FTL
             {
                 // 전투 시스템 호출
                 CombatSystem.Instance.MoveToEnemyArea(StartCol, this);
-                isAfterStartCol = true;
+                IsAfterStartCol = true;
                 isMoving = false;
                 StartCoroutine(SetProjectileDelay());
             }

@@ -219,6 +219,28 @@ namespace FTL
             return explosionObject;
         }
 
+        public EShipSide GetOpponentShipSide(EShipSide startSide)
+        {
+            if (startSide == EShipSide.Player)
+                return EShipSide.Enemy0;
+
+            return EShipSide.Player;
+        }
+
+        public Collider2D GetColliderByShipSide(EShipSide shipSide)
+        {
+            if (shipSideToColDict.TryGetValue(shipSide, out Collider2D col))
+            {
+                return col;
+            }
+            else
+            {
+                Debug.LogError($"CombatSystem: No collider found for ship side {shipSide}.");
+                return null;
+            }
+
+        }
+
         #endregion
 
         #region Private Method

@@ -21,6 +21,16 @@ namespace FTL
                 return null;
             }
 
+            if (enemyType == EEnemyType.None)
+            {
+                return null;
+            }
+
+            if (enemyType == EEnemyType.Random)
+            {
+                return GetRandomPrefab();
+            }
+
             for (int i = 0; i < entries.Length; i++)
             {
                 if (entries[i] == null)

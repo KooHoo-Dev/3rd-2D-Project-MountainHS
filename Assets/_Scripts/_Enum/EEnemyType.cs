@@ -2,8 +2,10 @@ namespace FTL
 {
     public enum EEnemyType
     {
-        Enemy1,
-        Enemy1_1,
-        Enemy1_2
+        None = -2,
+        Random = -1,
+        Enemy1 = 0,
+        Enemy2,
+        Enemy3
     }
 }

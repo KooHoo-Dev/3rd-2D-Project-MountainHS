@@ -12,15 +12,19 @@ namespace FTL
     public class GameManager : SingletonBase<GameManager>
     {
         private const string BATTLE_SCENE = "BattleScene";
+        private const string BATTLE_SCENE1 = "BattleScene1";
+        private const string BATTLE_SCENE2 = "BattleScene2";
+        private const string BATTLE_SCENE3 = "BattleScene3";
         private const string BATTLE_PREPARE = "BattlePrepare";
 
         public bool IsGameContextEmpty => gameContext == null || gameContext.IsEmpty;
         public PlayerController Player;
         [field: SerializeField] public EBattleResult BattleResult { get; set; }
 
+        [field: SerializeField] public EnemyDatabase EnemyDatabase { get; private set; }
+        [field: SerializeField] public WeaponDatabase WeaponDatabase { get; private set; }
         [SerializeField] private GameObject toggleMenuObject;
         [SerializeField] private GameContext gameContext;
-        [field: SerializeField] public WeaponDatabase WeaponDatabase { get; private set; }
         private MainUIController mainUIController;
 
         private void Start()
@@ -68,8 +72,41 @@ namespace FTL
             CursorController.Instance.ResetMouseSprite();
             if (scene.name == BATTLE_SCENE)
             {
+                EEnemyType enemyType = EEnemyType.Random;
                 SceneBinder sceneBinder = FindFirstObjectByType<SceneBinder>();
                 BackgroundController backgroundController = FindFirstObjectByType<BackgroundController>();
+
+                gameContext.SetEnemyType(enemyType);
+                sceneBinder.BindSceneObjects(gameContext);
+                backgroundController.SetRandomBackground();
+            }
+            else if (scene.name == BATTLE_SCENE1)
+            {
+                EEnemyType enemyType = EEnemyType.Enemy1;
+                SceneBinder sceneBinder = FindFirstObjectByType<SceneBinder>();
+                BackgroundController backgroundController = FindFirstObjectByType<BackgroundController>();
+
+                gameContext.SetEnemyType(enemyType);
+                sceneBinder.BindSceneObjects(gameContext);
+                backgroundController.SetRandomBackground();
+            }
+            else if (scene.name == BATTLE_SCENE2)
+            {
+                EEnemyType enemyType = EEnemyType.Enemy2;
+                SceneBinder sceneBinder = FindFirstObjectByType<SceneBinder>();
+                BackgroundController backgroundController = FindFirstObjectByType<BackgroundController>();
+
+                gameContext.SetEnemyType(enemyType);
+                sceneBinder.BindSceneObjects(gameContext);
+                backgroundController.SetRandomBackground();
+            }
+            else if (scene.name == BATTLE_SCENE3)
+            {
+                EEnemyType enemyType = EEnemyType.Enemy3;
+                SceneBinder sceneBinder = FindFirstObjectByType<SceneBinder>();
+                BackgroundController backgroundController = FindFirstObjectByType<BackgroundController>();
+
+                gameContext.SetEnemyType(enemyType);
                 sceneBinder.BindSceneObjects(gameContext);
                 backgroundController.SetRandomBackground();
             }

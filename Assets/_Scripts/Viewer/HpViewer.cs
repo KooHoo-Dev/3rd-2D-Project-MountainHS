@@ -13,12 +13,34 @@ namespace FTL
         [SerializeField] private List<Image> barSprites = new List<Image>();
         [SerializeField] private ShipController ship;
         [SerializeField] private int prevHp;
+        [SerializeField] private bool isEnemy = false;
         private ObjectPool<GameObject> barPool;
 
         private void Awake()
         {
             prevHp = -1;
             barPool = new ObjectPool<GameObject>(CreateBar, OnGetBar, OnReleaseBar, OnDestroyBar);
+        }
+
+        private void Start()
+        {
+            if (isEnemy)
+            {
+                // EnemyShield
+                GameObject[] enemies = GameObject.FindGameObjectsWithTag("EnemyShip");
+
+                foreach (GameObject enemy in enemies)
+                {
+                    if (enemy.TryGetComponent<ShipController>(out ship))
+                    {
+                        Debug.Log("HpViewer: Enemy shipController Found!");
+                        break;
+                    }
+                }
+
+                if (ship == null)
+                    Debug.LogError("HpViewer: There is no shipController on Enemy!");
+            }
         }
 
         private void LateUpdate()

@@ -82,6 +82,9 @@ namespace FTL
 
             weaponSystem = (WeaponSystem)GetFacilitySystemByERoomType(ERoomType.Weapon);
             PowerSystem = GetComponent<ShipPowerController>();
+            roomGroupTransform = FindDirectChildWithTag(transform, "Room Group").transform;
+            crewGroupTransform = FindDirectChildWithTag(transform, "Crew Group").transform;
+            weaponGroupTransform = FindDirectChildWithTag(transform, "Weapon Group").transform;
             isDeadCoroutineActivated = false;
             isShipInitialized = false;
         }
@@ -346,6 +349,17 @@ namespace FTL
             }
 
             StartCoroutine(DeadCoroutine(DEAD_ANIMATION_TIME, battleResult));
+        }
+
+        private GameObject FindDirectChildWithTag(Transform parent, string tag)
+        {
+            foreach (Transform child in parent)
+            {
+                if (child.CompareTag(tag))
+                    return child.gameObject;
+            }
+
+            return null;
         }
 
         public void RestoreHp(int damage)

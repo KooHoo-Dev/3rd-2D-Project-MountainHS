@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -11,11 +12,35 @@ namespace FTL
         [SerializeField] protected GameObject barGroup;
         [SerializeField] protected List<Image> barSprites = new List<Image>();
         [SerializeField] protected FacilitySystem facilitySystem;
+        [SerializeField] private bool isEnemy = false;
         protected ObjectPool<GameObject> barPool;
 
         protected virtual void Awake()
         {
             barPool = new ObjectPool<GameObject>(CreateBar, OnGetBar, OnReleaseBar, OnDestroyBar);
+        }
+
+        private void Start()
+        {
+            // facilityType에 맞는 type을 가져오도록
+            if (isEnemy)
+            {
+                // EnemyShield
+                GameObject[] enemies = GameObject.FindGameObjectsWithTag("EnemyShip");
+                //Type type = facilitySystem.Type.ToSystemType();
+
+                //foreach (GameObject enemy in enemies)
+                //{
+                //    if (enemy.TryGetComponent<ReactorSystem>(out reactorSystem))
+                //    {
+                //        Debug.Log("ReactorViewer: Enemy ReactorSystem Found!");
+                //        break;
+                //    }
+                //}
+
+                //if (reactorSystem == null)
+                //    Debug.LogError("ReactorViewer: There is no ReactorSystem on Enemy!");
+            }
         }
 
         protected void LateUpdate()

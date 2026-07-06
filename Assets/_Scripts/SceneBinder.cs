@@ -5,19 +5,18 @@ namespace FTL
     public class SceneBinder : MonoBehaviour
     {
         [Header("Enemy Spawn")]
-        [SerializeField] private EnemyDatabase enemyDatabase;
         [SerializeField] private Transform enemySpawnPoint;
         [SerializeField] private Transform enemySpawnParent;
         [SerializeField] private Transform enemyCrewSummaryGroupTransform;
         [SerializeField] private Transform enemyWeaponChargeGroupTransform;
 
         [Header("Stage Environment")]
-        [SerializeField] private StageEnvironmentController stageEnvironmentController;
+        [SerializeField] private EnvironmentController stageEnvironmentController;
 
         public void BindSceneObjects(GameContext gameContext)
         {
             PlayerController player = FindFirstObjectByType<PlayerController>();
-            EnemyController enemy = SpawnRandomEnemyOrFindSceneEnemy();
+            EnemyController enemy = SpawnEnemyOrFindSceneEnemy(gameContext.EnemyType);
             if (player == null)
             {
                 Debug.LogError("SceneBinder: PlayerController was not found.");
@@ -59,21 +58,23 @@ namespace FTL
                 return;
             }
 
-            stageEnvironmentController.InitStageEnvironment(CombatSystem.Instance);
+            stageEnvironmentController.InitStageEnvironment();
         }
 
-        private EnemyController SpawnRandomEnemyOrFindSceneEnemy()
+        private EnemyController SpawnEnemyOrFindSceneEnemy(EEnemyType enemyType)
         {
+            // Type에 따라 enemy 생성
+            EnemyDatabase enemyDatabase = GameManager.Instance.EnemyDatabase;
             if (enemyDatabase == null)
             {
-                Debug.LogWarning("SceneBinder: EnemyDatabase is not assigned. Using scene enemy instead.");
+                Debug.LogError("Gamemanager does not have enemy database.");
                 return FindFirstObjectByType<EnemyController>();
             }
 
-            GameObject enemyPrefab = enemyDatabase.GetRandomPrefab();
+            GameObject enemyPrefab = enemyDatabase.GetPrefab(enemyType);
             if (enemyPrefab == null)
             {
-                Debug.LogError("SceneBinder: Enemy prefab was not found in EnemyDatabase.");
+                Debug.LogWarning("SceneBinder: Enemy prefab is null. Search enemy in Battle Scene.");
                 return FindFirstObjectByType<EnemyController>();
             }
 
