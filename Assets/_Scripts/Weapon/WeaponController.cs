@@ -7,12 +7,12 @@ namespace FTL
 {
     public class WeaponController : MonoBehaviour
     {
-        private const float CHARGE_DURATION_ASSIST_MULTIPLIER = 0.75f;
+        private const float CHARGE_SPEED_ASSIST_MULTIPLIER = 1.2f;
 
         public bool IsReady => isReady;
         public bool IsPowered { set; get; } = false;
         public float ChargeProgress => chargeProgress;
-        public float ChargeDuration => GetRealChargeDuration();
+        public float ChargeDuration => chargeDuration;
 
         [field: SerializeField] public bool IsAssisted { get; set; }
         [SerializeField] private GameObject projectilePrefab;
@@ -27,6 +27,7 @@ namespace FTL
         private WeaponSystem weaponSystem;
         private ITargeting targetingSystem = null;
         private float reduceSpeed = 4f;
+        private float chargeSpeedMultiplier = 1f;
 
         private void Awake()
         {
@@ -51,7 +52,7 @@ namespace FTL
                 //    chargeProgress = 0f;
                 //}
 
-                chargeProgress = Mathf.Min(chargeProgress + Time.deltaTime, GetRealChargeDuration());
+                chargeProgress = Mathf.Min(chargeProgress + Time.deltaTime * GetChargeSpeed(), chargeDuration);
                 // chargeSprites에 있는 스프라이트 수 - 1만큼 간격 검증
             }
             else
@@ -130,9 +131,9 @@ namespace FTL
             }
         }
 
-        private float GetRealChargeDuration()
+        private float GetChargeSpeed()
         {
-            return IsAssisted ? chargeDuration * CHARGE_DURATION_ASSIST_MULTIPLIER : chargeDuration;
+            return chargeSpeedMultiplier * (IsAssisted ? CHARGE_SPEED_ASSIST_MULTIPLIER : 1f);
         }
 
         private bool IsReadyToFire()
@@ -147,7 +148,7 @@ namespace FTL
 
         private void UpdateIsReady()
         {
-            if (chargeProgress == GetRealChargeDuration())
+            if (chargeProgress == chargeDuration)
             {
                 isReady = true;
             }
@@ -177,14 +178,14 @@ namespace FTL
         {
             if (IsAssisted != isApplied)
             {
-                if (isApplied == true)
-                {
-                    float currentRate = chargeProgress / GetRealChargeDuration();
-                    chargeProgress = Mathf.Lerp(0f, chargeDuration, currentRate);
-                }
                 IsAssisted = isApplied;
-                chargeProgress = Mathf.Min(chargeProgress, GetRealChargeDuration());
+                chargeProgress = Mathf.Min(chargeProgress, chargeDuration);
             }
+        }
+
+        internal void SetChargeSpeedMultiplier(float multiplier)
+        {
+            chargeSpeedMultiplier = multiplier;
         }
 
     }

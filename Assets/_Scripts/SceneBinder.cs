@@ -15,6 +15,11 @@ namespace FTL
 
         public void BindSceneObjects(GameContext gameContext)
         {
+            BindSceneObjectsWithEnvironment(gameContext, false, false);
+        }
+
+        internal void BindSceneObjectsWithEnvironment(GameContext gameContext, bool isAsteroidStage, bool isSunStage)
+        {
             PlayerController player = FindFirstObjectByType<PlayerController>();
             EnemyController enemy = SpawnEnemyOrFindSceneEnemy(gameContext.EnemyType);
             if (player == null)
@@ -43,7 +48,7 @@ namespace FTL
             player.SetCrewsState(gameContext.CrewStates);
             player.SetWeaponTypes(gameContext.WeaponTypes);
             BindCombatSystem(player, enemy);
-            BindStageEnvironment();
+            BindStageEnvironment(isAsteroidStage, isSunStage);
         }
 
         private void BindCombatSystem(PlayerController player, EnemyController enemy)
@@ -51,13 +56,14 @@ namespace FTL
             CombatSystem.Instance.InitCombatSystem(player, enemy);
         }
 
-        private void BindStageEnvironment()
+        private void BindStageEnvironment(bool isAsteroidStage, bool isSunStage)
         {
             if (stageEnvironmentController == null)
             {
                 return;
             }
 
+            stageEnvironmentController.SetStageEnvironment(isAsteroidStage, isSunStage);
             stageEnvironmentController.InitStageEnvironment();
         }
 

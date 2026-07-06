@@ -28,6 +28,12 @@ namespace FTL
         private Coroutine environmentCoroutine;
         private bool hasLoggedMissingAsteroidPrefab;
 
+        internal void SetStageEnvironment(bool isAsteroid, bool isSun)
+        {
+            isAsteroidStage = isAsteroid;
+            isSunStage = isSun;
+        }
+
         public void InitStageEnvironment()
         {
             hasLoggedMissingAsteroidPrefab = false;

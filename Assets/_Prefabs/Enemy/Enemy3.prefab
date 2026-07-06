@@ -425,7 +425,7 @@ MonoBehaviour:
   weaponChargeGroupTransform: {fileID: 0}
   crewPrefab: {fileID: 217437053949938726, guid: 38559d697324fa9438b704eef2851029, type: 3}
   crewSummaryPrefab: {fileID: 2593341861223767119, guid: a8063d74c0bba934caceb0defa71611b, type: 3}
-  crewCount: 1
+  crewCount: 3
   isPlayer: 0
   FacilitySystems: []
 --- !u!114 &7087205736477999771
@@ -535,6 +535,7 @@ MonoBehaviour:
   targetData:
     TargetPosition: {x: 0, y: 0, z: 0}
     RoomId: 0
+  chargeSpeedMultiplier: 0
 --- !u!114 &3608840611304903342
 MonoBehaviour:
   m_ObjectHideFlags: 0

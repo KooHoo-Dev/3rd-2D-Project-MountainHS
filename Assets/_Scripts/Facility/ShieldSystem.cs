@@ -6,12 +6,12 @@ namespace FTL
     public class ShieldSystem : FacilitySystem
     {
         private const int MAX_SHIELD_LIMIT = 4;
-        private const float CHARGE_DURATION_ASSIST_MULTIPLIER = 0.75f;
+        private const float CHARGE_SPEED_ASSIST_MULTIPLIER = 1.2f;
 
         public int MaxShieldLimit => MAX_SHIELD_LIMIT;
         public int MaxShield => maxShield;
         public int ShieldCount => shieldCount;
-        public float ChargeDuration => GetRealChargeDuration();
+        public float ChargeDuration => chargeDuration;
         public float ChargeProgress => chargeProgress;
 
         [Header("Shield")]
@@ -48,8 +48,8 @@ namespace FTL
         {
             if (shieldCount < maxShield)
             {
-                chargeProgress += Time.deltaTime;
-                if (chargeProgress >= GetRealChargeDuration())
+                chargeProgress += Time.deltaTime * GetChargeSpeed();
+                if (chargeProgress >= chargeDuration)
                 {
                     chargeProgress = 0f;
                     shieldCount++;
@@ -65,9 +65,9 @@ namespace FTL
             }
         }
 
-        private float GetRealChargeDuration()
+        private float GetChargeSpeed()
         {
-            return chargeDuration * (IsAssisted ? CHARGE_DURATION_ASSIST_MULTIPLIER : 1f);
+            return IsAssisted ? CHARGE_SPEED_ASSIST_MULTIPLIER : 1f;
         }
 
         /// <summary>
@@ -88,13 +88,8 @@ namespace FTL
         {
             if (IsAssisted != isApplied)
             {
-                if (isApplied == true)
-                {
-                    float currentRate = chargeProgress / GetRealChargeDuration();
-                    chargeProgress = Mathf.Lerp(0f, chargeDuration, currentRate);
-                }
                 IsAssisted = isApplied;
-                chargeProgress = Mathf.Min(chargeProgress, GetRealChargeDuration());
+                chargeProgress = Mathf.Min(chargeProgress, chargeDuration);
             }
         }
 
