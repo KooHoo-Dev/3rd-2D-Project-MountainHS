@@ -10,7 +10,8 @@ namespace FTL
         [SerializeField] private Image facilityIcon;
         [SerializeField] private Image assistIcon;
         [SerializeField] private TMP_Text iconText;
-        [SerializeField] private ERoomType contextFacilityType = ERoomType.Empty;
+        [SerializeField] private ERoomType facilityType = ERoomType.Empty;
+        [SerializeField] private bool isEnemy = false;
         private Image repairBar;
 
         protected override void Awake()
@@ -33,10 +34,64 @@ namespace FTL
             if (repairBar != null)
                 repairBar.enabled = false;
 
-            if (contextFacilityType == ERoomType.Empty)
-                contextFacilityType = facilitySystem.Type;
+            // facilityType에 맞는 type을 가져오도록
+            if (isEnemy)
+            {
+                // EnemyShield
+                GameObject[] enemies = GameObject.FindGameObjectsWithTag("EnemyShip");
+                switch (facilityType)
+                {
+                    case ERoomType.Weapon:
+                        WeaponSystem weaponSystem = null;
+                        foreach (GameObject enemy in enemies)
+                        {
+                            if (enemy.TryGetComponent<WeaponSystem>(out weaponSystem))
+                            {
+                                Debug.Log("ReactorViewer: Enemy ReactorSystem Found!");
+                                break;
+                            }
+                        }
+                        facilitySystem = weaponSystem;
+                        break;
+                    case ERoomType.Engine:
+                        EngineSystem engineSystem = null;
+                        foreach (GameObject enemy in enemies)
+                        {
+                            if (enemy.TryGetComponent<EngineSystem>(out engineSystem))
+                            {
+                                Debug.Log("ReactorViewer: Enemy ReactorSystem Found!");
+                                break;
+                            }
+                        }
+                        facilitySystem = engineSystem;
+                        break;
+                    case ERoomType.Shield:
+                        ShieldSystem shieldSystem = null;
+                        foreach (GameObject enemy in enemies)
+                        {
+                            if (enemy.TryGetComponent<ShieldSystem>(out shieldSystem))
+                            {
+                                Debug.Log("ReactorViewer: Enemy ReactorSystem Found!");
+                                break;
+                            }
+                        }
+                        facilitySystem = shieldSystem;
+                        break;
+                    case ERoomType.Empty:
+                    default:
+                        Debug.LogError("ReactorViewer: Invalid Facility Type!");
+                        break;
+                }
 
-            iconText.SetText(contextFacilityType.ToRoomTypeName());
+                if (facilitySystem == null)
+                    Debug.LogError("ReactorViewer: There is no ReactorSystem on Enemy!");
+            }
+
+            if (facilityType == ERoomType.Empty)
+                facilityType = facilitySystem.Type;
+
+            iconText.SetText(facilityType.ToRoomTypeName());
+
         }
 
         protected override void SetBarState(int barIndex, EPowerBarStatus status)
@@ -209,7 +264,7 @@ namespace FTL
             }
 
             // 문자열 기반 탐색은 절대 안됨 (무조건 고칠것)
-            maxPowerLimit = gameManager.GetFacilityMaxPowerLimit(contextFacilityType);
+            maxPowerLimit = gameManager.GetFacilityMaxPowerLimit(facilityType);
             return true;
         }
 

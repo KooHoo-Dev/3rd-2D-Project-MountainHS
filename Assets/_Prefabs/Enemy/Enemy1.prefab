@@ -254,7 +254,7 @@ GameObject:
   - component: {fileID: 9087877586689904619}
   m_Layer: 0
   m_Name: Crew Group
-  m_TagString: Untagged
+  m_TagString: Crew Group
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -317,7 +317,7 @@ GameObject:
   - component: {fileID: 6835425291366784689}
   m_Layer: 0
   m_Name: Weapon Group
-  m_TagString: Untagged
+  m_TagString: Weapon Group
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -360,7 +360,7 @@ GameObject:
   - component: {fileID: 3233944821611000062}
   m_Layer: 0
   m_Name: Enemy1
-  m_TagString: Untagged
+  m_TagString: EnemyShip
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -398,7 +398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ddf885e28e6d4c4facf22f0460c1068, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.EnemyController
-  <WeaponTypes>k__BackingField: 00000000000000000000000000000000
+  <WeaponTypes>k__BackingField: 000000000000000000000000
   weaponChargeStatusPrefab: {fileID: 989575095297274148, guid: aaa42232579ab2d42b73dc996c4002c0, type: 3}
   weaponTransformList:
   - <WeaponOffset>k__BackingField: {x: 2, y: -1.5, z: 0}
@@ -415,13 +415,13 @@ MonoBehaviour:
     isFlipY: 0
   <ShipData>k__BackingField: {fileID: 11400000, guid: 220620f264c5f2a4f8951128e1b6500a, type: 2}
   <Hp>k__BackingField: 0
-  PowerSystem: {fileID: 7166124069628289286}
+  PowerSystem: {fileID: 7166124069628289286, guid: ab6c5dcce78cd934e884bbd5f0aa003f, type: 3}
   roomPrefab: {fileID: 4957643729303577055, guid: 2363bb96b39eb5645b714a719b2a5a6d, type: 3}
-  roomGroupTransform: {fileID: 3992394123822748016}
+  roomGroupTransform: {fileID: 3992394123822748016, guid: ab6c5dcce78cd934e884bbd5f0aa003f, type: 3}
   <Rooms>k__BackingField: []
-  crewGroupTransform: {fileID: 9087877586689904619}
+  crewGroupTransform: {fileID: 9087877586689904619, guid: ab6c5dcce78cd934e884bbd5f0aa003f, type: 3}
   crewSummaryGroupTransform: {fileID: 0}
-  weaponGroupTransform: {fileID: 6835425291366784689}
+  weaponGroupTransform: {fileID: 6835425291366784689, guid: ab6c5dcce78cd934e884bbd5f0aa003f, type: 3}
   weaponChargeGroupTransform: {fileID: 0}
   crewPrefab: {fileID: 217437053949938726, guid: 38559d697324fa9438b704eef2851029, type: 3}
   crewSummaryPrefab: {fileID: 2593341861223767119, guid: a8063d74c0bba934caceb0defa71611b, type: 3}
@@ -456,6 +456,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FTL.EnemyPowerController
   reactorSystem: {fileID: 7087205736477999771}
   facilities: []
+  powerData:
+    ShieldPower: 2
+    WeaponPower: 2
+    EnginePower: 1
 --- !u!114 &1656400099427965507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -604,7 +608,7 @@ GameObject:
   - component: {fileID: 3992394123822748016}
   m_Layer: 0
   m_Name: Room Group
-  m_TagString: Untagged
+  m_TagString: Room Group
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

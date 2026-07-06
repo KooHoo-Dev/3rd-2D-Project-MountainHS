@@ -16,11 +16,49 @@ namespace FTL
         [SerializeField] private Vector3 startLocalScale;
         [SerializeField] private float shieldUpDelay;
         [SerializeField] private int prevShieldCount;
+        [SerializeField] private bool isEnemy = false;
 
         private void Awake()
         {
-            startLocalScale = shieldMainSprite.transform.localScale;
-            col = shieldMainSprite.GetComponent<Collider2D>();
+            if (isEnemy == false)
+            {
+                startLocalScale = shieldMainSprite.transform.localScale;
+                col = shieldMainSprite.GetComponent<Collider2D>();
+            }
+        }
+
+        private void Start()
+        {
+            if (isEnemy)
+            {
+                // EnemyShield
+                GameObject[] enemies = GameObject.FindGameObjectsWithTag("EnemyShip");
+
+                foreach (GameObject enemy in enemies)
+                {
+                    if (enemy.layer == LayerMask.NameToLayer("Shield"))
+                    {
+                        // 찾은 오브젝트
+                        shieldMainSprite = enemy.GetComponent<SpriteRenderer>();
+                        startLocalScale = shieldMainSprite.transform.localScale;
+                        col = shieldMainSprite.GetComponent<Collider2D>();
+
+                    }
+                }
+
+                foreach (GameObject enemy in enemies)
+                {
+                    if (enemy.TryGetComponent<ShieldSystem>(out shieldSystem))
+                    {
+                        Debug.Log("ShieldViewer: Enemy ShieldSystem Found!");
+                        break;
+                    }
+
+                }
+
+                if (shieldSystem == null)
+                    Debug.LogError("ShieldViewer: There is no shieldMainSprite on Enemy!");
+            }
         }
         // 실드 시스템의 최대 실드 개수, 실드 개수에 따라 실드 ui 표시
         private void LateUpdate()

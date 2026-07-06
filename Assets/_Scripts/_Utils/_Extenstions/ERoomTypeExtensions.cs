@@ -1,3 +1,5 @@
+using System;
+
 namespace FTL
 {
     public static class ERoomTypeExtensions
@@ -16,5 +18,12 @@ namespace FTL
                     return string.Empty;
             }
         }
+        //public static Type ToSystemType(this ERoomType type) => type switch
+        //{
+        //    ERoomType.Weapon => typeof(WeaponSystem),
+        //    ERoomType.Engine => typeof(EngineSystem),
+        //    ERoomType.Shield => typeof(ShieldSystem),
+        //    _ => typeof(FacilitySystem)
+        //};
     }
 }

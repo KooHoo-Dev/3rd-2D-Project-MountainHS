@@ -10,6 +10,9 @@ TagManager:
   - Main UI
   - Enemy Crew Summary Group
   - Enemy Weapon Charge Group
+  - Room Group
+  - Crew Group
+  - Weapon Group
   layers:
   - Default
   - TransparentFX

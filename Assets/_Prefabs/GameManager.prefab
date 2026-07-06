@@ -46,6 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FTL.GameManager
   Player: {fileID: 0}
   <BattleResult>k__BackingField: 0
+  <EnemyDatabase>k__BackingField: {fileID: 11400000, guid: a088e6ea727fc424bbd4ed6a1c4ce40d, type: 2}
+  <WeaponDatabase>k__BackingField: {fileID: 11400000, guid: a043e17626bf0524fbe34cc98ad8aac2, type: 2}
   toggleMenuObject: {fileID: 0}
   gameContext:
     <FacilityUpgradeCount>k__BackingField: 
@@ -56,4 +58,3 @@ MonoBehaviour:
     <ShipPower>k__BackingField: 0
     <ReactorUpgradeCount>k__BackingField: 0
     <WeaponTypes>k__BackingField: 
-  <WeaponDatabase>k__BackingField: {fileID: 11400000, guid: a043e17626bf0524fbe34cc98ad8aac2, type: 2}

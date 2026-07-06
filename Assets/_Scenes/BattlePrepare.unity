@@ -175,6 +175,7 @@ MonoBehaviour:
   barGroupTransform: {fileID: 822549130}
   barSprites: []
   reactorSystem: {fileID: 0}
+  isEnemy: 0
 --- !u!114 &115891354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1551,6 +1552,10 @@ PrefabInstance:
       propertyPath: barPrefab
       value: 
       objectReference: {fileID: 4545221981191168617, guid: 4392d3ccb84dd464abe0827b8357f8e7, type: 3}
+    - target: {fileID: 4159365773981505861, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: facilityType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4470097844475275189, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3044,6 +3049,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4545221981191168617, guid: 4392d3ccb84dd464abe0827b8357f8e7, type: 3}
     - target: {fileID: 4159365773981505861, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: facilityType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4159365773981505861, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
       propertyPath: contextFacilityType
       value: 1
       objectReference: {fileID: 0}
@@ -3996,6 +4005,10 @@ PrefabInstance:
       propertyPath: barPrefab
       value: 
       objectReference: {fileID: 4545221981191168617, guid: 4392d3ccb84dd464abe0827b8357f8e7, type: 3}
+    - target: {fileID: 4159365773981505861, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
+      propertyPath: facilityType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4159365773981505861, guid: d2f6c9d35a448ed479961c49661a96e2, type: 3}
       propertyPath: contextFacilityType
       value: 2

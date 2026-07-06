@@ -11,11 +11,33 @@ namespace FTL
         [SerializeField] protected Transform barGroupTransform;
         [SerializeField] protected List<Image> barSprites;
         [SerializeField] protected ReactorSystem reactorSystem;
+        [SerializeField] private bool isEnemy = false;
         protected ObjectPool<GameObject> barPool;
 
         protected virtual void Awake()
         {
             barPool = new ObjectPool<GameObject>(CreateBar, OnGetBar, OnReleaseBar, OnDestroyBar);
+        }
+
+        private void Start()
+        {
+            if (isEnemy)
+            {
+                // EnemyShield
+                GameObject[] enemies = GameObject.FindGameObjectsWithTag("EnemyShip");
+
+                foreach (GameObject enemy in enemies)
+                {
+                    if (enemy.TryGetComponent<ReactorSystem>(out reactorSystem))
+                    {
+                        Debug.Log("ReactorViewer: Enemy ReactorSystem Found!");
+                        break;
+                    }
+                }
+
+                if (reactorSystem == null)
+                    Debug.LogError("ReactorViewer: There is no ReactorSystem on Enemy!");
+            }
         }
 
         protected void LateUpdate()

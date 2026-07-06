@@ -46,10 +46,33 @@ namespace FTL
         protected CrewSystem crewSystem;
         protected WeaponSystem weaponSystem;
         protected bool isDeadCoroutineActivated;
+        protected bool isShipInitialized;
 
         protected virtual void Awake()
         {
-            Hp = ShipData.MaxHp;
+            InitShipReferences();
+            TryInitializeShip(false);
+        }
+
+        public void SetExternalUIGroups(Transform crewSummaryGroup, Transform weaponChargeGroup)
+        {
+            crewSummaryGroupTransform = crewSummaryGroup;
+            weaponChargeGroupTransform = weaponChargeGroup;
+        }
+
+        public void InitializeShipIfReady()
+        {
+            TryInitializeShip(true);
+        }
+
+        private void InitShipReferences()
+        {
+            if (ShipData != null)
+            {
+                Hp = ShipData.MaxHp;
+            }
+
+            FacilitySystems.Clear();
             FacilitySystems.Add(GetComponent<WeaponSystem>());
             FacilitySystems.Add(GetComponent<EngineSystem>());
             FacilitySystems.Add(GetComponent<ShieldSystem>());
@@ -59,13 +82,57 @@ namespace FTL
 
             weaponSystem = (WeaponSystem)GetFacilitySystemByERoomType(ERoomType.Weapon);
             PowerSystem = GetComponent<ShipPowerController>();
+            roomGroupTransform = FindDirectChildWithTag(transform, "Room Group").transform;
+            crewGroupTransform = FindDirectChildWithTag(transform, "Crew Group").transform;
+            weaponGroupTransform = FindDirectChildWithTag(transform, "Weapon Group").transform;
             isDeadCoroutineActivated = false;
+            isShipInitialized = false;
+        }
+
+        private void TryInitializeShip(bool shouldLogError)
+        {
+            if (isShipInitialized)
+            {
+                return;
+            }
+
+            if (CanInitializeShip(shouldLogError) == false)
+            {
+                return;
+            }
 
             InitRooms();
             InitCrews();
             InitWeapons();
+            isShipInitialized = true;
+        }
 
-            void InitRooms()
+        private bool CanInitializeShip(bool shouldLogError)
+        {
+            bool canInitialize =
+                ShipData != null &&
+                roomPrefab != null &&
+                roomGroupTransform != null &&
+                crewGroupTransform != null &&
+                crewSummaryGroupTransform != null &&
+                weaponGroupTransform != null &&
+                weaponChargeGroupTransform != null &&
+                crewPrefab != null &&
+                crewSummaryPrefab != null &&
+                weaponChargeStatusPrefab != null &&
+                crewSystem != null &&
+                weaponSystem != null &&
+                PowerSystem != null;
+
+            if (canInitialize == false && shouldLogError)
+            {
+                Debug.LogError($"{name}: Ship initialization failed. Required prefab or group reference is missing.");
+            }
+
+            return canInitialize;
+        }
+
+        private void InitRooms()
             {
                 for (int i = 0; i < ShipData.Rooms.Count; i++)
                 {
@@ -88,7 +155,7 @@ namespace FTL
                 crewSystem.Rooms = Rooms;
             }
 
-            void InitCrews()
+        private void InitCrews()
             {
                 for (int i = 0; i < crewCount; i++)
                 {
@@ -108,7 +175,7 @@ namespace FTL
                 }
             }
 
-            void InitWeapons()
+        private void InitWeapons()
             {
                 for (int i = 0; i < WeaponTypes.Count; i++)
                 {
@@ -144,7 +211,6 @@ namespace FTL
                 }
                 weaponSystem.SetWeaponSystemOfWeapons();
             }
-        }
 
 
         protected void HandlePowerInput(ERoomType facilityType, bool isRecoverInput)
@@ -228,8 +294,19 @@ namespace FTL
         {
             int damage = projectile.Damage;
             int crewDamage = projectile.CrewDamage;
+            TakeDamageToRoom(damage, crewDamage, roomId);
+        }
+
+        public void TakeDamageToRoom(int damage, int crewDamage, int roomId)
+        {
             // 피격당한 room 객체 가져오기
             Room room = GetRoomByIdOrNull(roomId);
+            if (room == null)
+            {
+                Debug.LogError($"{name}: Cannot apply room damage. Room id {roomId} was not found.");
+                return;
+            }
+
             room.TakeDamageToCrews(crewDamage);
             StartCoroutine(ShakeRoom(room));
             bool canDamageFacility = room != null && room.HasFacility;
@@ -272,6 +349,17 @@ namespace FTL
             }
 
             StartCoroutine(DeadCoroutine(DEAD_ANIMATION_TIME, battleResult));
+        }
+
+        private GameObject FindDirectChildWithTag(Transform parent, string tag)
+        {
+            foreach (Transform child in parent)
+            {
+                if (child.CompareTag(tag))
+                    return child.gameObject;
+            }
+
+            return null;
         }
 
         public void RestoreHp(int damage)

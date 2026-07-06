@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.65, y: 0.65, z: 1}
+  m_LocalScale: {x: 0.55, y: 0.65, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7283436188570211942}
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -5
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -834991920120882256, guid: 3a8d00c6cc7fb844dac10c21c2110b09, type: 3}
+  m_Sprite: {fileID: 8306816943020069084, guid: 58f99246405a3b04994f6d761c5f46fc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -254,7 +254,7 @@ GameObject:
   - component: {fileID: 9087877586689904619}
   m_Layer: 0
   m_Name: Crew Group
-  m_TagString: Untagged
+  m_TagString: Crew Group
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -317,7 +317,7 @@ GameObject:
   - component: {fileID: 6835425291366784689}
   m_Layer: 0
   m_Name: Weapon Group
-  m_TagString: Untagged
+  m_TagString: Weapon Group
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -359,8 +359,8 @@ GameObject:
   - component: {fileID: 8734392424899822169}
   - component: {fileID: 3233944821611000062}
   m_Layer: 0
-  m_Name: Enemy1 1
-  m_TagString: Untagged
+  m_Name: Enemy2
+  m_TagString: EnemyShip
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -398,7 +398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ddf885e28e6d4c4facf22f0460c1068, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.EnemyController
-  <WeaponTypes>k__BackingField: 00000000000000000000000000000000
+  <WeaponTypes>k__BackingField: 020000000000000004000000
   weaponChargeStatusPrefab: {fileID: 989575095297274148, guid: aaa42232579ab2d42b73dc996c4002c0, type: 3}
   weaponTransformList:
   - <WeaponOffset>k__BackingField: {x: 2, y: -1.5, z: 0}
@@ -413,7 +413,7 @@ MonoBehaviour:
     <WeaponRotation>k__BackingField: {x: 0, y: 0, z: -90}
     isFlipX: 0
     isFlipY: 0
-  <ShipData>k__BackingField: {fileID: 11400000, guid: 220620f264c5f2a4f8951128e1b6500a, type: 2}
+  <ShipData>k__BackingField: {fileID: 11400000, guid: 71a3f80c9628cf44eb465f7fdcec7c65, type: 2}
   <Hp>k__BackingField: 0
   PowerSystem: {fileID: 7166124069628289286}
   roomPrefab: {fileID: 4957643729303577055, guid: 2363bb96b39eb5645b714a719b2a5a6d, type: 3}
@@ -440,7 +440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15b6b04d3fcf4331b8f1536c314afa07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.ReactorSystem
-  maxPower: 5
+  maxPower: 11
   power: 0
 --- !u!114 &7166124069628289286
 MonoBehaviour:
@@ -456,6 +456,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FTL.EnemyPowerController
   reactorSystem: {fileID: 7087205736477999771}
   facilities: []
+  powerData:
+    ShieldPower: 4
+    WeaponPower: 4
+    EnginePower: 3
 --- !u!114 &1656400099427965507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,11 +475,11 @@ MonoBehaviour:
   <IsAssisted>k__BackingField: 0
   <RepairDuration>k__BackingField: 7.5
   <RepairProgress>k__BackingField: 0
-  <MaxPowerLimit>k__BackingField: 3
+  <MaxPowerLimit>k__BackingField: 4
   TotalDamage: 0
   Power: 0
   type: 2
-  maxPower: 8
+  maxPower: 4
   maxShield: 0
   shieldCount: 0
   chargeDuration: 3
@@ -520,7 +524,7 @@ MonoBehaviour:
   <IsAssisted>k__BackingField: 0
   <RepairDuration>k__BackingField: 7.5
   <RepairProgress>k__BackingField: 0
-  <MaxPowerLimit>k__BackingField: 3
+  <MaxPowerLimit>k__BackingField: 4
   TotalDamage: 0
   Power: 0
   type: 0
@@ -604,7 +608,7 @@ GameObject:
   - component: {fileID: 3992394123822748016}
   m_Layer: 0
   m_Name: Room Group
-  m_TagString: Untagged
+  m_TagString: Room Group
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

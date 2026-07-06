@@ -180,6 +180,24 @@ namespace FTL
             return ships[0].Rooms;
         }
 
+        public ShipController GetShip(EShipSide shipSide)
+        {
+            if (ships == null)
+            {
+                Debug.LogError("CombatSystem: ships are not initialized.");
+                return null;
+            }
+
+            int shipIndex = (int)shipSide;
+            if (shipIndex < 0 || shipIndex >= ships.Length)
+            {
+                Debug.LogError($"CombatSystem: Invalid ship side {shipSide}.");
+                return null;
+            }
+
+            return ships[shipIndex];
+        }
+
         public Room GetRoomOrNull(EShipSide shipSide, Vector2 position)
         {
             List<Room> rooms = ships[(int)shipSide].Rooms;
@@ -200,6 +218,54 @@ namespace FTL
             GameObject explosionObject = explosionPool.Get();
             return explosionObject;
         }
+
+        public EShipSide GetOpponentShipSide(EShipSide startSide)
+        {
+            if (startSide == EShipSide.Player)
+                return EShipSide.Enemy0;
+
+            return EShipSide.Player;
+        }
+
+        public Collider2D GetColliderByShipSide(EShipSide shipSide)
+        {
+            if (shipSideToColDict.TryGetValue(shipSide, out Collider2D col))
+            {
+                return col;
+            }
+            else
+            {
+                Debug.LogError($"CombatSystem: No collider found for ship side {shipSide}.");
+                return null;
+            }
+
+        }
+
+        public void SetFloatingText(ProjectileController projectile, EDamageType type)
+        {
+            GameObject floatingTextObject = floatingTextPool.Get();
+            FloatingTextController floatingText = floatingTextObject.GetComponent<FloatingTextController>();
+            Color color = type.GetColorFromDamageType();
+
+            floatingText.transform.SetParent(floatingTextGroupTransform);
+            floatingTextObject.transform.position = projectile.transform.position;
+            floatingText.SetText($"{type.GetDamageFromDamageType(projectile)}");
+            floatingText.SetTextColor(color);
+        }
+
+        public void SetFloatingText(Room room, EDamageType type, int damage)
+        {
+            GameObject floatingTextObject = floatingTextPool.Get();
+            FloatingTextController floatingText = floatingTextObject.GetComponent<FloatingTextController>();
+            Color color = type.GetColorFromDamageType();
+
+            floatingText.transform.SetParent(floatingTextGroupTransform);
+            floatingTextObject.transform.position = room.GlobalPosition;
+            floatingText.SetText($"{damage}");
+            floatingText.SetTextColor(color);
+        }
+
+
 
         #endregion
 
@@ -247,18 +313,6 @@ namespace FTL
         private void OnDestroyExplosion(GameObject explosion)
         {
             Destroy(explosion);
-        }
-
-        private void SetFloatingText(ProjectileController projectile, EDamageType type)
-        {
-            GameObject floatingTextObject = floatingTextPool.Get();
-            FloatingTextController floatingText = floatingTextObject.GetComponent<FloatingTextController>();
-            Color color = type.GetColorFromDamageType();
-
-            floatingText.transform.SetParent(floatingTextGroupTransform);
-            floatingTextObject.transform.position = projectile.transform.position;
-            floatingText.SetText($"{type.GetDamageFromDamageType(projectile)}");
-            floatingText.SetTextColor(color);
         }
 
         private Vector3 GetRandomPositionOnColliderEdge(Collider2D col, float z, float seed)

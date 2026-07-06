@@ -10,47 +10,52 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b31b0440145f17846a3c14528746087e, type: 3}
-  m_Name: EnemyShipData
+  m_Name: EnemyShip3Data
   m_EditorClassIdentifier: Assembly-CSharp::FTL.ShipData
-  <MaxHp>k__BackingField: 8
+  <MaxHp>k__BackingField: 16
   <Rooms>k__BackingField:
-  - <Id>k__BackingField: 1
+  - neighborRoomIds: 0200000003000000
+    <FacilitySystem>k__BackingField: {fileID: 0}
+    <Crews>k__BackingField: []
     <Type>k__BackingField: -1
     <LocalPosition>k__BackingField: {x: 0, y: -2}
     <GlobalPosition>k__BackingField: {x: 0, y: 0}
     <MaxCrewCapacity>k__BackingField: 2
-    <CurrentCrewCount>k__BackingField: 0
-    neighborRoomIds: 0200000003000000
+    <Id>k__BackingField: 1
+    <IsHit>k__BackingField: 0
+  - neighborRoomIds: 010000000300000004000000
     <FacilitySystem>k__BackingField: {fileID: 0}
-  - <Id>k__BackingField: 2
+    <Crews>k__BackingField: []
     <Type>k__BackingField: 0
     <LocalPosition>k__BackingField: {x: -0.5, y: -1}
     <GlobalPosition>k__BackingField: {x: 0, y: 0}
     <MaxCrewCapacity>k__BackingField: 2
-    <CurrentCrewCount>k__BackingField: 0
-    neighborRoomIds: 010000000300000004000000
+    <Id>k__BackingField: 2
+    <IsHit>k__BackingField: 0
+  - neighborRoomIds: 020000000400000001000000
     <FacilitySystem>k__BackingField: {fileID: 0}
-  - <Id>k__BackingField: 3
+    <Crews>k__BackingField: []
     <Type>k__BackingField: 2
     <LocalPosition>k__BackingField: {x: 0.5, y: -1}
     <GlobalPosition>k__BackingField: {x: 0, y: 0}
     <MaxCrewCapacity>k__BackingField: 2
-    <CurrentCrewCount>k__BackingField: 0
-    neighborRoomIds: 020000000400000001000000
+    <Id>k__BackingField: 3
+    <IsHit>k__BackingField: 0
+  - neighborRoomIds: 050000000200000003000000
     <FacilitySystem>k__BackingField: {fileID: 0}
-  - <Id>k__BackingField: 4
+    <Crews>k__BackingField: []
     <Type>k__BackingField: -1
     <LocalPosition>k__BackingField: {x: 0, y: 0}
     <GlobalPosition>k__BackingField: {x: 0, y: 0}
     <MaxCrewCapacity>k__BackingField: 2
-    <CurrentCrewCount>k__BackingField: 0
-    neighborRoomIds: 050000000200000003000000
+    <Id>k__BackingField: 4
+    <IsHit>k__BackingField: 0
+  - neighborRoomIds: 04000000
     <FacilitySystem>k__BackingField: {fileID: 0}
-  - <Id>k__BackingField: 5
+    <Crews>k__BackingField: []
     <Type>k__BackingField: 1
     <LocalPosition>k__BackingField: {x: 0, y: 1}
     <GlobalPosition>k__BackingField: {x: 0, y: 0}
     <MaxCrewCapacity>k__BackingField: 2
-    <CurrentCrewCount>k__BackingField: 0
-    neighborRoomIds: 04000000
-    <FacilitySystem>k__BackingField: {fileID: 0}
+    <Id>k__BackingField: 5
+    <IsHit>k__BackingField: 0
