@@ -18,9 +18,11 @@ namespace FTL
         [SerializeField] protected ERoomType type;
         [SerializeField] protected int maxPower;
         protected EFacilityStatus facilityStatus;
+        protected ShipController ship;
 
         protected virtual void Awake()
         {
+            ship = GetComponent<ShipController>();
             IsAssisted = false;
             Power = 0;
             maxPower = MaxPowerLimit;
@@ -121,6 +123,12 @@ namespace FTL
             }
 
             return overflowAmount;
+        }
+
+        public bool CanRunFacilityLogic()
+        {
+            return GameManager.Instance.CanRunCombat &&
+                ship.IsCombatStopped == false;
         }
 
         public virtual void ApplyAssistEffectOnFacility(bool isApplied)

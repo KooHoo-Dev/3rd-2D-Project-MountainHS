@@ -20,6 +20,7 @@ namespace FTL
 
         private void Start()
         {
+            ship = GetComponent<ShipController>();
             CrewController[] crews = GetComponentsInChildren<CrewController>();
             for (int i = 0; i < crews.Length; i++)
             {
@@ -64,6 +65,11 @@ namespace FTL
 
         public void AddSelectedCrew(CrewController crew)
         {
+            if (CanRunCrewLogic() == false)
+            {
+                return;
+            }
+
             crew.IsSelected = true;
             selectedCrews.Add(crew);
         }
@@ -82,6 +88,11 @@ namespace FTL
 
         public void SetTargetRoom(Room room)
         {
+            if (CanRunCrewLogic() == false)
+            {
+                return;
+            }
+
             bool hasSelectedCrew = selectedCrews.Count > 0;
             if (hasSelectedCrew == false)
             {
@@ -114,6 +125,12 @@ namespace FTL
             //        : EBattleResult.EnemyAllCrewDead;
             //    GameManager.Instance.HandleBattleResult(battleResult);
             //}
+        }
+
+        public bool CanRunCrewLogic()
+        {
+            return GameManager.Instance.CanRunCombat &&
+                ship.IsCombatStopped == false;
         }
 
     }

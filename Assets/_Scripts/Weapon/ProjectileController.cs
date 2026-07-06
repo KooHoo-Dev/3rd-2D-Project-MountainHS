@@ -44,6 +44,11 @@ namespace FTL
 
         private void Update()
         {
+            if (GameManager.Instance.CanRunCombat == false)
+            {
+                return;
+            }
+
             // 목적지에 도착했으면 삭제
             if (IsArrived)
             {
@@ -105,6 +110,11 @@ namespace FTL
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            if (GameManager.Instance.CanRunCombat == false)
+            {
+                return;
+            }
+
             // 충돌한 콜라이더가 함선 레이어 콜라이더이면
             bool hasNoStartCol = StartCol == null;
             if (hasNoStartCol)
@@ -133,6 +143,11 @@ namespace FTL
 
         private void OnTriggerExit2D(Collider2D collision)
         {
+            if (GameManager.Instance.CanRunCombat == false)
+            {
+                return;
+            }
+
             // 특정 콜라이더이면 그에 대응되는 EShipArea가 뽑히도록 하면 좋을 거 같은데
             bool isLeavingStartCol = StartCol == collision;
             if (isLeavingStartCol)

@@ -31,6 +31,11 @@ namespace FTL
 
         private void Update()
         {
+            if (CanRunFacilityLogic() == false)
+            {
+                return;
+            }
+
             UpdateWeaponActivation();
 
             UpdateWeaponTargeting();
@@ -106,6 +111,11 @@ namespace FTL
 
         public void SetSelectedWeapon(int index)
         {
+            if (CanRunFacilityLogic() == false)
+            {
+                return;
+            }
+
             // 선택한 무기가 없으면 (무기 리스트의 인덱스 범위 초과) 예외처리
             if (index > weapons.Count)
             {
@@ -120,6 +130,11 @@ namespace FTL
 
         public void SetSelectedRoomTarget(ProjectileTargetData targetData)
         {
+            if (CanRunFacilityLogic() == false)
+            {
+                return;
+            }
+
             this.targetData = targetData;
             CursorController.Instance.ResetMouseSprite();
         }
@@ -127,6 +142,15 @@ namespace FTL
         // 선택한 무기 리셋
         public void ResetSelectedWeapon()
         {
+            ProjectileTargetData emptyData = new ProjectileTargetData(Vector2.zero, -1);
+            ResetWeaponTargetSprite(selectedWeapon);
+            CursorController.Instance.ResetMouseSprite();
+            if (selectedWeapon == null)
+            {
+                Debug.LogWarning("Selected Weapon is null. Reset failed.");
+                return;
+            }
+            selectedWeapon.SetRoomTarget(emptyData);
             selectedWeapon = null;
         }
 
