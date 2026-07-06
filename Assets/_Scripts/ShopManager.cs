@@ -19,6 +19,8 @@ namespace FTL
         private const string RESTORE_UI_ROOT = "Restore UI Root";
         private const string CREW_GROUP_ROOT = "Crew Group Root";
 
+        public static int BattlePrepareVisitCount = 0;
+
         // switch 두개 등록
         [SerializeField] private Button shipUpgradeSwitchButton;
         [SerializeField] private Button restoreSwitchButton;
@@ -42,6 +44,7 @@ namespace FTL
 
         private void Awake()
         {
+            BattlePrepareVisitCount++;
             InitMainGameObject();
             InitFacilityUpgradeCounts();
             GameManager.Instance.EnsureBattlePrepareTestGameContext();

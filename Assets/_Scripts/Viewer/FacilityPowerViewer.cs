@@ -1,11 +1,12 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace FTL
 {
-    public class FacilityPowerViewer : PowerViewer
+    public class FacilityPowerViewer : PowerViewer, IPointerClickHandler
     {
         [SerializeField] private Image facilityIcon;
         [SerializeField] private Image assistIcon;
@@ -27,6 +28,61 @@ namespace FTL
                 repairBar = repairBarTransform.GetComponent<Image>();
 
             CacheBarSpritesFromChildren();
+        }
+
+        void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
+        {
+            if (CanHandlePlayerPowerClick(eventData) == false)
+            {
+                return;
+            }
+
+            ShipPowerController powerSystem = GameManager.Instance.Player.PowerSystem;
+            if (eventData.button == PointerEventData.InputButton.Left)
+            {
+                powerSystem.TryAllocatePower(facilityType);
+            }
+            else if (eventData.button == PointerEventData.InputButton.Right)
+            {
+                powerSystem.TryDeallocatePower(facilityType);
+            }
+        }
+
+        private bool CanHandlePlayerPowerClick(PointerEventData eventData)
+        {
+            if (isEnemy || facilitySystem == null || facilityType == ERoomType.Empty)
+            {
+                return false;
+            }
+
+            if (IsFacilityIconClicked(eventData) == false)
+            {
+                return false;
+            }
+
+            if (GameManager.IsInitialized == false || GameManager.Instance.Player == null)
+            {
+                Debug.LogWarning($"{gameObject.name}: Player is not ready to handle facility power click.");
+                return false;
+            }
+
+            return GameManager.Instance.Player.PowerSystem != null;
+        }
+
+        private bool IsFacilityIconClicked(PointerEventData eventData)
+        {
+            if (facilityIcon == null)
+            {
+                return false;
+            }
+
+            GameObject clickedObject = eventData.pointerPressRaycast.gameObject;
+            if (clickedObject == null)
+            {
+                return false;
+            }
+
+            return clickedObject == facilityIcon.gameObject || clickedObject.transform.IsChildOf(facilityIcon.transform);
         }
 
         private void Start()

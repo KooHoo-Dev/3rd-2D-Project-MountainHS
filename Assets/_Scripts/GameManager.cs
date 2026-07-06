@@ -16,6 +16,7 @@ namespace FTL
         private const string BATTLE_SCENE2 = "BattleScene2";
         private const string BATTLE_SCENE3 = "BattleScene3";
         private const string BATTLE_PREPARE = "BattlePrepare";
+        private const string VICTORY_SCENE = "VictoryScene";
 
         public bool IsGameContextEmpty => gameContext == null || gameContext.IsEmpty;
         public bool IsCombatPaused => isCombatPaused;
@@ -78,13 +79,7 @@ namespace FTL
             CursorController.Instance.ResetMouseSprite();
             if (scene.name == BATTLE_SCENE)
             {
-                EEnemyType enemyType = EEnemyType.Random;
-                SceneBinder sceneBinder = FindFirstObjectByType<SceneBinder>();
-                BackgroundController backgroundController = FindFirstObjectByType<BackgroundController>();
-
-                gameContext.SetEnemyType(enemyType);
-                sceneBinder.BindSceneObjects(gameContext);
-                backgroundController.SetRandomBackground();
+                BindLinearBattleScene();
             }
             else if (scene.name == BATTLE_SCENE1)
             {
@@ -121,6 +116,43 @@ namespace FTL
                 ShopManager shopManager = FindFirstObjectByType<ShopManager>();
                 shopManager.ApplyGameContext(gameContext);
             }
+        }
+
+        private void BindLinearBattleScene()
+        {
+            int battlePrepareVisitCount = ShopManager.BattlePrepareVisitCount;
+            EEnemyType enemyType = EEnemyType.Enemy1;
+            bool isAsteroidStage = false;
+            bool isSunStage = false;
+
+            if (battlePrepareVisitCount == 1)
+            {
+                enemyType = EEnemyType.Enemy2;
+                isAsteroidStage = true;
+            }
+            else if (battlePrepareVisitCount == 2)
+            {
+                enemyType = EEnemyType.Enemy2;
+                isSunStage = true;
+            }
+            else if (battlePrepareVisitCount == 3)
+            {
+                enemyType = EEnemyType.Enemy3;
+                isAsteroidStage = true;
+                isSunStage = true;
+            }
+            else if (battlePrepareVisitCount >= 4)
+            {
+                SceneManager.LoadScene(VICTORY_SCENE);
+                return;
+            }
+
+            SceneBinder sceneBinder = FindFirstObjectByType<SceneBinder>();
+            BackgroundController backgroundController = FindFirstObjectByType<BackgroundController>();
+
+            gameContext.SetEnemyType(enemyType);
+            sceneBinder.BindSceneObjectsWithEnvironment(gameContext, isAsteroidStage, isSunStage);
+            backgroundController.SetRandomBackground();
         }
 
         public void HandleBattleResult(EBattleResult battleResult)
@@ -341,6 +373,7 @@ namespace FTL
         public void ResetGameContext()
         {
             gameContext = null;
+            ShopManager.BattlePrepareVisitCount = 0;
         }
 
         public void ExitGame()
