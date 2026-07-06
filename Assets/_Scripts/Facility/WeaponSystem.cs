@@ -86,11 +86,13 @@ namespace FTL
             // 무기 시스템 전력 상태에 따라 무기 활성화 상태 변화
             if (weapons.Count > 0)
             {
+                float chargeSpeedMultiplier = GetChargeSpeedMultiplierByPower();
                 if (IsPowered)
                 {
                     for (int i = 0; i < weapons.Count; i++)
                     {
                         weapons[i].IsPowered = true;
+                        weapons[i].SetChargeSpeedMultiplier(chargeSpeedMultiplier);
                     }
                 }
                 else
@@ -98,9 +100,44 @@ namespace FTL
                     for (int i = 0; i < weapons.Count; i++)
                     {
                         weapons[i].IsPowered = false;
+                        weapons[i].SetChargeSpeedMultiplier(1f);
                     }
                 }
             }
+        }
+
+        private float GetChargeSpeedMultiplierByPower()
+        {
+            if (Power <= 0)
+            {
+                return 0f;
+            }
+            if (Power == 1)
+            {
+                return 0.75f;
+            }
+            if (Power == 2)
+            {
+                return 0.9f;
+            }
+            if (Power == 3)
+            {
+                return 1f;
+            }
+            if (Power == 4)
+            {
+                return 1.25f;
+            }
+            if (Power == 5)
+            {
+                return 1.4f;
+            }
+            if (Power == 6)
+            {
+                return 1.6f;
+            }
+
+            return 1.75f;
         }
 
         private bool CanUpdateWeapon()
