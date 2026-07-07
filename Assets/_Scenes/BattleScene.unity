@@ -179,6 +179,22 @@ PrefabInstance:
       propertyPath: weaponChargeGroupTransform
       value: 
       objectReference: {fileID: 606030066}
+    - target: {fileID: 2849580130000628616, guid: 4bc302751b467c54bb904d7ed9dd5d99, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 11.870251
+      objectReference: {fileID: 0}
+    - target: {fileID: 2849580130000628616, guid: 4bc302751b467c54bb904d7ed9dd5d99, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 10.671936
+      objectReference: {fileID: 0}
+    - target: {fileID: 2849580130000628616, guid: 4bc302751b467c54bb904d7ed9dd5d99, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.5036
+      objectReference: {fileID: 0}
+    - target: {fileID: 2849580130000628616, guid: 4bc302751b467c54bb904d7ed9dd5d99, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.096
+      objectReference: {fileID: 0}
     - target: {fileID: 2859093918142305779, guid: 4bc302751b467c54bb904d7ed9dd5d99, type: 3}
       propertyPath: m_TagString
       value: Crew Group
@@ -2533,8 +2549,8 @@ Transform:
   m_GameObject: {fileID: 842322586}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 12, y: 12, z: 1}
+  m_LocalPosition: {x: -0.5756, y: 0, z: 0}
+  m_LocalScale: {x: 10.8492, y: 12, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1051567088}
@@ -2573,7 +2589,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.000782907, y: 0.009495646}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2583,7 +2599,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.7196077, y: 0.70080453}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!212 &842322589
 SpriteRenderer:
