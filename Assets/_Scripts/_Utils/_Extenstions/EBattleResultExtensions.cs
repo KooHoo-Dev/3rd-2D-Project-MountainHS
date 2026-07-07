@@ -2,21 +2,21 @@ namespace FTL
 {
     public static class EBattleResultExtensions
     {
-        public static string GetBattleResultName(this EBattleResult resultType)
+        public static string GetBattleResultName(this BattleResult resultType)
         {
             switch (resultType)
             {
-                case EBattleResult.EnemyAllCrewDead:
+                case BattleResult.EnemyAllCrewDead:
                     return "Victory: All Crew Dead";
-                case EBattleResult.PlayerShipDestroyed:
+                case BattleResult.PlayerShipDestroyed:
                     return "Defeat: Ship Destroyed";
-                case EBattleResult.EnemyShipDestroyed:
+                case BattleResult.EnemyShipDestroyed:
                     return "Victory: Ship Destroyed";
-                case EBattleResult.PlayerRun:
+                case BattleResult.PlayerRun:
                     return "Escaped";
-                case EBattleResult.PlayerAllCrewDead:
+                case BattleResult.PlayerAllCrewDead:
                     return "Defeat: All Crew Dead";
-                case EBattleResult.None:
+                case BattleResult.None:
                 default:
                     return string.Empty;
             }

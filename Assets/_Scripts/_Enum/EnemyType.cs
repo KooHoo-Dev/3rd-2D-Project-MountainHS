@@ -1,6 +1,6 @@
 namespace FTL
 {
-    public enum EEnemyType
+    public enum EnemyType
     {
         None = -2,
         Random = -1,

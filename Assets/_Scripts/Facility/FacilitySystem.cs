@@ -5,8 +5,8 @@ namespace FTL
 {
     public class FacilitySystem : MonoBehaviour
     {
-        public ERoomType Type => type;
-        public EFacilityStatus FacilityStatus => facilityStatus;
+        public RoomType Type => type;
+        public FacilityStatus FacilityStatus => facilityStatus;
         public int MaxPower => maxPower;
         public bool IsPowered => Power > 0;
         [field: SerializeField] public bool IsAssisted { get; protected set; } = false;
@@ -15,9 +15,9 @@ namespace FTL
         [field: SerializeField] public int MaxPowerLimit { get; set; } = 3;
         public int TotalDamage;
         public int Power;
-        [SerializeField] protected ERoomType type;
+        [SerializeField] protected RoomType type;
         [SerializeField] protected int maxPower;
-        protected EFacilityStatus facilityStatus;
+        protected FacilityStatus facilityStatus;
         protected ShipController ship;
 
         protected virtual void Awake()
@@ -26,7 +26,7 @@ namespace FTL
             IsAssisted = false;
             Power = 0;
             maxPower = MaxPowerLimit;
-            facilityStatus = EFacilityStatus.Normal;
+            facilityStatus = FacilityStatus.Normal;
             TotalDamage = 0;
             UpdateFacilityStatus();
         }
@@ -98,19 +98,19 @@ namespace FTL
         {
             if (TotalDamage == MaxPowerLimit)
             {
-                facilityStatus = EFacilityStatus.Broked;
+                facilityStatus = FacilityStatus.Broked;
             }
             else if (TotalDamage > 0 && TotalDamage < MaxPowerLimit)
             {
-                facilityStatus = EFacilityStatus.Damaged;
+                facilityStatus = FacilityStatus.Damaged;
             }
             else if (Power == 0)
             {
-                facilityStatus = EFacilityStatus.Disabled;
+                facilityStatus = FacilityStatus.Disabled;
             }
             else if (TotalDamage == 0)
             {
-                facilityStatus = EFacilityStatus.Normal;
+                facilityStatus = FacilityStatus.Normal;
             }
         }
 

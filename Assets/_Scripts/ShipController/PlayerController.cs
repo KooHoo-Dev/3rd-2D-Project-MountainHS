@@ -13,9 +13,9 @@ namespace FTL
         [field: SerializeField] public int ScrapAmount { get; set; }
         [SerializeField] private LayerMask clickableLayer;
 
-        private ERoomType aKeyFacilityType = ERoomType.Shield;
-        private ERoomType sKeyFacilityType = ERoomType.Engine;
-        private ERoomType dKeyFacilityType = ERoomType.Weapon;
+        private RoomType aKeyFacilityType = RoomType.Shield;
+        private RoomType sKeyFacilityType = RoomType.Engine;
+        private RoomType dKeyFacilityType = RoomType.Weapon;
         private bool oneShotBool = true;
         private bool oneShotBool2 = true;
 
@@ -30,7 +30,7 @@ namespace FTL
         }
         private void Start()
         {
-            Ownership.ShipSide = EShipSide.Player;
+            Ownership.ShipSide = ShipSide.Player;
         }
 
         private void Update()
@@ -76,7 +76,7 @@ namespace FTL
             Collider2D[] clickCols = Physics2D.OverlapPointAll(worldPoint, clickableLayer);
             Collider2D roomCol = null;
             CrewController crew = null;
-            EShipSide shipSide = EShipSide.None;
+            ShipSide shipSide = ShipSide.None;
             LayerMask roomLayer = LayerMask.GetMask(Tags.ROOM_LAYER);
             LayerMask shipLayer = LayerMask.GetMask(Tags.SHIP_LAYER);
             LayerMask crewLayer = LayerMask.GetMask(Tags.CREW_LAYER);
@@ -109,7 +109,7 @@ namespace FTL
             LayerMask shipLayer,
             LayerMask crewLayer,
             ref Collider2D roomCol,
-            ref EShipSide shipSide,
+            ref ShipSide shipSide,
             ref CrewController crew)
         {
             int colLayer = col.gameObject.layer;
@@ -133,10 +133,10 @@ namespace FTL
             }
         }
 
-        private void HandleLeftMouseClick(Collider2D roomCol, EShipSide shipSide, CrewController crew)
+        private void HandleLeftMouseClick(Collider2D roomCol, ShipSide shipSide, CrewController crew)
         {
             bool hasRoomCol = roomCol != null;
-            bool isEnemyShip = shipSide != EShipSide.Player && shipSide != EShipSide.None;
+            bool isEnemyShip = shipSide != ShipSide.Player && shipSide != ShipSide.None;
             bool isEnemyRoomSelected = hasRoomCol && isEnemyShip;
 
             if (isEnemyRoomSelected)
@@ -148,7 +148,7 @@ namespace FTL
                 weaponSystem.SetSelectedRoomTarget(targetData);
             }
 
-            bool isPlayerCrewSelected = crew != null && shipSide == EShipSide.Player;
+            bool isPlayerCrewSelected = crew != null && shipSide == ShipSide.Player;
             if (isPlayerCrewSelected)
             {
                 crewSystem.AddSelectedCrew(crew);
@@ -182,7 +182,7 @@ namespace FTL
 
         public void SetFacilitySystems(List<FacilityState> facilityStates)
         {
-            for (ERoomType type = ERoomType.Weapon; type <= ERoomType.Shield; type++)
+            for (RoomType type = RoomType.Weapon; type <= RoomType.Shield; type++)
             {
                 int index = (int)type;
                 FacilitySystem facility = FacilitySystems[index];

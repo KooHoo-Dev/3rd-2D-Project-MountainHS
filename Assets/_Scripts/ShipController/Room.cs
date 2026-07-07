@@ -13,7 +13,7 @@ namespace FTL
         [field: SerializeField] private List<int> neighborRoomIds;
         [field: SerializeField] public FacilitySystem FacilitySystem { get; set; }
         [field: SerializeField] public List<CrewController> Crews { get; set; } = new List<CrewController>();
-        [field: SerializeField] public ERoomType Type { get; private set; }
+        [field: SerializeField] public RoomType Type { get; private set; }
         [field: SerializeField] public Vector2 LocalPosition { get; set; }
         [field: SerializeField] public Vector2 GlobalPosition { get; set; }
         [field: SerializeField] public int MaxCrewCapacity { get; private set; }
@@ -88,7 +88,7 @@ namespace FTL
             return GlobalPosition + crewOffset;
         }
 
-        public EFacilityStatus GetFacilityStatus()
+        public FacilityStatus GetFacilityStatus()
         {
             return FacilitySystem.FacilityStatus;
         }

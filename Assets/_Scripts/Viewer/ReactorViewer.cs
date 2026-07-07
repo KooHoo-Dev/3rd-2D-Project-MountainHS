@@ -47,7 +47,7 @@ namespace FTL
 
         // 전력바 상태 관리: 가용, 불가능
         // 전력바 상태에 따라 스프라이트 상태 변경
-        protected virtual void SetBarState(int barIndex, EPowerBarStatus status)
+        protected virtual void SetBarState(int barIndex, PowerBarStatus status)
         {
             if (barIndex < 0 || barIndex >= barSprites.Count)
             {
@@ -59,13 +59,13 @@ namespace FTL
             // 스프라이트 상태 변경
             switch (status)
             {
-                case EPowerBarStatus.Available:
+                case PowerBarStatus.Available:
                     image.color = Color.green; // 가용 상태 색상
                     break;
-                case EPowerBarStatus.Broken:
+                case PowerBarStatus.Broken:
                     image.color = Color.orange; // 불가능 상태 색상
                     break;
-                case EPowerBarStatus.UnAvailable:
+                case PowerBarStatus.UnAvailable:
                     image.color = Color.grey; // 불가능 상태 색상
                     break;
                 default:
@@ -106,11 +106,11 @@ namespace FTL
             {
                 if (i < availablePower)
                 {
-                    SetBarState(i, EPowerBarStatus.Available);
+                    SetBarState(i, PowerBarStatus.Available);
                 }
                 else
                 {
-                    SetBarState(i, EPowerBarStatus.UnAvailable);
+                    SetBarState(i, PowerBarStatus.UnAvailable);
                 }
             }
         }
@@ -141,7 +141,7 @@ namespace FTL
         {
             GameObject powerBar = barPool.Get();
             barSprites.Add(powerBar.GetComponent<UnityEngine.UI.Image>());
-            SetBarState(barSprites.Count - 1, EPowerBarStatus.Available);
+            SetBarState(barSprites.Count - 1, PowerBarStatus.Available);
         }
 
         private GameObject CreateBar()

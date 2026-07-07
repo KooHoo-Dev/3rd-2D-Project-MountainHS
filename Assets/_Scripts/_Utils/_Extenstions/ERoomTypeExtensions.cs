@@ -4,15 +4,15 @@ namespace FTL
 {
     public static class ERoomTypeExtensions
     {
-        public static string ToRoomTypeName(this ERoomType roomType)
+        public static string ToRoomTypeName(this RoomType roomType)
         {
             switch (roomType)
             {
-                case ERoomType.Weapon:
+                case RoomType.Weapon:
                     return "Weapon";
-                case ERoomType.Engine:
+                case RoomType.Engine:
                     return "Engine";
-                case ERoomType.Shield:
+                case RoomType.Shield:
                     return "Shield";
                 default:
                     return string.Empty;

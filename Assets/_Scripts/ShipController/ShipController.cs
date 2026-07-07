@@ -15,7 +15,7 @@ namespace FTL
         public bool IsCombatStopped => isCombatStopped;
         public ShipOwnership Ownership { get; private set; }
         [Header("Start Weapon Types")]
-        [field: SerializeField] public List<EWeaponType> WeaponTypes { get; private set; } = new List<EWeaponType>();
+        [field: SerializeField] public List<WeaponType> WeaponTypes { get; private set; } = new List<WeaponType>();
         [SerializeField] protected GameObject weaponChargeStatusPrefab;
         [SerializeField] protected List<WeaponTransformData> weaponTransformList;
 
@@ -82,7 +82,7 @@ namespace FTL
 
             Ownership = GetComponentInChildren<ShipOwnership>();
 
-            weaponSystem = (WeaponSystem)GetFacilitySystemByERoomType(ERoomType.Weapon);
+            weaponSystem = (WeaponSystem)GetFacilitySystemByERoomType(RoomType.Weapon);
             PowerSystem = GetComponent<ShipPowerController>();
             roomGroupTransform = FindDirectChildWithTag(transform, "Room Group").transform;
             crewGroupTransform = FindDirectChildWithTag(transform, "Crew Group").transform;
@@ -148,7 +148,7 @@ namespace FTL
                     roomViewer.Room = room;
                     roomViewer.SetRoomState();
 
-                    if (room.Type != ERoomType.Empty)
+                    if (room.Type != RoomType.Empty)
                     {
                         room.FacilitySystem = GetFacilitySystemByERoomType(room.Type);
                     }
@@ -182,7 +182,7 @@ namespace FTL
             {
                 for (int i = 0; i < WeaponTypes.Count; i++)
                 {
-                    EWeaponType weaponType = WeaponTypes[i];
+                    WeaponType weaponType = WeaponTypes[i];
                     WeaponDatabase weaponDatabase = GameManager.Instance.WeaponDatabase;
                     GameObject weaponPrefab = weaponDatabase.GetPrefab(weaponType);
                     GameObject weaponObject = Instantiate(weaponPrefab, weaponGroupTransform);
@@ -216,7 +216,7 @@ namespace FTL
             }
 
 
-        protected void HandlePowerInput(ERoomType facilityType, bool isRecoverInput)
+        protected void HandlePowerInput(RoomType facilityType, bool isRecoverInput)
         {
             if (CanControlShip() == false)
             {
@@ -262,25 +262,25 @@ namespace FTL
             return null;
         }
 
-        public FacilitySystem GetFacilitySystemByERoomType(ERoomType roomType)
+        public FacilitySystem GetFacilitySystemByERoomType(RoomType roomType)
         {
             switch (roomType)
             {
-                case ERoomType.Weapon:
-                    return FacilitySystems[(int)ERoomType.Weapon];
-                case ERoomType.Engine:
-                    return FacilitySystems[(int)ERoomType.Engine];
-                case ERoomType.Shield:
-                    return FacilitySystems[(int)ERoomType.Shield];
+                case RoomType.Weapon:
+                    return FacilitySystems[(int)RoomType.Weapon];
+                case RoomType.Engine:
+                    return FacilitySystems[(int)RoomType.Engine];
+                case RoomType.Shield:
+                    return FacilitySystems[(int)RoomType.Shield];
                 default:
                     throw new ArgumentException("Invalid room type");
             }
 
         }
 
-        public void SetWeaponTypes(List<EWeaponType> weaponTypes)
+        public void SetWeaponTypes(List<WeaponType> weaponTypes)
         {
-            WeaponTypes = new List<EWeaponType>();
+            WeaponTypes = new List<WeaponType>();
 
             for (int i = 0; i < weaponTypes.Count; i++)
             {
@@ -331,7 +331,7 @@ namespace FTL
 
         private void CheckGameOver()
         {
-            EBattleResult battleResult = EBattleResult.None;
+            BattleResult battleResult = BattleResult.None;
             bool isGameOver = IsDead || crewSystem.IsAllCrewDead;
             if (isGameOver == false || isDeadCoroutineActivated == true)
             {
@@ -342,15 +342,15 @@ namespace FTL
 
             if (crewSystem.IsAllCrewDead)
             {
-                battleResult = (Ownership.ShipSide == EShipSide.Player)
-                    ? EBattleResult.PlayerAllCrewDead
-                    : EBattleResult.EnemyAllCrewDead;
+                battleResult = (Ownership.ShipSide == ShipSide.Player)
+                    ? BattleResult.PlayerAllCrewDead
+                    : BattleResult.EnemyAllCrewDead;
             }
             if (IsDead)
             {
-                battleResult = (Ownership.ShipSide == EShipSide.Player)
-                    ? EBattleResult.PlayerShipDestroyed
-                    : EBattleResult.EnemyShipDestroyed;
+                battleResult = (Ownership.ShipSide == ShipSide.Player)
+                    ? BattleResult.PlayerShipDestroyed
+                    : BattleResult.EnemyShipDestroyed;
             }
 
             GameManager.Instance.StopBattle();
@@ -389,7 +389,7 @@ namespace FTL
             Hp = restoredHp > ShipData.MaxHp ? ShipData.MaxHp : restoredHp;
         }
 
-        public void RequestAllocatePower(ERoomType facilityType)
+        public void RequestAllocatePower(RoomType facilityType)
         {
             if (CanControlShip() == false)
             {
@@ -399,7 +399,7 @@ namespace FTL
             PowerSystem.TryAllocatePower(facilityType);
         }
 
-        public void RequestDeallocatePower(ERoomType facilityType)
+        public void RequestDeallocatePower(RoomType facilityType)
         {
             if (CanControlShip() == false)
             {
@@ -416,7 +416,7 @@ namespace FTL
                 GameManager.Instance.CanRunCombat;
         }
 
-        public virtual IEnumerator DeadCoroutine(float seconds, EBattleResult result)
+        public virtual IEnumerator DeadCoroutine(float seconds, BattleResult result)
         {
             isDeadCoroutineActivated = true;
             yield return new WaitForSeconds(seconds);

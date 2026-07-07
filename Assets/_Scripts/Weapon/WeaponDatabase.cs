@@ -6,7 +6,7 @@ namespace FTL
     [System.Serializable]
     public class WeaponPrefabEntry
     {
-        public EWeaponType weaponType;
+        public WeaponType weaponType;
         public GameObject prefab;
     }
 
@@ -16,7 +16,7 @@ namespace FTL
         [SerializeField]
         private WeaponPrefabEntry[] entries;
 
-        public GameObject GetPrefab(EWeaponType weaponType)
+        public GameObject GetPrefab(WeaponType weaponType)
         {
             foreach (WeaponPrefabEntry entry in entries)
             {

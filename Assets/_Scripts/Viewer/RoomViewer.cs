@@ -30,21 +30,21 @@ namespace FTL
         /// <summary>
         /// 외부에서 roomId, roomType 입력받으면 그에 맞게 텍스트, 색깔 바꾸기
         /// </summary>
-        public void SetRoomState(int id, ERoomType type)
+        public void SetRoomState(int id, RoomType type)
         {
             text.SetText($"{id}");
             switch (type)
             {
-                case ERoomType.Empty:
+                case RoomType.Empty:
                     spriteRenderer.color = Color.white;
                     break;
-                case ERoomType.Weapon:
+                case RoomType.Weapon:
                     spriteRenderer.color = Color.red;
                     break;
-                case ERoomType.Shield:
+                case RoomType.Shield:
                     spriteRenderer.color = Color.blue;
                     break;
-                case ERoomType.Engine:
+                case RoomType.Engine:
                     spriteRenderer.color = Color.green;
                     break;
             }

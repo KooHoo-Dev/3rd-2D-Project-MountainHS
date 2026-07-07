@@ -14,7 +14,7 @@ namespace FTL
         [field: SerializeField] public string Name { get; set; } = "Hans";
         public CrewSystem CrewSystem { set; get; }
         [SerializeField] private float moveSpeed = 3f;
-        [SerializeField] private ECrewStatus crewStatus = ECrewStatus.Idle;
+        [SerializeField] private CrewStatus crewStatus = CrewStatus.Idle;
         [field: SerializeField] public static Vector3 Offset { get; private set; } = new Vector3(0f, 0.5f, 0f);
         private Transform crewSpriteTransform; 
 
@@ -50,7 +50,7 @@ namespace FTL
 
             TargetRoom.AddCrew(this);
             CurrentRoom = TargetRoom;
-            crewStatus = ECrewStatus.Moving;
+            crewStatus = CrewStatus.Moving;
         }
 
         public void InitStartRoom(Room room)
@@ -62,14 +62,14 @@ namespace FTL
 
         private void UpdateCrewStatus()
         {
-            if (crewStatus == ECrewStatus.Moving)
+            if (crewStatus == CrewStatus.Moving)
             {
                 return;
             }
 
             if (CanMoveToLowPosition())
             {
-                crewStatus = ECrewStatus.Moving;
+                crewStatus = CrewStatus.Moving;
                 TargetRoom = CurrentRoom;
                 return;
             }
@@ -78,15 +78,15 @@ namespace FTL
             {
                 switch (CurrentRoom.GetFacilityStatus())
                 {
-                    case EFacilityStatus.Damaged:
-                    case EFacilityStatus.Broked:
-                        crewStatus = ECrewStatus.Repair;
+                    case FacilityStatus.Damaged:
+                    case FacilityStatus.Broked:
+                        crewStatus = CrewStatus.Repair;
                         break;
-                    case EFacilityStatus.Normal:
-                        crewStatus = ECrewStatus.Assisting;
+                    case FacilityStatus.Normal:
+                        crewStatus = CrewStatus.Assisting;
                         break;
-                    case EFacilityStatus.Disabled:
-                        crewStatus = ECrewStatus.Idle;
+                    case FacilityStatus.Disabled:
+                        crewStatus = CrewStatus.Idle;
                         break;
                     default:
                         Debug.LogWarning($"CrewController: UpdateStatus: Unexpected facility status {CurrentRoom.GetFacilityStatus()} in room {CurrentRoom.Id}");
@@ -122,7 +122,7 @@ namespace FTL
                 bool hasReachedTarget = crewSpriteTransform.position == targetPosition;
                 if (hasReachedTarget)
                 {
-                    crewStatus = ECrewStatus.Idle;
+                    crewStatus = CrewStatus.Idle;
                     TargetRoom = null;
                 }
                 else
@@ -145,19 +145,19 @@ namespace FTL
         {
             switch (crewStatus)
             {
-                case ECrewStatus.Moving:
+                case CrewStatus.Moving:
                     Room roomBeforeMoving = CurrentRoom;
                     MoveToTargetRoom();
                     break;
-                case ECrewStatus.Idle:
+                case CrewStatus.Idle:
                     AssistFacility(false);
                     ResetRepairProgressOnEmptyRoom(CurrentRoom);
                     break;
-                case ECrewStatus.Repair:
+                case CrewStatus.Repair:
                     AssistFacility(false);
                     RepairFacilityInRoom();
                     break;
-                case ECrewStatus.Assisting:
+                case CrewStatus.Assisting:
                     AssistFacility(true);
                     ResetRepairProgressOnEmptyRoom(CurrentRoom);
                     break;

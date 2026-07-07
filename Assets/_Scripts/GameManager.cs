@@ -23,7 +23,7 @@ namespace FTL
         public bool IsBattleStopped => isBattleStopped;
         public bool CanRunCombat => isCombatPaused == false && isBattleStopped == false;
         public PlayerController Player;
-        [field: SerializeField] public EBattleResult BattleResult { get; set; }
+        [field: SerializeField] public BattleResult BattleResult { get; set; }
 
         [field: SerializeField] public EnemyDatabase EnemyDatabase { get; private set; }
         [field: SerializeField] public WeaponDatabase WeaponDatabase { get; private set; }
@@ -83,7 +83,7 @@ namespace FTL
             }
             else if (scene.name == BATTLE_SCENE1)
             {
-                EEnemyType enemyType = EEnemyType.Enemy1;
+                EnemyType enemyType = EnemyType.Enemy1;
                 SceneBinder sceneBinder = FindFirstObjectByType<SceneBinder>();
                 BackgroundController backgroundController = FindFirstObjectByType<BackgroundController>();
 
@@ -93,7 +93,7 @@ namespace FTL
             }
             else if (scene.name == BATTLE_SCENE2)
             {
-                EEnemyType enemyType = EEnemyType.Enemy2;
+                EnemyType enemyType = EnemyType.Enemy2;
                 SceneBinder sceneBinder = FindFirstObjectByType<SceneBinder>();
                 BackgroundController backgroundController = FindFirstObjectByType<BackgroundController>();
 
@@ -103,7 +103,7 @@ namespace FTL
             }
             else if (scene.name == BATTLE_SCENE3)
             {
-                EEnemyType enemyType = EEnemyType.Enemy3;
+                EnemyType enemyType = EnemyType.Enemy3;
                 SceneBinder sceneBinder = FindFirstObjectByType<SceneBinder>();
                 BackgroundController backgroundController = FindFirstObjectByType<BackgroundController>();
 
@@ -121,23 +121,23 @@ namespace FTL
         private void BindLinearBattleScene()
         {
             int battlePrepareVisitCount = ShopManager.BattlePrepareVisitCount;
-            EEnemyType enemyType = EEnemyType.Enemy1;
+            EnemyType enemyType = EnemyType.Enemy1;
             bool isAsteroidStage = false;
             bool isSunStage = false;
 
             if (battlePrepareVisitCount == 1)
             {
-                enemyType = EEnemyType.Enemy2;
+                enemyType = EnemyType.Enemy2;
                 isAsteroidStage = true;
             }
             else if (battlePrepareVisitCount == 2)
             {
-                enemyType = EEnemyType.Enemy2;
+                enemyType = EnemyType.Enemy2;
                 isSunStage = true;
             }
             else if (battlePrepareVisitCount == 3)
             {
-                enemyType = EEnemyType.Enemy3;
+                enemyType = EnemyType.Enemy3;
                 isAsteroidStage = true;
                 isSunStage = true;
             }
@@ -155,72 +155,72 @@ namespace FTL
             backgroundController.SetRandomBackground();
         }
 
-        public void HandleBattleResult(EBattleResult battleResult)
+        public void HandleBattleResult(BattleResult battleResult)
         {
             StopBattle();
             // 함선이 파괴되면
             switch (battleResult)
             {
-                case EBattleResult.PlayerShipDestroyed:
+                case BattleResult.PlayerShipDestroyed:
                     Debug.Log("Player ship destroyed");
                     mainUIController.SetBattleResult(battleResult, 0);
                     break;
-                case EBattleResult.PlayerAllCrewDead:
+                case BattleResult.PlayerAllCrewDead:
                     // 게임오버 화면으로
                     // 어떤 Uicontroller인지 몰라도 얘한테 시켜서 게임오버화면으로 이동
                     mainUIController.SetBattleResult(battleResult, 0);
                     Debug.Log("Player all crew dead.");
                     break;
-                case EBattleResult.EnemyShipDestroyed:
+                case BattleResult.EnemyShipDestroyed:
                     SetGameContext(Player);
                     gameContext.AddScrap(100);
                     mainUIController.SetBattleResult(battleResult, 100);
                     Debug.Log("Enemy ship destroyed.");
                     break;
-                case EBattleResult.EnemyAllCrewDead:
+                case BattleResult.EnemyAllCrewDead:
                     SetGameContext(Player);
                     gameContext.AddScrap(200);
                     mainUIController.SetBattleResult(battleResult, 200);
                     Debug.Log("Enemy all crew dead.");
                     break;
-                case EBattleResult.PlayerRun:
+                case BattleResult.PlayerRun:
                     // 전투준비 화면으로 이동
                     // 어떤 Uicontroller인지 몰라도 얘한테 시켜서 전투준비화면으로 이동
                     SetGameContext(Player);
                     mainUIController.SetBattleResult(battleResult, 0);
                     Debug.Log("Player run.");
                     break;
-                case EBattleResult.None:
+                case BattleResult.None:
                 default:
                     Debug.LogError("Unknown EBattleResult");
                     break;
             }
         }
 
-        public void MoveSceneByBattleResult(EBattleResult battleResult) 
+        public void MoveSceneByBattleResult(BattleResult battleResult) 
         {
             switch (battleResult)
             {
-                case EBattleResult.PlayerShipDestroyed:
-                    mainUIController.MoveScene(ESceneIndex.GameOver);
+                case BattleResult.PlayerShipDestroyed:
+                    mainUIController.MoveScene(SceneIndex.GameOver);
                     break;
-                case EBattleResult.PlayerAllCrewDead:
-                    mainUIController.MoveScene(ESceneIndex.GameOver);
+                case BattleResult.PlayerAllCrewDead:
+                    mainUIController.MoveScene(SceneIndex.GameOver);
                     Debug.Log("Player all crew dead.");
                     break;
-                case EBattleResult.EnemyShipDestroyed:
-                    mainUIController.MoveScene(ESceneIndex.BattlePrepare);
+                case BattleResult.EnemyShipDestroyed:
+                    mainUIController.MoveScene(SceneIndex.BattlePrepare);
                     Debug.Log("Enemy ship destroyed.");
                     break;
-                case EBattleResult.EnemyAllCrewDead:
-                    mainUIController.MoveScene(ESceneIndex.BattlePrepare);
+                case BattleResult.EnemyAllCrewDead:
+                    mainUIController.MoveScene(SceneIndex.BattlePrepare);
                     Debug.Log("Enemy all crew dead.");
                     break;
-                case EBattleResult.PlayerRun:
-                    mainUIController.MoveScene(ESceneIndex.BattlePrepare);
+                case BattleResult.PlayerRun:
+                    mainUIController.MoveScene(SceneIndex.BattlePrepare);
                     Debug.Log("Player run.");
                     break;
-                case EBattleResult.None:
+                case BattleResult.None:
                 default:
                     Debug.LogError("Unknown EBattleResult");
                     break;
@@ -229,7 +229,7 @@ namespace FTL
 
         public void PlayerRun()
         {
-            HandleBattleResult(EBattleResult.PlayerRun);
+            HandleBattleResult(BattleResult.PlayerRun);
         }
 
         public void SetCombatPaused(bool isPaused)
@@ -330,9 +330,9 @@ namespace FTL
 
             List<FacilityState> facilityStates = new List<FacilityState>
             {
-                new FacilityState(0, 3, 1, ERoomType.Weapon),
-                new FacilityState(0, 3, 1, ERoomType.Engine),
-                new FacilityState(0, 3, 2, ERoomType.Shield)
+                new FacilityState(0, 3, 1, RoomType.Weapon),
+                new FacilityState(0, 3, 1, RoomType.Engine),
+                new FacilityState(0, 3, 2, RoomType.Shield)
             };
 
             List<CrewState> crewStates = new List<CrewState>
@@ -365,7 +365,7 @@ namespace FTL
             return gameContext.ScrapAmount;
         }
 
-        public void IncreaseMaxPowerLimitOfFacility(ERoomType roomType, int amount = 1)
+        public void IncreaseMaxPowerLimitOfFacility(RoomType roomType, int amount = 1)
         {
             gameContext.IncreaseMaxPowerLimitOfFacility(roomType, amount);
         }
@@ -430,7 +430,7 @@ namespace FTL
             return gameContext.ShipReactorCapacity;
         }
 
-        public int GetFacilityMaxPowerLimit(ERoomType roomType)
+        public int GetFacilityMaxPowerLimit(RoomType roomType)
         {
             return gameContext.GetFacilityMaxPowerLimit(roomType);
         }
@@ -444,27 +444,27 @@ namespace FTL
         {
             if (SimpleInput.GetKeyDown(Key.Digit1))
             {
-                BattleResult = EBattleResult.PlayerShipDestroyed;
+                BattleResult = BattleResult.PlayerShipDestroyed;
             }
 
             if (SimpleInput.GetKeyDown(Key.Digit2))
             {
-                BattleResult = EBattleResult.PlayerAllCrewDead;
+                BattleResult = BattleResult.PlayerAllCrewDead;
             }
 
             if (SimpleInput.GetKeyDown(Key.Digit3))
             {
-                BattleResult = EBattleResult.PlayerRun;
+                BattleResult = BattleResult.PlayerRun;
             }
 
             if (SimpleInput.GetKeyDown(Key.Digit4))
             {
-                BattleResult = EBattleResult.EnemyAllCrewDead;
+                BattleResult = BattleResult.EnemyAllCrewDead;
             }
 
             if (SimpleInput.GetKeyDown(Key.Digit5))
             {
-                BattleResult = EBattleResult.EnemyShipDestroyed;
+                BattleResult = BattleResult.EnemyShipDestroyed;
             }
 
             if (SimpleInput.AnyKeyDown())

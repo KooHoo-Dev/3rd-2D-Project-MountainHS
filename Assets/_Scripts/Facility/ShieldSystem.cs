@@ -23,7 +23,7 @@ namespace FTL
         protected override void Awake()
         {
             base.Awake();
-            type = ERoomType.Shield;
+            type = RoomType.Shield;
             chargeProgress = 0f;
         }
 

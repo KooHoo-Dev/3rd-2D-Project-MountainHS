@@ -27,7 +27,7 @@ namespace FTL
             SceneManager.LoadScene(index);
         }
 
-        public void MoveScene(ESceneIndex eSceneIndex)
+        public void MoveScene(SceneIndex eSceneIndex)
         {
             MoveScene((int)eSceneIndex);
         }
@@ -35,7 +35,7 @@ namespace FTL
         public void ReturnToMainMenu()
         {
             GameManager.Instance.ResetGameContext();
-            MoveScene(ESceneIndex.MainMenu);
+            MoveScene(SceneIndex.MainMenu);
         }
 
         public void ExitGame()
@@ -45,10 +45,10 @@ namespace FTL
 
         public void HandlePlayerRun()
         {
-            GameManager.Instance.HandleBattleResult(EBattleResult.PlayerRun);
+            GameManager.Instance.HandleBattleResult(BattleResult.PlayerRun);
         }
 
-        public void SetBattleResult(EBattleResult battleResult, int reward)
+        public void SetBattleResult(BattleResult battleResult, int reward)
         {
             if (HasViewer)
             {

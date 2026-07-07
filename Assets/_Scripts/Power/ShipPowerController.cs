@@ -10,7 +10,7 @@ namespace FTL
         public int GetPower => reactorSystem.Power;
         [SerializeField] protected ReactorSystem reactorSystem;
         [SerializeField] protected List<FacilitySystem> facilities = new List<FacilitySystem>();
-        protected readonly Dictionary<ERoomType, int> assignedPowers = new Dictionary<ERoomType, int>();
+        protected readonly Dictionary<RoomType, int> assignedPowers = new Dictionary<RoomType, int>();
 
         protected virtual void Start()
         {
@@ -20,7 +20,7 @@ namespace FTL
         }
         protected void Update()
         {
-            for (ERoomType type = ERoomType.Weapon; type <= ERoomType.Shield; type++)
+            for (RoomType type = RoomType.Weapon; type <= RoomType.Shield; type++)
             {
                 HandleFacilityOverflow(type);
             }
@@ -38,7 +38,7 @@ namespace FTL
             assignedPowers.Add(facility.Type, facility.Power);
         }
 
-        public bool TryAllocatePower(ERoomType facilityType, int amount = 1)
+        public bool TryAllocatePower(RoomType facilityType, int amount = 1)
         {
             if (amount <= 0 || reactorSystem == null)
             {
@@ -64,7 +64,7 @@ namespace FTL
             return true;
         }
 
-        public bool TryDeallocatePower(ERoomType facilityType, int amount = 1)
+        public bool TryDeallocatePower(RoomType facilityType, int amount = 1)
         {
             if (amount <= 0 || reactorSystem == null)
             {
@@ -97,7 +97,7 @@ namespace FTL
             return true;
         }
 
-        public int GetAssignedPower(ERoomType facilityType)
+        public int GetAssignedPower(RoomType facilityType)
         {
             if (assignedPowers.TryGetValue(facilityType, out int power))
             {
@@ -123,7 +123,7 @@ namespace FTL
             reactorSystem.SetPower(amount);
         }
 
-        protected FacilitySystem FindFacility(ERoomType facilityType)
+        protected FacilitySystem FindFacility(RoomType facilityType)
         {
             for (int i = 0; i < facilities.Count; i++)
             {
@@ -136,7 +136,7 @@ namespace FTL
             return null;
         }
 
-        protected void SetAssignedPower(ERoomType facilityType, int power)
+        protected void SetAssignedPower(RoomType facilityType, int power)
         {
             assignedPowers[facilityType] = power;
         }
@@ -168,7 +168,7 @@ namespace FTL
         //    return totalPower;
         //}
 
-        protected void HandleFacilityOverflow(ERoomType facilityType)
+        protected void HandleFacilityOverflow(RoomType facilityType)
         {
             FacilitySystem facility = FindFacility(facilityType);
             if (facility == null)
@@ -186,7 +186,7 @@ namespace FTL
 
         public void ApplyState(FacilityState facilityState)
         {
-            ERoomType type = facilityState.Type;
+            RoomType type = facilityState.Type;
             int power = facilityState.Power;
             SetAssignedPower(type, power);
         }

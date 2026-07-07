@@ -94,17 +94,17 @@ namespace FTL
         // 시설 최대 전력 한계 증가
         public void IncreaseMaxPowerLimitOnWeaponFacility(int amount = 1)
         {
-            IncreaseMaxPowerLimit(ERoomType.Weapon, amount);
+            IncreaseMaxPowerLimit(RoomType.Weapon, amount);
         }
         public void IncreaseMaxPowerLimtOnEngineFacility(int amount = 1)
         {
-            IncreaseMaxPowerLimit(ERoomType.Engine, amount);
+            IncreaseMaxPowerLimit(RoomType.Engine, amount);
         }
         public void IncreaseMaxPowerLimitOnShieldFacility(int amount = 1)
         {
-            IncreaseMaxPowerLimit(ERoomType.Shield, amount);
+            IncreaseMaxPowerLimit(RoomType.Shield, amount);
         }
-        public void IncreaseMaxPowerLimit(ERoomType roomType, int amount=1)
+        public void IncreaseMaxPowerLimit(RoomType roomType, int amount=1)
         {
             if (amount <= 0)
             {

@@ -19,8 +19,8 @@ namespace FTL
         [field: SerializeField] public int ShipReactorCapacity { get; private set; }
         [field: SerializeField] public int ShipPower { get; private set; }
         [field: SerializeField] public int ReactorUpgradeCount { get; private set; }
-        [field: SerializeField] public List<EWeaponType> WeaponTypes { get; private set; } = new List<EWeaponType>();
-        [field: SerializeField] public EEnemyType EnemyType { get; private set; } = EEnemyType.None;
+        [field: SerializeField] public List<WeaponType> WeaponTypes { get; private set; } = new List<WeaponType>();
+        [field: SerializeField] public EnemyType EnemyType { get; private set; } = EnemyType.None;
 
         public GameContext(List<Room> rooms, List<FacilityState> facilities, List<CrewState> crews, int scrapAmount, int shipHp, int shipMaxHp, int shipReactorCapacity, int shipPower)
         {
@@ -48,9 +48,9 @@ namespace FTL
             InitFacilityUpgradeCount();
         }
 
-        public void SetWeaponTypes(List<EWeaponType> weaponTypes)
+        public void SetWeaponTypes(List<WeaponType> weaponTypes)
         {
-            WeaponTypes = new List<EWeaponType>();
+            WeaponTypes = new List<WeaponType>();
             if (weaponTypes == null)
             {
                 return;
@@ -81,7 +81,7 @@ namespace FTL
             ReactorUpgradeCount = reactorUpgradeCount;
         }
 
-        public void IncreaseMaxPowerLimitOfFacility(ERoomType roomType, int amount = 1)
+        public void IncreaseMaxPowerLimitOfFacility(RoomType roomType, int amount = 1)
         {
             int index = (int)roomType;
             FacilityStates[index].MaxPowerLimit += amount;
@@ -113,7 +113,7 @@ namespace FTL
             return CrewStates[crewIndex].Name;
         }
 
-        public int GetFacilityMaxPowerLimit(ERoomType roomType)
+        public int GetFacilityMaxPowerLimit(RoomType roomType)
         {
             int index = (int)roomType;
 
@@ -146,7 +146,7 @@ namespace FTL
             ScrapAmount += v;
         }
 
-        public void SetEnemyType(EEnemyType enemyType)
+        public void SetEnemyType(EnemyType enemyType)
         {
             EnemyType = enemyType;
         }

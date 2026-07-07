@@ -4,5 +4,5 @@ using System.Text;
 
 namespace FTL
 {
-    public enum EFacilityStatus { Normal, Damaged, Broked, Disabled}
+    public enum FacilityStatus { Normal, Damaged, Broked, Disabled}
 }

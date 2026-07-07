@@ -19,7 +19,7 @@ namespace FTL
         protected override void Awake()
         {
             base.Awake();
-            type = ERoomType.Engine;
+            type = RoomType.Engine;
         }
 
         private void Update()

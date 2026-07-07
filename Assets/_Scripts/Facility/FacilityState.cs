@@ -2,12 +2,12 @@ namespace FTL
 {
     public class FacilityState
     {
-        public ERoomType Type;
+        public RoomType Type;
         public int TotalDamage;
         public int MaxPowerLimit;
         public int Power;
 
-        public FacilityState(int totalDamage, int maxPowerLimit, int power, ERoomType facilityType)
+        public FacilityState(int totalDamage, int maxPowerLimit, int power, RoomType facilityType)
         {
             TotalDamage = totalDamage;
             MaxPowerLimit = maxPowerLimit;

@@ -100,12 +100,12 @@ namespace FTL
             CombatSystem combatSystem = CombatSystem.Instance;
             if (applyToPlayer)
             {
-                ApplyEnvironmentEffectToShip(combatSystem.GetShip(EShipSide.Player));
+                ApplyEnvironmentEffectToShip(combatSystem.GetShip(ShipSide.Player));
             }
 
             if (applyToEnemy)
             {
-                ApplyEnvironmentEffectToShip(combatSystem.GetShip(EShipSide.Enemy0));
+                ApplyEnvironmentEffectToShip(combatSystem.GetShip(ShipSide.Enemy0));
             }
         }
 
@@ -123,8 +123,8 @@ namespace FTL
                 return;
             }
 
-            EShipSide startShipSide = ship.Ownership.ShipSide;
-            EShipSide endShipSide = CombatSystem.Instance.GetOpponentShipSide(startShipSide);
+            ShipSide startShipSide = ship.Ownership.ShipSide;
+            ShipSide endShipSide = CombatSystem.Instance.GetOpponentShipSide(startShipSide);
             Collider2D startCol = CombatSystem.Instance.GetColliderByShipSide(endShipSide);
             Collider2D endCol = CombatSystem.Instance.GetColliderByShipSide(startShipSide);
             int minHitCount = Mathf.Max(1, minRoomHitCount);

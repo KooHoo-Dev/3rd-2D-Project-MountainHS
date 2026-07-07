@@ -1,6 +1,6 @@
 namespace FTL
 {
-    public enum EExplosionType
+    public enum ExplosionType
     {
         Blue, Red, Purple, DarkRed
     }

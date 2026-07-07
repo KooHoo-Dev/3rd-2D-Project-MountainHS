@@ -4,6 +4,6 @@ namespace FTL
 {
     public class ShipOwnership: MonoBehaviour
     {
-        [field: SerializeField] public EShipSide ShipSide { get; set; }
+        [field: SerializeField] public ShipSide ShipSide { get; set; }
     }
 }

@@ -5,7 +5,7 @@ namespace FTL
     [System.Serializable]
     public class EnemyPrefabEntry
     {
-        public EEnemyType enemyType;
+        public EnemyType enemyType;
         public GameObject prefab;
     }
 
@@ -14,19 +14,19 @@ namespace FTL
     {
         [SerializeField] private EnemyPrefabEntry[] entries;
 
-        public GameObject GetPrefab(EEnemyType enemyType)
+        public GameObject GetPrefab(EnemyType enemyType)
         {
             if (entries == null)
             {
                 return null;
             }
 
-            if (enemyType == EEnemyType.None)
+            if (enemyType == EnemyType.None)
             {
                 return null;
             }
 
-            if (enemyType == EEnemyType.Random)
+            if (enemyType == EnemyType.Random)
             {
                 return GetRandomPrefab();
             }

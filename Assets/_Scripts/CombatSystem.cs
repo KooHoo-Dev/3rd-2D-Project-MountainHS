@@ -21,9 +21,9 @@ namespace FTL
         private CameraShakeController cameraShakeController;
         private SpriteShakeController[] spriteShakeControllers;
 
-        private Dictionary<Collider2D, EShipSide> colToNextShipAreaDict = new Dictionary<Collider2D, EShipSide>();
-        private Dictionary<EShipSide, Collider2D> shipSideToColDict = new Dictionary<EShipSide, Collider2D>();
-        private Dictionary<EShipSide, SpriteShakeController> shipSideToSpriteShake = new Dictionary<EShipSide, SpriteShakeController>();
+        private Dictionary<Collider2D, ShipSide> colToNextShipAreaDict = new Dictionary<Collider2D, ShipSide>();
+        private Dictionary<ShipSide, Collider2D> shipSideToColDict = new Dictionary<ShipSide, Collider2D>();
+        private Dictionary<ShipSide, SpriteShakeController> shipSideToSpriteShake = new Dictionary<ShipSide, SpriteShakeController>();
         private ObjectPool<GameObject> floatingTextPool;
         private ObjectPool<GameObject> explosionPool;
         [SerializeField] private GameObject floatingTextPrefab;
@@ -66,12 +66,12 @@ namespace FTL
             shipSideToColDict.Clear();
             colToNextShipAreaDict.Clear();
             shipSideToSpriteShake.Clear();
-            shipSideToColDict.Add(EShipSide.Player, shipAreas[0]);
-            shipSideToColDict.Add(EShipSide.Enemy0, shipAreas[1]);
-            colToNextShipAreaDict.Add(shipAreas[0], EShipSide.Enemy0);
-            colToNextShipAreaDict.Add(shipAreas[1], EShipSide.Player);
-            shipSideToSpriteShake.Add(EShipSide.Player, playerShaker);
-            shipSideToSpriteShake.Add(EShipSide.Enemy0, enemyShaker);
+            shipSideToColDict.Add(ShipSide.Player, shipAreas[0]);
+            shipSideToColDict.Add(ShipSide.Enemy0, shipAreas[1]);
+            colToNextShipAreaDict.Add(shipAreas[0], ShipSide.Enemy0);
+            colToNextShipAreaDict.Add(shipAreas[1], ShipSide.Player);
+            shipSideToSpriteShake.Add(ShipSide.Player, playerShaker);
+            shipSideToSpriteShake.Add(ShipSide.Enemy0, enemyShaker);
         }
 
         public bool NeedSceneBinding()
@@ -117,7 +117,7 @@ namespace FTL
         /// <param name="projectile"></param>
         public void MoveToEnemyArea(Collider2D col, ProjectileController projectile)
         {
-            EShipSide nextShipArea = colToNextShipAreaDict[col];
+            ShipSide nextShipArea = colToNextShipAreaDict[col];
             Collider2D nextShipCol = shipSideToColDict[nextShipArea];
             float seed = projectile.RandomSeed;
 
@@ -137,7 +137,7 @@ namespace FTL
             // projectile 주인 확인
             bool isPlayerProjectile = projectile.StartCol.CompareTag(Tags.PlayerShip);
             int opponentShipIndex = isPlayerProjectile ? 1 : 0;
-            ShieldSystem oppenentShieldSystem = (ShieldSystem)ships[opponentShipIndex].GetFacilitySystemByERoomType(ERoomType.Shield);
+            ShieldSystem oppenentShieldSystem = (ShieldSystem)ships[opponentShipIndex].GetFacilitySystemByERoomType(RoomType.Shield);
             // 실드 시스템의 현재 실드가 1 이상이면
             // 실드 시스템 TakeDamage 호출
             // return true;
@@ -180,7 +180,7 @@ namespace FTL
             return ships[0].Rooms;
         }
 
-        public ShipController GetShip(EShipSide shipSide)
+        public ShipController GetShip(ShipSide shipSide)
         {
             if (ships == null)
             {
@@ -198,7 +198,7 @@ namespace FTL
             return ships[shipIndex];
         }
 
-        public Room GetRoomOrNull(EShipSide shipSide, Vector2 position)
+        public Room GetRoomOrNull(ShipSide shipSide, Vector2 position)
         {
             List<Room> rooms = ships[(int)shipSide].Rooms;
             for (int i = 0; i < rooms.Count; i++)
@@ -219,15 +219,15 @@ namespace FTL
             return explosionObject;
         }
 
-        public EShipSide GetOpponentShipSide(EShipSide startSide)
+        public ShipSide GetOpponentShipSide(ShipSide startSide)
         {
-            if (startSide == EShipSide.Player)
-                return EShipSide.Enemy0;
+            if (startSide == ShipSide.Player)
+                return ShipSide.Enemy0;
 
-            return EShipSide.Player;
+            return ShipSide.Player;
         }
 
-        public Collider2D GetColliderByShipSide(EShipSide shipSide)
+        public Collider2D GetColliderByShipSide(ShipSide shipSide)
         {
             if (shipSideToColDict.TryGetValue(shipSide, out Collider2D col))
             {

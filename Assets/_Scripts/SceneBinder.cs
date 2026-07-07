@@ -67,7 +67,7 @@ namespace FTL
             stageEnvironmentController.InitStageEnvironment();
         }
 
-        private EnemyController SpawnEnemyOrFindSceneEnemy(EEnemyType enemyType)
+        private EnemyController SpawnEnemyOrFindSceneEnemy(EnemyType enemyType)
         {
             // Type에 따라 enemy 생성
             EnemyDatabase enemyDatabase = GameManager.Instance.EnemyDatabase;

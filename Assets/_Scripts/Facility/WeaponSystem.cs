@@ -16,7 +16,7 @@ namespace FTL
         protected override void Awake()
         {
             base.Awake();
-            type = ERoomType.Weapon;
+            type = RoomType.Weapon;
             selectedWeapon = null;
             targetData = new ProjectileTargetData(Vector3.zero, -1);
         }

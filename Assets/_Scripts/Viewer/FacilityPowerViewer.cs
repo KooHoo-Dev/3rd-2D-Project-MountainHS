@@ -11,7 +11,7 @@ namespace FTL
         [SerializeField] private Image facilityIcon;
         [SerializeField] private Image assistIcon;
         [SerializeField] private TMP_Text iconText;
-        [SerializeField] private ERoomType facilityType = ERoomType.Empty;
+        [SerializeField] private RoomType facilityType = RoomType.Empty;
         [SerializeField] private bool isEnemy = false;
         private Image repairBar;
 
@@ -50,7 +50,7 @@ namespace FTL
 
         private bool CanHandlePlayerPowerClick(PointerEventData eventData)
         {
-            if (isEnemy || facilitySystem == null || facilityType == ERoomType.Empty)
+            if (isEnemy || facilitySystem == null || facilityType == RoomType.Empty)
             {
                 return false;
             }
@@ -97,7 +97,7 @@ namespace FTL
                 GameObject[] enemies = GameObject.FindGameObjectsWithTag("EnemyShip");
                 switch (facilityType)
                 {
-                    case ERoomType.Weapon:
+                    case RoomType.Weapon:
                         WeaponSystem weaponSystem = null;
                         foreach (GameObject enemy in enemies)
                         {
@@ -109,7 +109,7 @@ namespace FTL
                         }
                         facilitySystem = weaponSystem;
                         break;
-                    case ERoomType.Engine:
+                    case RoomType.Engine:
                         EngineSystem engineSystem = null;
                         foreach (GameObject enemy in enemies)
                         {
@@ -121,7 +121,7 @@ namespace FTL
                         }
                         facilitySystem = engineSystem;
                         break;
-                    case ERoomType.Shield:
+                    case RoomType.Shield:
                         ShieldSystem shieldSystem = null;
                         foreach (GameObject enemy in enemies)
                         {
@@ -133,7 +133,7 @@ namespace FTL
                         }
                         facilitySystem = shieldSystem;
                         break;
-                    case ERoomType.Empty:
+                    case RoomType.Empty:
                     default:
                         Debug.LogError("ReactorViewer: Invalid Facility Type!");
                         break;
@@ -143,14 +143,14 @@ namespace FTL
                     Debug.LogError("ReactorViewer: There is no ReactorSystem on Enemy!");
             }
 
-            if (facilityType == ERoomType.Empty)
+            if (facilityType == RoomType.Empty)
                 facilityType = facilitySystem.Type;
 
             iconText.SetText(facilityType.ToRoomTypeName());
 
         }
 
-        protected override void SetBarState(int barIndex, EPowerBarStatus status)
+        protected override void SetBarState(int barIndex, PowerBarStatus status)
         {
             base.SetBarState(barIndex, status);
         }
@@ -201,16 +201,16 @@ namespace FTL
             // 만약 할당된 전력이 0이라면 시설 아이콘 색깔 비활성화
             switch (facilitySystem.FacilityStatus)
             {
-                case EFacilityStatus.Normal:
+                case FacilityStatus.Normal:
                     facilityIcon.color = Color.green;
                     break;
-                case EFacilityStatus.Damaged:
+                case FacilityStatus.Damaged:
                     facilityIcon.color = Color.orange;
                     break;
-                case EFacilityStatus.Broked:
+                case FacilityStatus.Broked:
                     facilityIcon.color = Color.red;
                     break;
-                case EFacilityStatus.Disabled:
+                case FacilityStatus.Disabled:
                     facilityIcon.color = Color.grey;
                     break;
                 default:
@@ -235,11 +235,11 @@ namespace FTL
             {
                 if (i < power)
                 {
-                    SetBarState(i, EPowerBarStatus.Available);
+                    SetBarState(i, PowerBarStatus.Available);
                 }
                 else if (totalDamage > 0 && i >= maxPowerLimit - totalDamage)
                 {
-                    SetBarState(i, EPowerBarStatus.Broken);
+                    SetBarState(i, PowerBarStatus.Broken);
                     if (facilitySystem.RepairProgress > 0f && i == maxPowerLimit - totalDamage)
                     {
                         // 해당 PowerBar 위치로 repairBar 이동시키고 SetActive
@@ -250,7 +250,7 @@ namespace FTL
                 }
                 else
                 {
-                    SetBarState(i, EPowerBarStatus.UnAvailable);
+                    SetBarState(i, PowerBarStatus.UnAvailable);
                 }
             }
         }
@@ -293,11 +293,11 @@ namespace FTL
             {
                 if (i < maxPowerLimit)
                 {
-                    SetBarState(i, EPowerBarStatus.Available);
+                    SetBarState(i, PowerBarStatus.Available);
                 }
                 else
                 {
-                    SetBarState(i, EPowerBarStatus.UnAvailable);
+                    SetBarState(i, PowerBarStatus.UnAvailable);
                 }
             }
         }
