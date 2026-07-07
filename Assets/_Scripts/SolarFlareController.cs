@@ -12,16 +12,26 @@ namespace FTL
         [SerializeField] private Color startColor;
         [SerializeField] private Color targetColor;
 
+        #region Unity Method
+
         private void Start()
         {
             flareImage.color = startColor;
         }
+
+        #endregion
+
+        #region Public Method
 
         [ContextMenu("Flare Test")]
         public void ApplyFlareEffect()
         {
             StartCoroutine(TurnOnFlare(FlareDuration));
         }
+
+        #endregion
+
+        #region Private Method
 
         private IEnumerator TurnOnFlare(float flareDuration)
         {
@@ -55,5 +65,7 @@ namespace FTL
                 yield return null;
             }
         }
+
+        #endregion
     }
 }

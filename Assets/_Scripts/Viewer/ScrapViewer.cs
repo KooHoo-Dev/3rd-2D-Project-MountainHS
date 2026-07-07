@@ -7,6 +7,8 @@ namespace FTL
     {
         TMP_Text text;
 
+        #region Unity Method
+
         private void Awake()
         {
             text = transform.GetChild(2).GetComponent<TMP_Text>();
@@ -17,5 +19,7 @@ namespace FTL
             int currentScrap = GameManager.Instance.GetScrap();
             text.SetText($"{currentScrap}");
         }
+
+        #endregion
     }
 }

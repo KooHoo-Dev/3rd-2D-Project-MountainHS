@@ -15,6 +15,8 @@ namespace FTL
         [SerializeField] private Vector3 direction = Vector3.up;
         [SerializeField] private TMP_Text text;
 
+        #region Unity Method
+
         private void Awake()
         {
             text = GetComponent<TMP_Text>();
@@ -35,11 +37,9 @@ namespace FTL
             transform.Translate(direction * (speed * Time.deltaTime));
         }
 
-        private IEnumerator DisableCoroutine(float lifetime)
-        {
-            yield return new WaitForSeconds(lifetime);
-            gameObject.SetActive(false);
-        }
+        #endregion
+
+        #region Public Method
 
         public void SetText(string value)
         {
@@ -50,5 +50,17 @@ namespace FTL
         {
             text.color = color;
         }
+
+        #endregion
+
+        #region Private Method
+
+        private IEnumerator DisableCoroutine(float lifetime)
+        {
+            yield return new WaitForSeconds(lifetime);
+            gameObject.SetActive(false);
+        }
+
+        #endregion
     }
 }

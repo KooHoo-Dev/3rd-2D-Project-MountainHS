@@ -9,10 +9,14 @@ namespace FTL
         [SerializeField] private List<Sprite> sprites;
         [SerializeField] private Image background;
 
+        #region Public Method
+
         public void SetRandomBackground()
         {
             int randIndex = Random.Range(0, sprites.Count);
             background.sprite = sprites[randIndex];
         }
+
+        #endregion
     }
 }

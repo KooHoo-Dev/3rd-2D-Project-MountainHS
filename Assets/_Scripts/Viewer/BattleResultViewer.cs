@@ -9,6 +9,8 @@ namespace FTL
         [SerializeField] private TMP_Text rewardText;
         [SerializeField] private EBattleResult battleResult = EBattleResult.None;
 
+        #region Public Method
+
         // 나중에 보상 종류 다양해지면 클래스나 인스턴스로 묶어야겠네
         public void SetBattleResult(EBattleResult battleResult, int reward)
         {
@@ -25,5 +27,7 @@ namespace FTL
             gameObject.SetActive(false);
             GameManager.Instance.MoveSceneByBattleResult(battleResult);
         }
+
+        #endregion
     }
 }

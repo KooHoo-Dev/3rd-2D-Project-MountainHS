@@ -12,10 +12,16 @@ namespace FTL
         [SerializeField] private int maxPower = 3;
         [SerializeField] private int power;
 
+        #region Unity Method
+
         private void Awake()
         {
             power = maxPower;
         }
+
+        #endregion
+
+        #region Public Method
 
         public void AddPower(int amount)
         {
@@ -52,5 +58,7 @@ namespace FTL
         {
             power = amount;
         }
+
+        #endregion
     }
 }

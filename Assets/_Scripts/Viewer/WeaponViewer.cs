@@ -10,25 +10,39 @@ namespace FTL
         [SerializeField] private Image weaponChargeBar;
         private SpriteRenderer spriteRenderer;
 
+        #region Unity Method
+
         private void Awake()
         {
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
+
         private void LateUpdate()                        
         {
             float chargeRate = weapon.ChargeProgress / weapon.ChargeDuration;
             UpdateChargeSprite(chargeRate);
             weaponChargeBar.fillAmount = chargeRate;
         }
+
+        #endregion
+
+        #region Public Method
+
+        public void SetChargeBar(Image chargeBar)
+        {
+            weaponChargeBar = chargeBar;
+        }
+
+        #endregion
+
+        #region Private Method
+
         private void UpdateChargeSprite(float chargeRate)
         {
             int spriteIndex = Mathf.FloorToInt((chargeRate) * (chargeSprites.Length - 1));
             spriteRenderer.sprite = chargeSprites[spriteIndex];
         }
 
-        public void SetChargeBar(Image chargeBar)
-        {
-            weaponChargeBar = chargeBar;
-        }
+        #endregion
     }
 }

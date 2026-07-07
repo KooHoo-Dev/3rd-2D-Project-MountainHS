@@ -6,6 +6,8 @@ namespace Assets._Scripts.Test
 {
     public class Test
     {
+        #region Public Method
+
         public void Main()
         {
             TestA testA = new TestA();
@@ -14,5 +16,7 @@ namespace Assets._Scripts.Test
             test = testA;
             test = testB;
         }
+
+        #endregion
     }
 }

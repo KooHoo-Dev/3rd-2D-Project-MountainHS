@@ -7,6 +7,8 @@ namespace FTL
         public string Name;
         public int LastRoomId;
 
+        #region Public Method
+
         public CrewState()
         {
             Hp = 0;
@@ -39,5 +41,7 @@ namespace FTL
             LastRoomId = (crew.CurrentRoom != null) 
                 ? crew.CurrentRoom.Id : -1;
         }
+
+        #endregion
     }
 }

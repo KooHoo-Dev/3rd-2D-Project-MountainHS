@@ -15,6 +15,8 @@ namespace FTL
         [SerializeField] private bool isEnemy = false;
         private Image repairBar;
 
+        #region Unity Method
+
         protected override void Awake()
         {
             base.Awake();
@@ -46,43 +48,6 @@ namespace FTL
             {
                 powerSystem.TryDeallocatePower(facilityType);
             }
-        }
-
-        private bool CanHandlePlayerPowerClick(PointerEventData eventData)
-        {
-            if (isEnemy || facilitySystem == null || facilityType == ERoomType.Empty)
-            {
-                return false;
-            }
-
-            if (IsFacilityIconClicked(eventData) == false)
-            {
-                return false;
-            }
-
-            if (GameManager.IsInitialized == false || GameManager.Instance.Player == null)
-            {
-                Debug.LogWarning($"{gameObject.name}: Player is not ready to handle facility power click.");
-                return false;
-            }
-
-            return GameManager.Instance.Player.PowerSystem != null;
-        }
-
-        private bool IsFacilityIconClicked(PointerEventData eventData)
-        {
-            if (facilityIcon == null)
-            {
-                return false;
-            }
-
-            GameObject clickedObject = eventData.pointerPressRaycast.gameObject;
-            if (clickedObject == null)
-            {
-                return false;
-            }
-
-            return clickedObject == facilityIcon.gameObject || clickedObject.transform.IsChildOf(facilityIcon.transform);
         }
 
         private void Start()
@@ -150,6 +115,10 @@ namespace FTL
 
         }
 
+        #endregion
+
+        #region Public Method
+
         protected override void SetBarState(int barIndex, EPowerBarStatus status)
         {
             base.SetBarState(barIndex, status);
@@ -172,6 +141,47 @@ namespace FTL
             UpdatePowerBars(power, maxPower, maxPowerLimit, totalDamage);
             UpdateRepairBar();
             UpdateFacilityIcon();
+        }
+
+        #endregion
+
+        #region Private Method
+
+        private bool CanHandlePlayerPowerClick(PointerEventData eventData)
+        {
+            if (isEnemy || facilitySystem == null || facilityType == ERoomType.Empty)
+            {
+                return false;
+            }
+
+            if (IsFacilityIconClicked(eventData) == false)
+            {
+                return false;
+            }
+
+            if (GameManager.IsInitialized == false || GameManager.Instance.Player == null)
+            {
+                Debug.LogWarning($"{gameObject.name}: Player is not ready to handle facility power click.");
+                return false;
+            }
+
+            return GameManager.Instance.Player.PowerSystem != null;
+        }
+
+        private bool IsFacilityIconClicked(PointerEventData eventData)
+        {
+            if (facilityIcon == null)
+            {
+                return false;
+            }
+
+            GameObject clickedObject = eventData.pointerPressRaycast.gameObject;
+            if (clickedObject == null)
+            {
+                return false;
+            }
+
+            return clickedObject == facilityIcon.gameObject || clickedObject.transform.IsChildOf(facilityIcon.transform);
         }
 
         private void UpdateRepairBar()
@@ -336,5 +346,7 @@ namespace FTL
                 }
             }
         }
+
+        #endregion
     }
 }

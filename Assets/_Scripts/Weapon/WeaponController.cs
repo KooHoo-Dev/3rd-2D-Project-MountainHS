@@ -29,6 +29,8 @@ namespace FTL
         private float reduceSpeed = 4f;
         private float chargeSpeedMultiplier = 1f;
 
+        #region Unity Method
+
         private void Awake()
         {
             isReady = false;
@@ -88,6 +90,44 @@ namespace FTL
 
             //prevIsPowered = IsPowered;
         }
+
+        #endregion
+
+        #region Public Method
+
+        public void SetRoomTarget(ProjectileTargetData targetData)
+        {
+            TargetData.TargetPosition = targetData.TargetPosition;
+            TargetData.RoomId = targetData.RoomId;
+        }
+
+        public void SetTargetingSystem(ITargeting targetingSystem)
+        {
+            this.targetingSystem = targetingSystem;
+        }
+
+        public void SetWeaponSystem(WeaponSystem weaponSystem)
+        {
+            this.weaponSystem = weaponSystem;
+        }
+
+        public void ApplyAssistEffectOnWeapon(bool isApplied)
+        {
+            if (IsAssisted != isApplied)
+            {
+                IsAssisted = isApplied;
+                chargeProgress = Mathf.Min(chargeProgress, chargeDuration);
+            }
+        }
+
+        internal void SetChargeSpeedMultiplier(float multiplier)
+        {
+            chargeSpeedMultiplier = multiplier;
+        }
+
+        #endregion
+
+        #region Private Method
 
         private IEnumerator FireCoroutine(ProjectileTargetData targetData, float seed)
         {
@@ -158,35 +198,6 @@ namespace FTL
             }
         }
 
-        public void SetRoomTarget(ProjectileTargetData targetData)
-        {
-            TargetData.TargetPosition = targetData.TargetPosition;
-            TargetData.RoomId = targetData.RoomId;
-        }
-
-        public void SetTargetingSystem(ITargeting targetingSystem)
-        {
-            this.targetingSystem = targetingSystem;
-        }
-
-        public void SetWeaponSystem(WeaponSystem weaponSystem)
-        {
-            this.weaponSystem = weaponSystem;
-        }
-
-        public void ApplyAssistEffectOnWeapon(bool isApplied)
-        {
-            if (IsAssisted != isApplied)
-            {
-                IsAssisted = isApplied;
-                chargeProgress = Mathf.Min(chargeProgress, chargeDuration);
-            }
-        }
-
-        internal void SetChargeSpeedMultiplier(float multiplier)
-        {
-            chargeSpeedMultiplier = multiplier;
-        }
-
+        #endregion
     }
 }

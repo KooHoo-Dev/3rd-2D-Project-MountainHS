@@ -14,6 +14,8 @@ namespace FTL
         [SerializeField] private bool isEnemy = false;
         protected ObjectPool<GameObject> barPool;
 
+        #region Unity Method
+
         protected virtual void Awake()
         {
             barPool = new ObjectPool<GameObject>(CreateBar, OnGetBar, OnReleaseBar, OnDestroyBar);
@@ -44,6 +46,10 @@ namespace FTL
         {
             UpdateViewer();
         }
+
+        #endregion
+
+        #region Public Method
 
         // 전력바 상태 관리: 가용, 불가능
         // 전력바 상태에 따라 스프라이트 상태 변경
@@ -115,6 +121,18 @@ namespace FTL
             }
         }
 
+        // 반응로 전력 추가
+        public void AddBar()
+        {
+            GameObject powerBar = barPool.Get();
+            barSprites.Add(powerBar.GetComponent<UnityEngine.UI.Image>());
+            SetBarState(barSprites.Count - 1, EPowerBarStatus.Available);
+        }
+
+        #endregion
+
+        #region Private Method
+
         private bool TryGetGameContextReactorCapacity(out int reactorCapacity)
         {
             reactorCapacity = 0;
@@ -134,14 +152,6 @@ namespace FTL
 
             reactorCapacity = gameManager.GetShipReactorCapacity();
             return true;
-        }
-
-        // 반응로 전력 추가
-        public void AddBar()
-        {
-            GameObject powerBar = barPool.Get();
-            barSprites.Add(powerBar.GetComponent<UnityEngine.UI.Image>());
-            SetBarState(barSprites.Count - 1, EPowerBarStatus.Available);
         }
 
         private GameObject CreateBar()
@@ -164,5 +174,7 @@ namespace FTL
         {
             Destroy(powerBar);
         }
+
+        #endregion
     }
 }

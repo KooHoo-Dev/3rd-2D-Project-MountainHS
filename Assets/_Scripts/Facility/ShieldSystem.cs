@@ -20,6 +20,8 @@ namespace FTL
         [SerializeField] private float chargeDuration = 3;
         [SerializeField] private float chargeProgress;
 
+        #region Unity Method
+
         protected override void Awake()
         {
             base.Awake();
@@ -37,6 +39,53 @@ namespace FTL
             SetMaxShieldCountByPower(Power);
             UpdateShield();
         }
+
+        #endregion
+
+        #region Public Method
+
+        public override void TakeDamage(int amount)
+        {
+            base.TakeDamage(amount);
+        }
+
+        public override void ApplyAssistEffectOnFacility(bool isApplied)
+        {
+            if (IsAssisted != isApplied)
+            {
+                IsAssisted = isApplied;
+                chargeProgress = Mathf.Min(chargeProgress, chargeDuration);
+            }
+        }
+
+        public void TakeDamageToShield()
+        {
+            if (shieldCount == 0)
+            {
+                Debug.Log("ShieldCount is zero, damage to Hull");
+                return;
+            }
+
+            shieldCount--;
+        }
+
+        public int TakeDamageToShield(int amount)
+        {
+            int newShieldCount = Mathf.Max(0, shieldCount - amount);
+            int realDamage = shieldCount - newShieldCount;
+            if (shieldCount == 0)
+            {
+                Debug.Log("ShieldCount is zero, damage to Hull");
+                return -1;
+            }
+
+            shieldCount -= realDamage;
+            return realDamage;
+        }
+
+        #endregion
+
+        #region Private Method
 
         /// <summary>
         /// 최대 실드 수까지 실드 채워지는 기능 구현
@@ -79,45 +128,6 @@ namespace FTL
             maxShield = power / 2;
         }
 
-        public override void TakeDamage(int amount)
-        {
-            base.TakeDamage(amount);
-        }
-
-        public override void ApplyAssistEffectOnFacility(bool isApplied)
-        {
-            if (IsAssisted != isApplied)
-            {
-                IsAssisted = isApplied;
-                chargeProgress = Mathf.Min(chargeProgress, chargeDuration);
-            }
-        }
-
-        public void TakeDamageToShield()
-        {
-            if (shieldCount == 0)
-            {
-                Debug.Log("ShieldCount is zero, damage to Hull");
-                return;
-            }
-
-            shieldCount--;
-        }
-
-        public int TakeDamageToShield(int amount)
-        {
-            int newShieldCount = Mathf.Max(0, shieldCount - amount);
-            int realDamage = shieldCount - newShieldCount;
-            if (shieldCount == 0)
-            {
-                Debug.Log("ShieldCount is zero, damage to Hull");
-                return -1;
-            }
-
-            shieldCount -= realDamage;
-            return realDamage;
-        }
-
-
+        #endregion
     }
 }

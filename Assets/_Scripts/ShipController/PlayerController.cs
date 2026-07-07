@@ -19,6 +19,8 @@ namespace FTL
         private bool oneShotBool = true;
         private bool oneShotBool2 = true;
 
+        #region Unity Method
+
         protected override void Awake()
         {
             base.Awake();
@@ -28,6 +30,7 @@ namespace FTL
                 GameManager.Instance.SetGameContext(this);
             }
         }
+
         private void Start()
         {
             Ownership.ShipSide = EShipSide.Player;
@@ -67,6 +70,52 @@ namespace FTL
             HandleMouse();
 
         }
+
+        #endregion
+
+        #region Public Method
+
+        public void IncreaseReactorPower(int amount)
+        {
+            PowerSystem.AddReactorPower(amount);
+        }
+
+        public void SetReactorMaxPower(int amount)
+        {
+            PowerSystem.SetReactorMaxPower(amount);
+        }
+
+        public void SetFacilitySystems(List<FacilityState> facilityStates)
+        {
+            for (ERoomType type = ERoomType.Weapon; type <= ERoomType.Shield; type++)
+            {
+                int index = (int)type;
+                FacilitySystem facility = FacilitySystems[index];
+                FacilityState facilityState = facilityStates[index];
+                facility.ApplyState(facilityState);
+                PowerSystem.ApplyState(facilityState);
+            }
+        }
+
+        public void SetCrewsState(List<CrewState> crewStates)
+        {
+            for (int i = 0; i < Crews.Count; i++)
+            {
+                CrewController crew = Crews[i];
+                CrewState crewState = crewStates[i];
+                Room room = GetRoomByIdOrNull(crewState.LastRoomId);
+                crew.ApplyCrewState(crewState, room);
+            }
+        }
+
+        public void SetReactorPower(int shipPower)
+        {
+            PowerSystem.SetReactorPower(shipPower);
+        }
+
+        #endregion
+
+        #region Private Method
 
         private void HandleMouse()
         {
@@ -170,41 +219,6 @@ namespace FTL
             }
         }
 
-        public void IncreaseReactorPower(int amount)
-        {
-            PowerSystem.AddReactorPower(amount);
-        }
-
-        public void SetReactorMaxPower(int amount)
-        {
-            PowerSystem.SetReactorMaxPower(amount);
-        }
-
-        public void SetFacilitySystems(List<FacilityState> facilityStates)
-        {
-            for (ERoomType type = ERoomType.Weapon; type <= ERoomType.Shield; type++)
-            {
-                int index = (int)type;
-                FacilitySystem facility = FacilitySystems[index];
-                FacilityState facilityState = facilityStates[index];
-                facility.ApplyState(facilityState);
-                PowerSystem.ApplyState(facilityState);
-            }
-        }
-
-        public void SetCrewsState(List<CrewState> crewStates)
-        {
-            for (int i = 0; i < Crews.Count; i++)
-            {
-                CrewController crew = Crews[i];
-                CrewState crewState = crewStates[i];
-                Room room = GetRoomByIdOrNull(crewState.LastRoomId);
-                crew.ApplyCrewState(crewState, room);
-            }
-        }
-
-
-        #region Test Method
         private void TestOverlapPoint(Collider2D clickCol)
         {
             if (oneShotBool2)
@@ -269,11 +283,6 @@ namespace FTL
             }
             oneShotBool2 = true;
             yield break;
-        }
-
-        public void SetReactorPower(int shipPower)
-        {
-            PowerSystem.SetReactorPower(shipPower);
         }
 
         #endregion

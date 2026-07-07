@@ -12,12 +12,15 @@ namespace FTL
         [SerializeField] protected List<FacilitySystem> facilities = new List<FacilitySystem>();
         protected readonly Dictionary<ERoomType, int> assignedPowers = new Dictionary<ERoomType, int>();
 
+        #region Unity Method
+
         protected virtual void Start()
         {
             facilities.Add(GetComponent<ShieldSystem>());
             facilities.Add(GetComponent<WeaponSystem>());
             facilities.Add(GetComponent<EngineSystem>());
         }
+
         protected void Update()
         {
             for (ERoomType type = ERoomType.Weapon; type <= ERoomType.Shield; type++)
@@ -25,6 +28,10 @@ namespace FTL
                 HandleFacilityOverflow(type);
             }
         }
+
+        #endregion
+
+        #region Public Method
 
         public void RegisterFacility(FacilitySystem facility)
         {
@@ -106,7 +113,6 @@ namespace FTL
 
             return 0;
         }
-
 
         public void AddReactorPower(int amount)
         {
@@ -190,5 +196,7 @@ namespace FTL
             int power = facilityState.Power;
             SetAssignedPower(type, power);
         }
+
+        #endregion
     }
 }

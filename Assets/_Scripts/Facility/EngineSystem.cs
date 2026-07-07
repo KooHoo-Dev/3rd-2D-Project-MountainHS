@@ -16,6 +16,8 @@ namespace FTL
         [SerializeField] private int prevPower;
         [SerializeField] private float chargeSpeed = 1f;
 
+        #region Unity Method
+
         protected override void Awake()
         {
             base.Awake();
@@ -34,17 +36,9 @@ namespace FTL
             prevPower = Power;
         }
 
-        private void UpdateCanEscape()
-        {
-            if (ChargeProgress == chargeDuration)
-            {
-                canEscape = true;
-            }
-            else
-            {
-                canEscape = false;
-            }
-        }
+        #endregion
+
+        #region Public Method
 
         public void UpdateEscapeCharge()
         {
@@ -60,6 +54,22 @@ namespace FTL
             chargeProgress = Mathf.Min(chargeProgress, chargeDuration);
         }
 
+        #endregion
+
+        #region Private Method
+
+        private void UpdateCanEscape()
+        {
+            if (ChargeProgress == chargeDuration)
+            {
+                canEscape = true;
+            }
+            else
+            {
+                canEscape = false;
+            }
+        }
+
         private float GetNewChargeSpeed(float chargeSpeed)
         {
             if (Power == 0)
@@ -70,5 +80,7 @@ namespace FTL
             return (1 + 0.5f * (Power - 1)) 
                 * (IsAssisted ? CHARGE_SPEED_ASSIST_MULTIPLIER : 1f);
         }
+
+        #endregion
     }
 }

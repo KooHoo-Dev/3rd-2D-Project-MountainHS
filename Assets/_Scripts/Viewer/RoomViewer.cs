@@ -11,6 +11,8 @@ namespace FTL
         private SpriteShakeController spriteShaker;
         private TMP_Text text;
 
+        #region Unity Method
+
         private void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
@@ -26,6 +28,10 @@ namespace FTL
                 spriteShaker.ShakeSprite();
             }
         }
+
+        #endregion
+
+        #region Public Method
 
         /// <summary>
         /// 외부에서 roomId, roomType 입력받으면 그에 맞게 텍스트, 색깔 바꾸기
@@ -64,5 +70,7 @@ namespace FTL
         {
             SetRoomState(Room.Id, Room.Type);
         }
+
+        #endregion
     }
 }

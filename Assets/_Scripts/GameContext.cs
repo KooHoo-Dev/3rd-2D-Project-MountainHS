@@ -22,6 +22,8 @@ namespace FTL
         [field: SerializeField] public List<EWeaponType> WeaponTypes { get; private set; } = new List<EWeaponType>();
         [field: SerializeField] public EEnemyType EnemyType { get; private set; } = EEnemyType.None;
 
+        #region Public Method
+
         public GameContext(List<Room> rooms, List<FacilityState> facilities, List<CrewState> crews, int scrapAmount, int shipHp, int shipMaxHp, int shipReactorCapacity, int shipPower)
         {
             Rooms = new List<Room>();
@@ -59,15 +61,6 @@ namespace FTL
             for (int i = 0; i < weaponTypes.Count; i++)
             {
                 WeaponTypes.Add(weaponTypes[i]);
-            }
-        }
-
-        private void InitFacilityUpgradeCount()
-        {
-            FacilityUpgradeCount.Clear();
-            for (int i = 0; i < 3; i++)
-            {
-                FacilityUpgradeCount.Add(0);
             }
         }
 
@@ -150,5 +143,20 @@ namespace FTL
         {
             EnemyType = enemyType;
         }
+
+        #endregion
+
+        #region Private Method
+
+        private void InitFacilityUpgradeCount()
+        {
+            FacilityUpgradeCount.Clear();
+            for (int i = 0; i < 3; i++)
+            {
+                FacilityUpgradeCount.Add(0);
+            }
+        }
+
+        #endregion
     }
 }

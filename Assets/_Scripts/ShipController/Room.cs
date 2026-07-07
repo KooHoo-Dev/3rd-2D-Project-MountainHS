@@ -9,7 +9,6 @@ namespace FTL
     public class Room
     {
         public bool HasFacility => FacilitySystem != null;
-        public bool IsUnintialized() => Id == 0 && MaxCrewCapacity == 0;
         [field: SerializeField] private List<int> neighborRoomIds;
         [field: SerializeField] public FacilitySystem FacilitySystem { get; set; }
         [field: SerializeField] public List<CrewController> Crews { get; set; } = new List<CrewController>();
@@ -20,6 +19,10 @@ namespace FTL
         [field: SerializeField] public int Id { get; private set; }
         [field: SerializeField] public bool IsHit { get; set; } = false;
 
+        #region Public Method
+
+        public bool IsUnintialized() => Id == 0 && MaxCrewCapacity == 0;
+
         public Room(Room room)
         {
             Id = room.Id;
@@ -29,6 +32,7 @@ namespace FTL
             MaxCrewCapacity = room.MaxCrewCapacity;
             neighborRoomIds = new List<int>(room.neighborRoomIds);
         }
+
         public void SetRoomData(Room room)
         {
             Id = room.Id;
@@ -38,6 +42,7 @@ namespace FTL
             MaxCrewCapacity = room.MaxCrewCapacity;
             neighborRoomIds = new List<int>(room.neighborRoomIds);
         }
+
         public void AddCrew(CrewController crew)
         {
             if (Crews.Contains(crew))
@@ -55,6 +60,7 @@ namespace FTL
 
             Crews.Add(crew);
         }
+
         public void ReduceCrew(CrewController crew)
         {
             if (Crews.Contains(crew) == false)
@@ -140,5 +146,7 @@ namespace FTL
         {
             IsHit = isHit;
         }
+
+        #endregion
     }
 }

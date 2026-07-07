@@ -16,6 +16,8 @@ namespace FTL
         [SerializeField]
         private WeaponPrefabEntry[] entries;
 
+        #region Public Method
+
         public GameObject GetPrefab(EWeaponType weaponType)
         {
             foreach (WeaponPrefabEntry entry in entries)
@@ -28,5 +30,7 @@ namespace FTL
 
             return null;
         }
+
+        #endregion
     } 
 }

@@ -18,6 +18,8 @@ namespace FTL
         [SerializeField] private bool isPlayer = true;
         [SerializeField] private Room targetRoom = null;
 
+        #region Unity Method
+
         private void Start()
         {
             ship = GetComponent<ShipController>();
@@ -35,33 +37,9 @@ namespace FTL
             facilitySystems.Add(GetComponent<ShieldSystem>());
         }
 
-        //private void Update()
-        //{
-        //    // 조건에 맞으면 승무원 이동 로직 수행
-        //    if (selectedCrews.Count > 0 &&
-        //        targetRoom != null)
-        //    {
-        //    }
-        //}
+        #endregion
 
-        private void SetTargetToCrew()
-        {
-            for (int i = 0; i < selectedCrews.Count; i++)
-            {
-                bool isTargetRoomFull = targetRoom.IsFull();
-                if (isTargetRoomFull)
-                {
-                    Debug.LogWarning($"Room {targetRoom.Id} is full. Cannot move crew.");
-                    break;
-                }
-
-                CrewController crew = selectedCrews[i];
-                crew.SetTargetRoom(targetRoom);
-            }
-
-            //selectedCrews.Clear();
-            targetRoom = null;
-        }
+        #region Public Method
 
         public void AddSelectedCrew(CrewController crew)
         {
@@ -133,5 +111,38 @@ namespace FTL
                 ship.IsCombatStopped == false;
         }
 
+        #endregion
+
+        #region Private Method
+
+        //private void Update()
+        //{
+        //    // 조건에 맞으면 승무원 이동 로직 수행
+        //    if (selectedCrews.Count > 0 &&
+        //        targetRoom != null)
+        //    {
+        //    }
+        //}
+
+        private void SetTargetToCrew()
+        {
+            for (int i = 0; i < selectedCrews.Count; i++)
+            {
+                bool isTargetRoomFull = targetRoom.IsFull();
+                if (isTargetRoomFull)
+                {
+                    Debug.LogWarning($"Room {targetRoom.Id} is full. Cannot move crew.");
+                    break;
+                }
+
+                CrewController crew = selectedCrews[i];
+                crew.SetTargetRoom(targetRoom);
+            }
+
+            //selectedCrews.Clear();
+            targetRoom = null;
+        }
+
+        #endregion
     }
 }

@@ -38,6 +38,8 @@ namespace FTL
         // 반응로 최대 전력 증가
         private int reactorUpgradeCount = 0;
 
+        #region Unity Method
+
         // 회복 ui
         // 승무원 회복
         // 함선 수리
@@ -55,25 +57,9 @@ namespace FTL
             InitCrewSummaries();
         }
 
-        private void InitMainGameObject()
-        {
-            upgradeUIRoot = GameObject.Find(UPGRADE_UI_ROOT);
-            restoreUIRoot = GameObject.Find(RESTORE_UI_ROOT);
-            upgradeUIRoot.SetActive(true);
-            restoreUIRoot.SetActive(false);
-        }
+        #endregion
 
-        private void InitFacilityUpgradeCounts()
-        {
-            facilityUpgradeCount.Clear();
-            facilityUpgradeMax.Clear();
-
-            for (int i = 0; i < 3; i++)
-            {
-                facilityUpgradeCount.Add(0);
-                facilityUpgradeMax.Add(FACILITY_UPGRADE_MAX);
-            }
-        }
+        #region Public Method
 
         public void InitCrewSummaries()
         {
@@ -96,14 +82,17 @@ namespace FTL
         {
             IncreaseMaxPowerLimit(ERoomType.Weapon, amount);
         }
+
         public void IncreaseMaxPowerLimtOnEngineFacility(int amount = 1)
         {
             IncreaseMaxPowerLimit(ERoomType.Engine, amount);
         }
+
         public void IncreaseMaxPowerLimitOnShieldFacility(int amount = 1)
         {
             IncreaseMaxPowerLimit(ERoomType.Shield, amount);
         }
+
         public void IncreaseMaxPowerLimit(ERoomType roomType, int amount=1)
         {
             if (amount <= 0)
@@ -242,5 +231,31 @@ namespace FTL
             }
             reactorUpgradeCount = gameContext.ReactorUpgradeCount;
         }
+
+        #endregion
+
+        #region Private Method
+
+        private void InitMainGameObject()
+        {
+            upgradeUIRoot = GameObject.Find(UPGRADE_UI_ROOT);
+            restoreUIRoot = GameObject.Find(RESTORE_UI_ROOT);
+            upgradeUIRoot.SetActive(true);
+            restoreUIRoot.SetActive(false);
+        }
+
+        private void InitFacilityUpgradeCounts()
+        {
+            facilityUpgradeCount.Clear();
+            facilityUpgradeMax.Clear();
+
+            for (int i = 0; i < 3; i++)
+            {
+                facilityUpgradeCount.Add(0);
+                facilityUpgradeMax.Add(FACILITY_UPGRADE_MAX);
+            }
+        }
+
+        #endregion
     }
 }

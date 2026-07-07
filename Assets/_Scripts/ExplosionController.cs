@@ -6,6 +6,9 @@ namespace FTL
     {
         private float elapsed = 0f;
         [SerializeField] private float explosionDuration = 0.12f;
+
+        #region Unity Method
+
         private void OnEnable()
         {
             elapsed = 0f;
@@ -19,5 +22,7 @@ namespace FTL
                 gameObject.SetActive(false);
             }
         }
+
+        #endregion
     }
 }

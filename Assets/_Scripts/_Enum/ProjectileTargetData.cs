@@ -10,6 +10,8 @@ namespace FTL
         public Vector3 TargetPosition;
         public int RoomId;
 
+        #region Public Method
+
         public ProjectileTargetData(Vector3 targetPosition, int roomId)
         {
             TargetPosition = targetPosition;
@@ -26,5 +28,7 @@ namespace FTL
         {
             return TargetPosition != Vector3.zero && RoomId >= 0;
         }
+
+        #endregion
     }
 }
