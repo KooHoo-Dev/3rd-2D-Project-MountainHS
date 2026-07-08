@@ -22,6 +22,8 @@ namespace FTL
         private bool isSelected;
         private Vector3 targetPosition;
 
+        #region Unity Method
+
         private void Awake()
         {
             propertyBlock = new MaterialPropertyBlock();
@@ -58,6 +60,47 @@ namespace FTL
             UpdateViewer();
             UpdateTargetRoom();
         }
+
+        #endregion
+
+        #region Public Method
+
+        public void SetGameContextCrew(int crewIndex, TMP_Text text, Image hpBar)
+        {
+            useGameContext = true;
+            this.CrewIndex = crewIndex;
+            this.text = text;
+            this.hpBar = hpBar;
+        }
+
+        public void SetText(TMP_Text text)
+        {
+            this.text = text;
+        }
+
+        public void SetHpBar(Image hpBar)
+        {
+            this.hpBar = hpBar;
+        }
+
+        public void SetCrewSprite (SpriteRenderer crewSprite)
+        {
+            this.crewSprite = crewSprite;
+        }
+
+        public void SetCrewTargetSpite(SpriteRenderer crewTargetSprite)
+        {
+            this.crewTargetSprite = crewTargetSprite;
+        }
+
+        public void SetCrewController(CrewController crew)
+        {
+            this.crew = crew;
+        }
+
+        #endregion
+
+        #region Private Method
 
         private void UpdateTargetRoom()
         {
@@ -127,37 +170,6 @@ namespace FTL
             hpBar.fillAmount = Mathf.InverseLerp(0f, maxHp, hp);
         }
 
-        public void SetGameContextCrew(int crewIndex, TMP_Text text, Image hpBar)
-        {
-            useGameContext = true;
-            this.CrewIndex = crewIndex;
-            this.text = text;
-            this.hpBar = hpBar;
-        }
-
-        public void SetText(TMP_Text text)
-        {
-            this.text = text;
-        }
-
-        public void SetHpBar(Image hpBar)
-        {
-            this.hpBar = hpBar;
-        }
-
-        public void SetCrewSprite (SpriteRenderer crewSprite)
-        {
-            this.crewSprite = crewSprite;
-        }
-
-        public void SetCrewTargetSpite(SpriteRenderer crewTargetSprite)
-        {
-            this.crewTargetSprite = crewTargetSprite;
-        }
-
-        public void SetCrewController(CrewController crew)
-        {
-            this.crew = crew;
-        }
+        #endregion
     }
 }

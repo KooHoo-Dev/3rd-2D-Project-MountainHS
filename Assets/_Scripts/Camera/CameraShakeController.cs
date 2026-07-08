@@ -12,15 +12,25 @@ namespace FTL
         [SerializeField] private float shakeStrengthOffset = 1f;
         [SerializeField] private bool isShaked = false;
 
+        #region Unity Method
+
         private void Awake()
         {
             isShaked = false;
         }
 
+        #endregion
+
+        #region Public Method
+
         public void ShakeCamera()
         {
             StartCoroutine(MoveCameraToRandomRange());
         }
+
+        #endregion
+
+        #region Private Method
 
         private IEnumerator MoveCameraToRandomRange()
         {
@@ -55,5 +65,7 @@ namespace FTL
             float yOffset = Random.Range(-yRange, yRange);
             return new Vector3(xOffset, yOffset, 0f);
         }
+
+        #endregion
     }
 }

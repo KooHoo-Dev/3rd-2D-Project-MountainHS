@@ -14,6 +14,9 @@ namespace FTL
     public class EnemyPowerController: ShipPowerController
     {
         [SerializeField] private PowerData powerData;
+
+        #region Unity Method
+
         protected override void Start()
         {
             base.Start();
@@ -25,5 +28,7 @@ namespace FTL
             TryAllocatePower(RoomType.Engine, powerData.EnginePower);
             
         }
+
+        #endregion
     }
 }

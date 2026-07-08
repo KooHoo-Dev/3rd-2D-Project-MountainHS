@@ -7,6 +7,8 @@ public class AspectRatioController : MonoBehaviour
     [SerializeField] private float targetAspect = 16 / 9f;
     [SerializeField] private float cameraAspect;
 
+    #region Unity Method
+
     private void Start()
     {
         cameraAspect = GetCameraAspect();
@@ -22,6 +24,10 @@ public class AspectRatioController : MonoBehaviour
             ApplyLetteringBox();
         }
     }
+
+    #endregion
+
+    #region Private Method
 
     private void ApplyLetteringBox()
     {
@@ -46,4 +52,5 @@ public class AspectRatioController : MonoBehaviour
         return width / (float)height;
     }
 
+    #endregion
 }

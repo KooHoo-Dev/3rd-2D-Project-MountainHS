@@ -18,6 +18,8 @@ namespace FTL
         [SerializeField] private int prevShieldCount;
         [SerializeField] private bool isEnemy = false;
 
+        #region Unity Method
+
         private void Awake()
         {
             if (isEnemy == false)
@@ -60,11 +62,16 @@ namespace FTL
                     Debug.LogError("ShieldViewer: There is no shieldMainSprite on Enemy!");
             }
         }
+
         // 실드 시스템의 최대 실드 개수, 실드 개수에 따라 실드 ui 표시
         private void LateUpdate()
         {
             UpdateViewer();
         }
+
+        #endregion
+
+        #region Private Method
 
         // 충전한 정도에 따라서 투명도를 다르게 표시하고 싶은데
         private void UpdateViewer()
@@ -138,5 +145,7 @@ namespace FTL
                 yield return null;
             }
         }
+
+        #endregion
     }
 }

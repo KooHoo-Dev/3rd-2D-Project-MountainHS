@@ -13,21 +13,14 @@ namespace FTL
         [SerializeField] private float chargeSpeedMultiplier = 0f;
         public ITargeting TargetingSystem { get; set; }
 
+        #region Unity Method
+
         protected override void Awake()
         {
             base.Awake();
             type = RoomType.Weapon;
             selectedWeapon = null;
             targetData = new ProjectileTargetData(Vector3.zero, -1);
-        }
-
-        public void SetWeaponsTargetingSystem(ITargeting targetingSystem)
-        {
-            TargetingSystem = targetingSystem;
-            for (int i = 0; i < weapons.Count; i++)
-            {
-                weapons[i].SetTargetingSystem(TargetingSystem);
-            }
         }
 
         private void Update()
@@ -41,6 +34,103 @@ namespace FTL
 
             UpdateWeaponTargeting();
         }
+
+        #endregion
+
+        #region Public Method
+
+        public void SetWeaponsTargetingSystem(ITargeting targetingSystem)
+        {
+            TargetingSystem = targetingSystem;
+            for (int i = 0; i < weapons.Count; i++)
+            {
+                weapons[i].SetTargetingSystem(TargetingSystem);
+            }
+        }
+
+        public void SetSelectedWeapon(int index)
+        {
+            if (CanRunFacilityLogic() == false)
+            {
+                return;
+            }
+
+            // 선택한 무기가 없으면 (무기 리스트의 인덱스 범위 초과) 예외처리
+            if (index > weapons.Count)
+            {
+                Debug.LogWarning($"WeaponSystem: SetSelectWeapon index out of range");
+                return;
+            }
+
+            // 선택한 무기 갱신
+            selectedWeapon = weapons[index];
+            CursorController.Instance.SetCursorAim(index);
+        }
+
+        public void SetSelectedRoomTarget(ProjectileTargetData targetData)
+        {
+            if (CanRunFacilityLogic() == false)
+            {
+                return;
+            }
+
+            this.targetData = targetData;
+            CursorController.Instance.ResetMouseSprite();
+        }
+
+        // 선택한 무기 리셋
+        public void ResetSelectedWeapon()
+        {
+            ProjectileTargetData emptyData = new ProjectileTargetData(Vector2.zero, -1);
+            ResetWeaponTargetSprite(selectedWeapon);
+            CursorController.Instance.ResetMouseSprite();
+            if (selectedWeapon == null)
+            {
+                Debug.LogWarning("Selected Weapon is null. Reset failed.");
+                return;
+            }
+            selectedWeapon.SetRoomTarget(emptyData);
+            selectedWeapon = null;
+        }
+
+        public override void ApplyAssistEffectOnFacility(bool isApplied)
+        {
+            base.ApplyAssistEffectOnFacility(isApplied);
+            for (int i = 0; i < weapons.Count; i++)
+            {
+                weapons[i].ApplyAssistEffectOnWeapon(isApplied);
+            }
+        }
+
+        public void AddWeapon(WeaponController weapon)
+        {
+            //weapons 초기화 해야함
+            weapons.Add(weapon);
+        }
+
+        public void SetWeaponSystemOfWeapons()
+        {
+            for (int i = 0; i < weapons.Count; i++)
+            {
+                weapons[i].SetWeaponSystem(this);
+            }
+        }
+
+        public void ResetWeaponTargetSprite(WeaponController weapon)
+        {
+            int weaponIndex = FindWeaponIndex(weapon);
+            if (weaponIndex == -1)
+            {
+                Debug.LogWarning($"WeaponSystem: ResetWeaponTargetSprite weapon not found");
+                return;
+            }
+
+            targetSpriteObjects[weaponIndex].SetActive(false);
+        }
+
+        #endregion
+
+        #region Private Method
 
         private void UpdateWeaponTargeting()
         {
@@ -148,86 +238,6 @@ namespace FTL
                             selectedWeapon != null;
         }
 
-        public void SetSelectedWeapon(int index)
-        {
-            if (CanRunFacilityLogic() == false)
-            {
-                return;
-            }
-
-            // 선택한 무기가 없으면 (무기 리스트의 인덱스 범위 초과) 예외처리
-            if (index > weapons.Count)
-            {
-                Debug.LogWarning($"WeaponSystem: SetSelectWeapon index out of range");
-                return;
-            }
-
-            // 선택한 무기 갱신
-            selectedWeapon = weapons[index];
-            CursorController.Instance.SetCursorAim(index);
-        }
-
-        public void SetSelectedRoomTarget(ProjectileTargetData targetData)
-        {
-            if (CanRunFacilityLogic() == false)
-            {
-                return;
-            }
-
-            this.targetData = targetData;
-            CursorController.Instance.ResetMouseSprite();
-        }
-
-        // 선택한 무기 리셋
-        public void ResetSelectedWeapon()
-        {
-            ProjectileTargetData emptyData = new ProjectileTargetData(Vector2.zero, -1);
-            ResetWeaponTargetSprite(selectedWeapon);
-            CursorController.Instance.ResetMouseSprite();
-            if (selectedWeapon == null)
-            {
-                Debug.LogWarning("Selected Weapon is null. Reset failed.");
-                return;
-            }
-            selectedWeapon.SetRoomTarget(emptyData);
-            selectedWeapon = null;
-        }
-
-        public override void ApplyAssistEffectOnFacility(bool isApplied)
-        {
-            base.ApplyAssistEffectOnFacility(isApplied);
-            for (int i = 0; i < weapons.Count; i++)
-            {
-                weapons[i].ApplyAssistEffectOnWeapon(isApplied);
-            }
-        }
-
-        public void AddWeapon(WeaponController weapon)
-        {
-            //weapons 초기화 해야함
-            weapons.Add(weapon);
-        }
-
-        public void SetWeaponSystemOfWeapons()
-        {
-            for (int i = 0; i < weapons.Count; i++)
-            {
-                weapons[i].SetWeaponSystem(this);
-            }
-        }
-
-        public void ResetWeaponTargetSprite(WeaponController weapon)
-        {
-            int weaponIndex = FindWeaponIndex(weapon);
-            if (weaponIndex == -1)
-            {
-                Debug.LogWarning($"WeaponSystem: ResetWeaponTargetSprite weapon not found");
-                return;
-            }
-
-            targetSpriteObjects[weaponIndex].SetActive(false);
-        }
-
         private void SetWeaponTargetSprite(int index, ProjectileTargetData targetData)
         {
             if (index < 0 || index >= targetSpriteObjects.Count)
@@ -251,5 +261,7 @@ namespace FTL
             }
             return -1;
         }
+
+        #endregion
     }
 }

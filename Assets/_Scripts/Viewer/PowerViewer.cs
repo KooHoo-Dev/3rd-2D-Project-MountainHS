@@ -14,6 +14,8 @@ namespace FTL
         [SerializeField] protected FacilitySystem facilitySystem;
         protected ObjectPool<GameObject> barPool;
 
+        #region Unity Method
+
         protected virtual void Awake()
         {
             barPool = new ObjectPool<GameObject>(CreateBar, OnGetBar, OnReleaseBar, OnDestroyBar);
@@ -23,6 +25,10 @@ namespace FTL
         {
             UpdateViewer();
         }
+
+        #endregion
+
+        #region Public Method
 
         // 전력바 상태 관리: 가용, 불가능
         // 전력바 상태에 따라 스프라이트 상태 변경
@@ -88,6 +94,10 @@ namespace FTL
             SetBarState(barSprites.Count - 1, PowerBarStatus.Available);
         }
 
+        #endregion
+
+        #region Private Method
+
         private GameObject CreateBar()
         {
             return Instantiate(barPrefab, barGroup.transform);
@@ -108,5 +118,7 @@ namespace FTL
         {
             Destroy(powerBar);
         }
+
+        #endregion
     }
 }

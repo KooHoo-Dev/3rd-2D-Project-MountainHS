@@ -26,6 +26,8 @@ namespace FTL
 
         private SpriteRenderer spriteRenderer;
 
+        #region Unity Method
+
         private void Awake()
         {
             StartCol = null;
@@ -74,38 +76,6 @@ namespace FTL
                     transform.position = Vector3.MoveTowards(transform.position, TargetPos, moveDistance);
                 }
             }
-        }
-        // SetTarget
-
-        public void SetTarget(ProjectileTargetData targetData)
-        {
-            TargetPos = targetData.TargetPosition;
-            targetRoomId = targetData.RoomId;
-        }
-
-        public void SetStartCol(Collider2D startCol)
-        {
-            StartCol = startCol;
-        }
-
-        public void SetEndCol(Collider2D endCol)
-        {
-            this.endCol = endCol;
-        }
-
-        public void SetIsAfterStartCol(bool isAfterStartCol)
-        {
-            IsAfterStartCol = isAfterStartCol;
-        }
-
-        public void SetIsMoving(bool isMoving)
-        {
-            this.isMoving = isMoving;
-        }
-
-        public void SetRandomSeed(float seed)
-        {
-            RandomSeed = seed;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -167,6 +137,47 @@ namespace FTL
             }
         }
 
+        #endregion
+
+        #region Public Method
+
+        // SetTarget
+
+        public void SetTarget(ProjectileTargetData targetData)
+        {
+            TargetPos = targetData.TargetPosition;
+            targetRoomId = targetData.RoomId;
+        }
+
+        public void SetStartCol(Collider2D startCol)
+        {
+            StartCol = startCol;
+        }
+
+        public void SetEndCol(Collider2D endCol)
+        {
+            this.endCol = endCol;
+        }
+
+        public void SetIsAfterStartCol(bool isAfterStartCol)
+        {
+            IsAfterStartCol = isAfterStartCol;
+        }
+
+        public void SetIsMoving(bool isMoving)
+        {
+            this.isMoving = isMoving;
+        }
+
+        public void SetRandomSeed(float seed)
+        {
+            RandomSeed = seed;
+        }
+
+        #endregion
+
+        #region Private Method
+
         private IEnumerator SetProjectileDelay()
         {
             const float MAX_SPEED = 11f;
@@ -185,5 +196,7 @@ namespace FTL
             spriteRenderer.enabled = true;
             isMoving = true;
         }
+
+        #endregion
     }
 }

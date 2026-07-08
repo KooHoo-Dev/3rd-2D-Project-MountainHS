@@ -12,6 +12,8 @@ namespace FTL
         [SerializeField] private Transform spriteParentTransform;
         [SerializeField] private SpriteRenderer spriteRenderer;
 
+        #region Unity Method
+
         private void Awake()
         {
             IsShaked = false;
@@ -29,10 +31,18 @@ namespace FTL
             }
         }
 
+        #endregion
+
+        #region Public Method
+
         public void ShakeSprite()
         {
             StartCoroutine(MoveSpriteObjectToRandomOffset());
         }
+
+        #endregion
+
+        #region Private Method
 
         private IEnumerator MoveSpriteObjectToRandomOffset()
         {
@@ -67,5 +77,7 @@ namespace FTL
             float yOffset = Random.Range(-yRange, yRange);
             return new Vector3(xOffset, yOffset, 0f);
         }
+
+        #endregion
     }
 }

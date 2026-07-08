@@ -13,6 +13,8 @@ namespace FTL
         [SerializeField] private List<Sprite> targetSprites;
         private SpriteRenderer spriteRenderer;
 
+        #region Unity Method
+
         protected override void OnInitialize()
         {
             base.OnInitialize();
@@ -32,12 +34,9 @@ namespace FTL
             SetMousePos();
         }
 
-        private void SetMousePos()
-        {
-            Vector2 mousePos = SimpleInput.GetMousePosition();
-            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-            gameObject.transform.position = mousePos;
-        }
+        #endregion
+
+        #region Public Method
 
         public void SetCursorAim(int index)
         {
@@ -48,5 +47,18 @@ namespace FTL
         {
             spriteRenderer.sprite = cursorSprite;
         }
+
+        #endregion
+
+        #region Private Method
+
+        private void SetMousePos()
+        {
+            Vector2 mousePos = SimpleInput.GetMousePosition();
+            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+            gameObject.transform.position = mousePos;
+        }
+
+        #endregion
     }
 }

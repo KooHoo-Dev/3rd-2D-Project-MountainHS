@@ -13,6 +13,8 @@ namespace FTL
         [Header("Stage Environment")]
         [SerializeField] private EnvironmentController stageEnvironmentController;
 
+        #region Public Method
+
         public void BindSceneObjects(GameContext gameContext)
         {
             BindSceneObjectsWithEnvironment(gameContext, false, false);
@@ -50,6 +52,10 @@ namespace FTL
             BindCombatSystem(player, enemy);
             BindStageEnvironment(isAsteroidStage, isSunStage);
         }
+
+        #endregion
+
+        #region Private Method
 
         private void BindCombatSystem(PlayerController player, EnemyController enemy)
         {
@@ -132,5 +138,6 @@ namespace FTL
             }
         }
 
+        #endregion
     }
 }

@@ -8,6 +8,8 @@ namespace FTL
     {
         private List<Room> rooms = new List<Room>();
 
+        #region Public Method
+
         public RandomTargeter(List<Room> rooms)
         {
             for (int i = 0; i < rooms.Count; i++)
@@ -21,5 +23,7 @@ namespace FTL
             int randomIndex = Random.Range(0, rooms.Count);
             return rooms[randomIndex];
         }
+
+        #endregion
     }
 }

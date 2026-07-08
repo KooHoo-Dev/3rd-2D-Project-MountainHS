@@ -7,6 +7,8 @@ namespace FTL
     {
         private ITargeting targetingSystem;
 
+        #region Unity Method
+
         private void Start()
         {
             targetingSystem = new RandomTargeter(CombatSystem.Instance.GetPlayerRooms());
@@ -14,5 +16,6 @@ namespace FTL
             Ownership.ShipSide = ShipSide.Enemy0;
         }
 
+        #endregion
     }
 }

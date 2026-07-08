@@ -16,7 +16,9 @@ namespace FTL
         [SerializeField] private float moveSpeed = 3f;
         [SerializeField] private CrewStatus crewStatus = CrewStatus.Idle;
         [field: SerializeField] public static Vector3 Offset { get; private set; } = new Vector3(0f, 0.5f, 0f);
-        private Transform crewSpriteTransform; 
+        private Transform crewSpriteTransform;
+
+        #region Unity Method
 
         private void Awake()
         {
@@ -36,6 +38,10 @@ namespace FTL
             UpdateCrewStatus();
             HandleStatus();
         }
+
+        #endregion
+
+        #region Public Method
 
         public void SetTargetRoom(Room room)
         {
@@ -59,6 +65,36 @@ namespace FTL
             room.AddCrew(this);
             crewSpriteTransform.position = room.GlobalPosition;
         }
+
+        public void ApplyCrewState(CrewState crewState, Room room)
+        {
+            CurrentRoom.ReduceCrew(this);
+            InitStartRoom(room);
+            Hp = crewState.Hp;
+            Name = crewState.Name;
+        }
+
+        public void HealHp(int amount)
+        {
+            Hp = Mathf.Min(MaxHp, Hp + amount);
+        }
+
+        public void TakeDamage(int amount)
+        {
+            Hp = Mathf.Max(0, Hp - amount);
+            if (IsDead)
+            {
+                //CurrentRoom.ReduceCrew(this);
+                //if (CurrentRoom != TargetRoom)
+                //    TargetRoom.ReduceCrew(this);
+                CrewSystem.HandleCrewDeath(this);
+                gameObject.SetActive(false);
+            }
+        }
+
+        #endregion
+
+        #region Private Method
 
         private void UpdateCrewStatus()
         {
@@ -133,14 +169,6 @@ namespace FTL
             }
         }
 
-        public void ApplyCrewState(CrewState crewState, Room room)
-        {
-            CurrentRoom.ReduceCrew(this);
-            InitStartRoom(room);
-            Hp = crewState.Hp;
-            Name = crewState.Name;
-        }
-
         private void HandleStatus()
         {
             switch (crewStatus)
@@ -174,23 +202,6 @@ namespace FTL
             }
         }
 
-        public void HealHp(int amount)
-        {
-            Hp = Mathf.Min(MaxHp, Hp + amount);
-        }
-
-        public void TakeDamage(int amount)
-        {
-            Hp = Mathf.Max(0, Hp - amount);
-            if (IsDead)
-            {
-                //CurrentRoom.ReduceCrew(this);
-                //if (CurrentRoom != TargetRoom)
-                //    TargetRoom.ReduceCrew(this);
-                CrewSystem.HandleCrewDeath(this);
-                gameObject.SetActive(false);
-            }
-        }
-
+        #endregion
     }
 }

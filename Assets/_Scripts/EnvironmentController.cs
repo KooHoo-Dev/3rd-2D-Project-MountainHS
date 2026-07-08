@@ -28,6 +28,17 @@ namespace FTL
         private Coroutine environmentCoroutine;
         private bool hasLoggedMissingAsteroidPrefab;
 
+        #region Unity Method
+
+        private void OnDisable()
+        {
+            StopEnvironmentEffects();
+        }
+
+        #endregion
+
+        #region Public Method
+
         internal void SetStageEnvironment(bool isAsteroid, bool isSun)
         {
             isAsteroidStage = isAsteroid;
@@ -40,10 +51,9 @@ namespace FTL
             StartEnvironmentEffects();
         }
 
-        private void OnDisable()
-        {
-            StopEnvironmentEffects();
-        }
+        #endregion
+
+        #region Private Method
 
         private void StartEnvironmentEffects()
         {
@@ -205,5 +215,7 @@ namespace FTL
             //    Destroy(asteroidObject, asteroidLifetime);
             //}
         }
+
+        #endregion
     }
 }

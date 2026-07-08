@@ -20,6 +20,8 @@ namespace FTL
         protected FacilityStatus facilityStatus;
         protected ShipController ship;
 
+        #region Unity Method
+
         protected virtual void Awake()
         {
             ship = GetComponent<ShipController>();
@@ -30,6 +32,10 @@ namespace FTL
             TotalDamage = 0;
             UpdateFacilityStatus();
         }
+
+        #endregion
+
+        #region Public Method
 
         public bool CanAddPower(int amount)
         {
@@ -140,7 +146,6 @@ namespace FTL
             }
         }
 
-        #region Context Menu Test Function
         [ContextMenu("Add Power")]
         public void TestAddPower()
         {
@@ -165,6 +170,7 @@ namespace FTL
         {
             Repair(1);
         }
+
         #endregion
     }
 }

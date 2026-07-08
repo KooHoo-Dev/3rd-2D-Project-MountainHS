@@ -103,6 +103,7 @@ namespace FTL
 
             return false;
         }
+
         /// <summary>
         ///- 투사체 피격 판정 
         ///    - 멤버
@@ -265,8 +266,6 @@ namespace FTL
             floatingText.SetTextColor(color);
         }
 
-
-
         #endregion
 
         #region Private Method
@@ -342,6 +341,5 @@ namespace FTL
         }
 
         #endregion
-
     }
 }

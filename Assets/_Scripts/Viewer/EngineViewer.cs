@@ -12,11 +12,14 @@ namespace FTL
         [SerializeField] private Image jumpProgressBar;
         [SerializeField] private Image assistImage;
 
+        #region Unity Method
+
         private void Awake()
         {
             jumpButton.SetActive(false);
             chargeStatus.SetActive(true);
         }
+
         private void LateUpdate()
         {
             bool canJump = UpdateChargeBar();
@@ -49,5 +52,7 @@ namespace FTL
             }
 
         }
+
+        #endregion
     }
 }

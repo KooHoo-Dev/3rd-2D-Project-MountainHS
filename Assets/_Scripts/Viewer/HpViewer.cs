@@ -16,6 +16,8 @@ namespace FTL
         [SerializeField] private bool isEnemy = false;
         private ObjectPool<GameObject> barPool;
 
+        #region Unity Method
+
         private void Awake()
         {
             prevHp = -1;
@@ -47,6 +49,22 @@ namespace FTL
         {
             UpdateViewer();
         }
+
+        #endregion
+
+        #region Public Method
+
+        // 반응로 전력 추가
+        public void AddBar()
+        {
+            GameObject powerBar = barPool.Get();
+            barSprites.Add(powerBar.GetComponent<Image>());
+            SetBarState(barSprites.Count - 1, EHpBarStatus.Available);
+        }
+
+        #endregion
+
+        #region Private Method
 
         // 전력바 상태 관리: 가용, 불가능
         // 전력바 상태에 따라 스프라이트 상태 변경
@@ -137,14 +155,6 @@ namespace FTL
             return true;
         }
 
-        // 반응로 전력 추가
-        public void AddBar()
-        {
-            GameObject powerBar = barPool.Get();
-            barSprites.Add(powerBar.GetComponent<Image>());
-            SetBarState(barSprites.Count - 1, EHpBarStatus.Available);
-        }
-
         private GameObject CreateBar()
         {
             return Instantiate(barPrefab, barGroup.transform);
@@ -165,5 +175,7 @@ namespace FTL
         {
             Destroy(powerBar);
         }
+
+        #endregion
     }
 }

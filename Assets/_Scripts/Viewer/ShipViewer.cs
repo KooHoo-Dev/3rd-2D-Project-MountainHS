@@ -21,6 +21,8 @@ namespace FTL
         private Material roomConnectionMaterial;
         private GameObject tempLineGroup;
 
+        #region Unity Method
+
         private void Awake()
         {
             if (showRoomConnections)
@@ -29,6 +31,7 @@ namespace FTL
                 tempLineGroup.transform.SetParent(transform, false);
             }
         }
+
         private void Start()
         {
             roomViewers = GetComponentsInChildren<RoomViewer>();
@@ -50,7 +53,6 @@ namespace FTL
             ClearRoomConnectionLines();
         }
 
-        #region Room Connection Visualize
         private void OnDrawGizmos()
         {
             if (showRoomConnections == false)
@@ -60,6 +62,10 @@ namespace FTL
 
             DrawRoomConnectionGizmos();
         }
+
+        #endregion
+
+        #region Private Method
 
         private void CreateRoomConnectionLines()
         {
@@ -221,7 +227,6 @@ namespace FTL
             return shipController.ShipData.Rooms;
         }
 
-
         private bool IsConnectionAlreadyDrawn(List<Room> rooms, int roomIndex, int neighborRoomId)
         {
             Room room = rooms[roomIndex];
@@ -242,7 +247,6 @@ namespace FTL
 
             return false;
         }
-        #endregion
 
         private Vector3 GetRoomLocalPosition(Room room)
         {
@@ -320,5 +324,7 @@ namespace FTL
 
             return neighborRoomIdsField.GetValue(room) as List<int>;
         }
+
+        #endregion
     }
 }

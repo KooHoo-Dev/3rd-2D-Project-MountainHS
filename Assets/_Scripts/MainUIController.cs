@@ -9,6 +9,8 @@ namespace FTL
         private bool HasViewer => brViewer != null;
         [SerializeField] private BattleResultViewer brViewer;
 
+        #region Unity Method
+
         private void Start()
         {
             if (HasViewer)
@@ -16,6 +18,10 @@ namespace FTL
                 brViewer.gameObject.SetActive(false);
             }
         }
+
+        #endregion
+
+        #region Public Method
 
         public void MoveScene(int index)
         {
@@ -60,5 +66,7 @@ namespace FTL
                 Debug.LogWarning("BattleResultViewer is not assigned in MainUIController. Cannot display battle result.");
             }
         }
+
+        #endregion
     }
 }
