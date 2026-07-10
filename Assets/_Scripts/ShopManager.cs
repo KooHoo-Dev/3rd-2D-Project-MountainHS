@@ -19,7 +19,7 @@ namespace FTL
         private const string RESTORE_UI_ROOT = "Restore UI Root";
         private const string CREW_GROUP_ROOT = "Crew Group Root";
 
-        public static int BattlePrepareVisitCount = 0;
+        public static int VisitCount = 0;
 
         // switch 두개 등록
         [SerializeField] private Button shipUpgradeSwitchButton;
@@ -44,7 +44,7 @@ namespace FTL
 
         private void Awake()
         {
-            BattlePrepareVisitCount++;
+            VisitCount++;
             InitMainGameObject();
             InitFacilityUpgradeCounts();
             GameManager.Instance.EnsureBattlePrepareTestGameContext();
@@ -241,6 +241,18 @@ namespace FTL
                 facilityUpgradeCount[i] = gameContext.FacilityUpgradeCount[i];
             }
             reactorUpgradeCount = gameContext.ReactorUpgradeCount;
+        }
+
+        [ContextMenu("Add VisitCount")]
+        public void AddVisitCount()
+        {
+            VisitCount += 1;
+        }
+        
+        [ContextMenu("Print VisitCount")]
+        public void PrintVisitCount()
+        {
+            Debug.Log(VisitCount);
         }
     }
 }

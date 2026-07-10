@@ -56,6 +56,11 @@ namespace FTL
             TryInitializeShip(false);
         }
 
+        protected virtual void Start()
+        {
+            crewSystem.Rooms = Rooms;
+        }
+
         public void SetExternalUIGroups(Transform crewSummaryGroup, Transform weaponChargeGroup)
         {
             crewSummaryGroupTransform = crewSummaryGroup;
@@ -155,7 +160,6 @@ namespace FTL
 
                     Rooms.Add(room);
                 }
-                crewSystem.Rooms = Rooms;
             }
 
         private void InitCrews()
@@ -200,17 +204,17 @@ namespace FTL
                     bool isFlipY = weaponTransformList[i].isFlipY;
                     int index = i;
 
-                    if (isPlayer)
-                    {
-                        weaponButton.onClick.RemoveAllListeners();
-                        weaponButton.onClick.AddListener(() => weaponSystem.SetSelectedWeapon(index));
-                    }
                     weaponObject.transform.localPosition += weaponOffset;
                     weaponObject.transform.Rotate(weaponRotation);
                     weaponSprite.flipX = isFlipX;
                     weaponSprite.flipY = isFlipY;
                     weaponViewer.SetChargeBar(chargeImage);
                     weaponSystem.AddWeapon(weapon);
+                    if (isPlayer)
+                    {
+                        weaponButton.onClick.RemoveAllListeners();
+                        weaponButton.onClick.AddListener(() => weaponSystem.SetSelectedWeapon(index));
+                    }
                 }
                 weaponSystem.SetWeaponSystemOfWeapons();
             }
@@ -311,7 +315,7 @@ namespace FTL
             }
 
             room.TakeDamageToCrews(crewDamage);
-            StartCoroutine(ShakeRoom(room));
+            StartCoroutine(SetRoomHitCoroutine(room));
             bool canDamageFacility = room != null && room.HasFacility;
             if (canDamageFacility)
             {
@@ -322,7 +326,7 @@ namespace FTL
             CheckGameOver();
         }
 
-        private IEnumerator ShakeRoom(Room room)
+        private IEnumerator SetRoomHitCoroutine(Room room)
         {
             room.SetIsHit(true);
             yield return new WaitForSeconds(0.25f);

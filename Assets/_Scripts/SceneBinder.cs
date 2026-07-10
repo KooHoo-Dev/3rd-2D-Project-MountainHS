@@ -20,7 +20,7 @@ namespace FTL
             BindSceneObjectsWithEnvironment(gameContext, false, false);
         }
 
-        internal void BindSceneObjectsWithEnvironment(GameContext gameContext, bool isAsteroidStage, bool isSunStage)
+        public void BindSceneObjectsWithEnvironment(GameContext gameContext, bool isAsteroidStage, bool isSunStage)
         {
             PlayerController player = FindFirstObjectByType<PlayerController>();
             EnemyController enemy = SpawnEnemyOrFindSceneEnemy(gameContext.EnemyType);

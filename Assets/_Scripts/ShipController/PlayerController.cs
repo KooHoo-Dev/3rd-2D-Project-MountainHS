@@ -28,8 +28,9 @@ namespace FTL
                 GameManager.Instance.SetGameContext(this);
             }
         }
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
             Ownership.ShipSide = ShipSide.Player;
         }
 

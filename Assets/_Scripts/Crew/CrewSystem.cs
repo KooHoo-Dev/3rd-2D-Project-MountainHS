@@ -12,17 +12,21 @@ namespace FTL
         public bool IsAllCrewDead => crews.Count == 0;
 
         [field: SerializeField] private ShipController ship;
-        private List<FacilitySystem> facilitySystems = new List<FacilitySystem>();
         [SerializeField] private List<CrewController> crews = new List<CrewController>();
         [SerializeField] private List<CrewController> selectedCrews = new List<CrewController>();
         [SerializeField] private bool isPlayer = true;
         [SerializeField] private Room targetRoom = null;
+        private List<FacilitySystem> facilitySystems = new List<FacilitySystem>();
 
         #region Unity Method
 
-        private void Start()
+        private void Awake()
         {
             ship = GetComponent<ShipController>();
+        }
+
+        private void Start()
+        {
             CrewController[] crews = GetComponentsInChildren<CrewController>();
             for (int i = 0; i < crews.Length; i++)
             {

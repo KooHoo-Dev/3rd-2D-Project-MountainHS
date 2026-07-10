@@ -38,7 +38,7 @@ namespace FTL
 
         #region Public Method
 
-        public void SetCursorAim(int index)
+        public void SetCursorAimSprite(int index)
         {
             spriteRenderer.sprite = targetSprites[index];
         }

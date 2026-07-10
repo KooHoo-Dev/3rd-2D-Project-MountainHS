@@ -24,8 +24,10 @@ namespace FTL
         private Dictionary<Collider2D, ShipSide> colToNextShipAreaDict = new Dictionary<Collider2D, ShipSide>();
         private Dictionary<ShipSide, Collider2D> shipSideToColDict = new Dictionary<ShipSide, Collider2D>();
         private Dictionary<ShipSide, SpriteShakeController> shipSideToSpriteShake = new Dictionary<ShipSide, SpriteShakeController>();
+        
         private ObjectPool<GameObject> floatingTextPool;
         private ObjectPool<GameObject> explosionPool;
+        
         [SerializeField] private GameObject floatingTextPrefab;
         [SerializeField] private GameObject explosionPrefab;
 

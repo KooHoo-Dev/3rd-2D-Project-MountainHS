@@ -9,8 +9,9 @@ namespace FTL
 
         #region Unity Method
 
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
             targetingSystem = new RandomTargeter(CombatSystem.Instance.GetPlayerRooms());
             weaponSystem.SetWeaponsTargetingSystem(targetingSystem);
             Ownership.ShipSide = ShipSide.Enemy0;

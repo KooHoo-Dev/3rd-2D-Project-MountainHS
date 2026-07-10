@@ -64,7 +64,7 @@ namespace FTL
 
             // 선택한 무기 갱신
             selectedWeapon = weapons[index];
-            CursorController.Instance.SetCursorAim(index);
+            CursorController.Instance.SetCursorAimSprite(index);
         }
 
         public void SetSelectedRoomTarget(ProjectileTargetData targetData)

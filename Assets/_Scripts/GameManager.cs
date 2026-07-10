@@ -22,7 +22,7 @@ namespace FTL
         public bool IsCombatPaused => isCombatPaused;
         public bool IsBattleStopped => isBattleStopped;
         public bool CanRunCombat => isCombatPaused == false && isBattleStopped == false;
-        public PlayerController Player;
+        public PlayerController Player { get;  set; }
         [field: SerializeField] public BattleResult BattleResult { get; set; }
 
         [field: SerializeField] public EnemyDatabase EnemyDatabase { get; private set; }
@@ -120,7 +120,7 @@ namespace FTL
 
         private void BindLinearBattleScene()
         {
-            int battlePrepareVisitCount = ShopManager.BattlePrepareVisitCount;
+            int battlePrepareVisitCount = ShopManager.VisitCount;
             EnemyType enemyType = EnemyType.Enemy1;
             bool isAsteroidStage = false;
             bool isSunStage = false;
@@ -373,7 +373,7 @@ namespace FTL
         public void ResetGameContext()
         {
             gameContext = null;
-            ShopManager.BattlePrepareVisitCount = 0;
+            ShopManager.VisitCount = 0;
         }
 
         public void ExitGame()
