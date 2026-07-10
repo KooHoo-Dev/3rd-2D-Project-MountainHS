@@ -11,12 +11,12 @@ namespace FTL
     /// </summary>
     public class GameManager : SingletonBase<GameManager>
     {
-        private const string BATTLE_SCENE = "BattleScene";
-        private const string BATTLE_SCENE1 = "BattleScene1";
-        private const string BATTLE_SCENE2 = "BattleScene2";
-        private const string BATTLE_SCENE3 = "BattleScene3";
-        private const string BATTLE_PREPARE = "BattlePrepare";
-        private const string VICTORY_SCENE = "Victory";
+        private const string battleScene = "BattleScene";
+        private const string battleScene1 = "BattleScene1";
+        private const string battleScene2 = "BattleScene2";
+        private const string battleScene3 = "BattleScene3";
+        private const string battlePrepare = "BattlePrepare";
+        private const string victoryScene = "Victory";
 
         public bool IsGameContextEmpty => gameContext == null || gameContext.IsEmpty;
         public bool IsCombatPaused => isCombatPaused;
@@ -33,20 +33,11 @@ namespace FTL
         private bool isCombatPaused;
         private bool isBattleStopped;
 
+        #region Unity Method
+
         private void Start()
         {
             InitUIObject();
-        }
-
-        private void InitUIObject()
-        {
-            mainUIController = FindFirstObjectByType<MainUIController>();
-            if (mainUIController == null)
-            {
-                return;
-            }
-
-            toggleMenuObject = mainUIController.transform.GetChild(1).gameObject;
         }
 
         private void Update()
@@ -54,7 +45,7 @@ namespace FTL
             if (SimpleInput.GetKeyDown(Key.Escape))
             {
                 string sceneName = SceneManager.GetActiveScene().name;
-                if (sceneName == BATTLE_PREPARE || IsBattleScene(sceneName))
+                if (sceneName == battlePrepare || IsBattleScene(sceneName))
                 {
                     ToggleMenu(sceneName);
                 }
@@ -71,89 +62,9 @@ namespace FTL
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }
 
-        private void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
-        {
-            isBattleStopped = false;
-            SetCombatPaused(false);
-            InitUIObject();
-            CursorController.Instance.ResetMouseSprite();
-            if (scene.name == BATTLE_SCENE)
-            {
-                BindLinearBattleScene();
-            }
-            else if (scene.name == BATTLE_SCENE1)
-            {
-                EnemyType enemyType = EnemyType.Enemy1;
-                SceneBinder sceneBinder = FindFirstObjectByType<SceneBinder>();
-                BackgroundController backgroundController = FindFirstObjectByType<BackgroundController>();
+        #endregion
 
-                gameContext.SetEnemyType(enemyType);
-                sceneBinder.BindSceneObjects(gameContext);
-                backgroundController.SetRandomBackground();
-            }
-            else if (scene.name == BATTLE_SCENE2)
-            {
-                EnemyType enemyType = EnemyType.Enemy2;
-                SceneBinder sceneBinder = FindFirstObjectByType<SceneBinder>();
-                BackgroundController backgroundController = FindFirstObjectByType<BackgroundController>();
-
-                gameContext.SetEnemyType(enemyType);
-                sceneBinder.BindSceneObjects(gameContext);
-                backgroundController.SetRandomBackground();
-            }
-            else if (scene.name == BATTLE_SCENE3)
-            {
-                EnemyType enemyType = EnemyType.Enemy3;
-                SceneBinder sceneBinder = FindFirstObjectByType<SceneBinder>();
-                BackgroundController backgroundController = FindFirstObjectByType<BackgroundController>();
-
-                gameContext.SetEnemyType(enemyType);
-                sceneBinder.BindSceneObjects(gameContext);
-                backgroundController.SetRandomBackground();
-            }
-            else if (scene.name == BATTLE_PREPARE)
-            {
-                ShopManager shopManager = FindFirstObjectByType<ShopManager>();
-                shopManager.ApplyGameContext(gameContext);
-            }
-        }
-
-        private void BindLinearBattleScene()
-        {
-            int battlePrepareVisitCount = ShopManager.VisitCount;
-            EnemyType enemyType = EnemyType.Enemy1;
-            bool isAsteroidStage = false;
-            bool isSunStage = false;
-
-            if (battlePrepareVisitCount == 1)
-            {
-                enemyType = EnemyType.Enemy2;
-                isAsteroidStage = true;
-            }
-            else if (battlePrepareVisitCount == 2)
-            {
-                enemyType = EnemyType.Enemy2;
-                isSunStage = true;
-            }
-            else if (battlePrepareVisitCount == 3)
-            {
-                enemyType = EnemyType.Enemy3;
-                isAsteroidStage = true;
-                isSunStage = true;
-            }
-            else if (battlePrepareVisitCount >= 4)
-            {
-                SceneManager.LoadScene(VICTORY_SCENE);
-                return;
-            }
-
-            SceneBinder sceneBinder = FindFirstObjectByType<SceneBinder>();
-            BackgroundController backgroundController = FindFirstObjectByType<BackgroundController>();
-
-            gameContext.SetEnemyType(enemyType);
-            sceneBinder.BindSceneObjectsWithEnvironment(gameContext, isAsteroidStage, isSunStage);
-            backgroundController.SetRandomBackground();
-        }
+        #region Public Method
 
         public void HandleBattleResult(BattleResult battleResult)
         {
@@ -252,37 +163,6 @@ namespace FTL
             }
 
             SetCombatPaused(false);
-        }
-
-        private void ToggleMenu(string sceneName)
-        {
-            if (isBattleStopped)
-            {
-                return;
-            }
-
-            if (toggleMenuObject == null)
-            {
-                Debug.LogError("GameManager: toggleMenuObject is not assigned.");
-                return;
-            }
-
-            bool isToggleMenuActive = toggleMenuObject.activeSelf;
-            bool shouldOpenMenu = isToggleMenuActive == false;
-            toggleMenuObject.SetActive(shouldOpenMenu);
-
-            if (IsBattleScene(sceneName))
-            {
-                SetCombatPaused(shouldOpenMenu);
-            }
-        }
-
-        private bool IsBattleScene(string sceneName)
-        {
-            return sceneName == BATTLE_SCENE ||
-                sceneName == BATTLE_SCENE1 ||
-                sceneName == BATTLE_SCENE2 ||
-                sceneName == BATTLE_SCENE3;
         }
 
         //public void SetGameContext(List<Room> rooms, List<FacilitySystem> facilities, List<CrewController> crews, int shipHp, int shipMaxHp, int scrapAmount, int shipReactorCapacity, int shipPower)
@@ -439,7 +319,7 @@ namespace FTL
         {
             gameContext.AddShipHp(amount);
         }
-        #region Test Method
+
         public void TestHandleBattleResult()
         {
             if (SimpleInput.GetKeyDown(Key.Digit1))
@@ -498,13 +378,144 @@ namespace FTL
         public void ChangeBackground()
         {
             string sceneName = SceneManager.GetActiveScene().name;
-            if (sceneName == BATTLE_SCENE)
+            if (sceneName == battleScene)
             {
                 BackgroundController backgroundController = FindFirstObjectByType<BackgroundController>();
                 backgroundController.SetRandomBackground();
             }
 
         }
+
+        #endregion
+
+        #region Private Method
+
+        private void InitUIObject()
+        {
+            mainUIController = FindFirstObjectByType<MainUIController>();
+            if (mainUIController == null)
+            {
+                return;
+            }
+
+            toggleMenuObject = mainUIController.transform.GetChild(1).gameObject;
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
+        {
+            isBattleStopped = false;
+            SetCombatPaused(false);
+            InitUIObject();
+            CursorController.Instance.ResetMouseSprite();
+            if (scene.name == battleScene)
+            {
+                BindLinearBattleScene();
+            }
+            else if (scene.name == battleScene1)
+            {
+                EnemyType enemyType = EnemyType.Enemy1;
+                SceneBinder sceneBinder = FindFirstObjectByType<SceneBinder>();
+                BackgroundController backgroundController = FindFirstObjectByType<BackgroundController>();
+
+                gameContext.SetEnemyType(enemyType);
+                sceneBinder.BindSceneObjects(gameContext);
+                backgroundController.SetRandomBackground();
+            }
+            else if (scene.name == battleScene2)
+            {
+                EnemyType enemyType = EnemyType.Enemy2;
+                SceneBinder sceneBinder = FindFirstObjectByType<SceneBinder>();
+                BackgroundController backgroundController = FindFirstObjectByType<BackgroundController>();
+
+                gameContext.SetEnemyType(enemyType);
+                sceneBinder.BindSceneObjects(gameContext);
+                backgroundController.SetRandomBackground();
+            }
+            else if (scene.name == battleScene3)
+            {
+                EnemyType enemyType = EnemyType.Enemy3;
+                SceneBinder sceneBinder = FindFirstObjectByType<SceneBinder>();
+                BackgroundController backgroundController = FindFirstObjectByType<BackgroundController>();
+
+                gameContext.SetEnemyType(enemyType);
+                sceneBinder.BindSceneObjects(gameContext);
+                backgroundController.SetRandomBackground();
+            }
+            else if (scene.name == battlePrepare)
+            {
+                ShopManager shopManager = FindFirstObjectByType<ShopManager>();
+                shopManager.ApplyGameContext(gameContext);
+            }
+        }
+
+        private void BindLinearBattleScene()
+        {
+            int battlePrepareVisitCount = ShopManager.VisitCount;
+            EnemyType enemyType = EnemyType.Enemy1;
+            bool isAsteroidStage = false;
+            bool isSunStage = false;
+
+            if (battlePrepareVisitCount == 1)
+            {
+                enemyType = EnemyType.Enemy2;
+                isAsteroidStage = true;
+            }
+            else if (battlePrepareVisitCount == 2)
+            {
+                enemyType = EnemyType.Enemy2;
+                isSunStage = true;
+            }
+            else if (battlePrepareVisitCount == 3)
+            {
+                enemyType = EnemyType.Enemy3;
+                isAsteroidStage = true;
+                isSunStage = true;
+            }
+            else if (battlePrepareVisitCount >= 4)
+            {
+                SceneManager.LoadScene(victoryScene);
+                return;
+            }
+
+            SceneBinder sceneBinder = FindFirstObjectByType<SceneBinder>();
+            BackgroundController backgroundController = FindFirstObjectByType<BackgroundController>();
+
+            gameContext.SetEnemyType(enemyType);
+            sceneBinder.BindSceneObjectsWithEnvironment(gameContext, isAsteroidStage, isSunStage);
+            backgroundController.SetRandomBackground();
+        }
+
+        private void ToggleMenu(string sceneName)
+        {
+            if (isBattleStopped)
+            {
+                return;
+            }
+
+            if (toggleMenuObject == null)
+            {
+                Debug.LogError("GameManager: toggleMenuObject is not assigned.");
+                return;
+            }
+
+            bool isToggleMenuActive = toggleMenuObject.activeSelf;
+            bool shouldOpenMenu = isToggleMenuActive == false;
+            toggleMenuObject.SetActive(shouldOpenMenu);
+
+            if (IsBattleScene(sceneName))
+            {
+                SetCombatPaused(shouldOpenMenu);
+            }
+        }
+
+        private bool IsBattleScene(string sceneName)
+        {
+            return sceneName == battleScene ||
+                sceneName == battleScene1 ||
+                sceneName == battleScene2 ||
+                sceneName == battleScene3;
+        }
+
         #endregion
     }
 }

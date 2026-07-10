@@ -15,6 +15,8 @@ namespace FTL
         [SerializeField] private bool isEnemy = false;
         private Image repairBar;
 
+        #region Unity Method
+
         protected override void Awake()
         {
             base.Awake();
@@ -29,6 +31,10 @@ namespace FTL
 
             CacheBarSpritesFromChildren();
         }
+
+        #endregion
+
+        #region Public Method
 
         void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
         {
@@ -47,6 +53,10 @@ namespace FTL
                 powerSystem.TryDeallocatePower(facilityType);
             }
         }
+
+        #endregion
+
+        #region Private Method
 
         private bool CanHandlePlayerPowerClick(PointerEventData eventData)
         {
@@ -84,6 +94,10 @@ namespace FTL
 
             return clickedObject == facilityIcon.gameObject || clickedObject.transform.IsChildOf(facilityIcon.transform);
         }
+
+        #endregion
+
+        #region Unity Method
 
         private void Start()
         {
@@ -149,6 +163,10 @@ namespace FTL
             iconText.SetText(facilityType.ToRoomTypeName());
 
         }
+
+        #endregion
+
+        #region Private Method
 
         protected override void SetBarState(int barIndex, PowerBarStatus status)
         {
@@ -336,5 +354,7 @@ namespace FTL
                 }
             }
         }
+
+        #endregion
     }
 }

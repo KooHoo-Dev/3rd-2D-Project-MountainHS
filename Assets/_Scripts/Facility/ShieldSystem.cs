@@ -5,10 +5,10 @@ namespace FTL
 {
     public class ShieldSystem : FacilitySystem
     {
-        private const int MAX_SHIELD_LIMIT = 4;
-        private const float CHARGE_SPEED_ASSIST_MULTIPLIER = 1.2f;
+        private const int maxShieldLimit = 4;
+        private const float chargeSpeedAssistMultiplier = 1.2f;
 
-        public int MaxShieldLimit => MAX_SHIELD_LIMIT;
+        public int MaxShieldLimit => maxShieldLimit;
         public int MaxShield => maxShield;
         public int ShieldCount => shieldCount;
         public float ChargeDuration => chargeDuration;
@@ -116,7 +116,7 @@ namespace FTL
 
         private float GetChargeSpeed()
         {
-            return IsAssisted ? CHARGE_SPEED_ASSIST_MULTIPLIER : 1f;
+            return IsAssisted ? chargeSpeedAssistMultiplier : 1f;
         }
 
         /// <summary>

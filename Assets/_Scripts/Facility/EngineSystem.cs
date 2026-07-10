@@ -4,7 +4,7 @@ namespace FTL
 {
     public class EngineSystem : FacilitySystem
     {
-        private const float CHARGE_SPEED_ASSIST_MULTIPLIER = 1.2f;
+        private const float chargeSpeedAssistMultiplier = 1.2f;
 
         public float ChargeProgress => chargeProgress;
         public float ChargeDuration => chargeDuration;
@@ -78,7 +78,7 @@ namespace FTL
             }
 
             return (1 + 0.5f * (Power - 1)) 
-                * (IsAssisted ? CHARGE_SPEED_ASSIST_MULTIPLIER : 1f);
+                * (IsAssisted ? chargeSpeedAssistMultiplier : 1f);
         }
 
         #endregion

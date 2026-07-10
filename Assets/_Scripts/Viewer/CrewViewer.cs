@@ -7,7 +7,7 @@ namespace FTL
 {
     public class CrewViewer : MonoBehaviour
     {
-        private static readonly int GLOW_EFFECT = Shader.PropertyToID("_Glow");
+        private static readonly int glowEffect = Shader.PropertyToID("_Glow");
 
         public int CrewIndex;
 
@@ -138,11 +138,11 @@ namespace FTL
 
             if (selected)
             {
-                propertyBlock.SetFloat(GLOW_EFFECT, 100f);
+                propertyBlock.SetFloat(glowEffect, 100f);
             }
             else
             {
-                propertyBlock.SetFloat(GLOW_EFFECT, 0f);
+                propertyBlock.SetFloat(glowEffect, 0f);
             }
 
             crewSprite.SetPropertyBlock(propertyBlock);

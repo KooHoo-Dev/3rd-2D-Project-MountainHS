@@ -7,6 +7,8 @@ namespace FTL
         public int MaxPowerLimit;
         public int Power;
 
+        #region Public Method
+
         public FacilityState(int totalDamage, int maxPowerLimit, int power, RoomType facilityType)
         {
             TotalDamage = totalDamage;
@@ -30,5 +32,7 @@ namespace FTL
             Power = facility.Power;
             Type = facility.Type;
         }
+
+        #endregion
     }
 }

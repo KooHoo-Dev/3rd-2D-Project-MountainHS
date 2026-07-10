@@ -11,13 +11,13 @@ namespace FTL
 {
     public class ShopManager: MonoBehaviour
     {
-        private const int REACTOR_UPGRADE_MAX = 10;
-        private const int FACILITY_UPGRADE_MAX = 5;
-        private const string SHIP_UPGRADE_SWITCH = "Ship Upgrade Switch";
-        private const string RESTORE_SWITCH = "Restore Switch";
-        private const string UPGRADE_UI_ROOT = "Upgrade UI Root";
-        private const string RESTORE_UI_ROOT = "Restore UI Root";
-        private const string CREW_GROUP_ROOT = "Crew Group Root";
+        private const int reactorUpgradeMax = 10;
+        private const int facilityUpgradeMaxValue = 5;
+        private const string shipUpgradeSwitch = "Ship Upgrade Switch";
+        private const string restoreSwitch = "Restore Switch";
+        private const string upgradeUIRootName = "Upgrade UI Root";
+        private const string restoreUIRootName = "Restore UI Root";
+        private const string crewGroupRootName = "Crew Group Root";
 
         public static int VisitCount = 0;
 
@@ -42,6 +42,8 @@ namespace FTL
         // 승무원 회복
         // 함선 수리
 
+        #region Unity Method
+
         private void Awake()
         {
             VisitCount++;
@@ -55,25 +57,9 @@ namespace FTL
             InitCrewSummaries();
         }
 
-        private void InitMainGameObject()
-        {
-            upgradeUIRoot = GameObject.Find(UPGRADE_UI_ROOT);
-            restoreUIRoot = GameObject.Find(RESTORE_UI_ROOT);
-            upgradeUIRoot.SetActive(true);
-            restoreUIRoot.SetActive(false);
-        }
+        #endregion
 
-        private void InitFacilityUpgradeCounts()
-        {
-            facilityUpgradeCount.Clear();
-            facilityUpgradeMax.Clear();
-
-            for (int i = 0; i < 3; i++)
-            {
-                facilityUpgradeCount.Add(0);
-                facilityUpgradeMax.Add(FACILITY_UPGRADE_MAX);
-            }
-        }
+        #region Public Method
 
         public void InitCrewSummaries()
         {
@@ -150,7 +136,7 @@ namespace FTL
                 return;
             }
 
-            int newReactorUpgradeCount = Mathf.Min(REACTOR_UPGRADE_MAX, reactorUpgradeCount + amount);
+            int newReactorUpgradeCount = Mathf.Min(reactorUpgradeMax, reactorUpgradeCount + amount);
             int realIncrease = newReactorUpgradeCount - reactorUpgradeCount;
             if (realIncrease == 0)
             {
@@ -254,5 +240,31 @@ namespace FTL
         {
             Debug.Log(VisitCount);
         }
+
+        #endregion
+
+        #region Private Method
+
+        private void InitMainGameObject()
+        {
+            upgradeUIRoot = GameObject.Find(upgradeUIRootName);
+            restoreUIRoot = GameObject.Find(restoreUIRootName);
+            upgradeUIRoot.SetActive(true);
+            restoreUIRoot.SetActive(false);
+        }
+
+        private void InitFacilityUpgradeCounts()
+        {
+            facilityUpgradeCount.Clear();
+            facilityUpgradeMax.Clear();
+
+            for (int i = 0; i < 3; i++)
+            {
+                facilityUpgradeCount.Add(0);
+                facilityUpgradeMax.Add(facilityUpgradeMaxValue);
+            }
+        }
+
+        #endregion
     }
 }

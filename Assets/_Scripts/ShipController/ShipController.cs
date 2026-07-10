@@ -9,7 +9,7 @@ namespace FTL
     [DefaultExecutionOrder(1000)]
     public class ShipController : MonoBehaviour, IDamageable, IDeadable
     {
-        private const float DEAD_ANIMATION_TIME = 5f;
+        private const float deadAnimationTime = 5f;
 
         public bool IsDead => Hp == 0;
         public bool IsCombatStopped => isCombatStopped;
@@ -50,6 +50,8 @@ namespace FTL
         protected bool isShipInitialized;
         private bool isCombatStopped;
 
+        #region Unity Method
+
         protected virtual void Awake()
         {
             InitShipReferences();
@@ -61,6 +63,10 @@ namespace FTL
             crewSystem.Rooms = Rooms;
         }
 
+        #endregion
+
+        #region Public Method
+
         public void SetExternalUIGroups(Transform crewSummaryGroup, Transform weaponChargeGroup)
         {
             crewSummaryGroupTransform = crewSummaryGroup;
@@ -71,6 +77,10 @@ namespace FTL
         {
             TryInitializeShip(true);
         }
+
+        #endregion
+
+        #region Private Method
 
         private void InitShipReferences()
         {
@@ -266,6 +276,10 @@ namespace FTL
             return null;
         }
 
+        #endregion
+
+        #region Public Method
+
         public FacilitySystem GetFacilitySystemByERoomType(RoomType roomType)
         {
             switch (roomType)
@@ -326,42 +340,6 @@ namespace FTL
             CheckGameOver();
         }
 
-        private IEnumerator SetRoomHitCoroutine(Room room)
-        {
-            room.SetIsHit(true);
-            yield return new WaitForSeconds(0.25f);
-            room.SetIsHit(false);
-        }
-
-        private void CheckGameOver()
-        {
-            BattleResult battleResult = BattleResult.None;
-            bool isGameOver = IsDead || crewSystem.IsAllCrewDead;
-            if (isGameOver == false || isDeadCoroutineActivated == true)
-            {
-                return;
-            }
-
-            StopCombatFunctions();
-
-            if (crewSystem.IsAllCrewDead)
-            {
-                battleResult = (Ownership.ShipSide == ShipSide.Player)
-                    ? BattleResult.PlayerAllCrewDead
-                    : BattleResult.EnemyAllCrewDead;
-            }
-            if (IsDead)
-            {
-                battleResult = (Ownership.ShipSide == ShipSide.Player)
-                    ? BattleResult.PlayerShipDestroyed
-                    : BattleResult.EnemyShipDestroyed;
-            }
-
-            GameManager.Instance.StopBattle();
-
-            StartCoroutine(DeadCoroutine(DEAD_ANIMATION_TIME, battleResult));
-        }
-
         public void StopCombatFunctions()
         {
             isCombatStopped = true;
@@ -369,17 +347,6 @@ namespace FTL
             {
                 weaponSystem.ResetSelectedWeapon();
             }
-        }
-
-        private GameObject FindDirectChildWithTag(Transform parent, string tag)
-        {
-            foreach (Transform child in parent)
-            {
-                if (child.CompareTag(tag))
-                    return child.gameObject;
-            }
-
-            return null;
         }
 
         public void RestoreHp(int damage)
@@ -413,13 +380,6 @@ namespace FTL
             PowerSystem.TryDeallocatePower(facilityType);
         }
 
-        protected bool CanControlShip()
-        {
-            return IsDead == false &&
-                IsCombatStopped == false &&
-                GameManager.Instance.CanRunCombat;
-        }
-
         public virtual IEnumerator DeadCoroutine(float seconds, BattleResult result)
         {
             isDeadCoroutineActivated = true;
@@ -428,13 +388,70 @@ namespace FTL
             gameObject.SetActive(false);
         }
 
-        #region Test Method
         [ContextMenu("TakeDamage 1")]
         public void TestTakeDamage()
         {
             TakeDamage(1);
             CheckGameOver();
         }
+
+        #endregion
+
+        #region Private Method
+        protected bool CanControlShip()
+        {
+            return IsDead == false &&
+                IsCombatStopped == false &&
+                GameManager.Instance.CanRunCombat;
+        }
+
+        protected GameObject FindDirectChildWithTag(Transform parent, string tag)
+        {
+            foreach (Transform child in parent)
+            {
+                if (child.CompareTag(tag))
+                    return child.gameObject;
+            }
+
+            return null;
+        }
+
+        protected IEnumerator SetRoomHitCoroutine(Room room)
+        {
+            room.SetIsHit(true);
+            yield return new WaitForSeconds(0.25f);
+            room.SetIsHit(false);
+        }
+
+        protected void CheckGameOver()
+        {
+            BattleResult battleResult = BattleResult.None;
+            bool isGameOver = IsDead || crewSystem.IsAllCrewDead;
+            if (isGameOver == false || isDeadCoroutineActivated == true)
+            {
+                return;
+            }
+
+            StopCombatFunctions();
+
+            if (crewSystem.IsAllCrewDead)
+            {
+                battleResult = (Ownership.ShipSide == ShipSide.Player)
+                    ? BattleResult.PlayerAllCrewDead
+                    : BattleResult.EnemyAllCrewDead;
+            }
+            if (IsDead)
+            {
+                battleResult = (Ownership.ShipSide == ShipSide.Player)
+                    ? BattleResult.PlayerShipDestroyed
+                    : BattleResult.EnemyShipDestroyed;
+            }
+
+            GameManager.Instance.StopBattle();
+
+            StartCoroutine(DeadCoroutine(deadAnimationTime, battleResult));
+        }
+
         #endregion
     }
 }

@@ -7,7 +7,7 @@ namespace FTL
 {
     public class WeaponController : MonoBehaviour
     {
-        private const float CHARGE_SPEED_ASSIST_MULTIPLIER = 1.2f;
+        private const float chargeSpeedAssistMultiplier = 1.2f;
 
         public bool IsReady => isReady;
         public bool IsPowered { set; get; } = false;
@@ -173,7 +173,7 @@ namespace FTL
 
         private float GetChargeSpeed()
         {
-            return chargeSpeedMultiplier * (IsAssisted ? CHARGE_SPEED_ASSIST_MULTIPLIER : 1f);
+            return chargeSpeedMultiplier * (IsAssisted ? chargeSpeedAssistMultiplier : 1f);
         }
 
         private bool IsReadyToFire()

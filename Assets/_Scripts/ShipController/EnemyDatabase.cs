@@ -14,6 +14,8 @@ namespace FTL
     {
         [SerializeField] private EnemyPrefabEntry[] entries;
 
+        #region Public Method
+
         public GameObject GetPrefab(EnemyType enemyType)
         {
             if (entries == null)
@@ -87,5 +89,7 @@ namespace FTL
 
             return null;
         }
+
+        #endregion
     }
 }
