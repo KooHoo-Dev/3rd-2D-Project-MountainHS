@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,13 +15,13 @@ namespace FTL
         [SerializeField] private Vector3 startLocalScale;
         [SerializeField] private float shieldUpDelay;
         [SerializeField] private int prevShieldCount;
-        [SerializeField] private bool isEnemy = false;
+        [SerializeField] private bool isEnemy;
 
         #region Unity Method
 
         private void Awake()
         {
-            if (isEnemy == false)
+            if (!isEnemy)
             {
                 startLocalScale = shieldMainSprite.transform.localScale;
                 col = shieldMainSprite.GetComponent<Collider2D>();
@@ -44,22 +43,22 @@ namespace FTL
                         shieldMainSprite = enemy.GetComponent<SpriteRenderer>();
                         startLocalScale = shieldMainSprite.transform.localScale;
                         col = shieldMainSprite.GetComponent<Collider2D>();
-
                     }
                 }
 
                 foreach (GameObject enemy in enemies)
                 {
-                    if (enemy.TryGetComponent<ShieldSystem>(out shieldSystem))
+                    if (enemy.TryGetComponent(out shieldSystem))
                     {
                         Debug.Log("ShieldViewer: Enemy ShieldSystem Found!");
                         break;
                     }
-
                 }
 
                 if (shieldSystem == null)
+                {
                     Debug.LogError("ShieldViewer: There is no shieldMainSprite on Enemy!");
+                }
             }
         }
 
@@ -104,11 +103,17 @@ namespace FTL
                 {
                     Color newUIColor = color;
                     if (i < shieldCount)
+                    {
                         newUIColor.a = 1f;
+                    }
                     else if (i < maxShield)
+                    {
                         newUIColor.a = 0.5f;
+                    }
                     else
+                    {
                         newUIColor.a = 0f;
+                    }
 
                     shieldSquares[i].color = newUIColor;
                 }
@@ -123,6 +128,7 @@ namespace FTL
                     // 0.25초동안 스케일 커지기 (1로 커지기)
                     StartCoroutine(ShieldUpCoroutine());
                 }
+
                 Color newMainColor = Color.white;
                 newMainColor.a = (float)shieldCount / maxShieldLimit;
                 shieldMainSprite.color = newMainColor;
@@ -133,13 +139,16 @@ namespace FTL
         private IEnumerator ShieldUpCoroutine()
         {
             float inverseShieldUpDelay = 1 / shieldUpDelay;
-            Vector3 deltaScale = new Vector3(startLocalScale.x, startLocalScale.y, 0) * inverseShieldUpDelay * Time.deltaTime;
+            Vector3 deltaScale = new Vector3(startLocalScale.x, startLocalScale.y, 0) * inverseShieldUpDelay *
+                                 Time.deltaTime;
             Transform shieldMainSpriteTransform = shieldMainSprite.transform;
             while (true)
             {
                 Vector3 localScale = shieldMainSpriteTransform.localScale;
                 if (localScale.x >= startLocalScale.x && localScale.y >= startLocalScale.y)
+                {
                     yield break;
+                }
 
                 shieldMainSpriteTransform.localScale += deltaScale;
                 yield return null;

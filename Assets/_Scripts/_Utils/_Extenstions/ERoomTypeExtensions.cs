@@ -1,5 +1,3 @@
-using System;
-
 namespace FTL
 {
     public static class ERoomTypeExtensions

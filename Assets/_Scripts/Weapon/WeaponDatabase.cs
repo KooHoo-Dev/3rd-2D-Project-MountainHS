@@ -1,9 +1,9 @@
+using System;
 using UnityEngine;
-using Utilities;
 
 namespace FTL
 {
-    [System.Serializable]
+    [Serializable]
     public class WeaponPrefabEntry
     {
         public WeaponType weaponType;
@@ -13,8 +13,7 @@ namespace FTL
     [CreateAssetMenu(fileName = "WeaponDatabase", menuName = "SO/WeaponDatabase")]
     public class WeaponDatabase : ScriptableObject
     {
-        [SerializeField]
-        private WeaponPrefabEntry[] entries;
+        [SerializeField] private WeaponPrefabEntry[] entries;
 
         #region Public Method
 
@@ -32,5 +31,5 @@ namespace FTL
         }
 
         #endregion
-    } 
+    }
 }

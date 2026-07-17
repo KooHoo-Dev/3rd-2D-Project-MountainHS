@@ -7,24 +7,38 @@ namespace FTL
     [Serializable]
     public class GameContext
     {
-        public bool IsEmpty => Rooms == null || FacilityStates == null || CrewStates == null || WeaponTypes == null;
-
-        public List<Room> Rooms { get; private set; }
-        public List<FacilityState> FacilityStates { get; private set; }
-        public List<CrewState> CrewStates { get; private set; }
-        [field: SerializeField] public List<int> FacilityUpgradeCount { get; private set; } = new List<int>();
+        [field: SerializeField] public List<int> FacilityUpgradeCount { get; private set; } = new();
         [field: SerializeField] public int ScrapAmount { get; private set; }
         [field: SerializeField] public int ShipMaxHp { get; private set; }
         [field: SerializeField] public int ShipHp { get; private set; }
         [field: SerializeField] public int ShipReactorCapacity { get; private set; }
         [field: SerializeField] public int ShipPower { get; private set; }
         [field: SerializeField] public int ReactorUpgradeCount { get; private set; }
-        [field: SerializeField] public List<WeaponType> WeaponTypes { get; private set; } = new List<WeaponType>();
+        [field: SerializeField] public List<WeaponType> WeaponTypes { get; private set; } = new();
         [field: SerializeField] public EnemyType EnemyType { get; private set; } = EnemyType.None;
+        public bool IsEmpty => Rooms == null || FacilityStates == null || CrewStates == null || WeaponTypes == null;
+
+        public List<Room> Rooms { get; private set; }
+        public List<FacilityState> FacilityStates { get; private set; }
+        public List<CrewState> CrewStates { get; private set; }
+
+        #region Private Method
+
+        private void InitFacilityUpgradeCount()
+        {
+            FacilityUpgradeCount.Clear();
+            for (int i = 0; i < 3; i++)
+            {
+                FacilityUpgradeCount.Add(0);
+            }
+        }
+
+        #endregion
 
         #region Public Method
 
-        public GameContext(List<Room> rooms, List<FacilityState> facilities, List<CrewState> crews, int scrapAmount, int shipHp, int shipMaxHp, int shipReactorCapacity, int shipPower)
+        public GameContext(List<Room> rooms, List<FacilityState> facilities, List<CrewState> crews, int scrapAmount,
+            int shipHp, int shipMaxHp, int shipReactorCapacity, int shipPower)
         {
             Rooms = new List<Room>();
             FacilityStates = new List<FacilityState>();
@@ -33,10 +47,12 @@ namespace FTL
             {
                 Rooms.Add(new Room(rooms[i]));
             }
+
             for (int i = 0; i < facilities.Count; i++)
             {
                 FacilityStates.Add(new FacilityState(facilities[i]));
             }
+
             for (int i = 0; i < crews.Count; i++)
             {
                 CrewStates.Add(new CrewState(crews[i]));
@@ -82,7 +98,7 @@ namespace FTL
 
         public void IncreaseReactorMaxPower(int amount)
         {
-            ShipReactorCapacity+= amount;
+            ShipReactorCapacity += amount;
             ShipPower += amount;
         }
 
@@ -142,19 +158,6 @@ namespace FTL
         public void SetEnemyType(EnemyType enemyType)
         {
             EnemyType = enemyType;
-        }
-
-        #endregion
-
-        #region Private Method
-
-        private void InitFacilityUpgradeCount()
-        {
-            FacilityUpgradeCount.Clear();
-            for (int i = 0; i < 3; i++)
-            {
-                FacilityUpgradeCount.Add(0);
-            }
         }
 
         #endregion

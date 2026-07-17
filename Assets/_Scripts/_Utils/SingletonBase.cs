@@ -6,12 +6,12 @@ namespace Utilities
     public abstract class SingletonBase<T> : MonoBehaviour where T : MonoBehaviour
     {
         protected static T instance;
-        private static readonly object lockObj = new object();
-        private static bool applicationIsQuitting = false;
-        private static bool isInitialized = false;
+        private static readonly object lockObj = new();
+        private static bool applicationIsQuitting;
+        private static bool isInitialized;
 
         public static bool IsInitialized => isInitialized && instance != null;
-        
+
         public static T Instance
         {
             get
@@ -30,7 +30,7 @@ namespace Utilities
 
                         if (instance == null)
                         {
-                            var singletonObject = new GameObject(typeof(T).Name);
+                            GameObject singletonObject = new(typeof(T).Name);
                             instance = singletonObject.AddComponent<T>();
                             DontDestroyOnLoad(singletonObject);
                         }
@@ -61,11 +61,6 @@ namespace Utilities
             }
         }
 
-        protected virtual void OnApplicationQuit()
-        {
-            applicationIsQuitting = true;
-        }
-
         protected virtual void OnDestroy()
         {
             if (instance == this)
@@ -77,18 +72,23 @@ namespace Utilities
             }
         }
 
+        protected virtual void OnApplicationQuit()
+        {
+            applicationIsQuitting = true;
+        }
+
         /// <summary>
-        /// 싱글톤 초기화 시점에서 호출됨 (오버라이드 가능)
+        ///     싱글톤 초기화 시점에서 호출됨 (오버라이드 가능)
         /// </summary>
         protected virtual void OnInitialize() { }
 
         /// <summary>
-        /// 싱글톤 제거 시점에서 호출됨 (오버라이드 가능)
+        ///     싱글톤 제거 시점에서 호출됨 (오버라이드 가능)
         /// </summary>
         protected virtual void OnDispose() { }
 
         /// <summary>
-        /// 현재 인스턴스를 강제로 제거하고 다시 초기화 가능 상태로 되돌림. 다시 싱글톤 호출해야함 (어떤 문제있는지 잘 모름)
+        ///     현재 인스턴스를 강제로 제거하고 다시 초기화 가능 상태로 되돌림. 다시 싱글톤 호출해야함 (어떤 문제있는지 잘 모름)
         /// </summary>
         public static void ResetInstance()
         {
@@ -97,7 +97,7 @@ namespace Utilities
                 (instance as SingletonBase<T>)?.OnDispose();
 
 #if UNITY_EDITOR
-                DestroyImmediate((instance as MonoBehaviour)?.gameObject);
+                DestroyImmediate(instance?.gameObject);
 #else
                 Destroy((instance as MonoBehaviour)?.gameObject);
 #endif

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -42,11 +41,13 @@ namespace FTL
                 {
                     break;
                 }
+
                 Color newColor = Color.Lerp(startColor, targetColor, elapsed / flareDuration);
                 flareImage.color = newColor;
                 elapsed += Time.deltaTime;
                 yield return null;
             }
+
             StartCoroutine(TurnOffFlare(flareDuration));
         }
 
@@ -59,6 +60,7 @@ namespace FTL
                 {
                     break;
                 }
+
                 Color newColor = Color.Lerp(targetColor, startColor, elapsed / flareDuration);
                 flareImage.color = newColor;
                 elapsed += Time.deltaTime;

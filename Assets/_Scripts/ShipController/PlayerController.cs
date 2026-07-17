@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,14 +9,16 @@ namespace FTL
     public class PlayerController : ShipController
     {
         [Header("Player Settings")]
-        [field: SerializeField] public int ScrapAmount { get; set; }
+        [field: SerializeField]
+        public int ScrapAmount { get; set; }
+
         [SerializeField] private LayerMask clickableLayer;
 
-        private RoomType aKeyFacilityType = RoomType.Shield;
-        private RoomType sKeyFacilityType = RoomType.Engine;
-        private RoomType dKeyFacilityType = RoomType.Weapon;
+        private readonly RoomType aKeyFacilityType = RoomType.Shield;
+        private readonly RoomType dKeyFacilityType = RoomType.Weapon;
         private bool oneShotBool = true;
         private bool oneShotBool2 = true;
+        private readonly RoomType sKeyFacilityType = RoomType.Engine;
 
         #region Unity Method
 
@@ -30,6 +31,7 @@ namespace FTL
                 GameManager.Instance.SetGameContext(this);
             }
         }
+
         protected override void Start()
         {
             base.Start();
@@ -44,7 +46,7 @@ namespace FTL
                 crewSystem.ResetSelectedCrews();
             }
 
-            if (CanControlShip() == false)
+            if (!CanControlShip())
             {
                 return;
             }
@@ -60,6 +62,7 @@ namespace FTL
                 // 무기 시스템의 선택한 무기를 1번 무기로 교체
                 weaponSystem.SetSelectedWeapon(0);
             }
+
             if (SimpleInput.GetKeyDown(Key.Digit6))
             {
                 // 무기 시스템의 선택한 무기를 1번 무기로 교체
@@ -68,7 +71,6 @@ namespace FTL
 
             // 사용자 클릭 정보 리턴
             HandleMouse();
-
         }
 
         #endregion
@@ -174,7 +176,7 @@ namespace FTL
             else if (isShipLayer)
             {
                 shipSide = col.GetComponent<ShipOwnership>().ShipSide;
-                Debug.Log($"Ship Clicked!");
+                Debug.Log("Ship Clicked!");
             }
             else if (isCrewLayer)
             {
@@ -193,7 +195,7 @@ namespace FTL
                 Room room = CombatSystem.Instance.GetRoomOrNull(shipSide, roomCol.transform.position);
                 int roomId = room.Id;
                 Vector2 target = roomCol.bounds.center;
-                ProjectileTargetData targetData = new ProjectileTargetData(target, roomId);
+                ProjectileTargetData targetData = new(target, roomId);
                 weaponSystem.SetSelectedRoomTarget(targetData);
             }
 
@@ -279,10 +281,10 @@ namespace FTL
             }
             else
             {
-                Debug.Log($"Nothing is clicked in targetLayer!");
+                Debug.Log("Nothing is clicked in targetLayer!");
             }
+
             oneShotBool2 = true;
-            yield break;
         }
 
         #endregion

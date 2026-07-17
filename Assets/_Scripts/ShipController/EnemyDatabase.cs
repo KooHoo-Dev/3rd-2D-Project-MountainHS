@@ -1,8 +1,10 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace FTL
 {
-    [System.Serializable]
+    [Serializable]
     public class EnemyPrefabEntry
     {
         public EnemyType enemyType;

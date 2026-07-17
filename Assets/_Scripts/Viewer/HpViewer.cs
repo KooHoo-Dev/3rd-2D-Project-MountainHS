@@ -6,15 +6,28 @@ using UnityEngine.UI;
 namespace FTL
 {
     public enum EHpBarStatus { Available, UnAvailable }
+
     public class HpViewer : MonoBehaviour
     {
         [SerializeField] private GameObject barPrefab;
         [SerializeField] private GameObject barGroup;
-        [SerializeField] private List<Image> barSprites = new List<Image>();
+        [SerializeField] private List<Image> barSprites = new();
         [SerializeField] private ShipController ship;
         [SerializeField] private int prevHp;
-        [SerializeField] private bool isEnemy = false;
+        [SerializeField] private bool isEnemy;
         private ObjectPool<GameObject> barPool;
+
+        #region Public Method
+
+        // 반응로 전력 추가
+        public void AddBar()
+        {
+            GameObject powerBar = barPool.Get();
+            barSprites.Add(powerBar.GetComponent<Image>());
+            SetBarState(barSprites.Count - 1, EHpBarStatus.Available);
+        }
+
+        #endregion
 
         #region Unity Method
 
@@ -33,7 +46,7 @@ namespace FTL
 
                 foreach (GameObject enemy in enemies)
                 {
-                    if (enemy.TryGetComponent<ShipController>(out ship))
+                    if (enemy.TryGetComponent(out ship))
                     {
                         Debug.Log("HpViewer: Enemy shipController Found!");
                         break;
@@ -41,25 +54,15 @@ namespace FTL
                 }
 
                 if (ship == null)
+                {
                     Debug.LogError("HpViewer: There is no shipController on Enemy!");
+                }
             }
         }
 
         private void LateUpdate()
         {
             UpdateViewer();
-        }
-
-        #endregion
-
-        #region Public Method
-
-        // 반응로 전력 추가
-        public void AddBar()
-        {
-            GameObject powerBar = barPool.Get();
-            barSprites.Add(powerBar.GetComponent<Image>());
-            SetBarState(barSprites.Count - 1, EHpBarStatus.Available);
         }
 
         #endregion
@@ -99,11 +102,11 @@ namespace FTL
                 hp = ship.Hp;
                 maxHp = ship.ShipData.MaxHp;
             }
-            else if (TryGetGameContextHp(out hp, out maxHp) == false)
+            else if (!TryGetGameContextHp(out hp, out maxHp))
             {
                 return;
             }
-            
+
             if (hp == prevHp && barSprites.Count >= maxHp)
             {
                 return;
@@ -111,12 +114,13 @@ namespace FTL
 
             if (barSprites.Count < maxHp)
             {
-                int n = maxHp - barSprites.Count ;
+                int n = maxHp - barSprites.Count;
                 for (int i = 0; i < n; i++)
                 {
                     AddBar();
                 }
             }
+
             for (int i = 0; i < barSprites.Count; i++)
             {
                 if (i < hp)
@@ -137,7 +141,7 @@ namespace FTL
             hp = 0;
             maxHp = 0;
 
-            if (GameManager.IsInitialized == false)
+            if (!GameManager.IsInitialized)
             {
                 Debug.LogError($"{gameObject.name}: GameManager is not Initialized to use!");
                 return false;

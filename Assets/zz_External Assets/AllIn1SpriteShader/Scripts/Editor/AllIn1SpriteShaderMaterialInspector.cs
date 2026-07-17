@@ -1,6 +1,5 @@
 ﻿#if UNITY_EDITOR
 using System.Linq;
-using AllIn1SpriteShader;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -11,28 +10,28 @@ namespace AllIn1SpriteShader
     [CanEditMultipleObjects]
     public class AllIn1SpriteShaderMaterialInspector : ShaderGUI
     {
-        private Material targetMat;
-        private BlendMode srcMode, dstMode;
-        private CompareFunction zTestMode = CompareFunction.LessEqual;
-        private CullMode cullMode;
-
-        private GUIStyle propertiesStyle, bigLabelStyle, smallLabelStyle, toggleButtonStyle;
         private const int bigFontSize = 16, smallFontSize = 11;
-        private string[] oldKeyWords;
-        private int effectCount = 1;
-        private Material originalMaterialCopy;
-        private MaterialEditor matEditor;
-        private MaterialProperty[] matProperties;
-        private uint[] materialDrawers = new uint[] { 1, 2, 4 };
-        bool[] currEnabledDrawers;
         private const uint advancedConfigDrawer = 0;
         private const uint colorFxShapeDrawer = 1;
         private const uint uvFxShapeDrawer = 2;
+        private CullMode cullMode;
+        private bool[] currEnabledDrawers;
+        private int effectCount = 1;
+        private MaterialEditor matEditor;
+        private readonly uint[] materialDrawers = { 1, 2, 4 };
+        private MaterialProperty[] matProperties;
+        private string[] oldKeyWords;
+        private Material originalMaterialCopy;
+
+        private GUIStyle propertiesStyle, bigLabelStyle, smallLabelStyle, toggleButtonStyle;
+        private BlendMode srcMode, dstMode;
+        private Material targetMat;
+        private CompareFunction zTestMode = CompareFunction.LessEqual;
 
         public bool IsSRPShader()
         {
             bool res = false;
-            if(targetMat != null)
+            if (targetMat != null)
             {
                 res = targetMat.shader.name == "AllIn1SpriteShader/AllIn1SpriteShaderSRPBatch";
             }
@@ -57,8 +56,11 @@ namespace AllIn1SpriteShader
             currEnabledDrawers = new bool[materialDrawers.Length];
             bool isShaderSRP = IsSRPShader();
 
-            uint iniDrawers = (uint)ShaderGUI.FindProperty("_EditorDrawers", matProperties).floatValue;
-            for(int i = 0; i < materialDrawers.Length; i++) currEnabledDrawers[i] = (materialDrawers[i] & iniDrawers) > 0;
+            uint iniDrawers = (uint)FindProperty("_EditorDrawers", matProperties).floatValue;
+            for (int i = 0; i < materialDrawers.Length; i++)
+            {
+                currEnabledDrawers[i] = (materialDrawers[i] & iniDrawers) > 0;
+            }
 
             GUILayout.Label("General Properties", bigLabelStyle);
             DrawProperty(0);
@@ -69,12 +71,12 @@ namespace AllIn1SpriteShader
 
             DrawProperty(1);
             DrawProperty(2);
-        
-        
-            currEnabledDrawers[advancedConfigDrawer] = GUILayout.Toggle(currEnabledDrawers[advancedConfigDrawer], new GUIContent("<size=12>Show Advanced Configuration</size>"), toggleButtonStyle);
-            if(currEnabledDrawers[advancedConfigDrawer])
+
+
+            currEnabledDrawers[advancedConfigDrawer] = GUILayout.Toggle(currEnabledDrawers[advancedConfigDrawer],
+                new GUIContent("<size=12>Show Advanced Configuration</size>"), toggleButtonStyle);
+            if (currEnabledDrawers[advancedConfigDrawer])
             {
-            
                 EditorGUILayout.BeginVertical(propertiesStyle);
                 Blending();
                 DrawLine(Color.grey, 1, 3);
@@ -100,24 +102,27 @@ namespace AllIn1SpriteShader
             DrawLine(Color.grey, 1, 3);
             GUILayout.Label("Color Effects", bigLabelStyle);
 
-            currEnabledDrawers[colorFxShapeDrawer] = GUILayout.Toggle(currEnabledDrawers[colorFxShapeDrawer], new GUIContent("Show Color Effects"), toggleButtonStyle);
-            if(currEnabledDrawers[colorFxShapeDrawer])
+            currEnabledDrawers[colorFxShapeDrawer] = GUILayout.Toggle(currEnabledDrawers[colorFxShapeDrawer],
+                new GUIContent("Show Color Effects"), toggleButtonStyle);
+            if (currEnabledDrawers[colorFxShapeDrawer])
             {
                 Glow("Glow", "GLOW_ON");
                 if (isShaderSRP)
                 {
-                    GenericEffect("Fade", "FADE_ON", 7, 13, true, null, new int[] { 173, 174 });
+                    GenericEffect("Fade", "FADE_ON", 7, 13, true, null, new[] { 173, 174 });
                 }
                 else
                 {
-                    GenericEffect("Fade", "FADE_ON", 7, 13, true);
+                    GenericEffect("Fade", "FADE_ON", 7, 13);
                 }
 
                 Outline("Outline", "OUTBASE_ON", isShaderSRP);
-                GenericEffect("Alpha Outline", "ALPHAOUTLINE_ON", 26, 30, true, "A more performant but less flexible outline");
+                GenericEffect("Alpha Outline", "ALPHAOUTLINE_ON", 26, 30, true,
+                    "A more performant but less flexible outline");
                 InnerOutline("Inner Outline", "INNEROUTLINE_ON", 66, 69);
                 Gradient("Gradient & Radial Gradient", "GRADIENT_ON");
-                GenericEffect("Color Swap", "COLORSWAP_ON", 36, 42, true, "You will need a mask texture (see Documentation)", new int[] { 154 });
+                GenericEffect("Color Swap", "COLORSWAP_ON", 36, 42, true,
+                    "You will need a mask texture (see Documentation)", new[] { 154 });
                 GenericEffect("Hue Shift", "HSV_ON", 43, 45);
                 ColorChange("Change 1 Color", "CHANGECOLOR_ON");
                 ColorRamp("Color Ramp", "COLORRAMP_ON");
@@ -128,11 +133,19 @@ namespace AllIn1SpriteShader
                 Posterize("Posterize", "POSTERIZE_ON");
                 Blur("Blur", "BLUR_ON");
                 GenericEffect("Motion Blur", "MOTIONBLUR_ON", 62, 63);
-                GenericEffect("Ghost", "GHOST_ON", 64, 65, true, "This effect will not affect the outline", new int[] { 157 });
-                GenericEffect("Hologram", "HOLOGRAM_ON", 73, 77, true, null, new int[] { 140, 158 });
+                GenericEffect("Ghost", "GHOST_ON", 64, 65, true, "This effect will not affect the outline",
+                    new[] { 157 });
+                GenericEffect("Hologram", "HOLOGRAM_ON", 73, 77, true, null, new[] { 140, 158 });
                 GenericEffect("Chromatic Aberration", "CHROMABERR_ON", 78, 79);
-                if(!isShaderSRP) GenericEffect("Glitch", "GLITCH_ON", 80, 80, true, null, new int[] { 139, 172 });
-                else GenericEffect("Glitch", "GLITCH_ON", 80, 80, true, null, new int[] { 139, 179 });
+                if (!isShaderSRP)
+                {
+                    GenericEffect("Glitch", "GLITCH_ON", 80, 80, true, null, new[] { 139, 172 });
+                }
+                else
+                {
+                    GenericEffect("Glitch", "GLITCH_ON", 80, 80, true, null, new[] { 139, 179 });
+                }
+
                 GenericEffect("Flicker", "FLICKER_ON", 81, 83);
                 GenericEffect("Shadow", "SHADOW_ON", 84, 87);
                 GenericEffect("Shine", "SHINE_ON", 133, 138);
@@ -145,14 +158,16 @@ namespace AllIn1SpriteShader
             DrawLine(Color.grey, 1, 3);
             GUILayout.Label("UV Effects", bigLabelStyle);
 
-            currEnabledDrawers[uvFxShapeDrawer] = GUILayout.Toggle(currEnabledDrawers[uvFxShapeDrawer], new GUIContent("Show UV Effects"), toggleButtonStyle);
-            if(currEnabledDrawers[uvFxShapeDrawer])
+            currEnabledDrawers[uvFxShapeDrawer] = GUILayout.Toggle(currEnabledDrawers[uvFxShapeDrawer],
+                new GUIContent("Show UV Effects"), toggleButtonStyle);
+            if (currEnabledDrawers[uvFxShapeDrawer])
             {
                 GenericEffect("Hand Drawn", "DOODLE_ON", 88, 89);
                 Grass("Grass Movement / Wind", "WIND_ON");
                 GenericEffect("Wave", "WAVEUV_ON", 94, 98);
                 GenericEffect("Round Wave", "ROUNDWAVEUV_ON", 127, 128);
-                GenericEffect("Rect Size (Enable wireframe to see result)", "RECTSIZE_ON", 99, 99, true, "Only on single sprites spritesheets NOT supported");
+                GenericEffect("Rect Size (Enable wireframe to see result)", "RECTSIZE_ON", 99, 99, true,
+                    "Only on single sprites spritesheets NOT supported");
                 GenericEffect("Offset", "OFFSETUV_ON", 100, 101);
                 GenericEffect("Clipping / Fill Amount", "CLIPPING_ON", 102, 105);
                 GenericEffect("Radial Clipping / Radial Fill", "RADIALCLIPPING_ON", 164, 166);
@@ -160,7 +175,7 @@ namespace AllIn1SpriteShader
                 GenericEffect("Zoom", "ZOOMUV_ON", 108, 108);
                 if (isShaderSRP)
                 {
-                    GenericEffect("Distortion", "DISTORT_ON", 109, 112, true, null, new int[] { 177 });
+                    GenericEffect("Distortion", "DISTORT_ON", 109, 112, true, null, new[] { 177 });
                 }
                 else
                 {
@@ -169,7 +184,8 @@ namespace AllIn1SpriteShader
 
                 GenericEffect("Warp Distortion", "WARP_ON", 167, 169);
                 GenericEffect("Twist", "TWISTUV_ON", 113, 116);
-                GenericEffect("Rotate", "ROTATEUV_ON", 117, 117, true, "_Tip_ Use Clipping effect to avoid possible undesired parts");
+                GenericEffect("Rotate", "ROTATEUV_ON", 117, 117, true,
+                    "_Tip_ Use Clipping effect to avoid possible undesired parts");
                 GenericEffect("Polar Coordinates (Tile texture for good results)", "POLARUV_ON", -1, -1);
                 GenericEffect("Fish Eye", "FISHEYE_ON", 118, 118);
                 GenericEffect("Pinch", "PINCH_ON", 119, 119);
@@ -178,30 +194,36 @@ namespace AllIn1SpriteShader
 
             SetAndSaveEnabledDrawers(iniDrawers);
         }
-    
+
         private void SetAndSaveEnabledDrawers(uint iniDrawers)
         {
             uint currDrawers = 0;
-            for(int i = 0; i < currEnabledDrawers.Length; i++)
+            for (int i = 0; i < currEnabledDrawers.Length; i++)
             {
-                if(currEnabledDrawers[i]) currDrawers |= materialDrawers[i];
+                if (currEnabledDrawers[i])
+                {
+                    currDrawers |= materialDrawers[i];
+                }
             }
 
-            if(iniDrawers != currDrawers) ShaderGUI.FindProperty("_EditorDrawers", matProperties).floatValue = currDrawers;
+            if (iniDrawers != currDrawers)
+            {
+                FindProperty("_EditorDrawers", matProperties).floatValue = currDrawers;
+            }
         }
 
         private void Blending()
         {
-            MaterialProperty srcM = ShaderGUI.FindProperty("_MySrcMode", matProperties);
-            MaterialProperty dstM = ShaderGUI.FindProperty("_MyDstMode", matProperties);
-            if(srcM.floatValue == 0 && dstM.floatValue == 0)
+            MaterialProperty srcM = FindProperty("_MySrcMode", matProperties);
+            MaterialProperty dstM = FindProperty("_MyDstMode", matProperties);
+            if (srcM.floatValue == 0 && dstM.floatValue == 0)
             {
                 srcM.floatValue = 5;
                 dstM.floatValue = 10;
             }
 
             GUILayout.Label("Look for 'ShaderLab: Blending' if you don't know what this is", smallLabelStyle);
-            if(GUILayout.Button("Back To Default Blending"))
+            if (GUILayout.Button("Back To Default Blending"))
             {
                 srcM.floatValue = 5;
                 dstM.floatValue = 10;
@@ -212,14 +234,24 @@ namespace AllIn1SpriteShader
             dstMode = (BlendMode)dstM.floatValue;
             srcMode = (BlendMode)EditorGUILayout.EnumPopup("SrcMode", srcMode);
             dstMode = (BlendMode)EditorGUILayout.EnumPopup("DstMode", dstMode);
-            srcM.floatValue = (float)(srcMode);
-            dstM.floatValue = (float)(dstMode);
+            srcM.floatValue = (float)srcMode;
+            dstM.floatValue = (float)dstMode;
 
             bool ini = oldKeyWords.Contains("PREMULTIPLYALPHA_ON");
             bool toggle = EditorGUILayout.Toggle("Premultiply Alpha?", ini);
-            if(ini != toggle) Save();
-            if(toggle) targetMat.EnableKeyword("PREMULTIPLYALPHA_ON");
-            else targetMat.DisableKeyword("PREMULTIPLYALPHA_ON");
+            if (ini != toggle)
+            {
+                Save();
+            }
+
+            if (toggle)
+            {
+                targetMat.EnableKeyword("PREMULTIPLYALPHA_ON");
+            }
+            else
+            {
+                targetMat.DisableKeyword("PREMULTIPLYALPHA_ON");
+            }
         }
 
         private void Billboard(string inspector, string keyword)
@@ -227,57 +259,87 @@ namespace AllIn1SpriteShader
             bool toggle = oldKeyWords.Contains(keyword);
             bool ini = toggle;
 
-            GUIContent effectNameLabel = new GUIContent();
+            GUIContent effectNameLabel = new();
             effectNameLabel.tooltip = keyword + " (C#)";
             effectNameLabel.text = inspector;
             toggle = GUILayout.Toggle(toggle, effectNameLabel);
 
-            if(ini != toggle) Save();
-            if(toggle)
+            if (ini != toggle)
+            {
+                Save();
+            }
+
+            if (toggle)
             {
                 targetMat.EnableKeyword(keyword);
                 GUILayout.Label("Don't use this feature on UI elements!", smallLabelStyle);
                 DrawProperty(129, true);
                 MaterialProperty billboardY = matProperties[129];
-                if(billboardY.floatValue == 1) targetMat.EnableKeyword("BILBOARDY_ON");
-                else targetMat.DisableKeyword("BILBOARDY_ON");
+                if (billboardY.floatValue == 1)
+                {
+                    targetMat.EnableKeyword("BILBOARDY_ON");
+                }
+                else
+                {
+                    targetMat.DisableKeyword("BILBOARDY_ON");
+                }
             }
-            else targetMat.DisableKeyword(keyword);
+            else
+            {
+                targetMat.DisableKeyword(keyword);
+            }
         }
 
         private void ZWrite()
         {
-            MaterialProperty zWrite = ShaderGUI.FindProperty("_ZWrite", matProperties);
+            MaterialProperty zWrite = FindProperty("_ZWrite", matProperties);
             bool toggle = zWrite.floatValue > 0.9f ? true : false;
             EditorGUILayout.BeginHorizontal();
             {
                 float tempValue = zWrite.floatValue;
                 toggle = GUILayout.Toggle(toggle, new GUIContent("Enable Z Write"));
-                if(toggle) zWrite.floatValue = 1.0f;
-                else zWrite.floatValue = 0.0f;
-                if(tempValue != zWrite.floatValue && !Application.isPlaying) Save();
+                if (toggle)
+                {
+                    zWrite.floatValue = 1.0f;
+                }
+                else
+                {
+                    zWrite.floatValue = 0.0f;
+                }
+
+                if (tempValue != zWrite.floatValue && !Application.isPlaying)
+                {
+                    Save();
+                }
             }
             EditorGUILayout.EndHorizontal();
         }
 
         private void ZTest()
         {
-            MaterialProperty zTestM = ShaderGUI.FindProperty("_ZTestMode", matProperties);
+            MaterialProperty zTestM = FindProperty("_ZTestMode", matProperties);
             float tempValue = zTestM.floatValue;
-            zTestMode = (UnityEngine.Rendering.CompareFunction)zTestM.floatValue;
-            zTestMode = (UnityEngine.Rendering.CompareFunction)EditorGUILayout.EnumPopup("Z TestMode", zTestMode);
-            zTestM.floatValue = (float)(zTestMode);
-            if(tempValue != zTestM.floatValue && !Application.isPlaying) Save();
+            zTestMode = (CompareFunction)zTestM.floatValue;
+            zTestMode = (CompareFunction)EditorGUILayout.EnumPopup("Z TestMode", zTestMode);
+            zTestM.floatValue = (float)zTestMode;
+            if (tempValue != zTestM.floatValue && !Application.isPlaying)
+            {
+                Save();
+            }
         }
 
         private void Culling()
         {
-            MaterialProperty cullO = ShaderGUI.FindProperty("_CullingOption", matProperties);;
+            MaterialProperty cullO = FindProperty("_CullingOption", matProperties);
+            ;
             float tempValue = cullO.floatValue;
-            cullMode = (UnityEngine.Rendering.CullMode)cullO.floatValue;
-            cullMode = (UnityEngine.Rendering.CullMode)EditorGUILayout.EnumPopup("Culling Mode", cullMode);
-            cullO.floatValue = (float)(cullMode);
-            if(tempValue != cullO.floatValue && !Application.isPlaying) Save();
+            cullMode = (CullMode)cullO.floatValue;
+            cullMode = (CullMode)EditorGUILayout.EnumPopup("Culling Mode", cullMode);
+            cullO.floatValue = (float)cullMode;
+            if (tempValue != cullO.floatValue && !Application.isPlaying)
+            {
+                Save();
+            }
         }
 
         private void SpriteAtlas(string inspector, string keyword)
@@ -285,8 +347,12 @@ namespace AllIn1SpriteShader
             bool toggle = oldKeyWords.Contains(keyword);
             bool ini = toggle;
             toggle = GUILayout.Toggle(toggle, inspector);
-            if(ini != toggle) Save();
-            if(toggle)
+            if (ini != toggle)
+            {
+                Save();
+            }
+
+            if (toggle)
             {
                 targetMat.EnableKeyword(keyword);
                 EditorGUILayout.BeginVertical(propertiesStyle);
@@ -296,7 +362,10 @@ namespace AllIn1SpriteShader
                 }
                 EditorGUILayout.EndVertical();
             }
-            else targetMat.DisableKeyword(keyword);
+            else
+            {
+                targetMat.DisableKeyword(keyword);
+            }
         }
 
         private void Outline(string inspector, string keyword, bool isSRPShader)
@@ -304,14 +373,18 @@ namespace AllIn1SpriteShader
             bool toggle = oldKeyWords.Contains(keyword);
             bool ini = toggle;
 
-            GUIContent effectNameLabel = new GUIContent();
+            GUIContent effectNameLabel = new();
             effectNameLabel.tooltip = keyword + " (C#)";
             effectNameLabel.text = effectCount + ".Outline";
             toggle = EditorGUILayout.BeginToggleGroup(effectNameLabel, toggle);
 
             effectCount++;
-            if(ini != toggle) Save();
-            if(toggle)
+            if (ini != toggle)
+            {
+                Save();
+            }
+
+            if (toggle)
             {
                 targetMat.EnableKeyword("OUTBASE_ON");
                 EditorGUILayout.BeginVertical(propertiesStyle);
@@ -322,13 +395,20 @@ namespace AllIn1SpriteShader
                     DrawEffectSubKeywordToggle("Outline High Resolution?", "OUTBASE8DIR_ON");
 
                     DrawLine(Color.grey, 1, 3);
-                    bool outlinePixelPerf = DrawEffectSubKeywordToggle("Outline is Pixel Perfect?", "OUTBASEPIXELPERF_ON");
-                    if(outlinePixelPerf) DrawProperty(18);
-                    else DrawProperty(17);
+                    bool outlinePixelPerf =
+                        DrawEffectSubKeywordToggle("Outline is Pixel Perfect?", "OUTBASEPIXELPERF_ON");
+                    if (outlinePixelPerf)
+                    {
+                        DrawProperty(18);
+                    }
+                    else
+                    {
+                        DrawProperty(17);
+                    }
 
                     DrawLine(Color.grey, 1, 3);
                     bool outlineTexture = DrawEffectSubKeywordToggle("Outline uses texture?", "OUTTEX_ON");
-                    if(outlineTexture)
+                    if (outlineTexture)
                     {
                         DrawProperty(19);
                         DrawProperty(20);
@@ -342,7 +422,7 @@ namespace AllIn1SpriteShader
 
                     DrawLine(Color.grey, 1, 3);
                     bool outlineDistort = DrawEffectSubKeywordToggle("Outline uses distortion?", "OUTDIST_ON");
-                    if(outlineDistort)
+                    if (outlineDistort)
                     {
                         DrawProperty(22);
                         DrawProperty(23);
@@ -360,47 +440,83 @@ namespace AllIn1SpriteShader
                 }
                 EditorGUILayout.EndVertical();
             }
-            else targetMat.DisableKeyword("OUTBASE_ON");
+            else
+            {
+                targetMat.DisableKeyword("OUTBASE_ON");
+            }
 
             EditorGUILayout.EndToggleGroup();
         }
 
-        private void GenericEffect(string inspector, string keyword, int first, int last, bool effectCounter = true, string preMessage = null, int[] extraProperties = null, bool boldToggleLetters = true)
+        private void GenericEffect(string inspector, string keyword, int first, int last, bool effectCounter = true,
+            string preMessage = null, int[] extraProperties = null, bool boldToggleLetters = true)
         {
             bool toggle = oldKeyWords.Contains(keyword);
             bool ini = toggle;
 
-            GUIContent effectNameLabel = new GUIContent();
+            GUIContent effectNameLabel = new();
             effectNameLabel.tooltip = keyword + " (C#)";
-            if(effectCounter)
+            if (effectCounter)
             {
                 effectNameLabel.text = effectCount + "." + inspector;
                 effectCount++;
             }
-            else effectNameLabel.text = inspector;
-            if(boldToggleLetters) toggle = EditorGUILayout.BeginToggleGroup(effectNameLabel, toggle);
-            else toggle = GUILayout.Toggle(toggle, effectNameLabel);
+            else
+            {
+                effectNameLabel.text = inspector;
+            }
 
-            if(ini != toggle) Save();
-            if(toggle)
+            if (boldToggleLetters)
+            {
+                toggle = EditorGUILayout.BeginToggleGroup(effectNameLabel, toggle);
+            }
+            else
+            {
+                toggle = GUILayout.Toggle(toggle, effectNameLabel);
+            }
+
+            if (ini != toggle)
+            {
+                Save();
+            }
+
+            if (toggle)
             {
                 targetMat.EnableKeyword(keyword);
-                if(first > 0)
+                if (first > 0)
                 {
                     EditorGUILayout.BeginVertical(propertiesStyle);
                     {
-                        if(preMessage != null) GUILayout.Label(preMessage, smallLabelStyle);
-                        for(int i = first; i <= last; i++) DrawProperty(i);
-                        if(extraProperties != null)
-                            foreach(int i in extraProperties)
+                        if (preMessage != null)
+                        {
+                            GUILayout.Label(preMessage, smallLabelStyle);
+                        }
+
+                        for (int i = first; i <= last; i++)
+                        {
+                            DrawProperty(i);
+                        }
+
+                        if (extraProperties != null)
+                        {
+                            foreach (int i in extraProperties)
+                            {
                                 DrawProperty(i);
+                            }
+                        }
                     }
                     EditorGUILayout.EndVertical();
                 }
             }
-            else targetMat.DisableKeyword(keyword);
+            else
+            {
+                targetMat.DisableKeyword(keyword);
+            }
 
-            if(boldToggleLetters) EditorGUILayout.EndToggleGroup();
+            if (boldToggleLetters)
+            {
+                EditorGUILayout.EndToggleGroup();
+            }
         }
 
         private void Glow(string inspector, string keyword)
@@ -408,20 +524,27 @@ namespace AllIn1SpriteShader
             bool toggle = oldKeyWords.Contains(keyword);
             bool ini = toggle;
 
-            GUIContent effectNameLabel = new GUIContent();
+            GUIContent effectNameLabel = new();
             effectNameLabel.tooltip = keyword + " (C#)";
             effectNameLabel.text = effectCount + "." + inspector;
             toggle = EditorGUILayout.BeginToggleGroup(effectNameLabel, toggle);
 
             effectCount++;
-            if(ini != toggle) Save();
-            if(toggle)
+            if (ini != toggle)
+            {
+                Save();
+            }
+
+            if (toggle)
             {
                 targetMat.EnableKeyword("GLOW_ON");
                 EditorGUILayout.BeginVertical(propertiesStyle);
                 {
                     bool useGlowTex = DrawEffectSubKeywordToggle("Use Glow Texture?", "GLOWTEX_ON");
-                    if(useGlowTex) DrawProperty(6);
+                    if (useGlowTex)
+                    {
+                        DrawProperty(6);
+                    }
 
                     DrawProperty(3);
                     DrawProperty(4);
@@ -429,7 +552,10 @@ namespace AllIn1SpriteShader
                 }
                 EditorGUILayout.EndVertical();
             }
-            else targetMat.DisableKeyword("GLOW_ON");
+            else
+            {
+                targetMat.DisableKeyword("GLOW_ON");
+            }
 
             EditorGUILayout.EndToggleGroup();
         }
@@ -439,51 +565,77 @@ namespace AllIn1SpriteShader
             bool toggle = oldKeyWords.Contains(keyword);
             bool ini = toggle;
 
-            GUIContent effectNameLabel = new GUIContent();
+            GUIContent effectNameLabel = new();
             effectNameLabel.tooltip = keyword + " (C#)";
             effectNameLabel.text = effectCount + "." + inspector;
             toggle = EditorGUILayout.BeginToggleGroup(effectNameLabel, toggle);
 
             effectCount++;
-            if(ini != toggle) Save();
-            if(toggle)
+            if (ini != toggle)
+            {
+                Save();
+            }
+
+            if (toggle)
             {
                 targetMat.EnableKeyword("COLORRAMP_ON");
                 EditorGUILayout.BeginVertical(propertiesStyle);
                 {
                     bool useEditableGradient = false;
-                    if(AssetDatabase.Contains(targetMat))
+                    if (AssetDatabase.Contains(targetMat))
                     {
                         useEditableGradient = oldKeyWords.Contains("GRADIENTCOLORRAMP_ON");
                         bool gradientTex = useEditableGradient;
                         gradientTex = GUILayout.Toggle(gradientTex, new GUIContent("Use Editable Gradient?"));
-                        if(useEditableGradient != gradientTex)
+                        if (useEditableGradient != gradientTex)
                         {
                             Save();
-                            if(gradientTex)
+                            if (gradientTex)
                             {
                                 useEditableGradient = true;
                                 targetMat.EnableKeyword("GRADIENTCOLORRAMP_ON");
                             }
-                            else targetMat.DisableKeyword("GRADIENTCOLORRAMP_ON");
+                            else
+                            {
+                                targetMat.DisableKeyword("GRADIENTCOLORRAMP_ON");
+                            }
                         }
 
-                        if(useEditableGradient) matEditor.ShaderProperty(matProperties[159], matProperties[159].displayName);
+                        if (useEditableGradient)
+                        {
+                            matEditor.ShaderProperty(matProperties[159], matProperties[159].displayName);
+                        }
                     }
-                    else GUILayout.Label("*Save to folder to allow for dynamic Gradient property", smallLabelStyle);
+                    else
+                    {
+                        GUILayout.Label("*Save to folder to allow for dynamic Gradient property", smallLabelStyle);
+                    }
 
-                    if(!useEditableGradient) DrawProperty(51);
+                    if (!useEditableGradient)
+                    {
+                        DrawProperty(51);
+                    }
 
                     DrawProperty(52);
                     DrawProperty(53, true);
                     MaterialProperty colorRampOut = matProperties[53];
-                    if(colorRampOut.floatValue == 1) targetMat.EnableKeyword("COLORRAMPOUTLINE_ON");
-                    else targetMat.DisableKeyword("COLORRAMPOUTLINE_ON");
+                    if (colorRampOut.floatValue == 1)
+                    {
+                        targetMat.EnableKeyword("COLORRAMPOUTLINE_ON");
+                    }
+                    else
+                    {
+                        targetMat.DisableKeyword("COLORRAMPOUTLINE_ON");
+                    }
+
                     DrawProperty(155);
                 }
                 EditorGUILayout.EndVertical();
             }
-            else targetMat.DisableKeyword("COLORRAMP_ON");
+            else
+            {
+                targetMat.DisableKeyword("COLORRAMP_ON");
+            }
 
             EditorGUILayout.EndToggleGroup();
         }
@@ -493,47 +645,77 @@ namespace AllIn1SpriteShader
             bool toggle = oldKeyWords.Contains(keyword);
             bool ini = toggle;
 
-            GUIContent effectNameLabel = new GUIContent();
+            GUIContent effectNameLabel = new();
             effectNameLabel.tooltip = keyword + " (C#)";
             effectNameLabel.text = effectCount + "." + inspector;
             toggle = EditorGUILayout.BeginToggleGroup(effectNameLabel, toggle);
 
             effectCount++;
-            if(ini != toggle) Save();
-            if(toggle)
+            if (ini != toggle)
+            {
+                Save();
+            }
+
+            if (toggle)
             {
                 targetMat.EnableKeyword("CHANGECOLOR_ON");
                 EditorGUILayout.BeginVertical(propertiesStyle);
                 {
-                    for(int i = 123; i < 127; i++) DrawProperty(i);
+                    for (int i = 123; i < 127; i++)
+                    {
+                        DrawProperty(i);
+                    }
 
                     DrawLine(Color.grey, 1, 3);
                     ini = oldKeyWords.Contains("CHANGECOLOR2_ON");
                     bool toggle2 = ini;
                     toggle2 = EditorGUILayout.Toggle("Use Color 2", ini);
-                    if(ini != toggle2) Save();
-                    if(toggle2)
+                    if (ini != toggle2)
+                    {
+                        Save();
+                    }
+
+                    if (toggle2)
                     {
                         targetMat.EnableKeyword("CHANGECOLOR2_ON");
-                        for(int i = 146; i < 149; i++) DrawProperty(i);
+                        for (int i = 146; i < 149; i++)
+                        {
+                            DrawProperty(i);
+                        }
                     }
-                    else targetMat.DisableKeyword("CHANGECOLOR2_ON");
+                    else
+                    {
+                        targetMat.DisableKeyword("CHANGECOLOR2_ON");
+                    }
 
                     DrawLine(Color.grey, 1, 3);
                     ini = oldKeyWords.Contains("CHANGECOLOR3_ON");
                     toggle2 = ini;
                     toggle2 = EditorGUILayout.Toggle("Use Color 3", toggle2);
-                    if(ini != toggle2) Save();
-                    if(toggle2)
+                    if (ini != toggle2)
+                    {
+                        Save();
+                    }
+
+                    if (toggle2)
                     {
                         targetMat.EnableKeyword("CHANGECOLOR3_ON");
-                        for(int i = 149; i < 152; i++) DrawProperty(i);
+                        for (int i = 149; i < 152; i++)
+                        {
+                            DrawProperty(i);
+                        }
                     }
-                    else targetMat.DisableKeyword("CHANGECOLOR3_ON");
+                    else
+                    {
+                        targetMat.DisableKeyword("CHANGECOLOR3_ON");
+                    }
                 }
                 EditorGUILayout.EndVertical();
             }
-            else targetMat.DisableKeyword("CHANGECOLOR_ON");
+            else
+            {
+                targetMat.DisableKeyword("CHANGECOLOR_ON");
+            }
 
             EditorGUILayout.EndToggleGroup();
         }
@@ -543,14 +725,18 @@ namespace AllIn1SpriteShader
             bool toggle = oldKeyWords.Contains(keyword);
             bool ini = toggle;
 
-            GUIContent effectNameLabel = new GUIContent();
+            GUIContent effectNameLabel = new();
             effectNameLabel.tooltip = keyword + " (C#)";
             effectNameLabel.text = effectCount + "." + inspector;
             toggle = EditorGUILayout.BeginToggleGroup(effectNameLabel, toggle);
 
             effectCount++;
-            if(ini != toggle) Save();
-            if(toggle)
+            if (ini != toggle)
+            {
+                Save();
+            }
+
+            if (toggle)
             {
                 targetMat.EnableKeyword("GREYSCALE_ON");
                 EditorGUILayout.BeginVertical(propertiesStyle);
@@ -559,13 +745,23 @@ namespace AllIn1SpriteShader
                     DrawProperty(56);
                     DrawProperty(55, true);
                     MaterialProperty greyScaleOut = matProperties[55];
-                    if(greyScaleOut.floatValue == 1) targetMat.EnableKeyword("GREYSCALEOUTLINE_ON");
-                    else targetMat.DisableKeyword("GREYSCALEOUTLINE_ON");
+                    if (greyScaleOut.floatValue == 1)
+                    {
+                        targetMat.EnableKeyword("GREYSCALEOUTLINE_ON");
+                    }
+                    else
+                    {
+                        targetMat.DisableKeyword("GREYSCALEOUTLINE_ON");
+                    }
+
                     DrawProperty(156);
                 }
                 EditorGUILayout.EndVertical();
             }
-            else targetMat.DisableKeyword("GREYSCALE_ON");
+            else
+            {
+                targetMat.DisableKeyword("GREYSCALE_ON");
+            }
 
             EditorGUILayout.EndToggleGroup();
         }
@@ -575,14 +771,18 @@ namespace AllIn1SpriteShader
             bool toggle = oldKeyWords.Contains(keyword);
             bool ini = toggle;
 
-            GUIContent effectNameLabel = new GUIContent();
+            GUIContent effectNameLabel = new();
             effectNameLabel.tooltip = keyword + " (C#)";
             effectNameLabel.text = effectCount + "." + inspector;
             toggle = EditorGUILayout.BeginToggleGroup(effectNameLabel, toggle);
 
             effectCount++;
-            if(ini != toggle) Save();
-            if(toggle)
+            if (ini != toggle)
+            {
+                Save();
+            }
+
+            if (toggle)
             {
                 targetMat.EnableKeyword("POSTERIZE_ON");
                 EditorGUILayout.BeginVertical(propertiesStyle);
@@ -591,12 +791,21 @@ namespace AllIn1SpriteShader
                     DrawProperty(58);
                     DrawProperty(59, true);
                     MaterialProperty posterizeOut = matProperties[59];
-                    if(posterizeOut.floatValue == 1) targetMat.EnableKeyword("POSTERIZEOUTLINE_ON");
-                    else targetMat.DisableKeyword("POSTERIZEOUTLINE_ON");
+                    if (posterizeOut.floatValue == 1)
+                    {
+                        targetMat.EnableKeyword("POSTERIZEOUTLINE_ON");
+                    }
+                    else
+                    {
+                        targetMat.DisableKeyword("POSTERIZEOUTLINE_ON");
+                    }
                 }
                 EditorGUILayout.EndVertical();
             }
-            else targetMat.DisableKeyword("POSTERIZE_ON");
+            else
+            {
+                targetMat.DisableKeyword("POSTERIZE_ON");
+            }
 
             EditorGUILayout.EndToggleGroup();
         }
@@ -606,14 +815,18 @@ namespace AllIn1SpriteShader
             bool toggle = oldKeyWords.Contains(keyword);
             bool ini = toggle;
 
-            GUIContent effectNameLabel = new GUIContent();
+            GUIContent effectNameLabel = new();
             effectNameLabel.tooltip = keyword + " (C#)";
             effectNameLabel.text = effectCount + "." + inspector;
             toggle = EditorGUILayout.BeginToggleGroup(effectNameLabel, toggle);
 
             effectCount++;
-            if(ini != toggle) Save();
-            if(toggle)
+            if (ini != toggle)
+            {
+                Save();
+            }
+
+            if (toggle)
             {
                 targetMat.EnableKeyword("BLUR_ON");
                 EditorGUILayout.BeginVertical(propertiesStyle);
@@ -622,12 +835,21 @@ namespace AllIn1SpriteShader
                     DrawProperty(60);
                     DrawProperty(61, true);
                     MaterialProperty blurIsHd = matProperties[61];
-                    if(blurIsHd.floatValue == 1) targetMat.EnableKeyword("BLURISHD_ON");
-                    else targetMat.DisableKeyword("BLURISHD_ON");
+                    if (blurIsHd.floatValue == 1)
+                    {
+                        targetMat.EnableKeyword("BLURISHD_ON");
+                    }
+                    else
+                    {
+                        targetMat.DisableKeyword("BLURISHD_ON");
+                    }
                 }
                 EditorGUILayout.EndVertical();
             }
-            else targetMat.DisableKeyword("BLUR_ON");
+            else
+            {
+                targetMat.DisableKeyword("BLUR_ON");
+            }
 
             EditorGUILayout.EndToggleGroup();
         }
@@ -637,14 +859,18 @@ namespace AllIn1SpriteShader
             bool toggle = oldKeyWords.Contains(keyword);
             bool ini = toggle;
 
-            GUIContent effectNameLabel = new GUIContent();
+            GUIContent effectNameLabel = new();
             effectNameLabel.tooltip = keyword + " (C#)";
             effectNameLabel.text = effectCount + "." + inspector;
             toggle = EditorGUILayout.BeginToggleGroup(effectNameLabel, toggle);
 
             effectCount++;
-            if(ini != toggle) Save();
-            if(toggle)
+            if (ini != toggle)
+            {
+                Save();
+            }
+
+            if (toggle)
             {
                 targetMat.EnableKeyword("WIND_ON");
                 EditorGUILayout.BeginVertical(propertiesStyle);
@@ -655,12 +881,21 @@ namespace AllIn1SpriteShader
                     DrawProperty(92);
                     DrawProperty(93, true);
                     MaterialProperty grassManual = matProperties[92];
-                    if(grassManual.floatValue == 1) targetMat.EnableKeyword("MANUALWIND_ON");
-                    else targetMat.DisableKeyword("MANUALWIND_ON");
+                    if (grassManual.floatValue == 1)
+                    {
+                        targetMat.EnableKeyword("MANUALWIND_ON");
+                    }
+                    else
+                    {
+                        targetMat.DisableKeyword("MANUALWIND_ON");
+                    }
                 }
                 EditorGUILayout.EndVertical();
             }
-            else targetMat.DisableKeyword("WIND_ON");
+            else
+            {
+                targetMat.DisableKeyword("WIND_ON");
+            }
 
             EditorGUILayout.EndToggleGroup();
         }
@@ -670,32 +905,48 @@ namespace AllIn1SpriteShader
             bool toggle = oldKeyWords.Contains(keyword);
             bool ini = toggle;
 
-            GUIContent effectNameLabel = new GUIContent();
+            GUIContent effectNameLabel = new();
             effectNameLabel.tooltip = keyword + " (C#)";
             effectNameLabel.text = effectCount + "." + inspector;
             toggle = EditorGUILayout.BeginToggleGroup(effectNameLabel, toggle);
 
             effectCount++;
-            if(ini != toggle) Save();
-            if(toggle)
+            if (ini != toggle)
+            {
+                Save();
+            }
+
+            if (toggle)
             {
                 targetMat.EnableKeyword(keyword);
-                if(first > 0)
+                if (first > 0)
                 {
                     EditorGUILayout.BeginVertical(propertiesStyle);
                     {
-                        for(int i = first; i <= last; i++) DrawProperty(i);
+                        for (int i = first; i <= last; i++)
+                        {
+                            DrawProperty(i);
+                        }
 
                         EditorGUILayout.Separator();
                         DrawProperty(72, true);
                         MaterialProperty onlyInOutline = matProperties[72];
-                        if(onlyInOutline.floatValue == 1) targetMat.EnableKeyword("ONLYINNEROUTLINE_ON");
-                        else targetMat.DisableKeyword("ONLYINNEROUTLINE_ON");
+                        if (onlyInOutline.floatValue == 1)
+                        {
+                            targetMat.EnableKeyword("ONLYINNEROUTLINE_ON");
+                        }
+                        else
+                        {
+                            targetMat.DisableKeyword("ONLYINNEROUTLINE_ON");
+                        }
                     }
                     EditorGUILayout.EndVertical();
                 }
             }
-            else targetMat.DisableKeyword(keyword);
+            else
+            {
+                targetMat.DisableKeyword(keyword);
+            }
 
             EditorGUILayout.EndToggleGroup();
         }
@@ -705,14 +956,18 @@ namespace AllIn1SpriteShader
             bool toggle = oldKeyWords.Contains(keyword);
             bool ini = toggle;
 
-            GUIContent effectNameLabel = new GUIContent();
+            GUIContent effectNameLabel = new();
             effectNameLabel.tooltip = keyword + " (C#)";
             effectNameLabel.text = effectCount + "." + inspector;
             toggle = EditorGUILayout.BeginToggleGroup(effectNameLabel, toggle);
 
             effectCount++;
-            if(ini != toggle) Save();
-            if(toggle)
+            if (ini != toggle)
+            {
+                Save();
+            }
+
+            if (toggle)
             {
                 targetMat.EnableKeyword(keyword);
 
@@ -720,7 +975,7 @@ namespace AllIn1SpriteShader
                 {
                     DrawProperty(143, true);
                     MaterialProperty gradIsRadial = matProperties[143];
-                    if(gradIsRadial.floatValue == 1)
+                    if (gradIsRadial.floatValue == 1)
                     {
                         targetMat.EnableKeyword("RADIALGRADIENT_ON");
                         DrawProperty(31);
@@ -733,20 +988,42 @@ namespace AllIn1SpriteShader
                         targetMat.DisableKeyword("RADIALGRADIENT_ON");
                         bool simpleGradient = oldKeyWords.Contains("GRADIENT2COL_ON");
                         bool simpleGradToggle = EditorGUILayout.Toggle("2 Color Gradient?", simpleGradient);
-                        if(simpleGradient && !simpleGradToggle) targetMat.DisableKeyword("GRADIENT2COL_ON");
-                        else if(!simpleGradient && simpleGradToggle) targetMat.EnableKeyword("GRADIENT2COL_ON");
+                        if (simpleGradient && !simpleGradToggle)
+                        {
+                            targetMat.DisableKeyword("GRADIENT2COL_ON");
+                        }
+                        else if (!simpleGradient && simpleGradToggle)
+                        {
+                            targetMat.EnableKeyword("GRADIENT2COL_ON");
+                        }
+
                         DrawProperty(31);
                         DrawProperty(32);
-                        if(!simpleGradToggle) DrawProperty(33);
+                        if (!simpleGradToggle)
+                        {
+                            DrawProperty(33);
+                        }
+
                         DrawProperty(34);
-                        if(!simpleGradToggle) DrawProperty(35);
-                        if(!simpleGradToggle) DrawProperty(141);
+                        if (!simpleGradToggle)
+                        {
+                            DrawProperty(35);
+                        }
+
+                        if (!simpleGradToggle)
+                        {
+                            DrawProperty(141);
+                        }
+
                         DrawProperty(142);
                     }
                 }
                 EditorGUILayout.EndVertical();
             }
-            else targetMat.DisableKeyword(keyword);
+            else
+            {
+                targetMat.DisableKeyword(keyword);
+            }
 
             EditorGUILayout.EndToggleGroup();
         }
@@ -756,14 +1033,18 @@ namespace AllIn1SpriteShader
             bool toggle = oldKeyWords.Contains(keyword);
             bool ini = toggle;
 
-            GUIContent effectNameLabel = new GUIContent();
+            GUIContent effectNameLabel = new();
             effectNameLabel.tooltip = keyword + " (C#)";
             effectNameLabel.text = effectCount + "." + inspector;
             toggle = EditorGUILayout.BeginToggleGroup(effectNameLabel, toggle);
 
             effectCount++;
-            if(ini != toggle) Save();
-            if(toggle)
+            if (ini != toggle)
+            {
+                Save();
+            }
+
+            if (toggle)
             {
                 targetMat.EnableKeyword(keyword);
                 EditorGUILayout.BeginVertical(propertiesStyle);
@@ -771,22 +1052,38 @@ namespace AllIn1SpriteShader
                     bool multModeOn = oldKeyWords.Contains("OVERLAYMULT_ON");
                     bool isMultMode = multModeOn;
                     isMultMode = GUILayout.Toggle(isMultMode, new GUIContent("Is overlay multiplicative?"));
-                    if(multModeOn != isMultMode)
+                    if (multModeOn != isMultMode)
                     {
                         Save();
-                        if(isMultMode)
+                        if (isMultMode)
                         {
                             multModeOn = true;
                             targetMat.EnableKeyword("OVERLAYMULT_ON");
                         }
-                        else targetMat.DisableKeyword("OVERLAYMULT_ON");
+                        else
+                        {
+                            targetMat.DisableKeyword("OVERLAYMULT_ON");
+                        }
                     }
 
-                    if(multModeOn) GUILayout.Label("Overlay is set to multiplicative mode", smallLabelStyle);
-                    else GUILayout.Label("Overlay is set to additive mode", smallLabelStyle);
+                    if (multModeOn)
+                    {
+                        GUILayout.Label("Overlay is set to multiplicative mode", smallLabelStyle);
+                    }
+                    else
+                    {
+                        GUILayout.Label("Overlay is set to additive mode", smallLabelStyle);
+                    }
 
-                    for(int i = 160; i <= 163; i++) DrawProperty(i);
-                    for(int i = 170; i <= 171; i++) DrawProperty(i);
+                    for (int i = 160; i <= 163; i++)
+                    {
+                        DrawProperty(i);
+                    }
+
+                    for (int i = 170; i <= 171; i++)
+                    {
+                        DrawProperty(i);
+                    }
 
                     if (isShaderSRP)
                     {
@@ -795,7 +1092,10 @@ namespace AllIn1SpriteShader
                 }
                 EditorGUILayout.EndVertical();
             }
-            else targetMat.DisableKeyword(keyword);
+            else
+            {
+                targetMat.DisableKeyword(keyword);
+            }
 
             EditorGUILayout.EndToggleGroup();
         }
@@ -806,18 +1106,21 @@ namespace AllIn1SpriteShader
 
             EditorGUILayout.BeginHorizontal();
             {
-                GUIContent propertyLabel = new GUIContent();
+                GUIContent propertyLabel = new();
                 propertyLabel.text = targetProperty.displayName;
                 propertyLabel.tooltip = targetProperty.name + " (C#)";
 
                 matEditor.ShaderProperty(targetProperty, propertyLabel);
 
-                if(!noReset)
+                if (!noReset)
                 {
-                    GUIContent resetButtonLabel = new GUIContent();
+                    GUIContent resetButtonLabel = new();
                     resetButtonLabel.text = "R";
                     resetButtonLabel.tooltip = "Resets to default value";
-                    if(GUILayout.Button(resetButtonLabel, GUILayout.Width(20))) ResetProperty(targetProperty);
+                    if (GUILayout.Button(resetButtonLabel, GUILayout.Width(20)))
+                    {
+                        ResetProperty(targetProperty);
+                    }
                 }
             }
             EditorGUILayout.EndHorizontal();
@@ -827,20 +1130,24 @@ namespace AllIn1SpriteShader
         {
             AllIn1ShaderPropertyType shaderProperty = EditorUtils.GetShaderTypeByMaterialProperty(targetProperty);
 
-            if(originalMaterialCopy == null) originalMaterialCopy = new Material(targetMat.shader);
-            if(shaderProperty == AllIn1ShaderPropertyType.Float || shaderProperty == AllIn1ShaderPropertyType.Range)
+            if (originalMaterialCopy == null)
+            {
+                originalMaterialCopy = new Material(targetMat.shader);
+            }
+
+            if (shaderProperty == AllIn1ShaderPropertyType.Float || shaderProperty == AllIn1ShaderPropertyType.Range)
             {
                 targetProperty.floatValue = originalMaterialCopy.GetFloat(targetProperty.name);
             }
-            else if(shaderProperty == AllIn1ShaderPropertyType.Vector)
+            else if (shaderProperty == AllIn1ShaderPropertyType.Vector)
             {
                 targetProperty.vectorValue = originalMaterialCopy.GetVector(targetProperty.name);
             }
-            else if(shaderProperty == AllIn1ShaderPropertyType.Color)
+            else if (shaderProperty == AllIn1ShaderPropertyType.Color)
             {
                 targetProperty.colorValue = originalMaterialCopy.GetColor(targetProperty.name);
             }
-            else if(shaderProperty == AllIn1ShaderPropertyType.Texture)
+            else if (shaderProperty == AllIn1ShaderPropertyType.Texture)
             {
                 targetProperty.textureValue = originalMaterialCopy.GetTexture(targetProperty.name);
             }
@@ -848,17 +1155,23 @@ namespace AllIn1SpriteShader
 
         private bool DrawEffectSubKeywordToggle(string inspector, string keyword, bool setCustomConfigAfter = false)
         {
-            GUIContent propertyLabel = new GUIContent();
+            GUIContent propertyLabel = new();
             propertyLabel.text = inspector;
             propertyLabel.tooltip = keyword + " (C#)";
 
             bool ini = oldKeyWords.Contains(keyword);
             bool toggle = ini;
             toggle = GUILayout.Toggle(toggle, propertyLabel);
-            if(ini != toggle)
+            if (ini != toggle)
             {
-                if(toggle) targetMat.EnableKeyword(keyword);
-                else targetMat.DisableKeyword(keyword);
+                if (toggle)
+                {
+                    targetMat.EnableKeyword(keyword);
+                }
+                else
+                {
+                    targetMat.DisableKeyword(keyword);
+                }
             }
 
             return toggle;
@@ -866,7 +1179,11 @@ namespace AllIn1SpriteShader
 
         private void Save()
         {
-            if(!Application.isPlaying) EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+            if (!Application.isPlaying)
+            {
+                EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+            }
+
             EditorUtility.SetDirty(targetMat);
         }
 
@@ -874,7 +1191,7 @@ namespace AllIn1SpriteShader
         {
             Rect r = EditorGUILayout.GetControlRect(GUILayout.Height(padding + thickness));
             r.height = thickness;
-            r.y += (padding / 2);
+            r.y += padding / 2;
             r.x -= 2;
             r.width += 6;
             EditorGUI.DrawRect(r, color);

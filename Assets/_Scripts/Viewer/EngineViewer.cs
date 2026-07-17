@@ -1,10 +1,9 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace FTL
 {
-    public class EngineViewer: MonoBehaviour
+    public class EngineViewer : MonoBehaviour
     {
         [SerializeField] private GameObject chargeStatus;
         [SerializeField] private GameObject jumpButton;
@@ -50,7 +49,6 @@ namespace FTL
                     jumpButton.SetActive(false);
                 }
             }
-
         }
 
         #endregion

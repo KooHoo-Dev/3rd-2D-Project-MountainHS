@@ -9,31 +9,29 @@ namespace AllIn1SpriteShader
     [ExecuteInEditMode]
     public class SetAtlasUvs : MonoBehaviour
     {
-        [SerializeField] private bool updateEveryFrame = false;
-        [Tooltip("If using a Sprite Renderer it will use the material property instead of sharedMaterial"), SerializeField] private bool useMaterialInstanceIfPossible = false;
+        [SerializeField] private bool updateEveryFrame;
+
+        [Tooltip("If using a Sprite Renderer it will use the material property instead of sharedMaterial")]
+        [SerializeField]
+        private bool useMaterialInstanceIfPossible;
+
+        private readonly int maxXuv = Shader.PropertyToID("_MaxXUV");
+        private readonly int maxYuv = Shader.PropertyToID("_MaxYUV");
+        private readonly int minXuv = Shader.PropertyToID("_MinXUV");
+        private readonly int minYuv = Shader.PropertyToID("_MinYUV");
+        private bool isUI;
         private Renderer render;
         private SpriteRenderer spriteRender;
         private Image uiImage;
-        private bool isUI = false;
-        private readonly int minXuv = Shader.PropertyToID("_MinXUV");
-        private readonly int maxXuv = Shader.PropertyToID("_MaxXUV");
-        private readonly int minYuv = Shader.PropertyToID("_MinYUV");
-        private readonly int maxYuv = Shader.PropertyToID("_MaxYUV");
-
-        private void Start()
-        {
-            Setup();
-        }
 
         private void Reset()
         {
             Setup();
         }
 
-        private void Setup()
+        private void Start()
         {
-            if (GetRendererReferencesIfNeeded()) GetAndSetUVs();
-            if (!updateEveryFrame && Application.isPlaying && this != null) this.enabled = false;
+            Setup();
         }
 
         private void LateUpdate()
@@ -44,9 +42,25 @@ namespace AllIn1SpriteShader
             }
         }
 
+        private void Setup()
+        {
+            if (GetRendererReferencesIfNeeded())
+            {
+                GetAndSetUVs();
+            }
+
+            if (!updateEveryFrame && Application.isPlaying && this != null)
+            {
+                enabled = false;
+            }
+        }
+
         public bool GetAndSetUVs()
         {
-            if (!GetRendererReferencesIfNeeded()) return false;
+            if (!GetRendererReferencesIfNeeded())
+            {
+                return false;
+            }
 
             if (!isUI)
             {
@@ -57,19 +71,19 @@ namespace AllIn1SpriteShader
                 r.y /= sprite.texture.height;
                 r.height /= sprite.texture.height;
 
-                if(useMaterialInstanceIfPossible && Application.isPlaying)
+                if (useMaterialInstanceIfPossible && Application.isPlaying)
                 {
                     render.material.SetFloat(minXuv, r.xMin);
                     render.material.SetFloat(maxXuv, r.xMax);
                     render.material.SetFloat(minYuv, r.yMin);
-                    render.material.SetFloat(maxYuv, r.yMax);   
+                    render.material.SetFloat(maxYuv, r.yMax);
                 }
                 else
                 {
                     render.sharedMaterial.SetFloat(minXuv, r.xMin);
                     render.sharedMaterial.SetFloat(maxXuv, r.xMax);
                     render.sharedMaterial.SetFloat(minYuv, r.yMin);
-                    render.sharedMaterial.SetFloat(maxYuv, r.yMax);   
+                    render.sharedMaterial.SetFloat(maxYuv, r.yMax);
                 }
             }
             else
@@ -91,11 +105,14 @@ namespace AllIn1SpriteShader
 
         public void ResetAtlasUvs()
         {
-            if (!GetRendererReferencesIfNeeded()) return;
+            if (!GetRendererReferencesIfNeeded())
+            {
+                return;
+            }
 
             if (!isUI)
             {
-                if(useMaterialInstanceIfPossible && Application.isPlaying)
+                if (useMaterialInstanceIfPossible && Application.isPlaying)
                 {
                     render.material.SetFloat(minXuv, 0f);
                     render.material.SetFloat(maxXuv, 1f);
@@ -107,7 +124,7 @@ namespace AllIn1SpriteShader
                     render.sharedMaterial.SetFloat(minXuv, 0f);
                     render.sharedMaterial.SetFloat(maxXuv, 1f);
                     render.sharedMaterial.SetFloat(minYuv, 0f);
-                    render.sharedMaterial.SetFloat(maxYuv, 1f);   
+                    render.sharedMaterial.SetFloat(maxYuv, 1f);
                 }
             }
             else
@@ -126,18 +143,28 @@ namespace AllIn1SpriteShader
 
         private bool GetRendererReferencesIfNeeded()
         {
-            if (spriteRender == null) spriteRender = GetComponent<SpriteRenderer>();
+            if (spriteRender == null)
+            {
+                spriteRender = GetComponent<SpriteRenderer>();
+            }
+
             if (spriteRender != null)
             {
                 if (spriteRender.sprite == null)
                 {
-                    #if UNITY_EDITOR
-                    EditorUtility.DisplayDialog("No sprite found", "The object: " + gameObject.name + ", has Sprite Renderer but no sprite", "Ok");
-                    #endif
+#if UNITY_EDITOR
+                    EditorUtility.DisplayDialog("No sprite found",
+                        "The object: " + gameObject.name + ", has Sprite Renderer but no sprite", "Ok");
+#endif
                     DestroyImmediate(this);
                     return false;
                 }
-                if (render == null) render = GetComponent<Renderer>();
+
+                if (render == null)
+                {
+                    render = GetComponent<Renderer>();
+                }
+
                 isUI = false;
             }
             else
@@ -147,32 +174,41 @@ namespace AllIn1SpriteShader
                     uiImage = GetComponent<Image>();
                     if (uiImage != null)
                     {
-                        #if UNITY_EDITOR
-                        Debug.Log("You added the SetAtlasUv component to: " + gameObject.name + " that has a UI Image\n " +
-                        "This SetAtlasUV component will only work properly on UI Images if each Image has a DIFFERENT material instance (See Documentation Sprite Atlases section for more info)");
-                        #endif
+#if UNITY_EDITOR
+                        Debug.Log("You added the SetAtlasUv component to: " + gameObject.name +
+                                  " that has a UI Image\n " +
+                                  "This SetAtlasUV component will only work properly on UI Images if each Image has a DIFFERENT material instance (See Documentation Sprite Atlases section for more info)");
+#endif
                     }
                     else
                     {
-                        #if UNITY_EDITOR
-                        EditorUtility.DisplayDialog("No Renderer or UI Graphic found", "This SetAtlasUV component will now get destroyed", "Ok");
-                        #endif
+#if UNITY_EDITOR
+                        EditorUtility.DisplayDialog("No Renderer or UI Graphic found",
+                            "This SetAtlasUV component will now get destroyed", "Ok");
+#endif
                         DestroyImmediate(this);
                         return false;
                     }
                 }
-                if (render == null) render = GetComponent<Renderer>();
+
+                if (render == null)
+                {
+                    render = GetComponent<Renderer>();
+                }
+
                 isUI = true;
             }
 
             if (spriteRender == null && uiImage == null)
             {
-                #if UNITY_EDITOR
-                EditorUtility.DisplayDialog("No Renderer or UI Graphic found", "This SetAtlasUV component will now get destroyed", "Ok");
-                #endif
+#if UNITY_EDITOR
+                EditorUtility.DisplayDialog("No Renderer or UI Graphic found",
+                    "This SetAtlasUV component will now get destroyed", "Ok");
+#endif
                 DestroyImmediate(this);
                 return false;
             }
+
             return true;
         }
     }

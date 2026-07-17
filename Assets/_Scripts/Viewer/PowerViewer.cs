@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -10,7 +9,7 @@ namespace FTL
     {
         [SerializeField] protected GameObject barPrefab;
         [SerializeField] protected GameObject barGroup;
-        [SerializeField] protected List<Image> barSprites = new List<Image>();
+        [SerializeField] protected List<Image> barSprites = new();
         [SerializeField] protected FacilitySystem facilitySystem;
         protected ObjectPool<GameObject> barPool;
 
@@ -73,6 +72,7 @@ namespace FTL
                     AddBar();
                 }
             }
+
             for (int i = 0; i < barSprites.Count; i++)
             {
                 if (i < availablePower)

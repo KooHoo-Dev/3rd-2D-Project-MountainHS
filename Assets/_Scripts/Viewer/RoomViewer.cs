@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 
@@ -23,7 +22,7 @@ namespace FTL
 
         private void Update()
         {
-            if (Room.IsHit && spriteShaker.IsShaked == false)
+            if (Room.IsHit && !spriteShaker.IsShaked)
             {
                 spriteShaker.ShakeSprite();
             }
@@ -34,7 +33,7 @@ namespace FTL
         #region Public Method
 
         /// <summary>
-        /// 외부에서 roomId, roomType 입력받으면 그에 맞게 텍스트, 색깔 바꾸기
+        ///     외부에서 roomId, roomType 입력받으면 그에 맞게 텍스트, 색깔 바꾸기
         /// </summary>
         public void SetRoomState(int id, RoomType type)
         {

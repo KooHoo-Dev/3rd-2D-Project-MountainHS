@@ -5,45 +5,45 @@ using UnityEngine.InputSystem;
 
 namespace AllIn1SpriteShader
 {
-	public static class AllIn1InputSystem
-	{
+    public static class AllIn1InputSystem
+    {
 #if ENABLE_INPUT_SYSTEM
-		public static bool GetKeyDown(KeyCode keyCode)
-		{
-			Key key = InputKeyConverter.GetKeyFromKeycode(keyCode);
+        public static bool GetKeyDown(KeyCode keyCode)
+        {
+            Key key = InputKeyConverter.GetKeyFromKeycode(keyCode);
 
-			bool res = Keyboard.current[key].wasPressedThisFrame;
-			return res;
-		}
+            bool res = Keyboard.current[key].wasPressedThisFrame;
+            return res;
+        }
 
-		public static bool GetKey(KeyCode keyCode)
-		{
-			Key key = InputKeyConverter.GetKeyFromKeycode(keyCode);
-			bool res = Keyboard.current[key].isPressed;
-			return res;
-		}
+        public static bool GetKey(KeyCode keyCode)
+        {
+            Key key = InputKeyConverter.GetKeyFromKeycode(keyCode);
+            bool res = Keyboard.current[key].isPressed;
+            return res;
+        }
 
-		public static float GetMouseXAxis()
-		{
-			Vector2 delta = Mouse.current.delta.ReadValue();
-			float res = delta.x * 0.1f;
-			return res;
-		}
+        public static float GetMouseXAxis()
+        {
+            Vector2 delta = Mouse.current.delta.ReadValue();
+            float res = delta.x * 0.1f;
+            return res;
+        }
 
-		public static float GetMouseYAxis()
-		{
-			Vector2 delta = Mouse.current.delta.ReadValue();
-			float res = delta.y * 0.1f;
-			return res;
-		}
+        public static float GetMouseYAxis()
+        {
+            Vector2 delta = Mouse.current.delta.ReadValue();
+            float res = delta.y * 0.1f;
+            return res;
+        }
 
-		public static float GetMouseScroll()
-		{
-			Vector2 scrollValue = Mouse.current.scroll.ReadValue();
-			
-			float res = scrollValue.y * 0.1f;
-			return res;
-		}
+        public static float GetMouseScroll()
+        {
+            Vector2 scrollValue = Mouse.current.scroll.ReadValue();
+
+            float res = scrollValue.y * 0.1f;
+            return res;
+        }
 
 #elif ENABLE_LEGACY_INPUT_MANAGER
 		public static bool GetKeyDown(KeyCode keyCode)
@@ -76,5 +76,5 @@ namespace AllIn1SpriteShader
 			return res;
 		}
 #endif
-	}
+    }
 }

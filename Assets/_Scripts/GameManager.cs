@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -7,7 +8,7 @@ using Utilities;
 namespace FTL
 {
     /// <summary>
-    /// GameManager는 전투 종료, 게임 종료 같은 씬간 정보를 관리
+    ///     GameManager는 전투 종료, 게임 종료 같은 씬간 정보를 관리
     /// </summary>
     public class GameManager : SingletonBase<GameManager>
     {
@@ -17,12 +18,6 @@ namespace FTL
         private const string battleScene3 = "BattleScene3";
         private const string battlePrepare = "BattlePrepare";
         private const string victoryScene = "Victory";
-
-        public bool IsGameContextEmpty => gameContext == null || gameContext.IsEmpty;
-        public bool IsCombatPaused => isCombatPaused;
-        public bool IsBattleStopped => isBattleStopped;
-        public bool CanRunCombat => isCombatPaused == false && isBattleStopped == false;
-        public PlayerController Player { get;  set; }
         [field: SerializeField] public BattleResult BattleResult { get; set; }
 
         [field: SerializeField] public EnemyDatabase EnemyDatabase { get; private set; }
@@ -30,8 +25,14 @@ namespace FTL
         [SerializeField] private GameObject toggleMenuObject;
         [SerializeField] private GameContext gameContext;
         private MainUIController mainUIController;
-        private bool isCombatPaused;
-        private bool isBattleStopped;
+
+        public bool IsGameContextEmpty => gameContext == null || gameContext.IsEmpty;
+        public bool IsCombatPaused { get; private set; }
+
+        public bool IsBattleStopped { get; private set; }
+
+        public bool CanRunCombat => !IsCombatPaused && !IsBattleStopped;
+        public PlayerController Player { get; set; }
 
         #region Unity Method
 
@@ -108,7 +109,7 @@ namespace FTL
             }
         }
 
-        public void MoveSceneByBattleResult(BattleResult battleResult) 
+        public void MoveSceneByBattleResult(BattleResult battleResult)
         {
             switch (battleResult)
             {
@@ -145,18 +146,18 @@ namespace FTL
 
         public void SetCombatPaused(bool isPaused)
         {
-            if (isBattleStopped && isPaused)
+            if (IsBattleStopped && isPaused)
             {
                 return;
             }
 
-            isCombatPaused = isPaused;
+            IsCombatPaused = isPaused;
             Time.timeScale = isPaused ? 0f : 1f;
         }
 
         public void StopBattle()
         {
-            isBattleStopped = true;
+            IsBattleStopped = true;
             if (toggleMenuObject != null)
             {
                 toggleMenuObject.SetActive(false);
@@ -183,39 +184,40 @@ namespace FTL
             List<FacilitySystem> facilities = player.FacilitySystems;
             List<CrewController> crews = player.Crews;
 
-            List<FacilityState> facilityStates = new List<FacilityState>();
+            List<FacilityState> facilityStates = new();
             for (int i = 0; i < facilities.Count; i++)
             {
                 facilityStates.Add(new FacilityState(facilities[i]));
             }
 
-            List<CrewState> crewStates = new List<CrewState>();
+            List<CrewState> crewStates = new();
             for (int i = 0; i < crews.Count; i++)
             {
                 crewStates.Add(new CrewState(crews[i]));
             }
 
-            gameContext = new GameContext(rooms, facilityStates, crewStates, player.ScrapAmount, player.Hp, player.ShipData.MaxHp, player.PowerSystem.GetReactorMaxPower, player.PowerSystem.GetPower);
+            gameContext = new GameContext(rooms, facilityStates, crewStates, player.ScrapAmount, player.Hp,
+                player.ShipData.MaxHp, player.PowerSystem.GetReactorMaxPower, player.PowerSystem.GetPower);
             gameContext.SetWeaponTypes(player.WeaponTypes);
         }
 
         public void EnsureBattlePrepareTestGameContext()
         {
-            if (IsGameContextEmpty == false)
+            if (!IsGameContextEmpty)
             {
                 return;
             }
 
-            List<Room> rooms = new List<Room>();
+            List<Room> rooms = new();
 
-            List<FacilityState> facilityStates = new List<FacilityState>
+            List<FacilityState> facilityStates = new()
             {
                 new FacilityState(0, 3, 1, RoomType.Weapon),
                 new FacilityState(0, 3, 1, RoomType.Engine),
                 new FacilityState(0, 3, 2, RoomType.Shield)
             };
 
-            List<CrewState> crewStates = new List<CrewState>
+            List<CrewState> crewStates = new()
             {
                 new CrewState(100, 100, "Hans", 1),
                 new CrewState(100, 100, "Tom", 2),
@@ -242,6 +244,7 @@ namespace FTL
                 Debug.LogError("GameContext is null. Cannot get scrap.");
                 return 0;
             }
+
             return gameContext.ScrapAmount;
         }
 
@@ -259,7 +262,7 @@ namespace FTL
         public void ExitGame()
         {
 #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
+            EditorApplication.isPlaying = false;
 #else
             Application.Quit();
 #endif
@@ -383,7 +386,6 @@ namespace FTL
                 BackgroundController backgroundController = FindFirstObjectByType<BackgroundController>();
                 backgroundController.SetRandomBackground();
             }
-
         }
 
         #endregion
@@ -403,7 +405,7 @@ namespace FTL
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
         {
-            isBattleStopped = false;
+            IsBattleStopped = false;
             SetCombatPaused(false);
             InitUIObject();
             CursorController.Instance.ResetMouseSprite();
@@ -487,7 +489,7 @@ namespace FTL
 
         private void ToggleMenu(string sceneName)
         {
-            if (isBattleStopped)
+            if (IsBattleStopped)
             {
                 return;
             }
@@ -499,7 +501,7 @@ namespace FTL
             }
 
             bool isToggleMenuActive = toggleMenuObject.activeSelf;
-            bool shouldOpenMenu = isToggleMenuActive == false;
+            bool shouldOpenMenu = !isToggleMenuActive;
             toggleMenuObject.SetActive(shouldOpenMenu);
 
             if (IsBattleScene(sceneName))
@@ -511,9 +513,9 @@ namespace FTL
         private bool IsBattleScene(string sceneName)
         {
             return sceneName == battleScene ||
-                sceneName == battleScene1 ||
-                sceneName == battleScene2 ||
-                sceneName == battleScene3;
+                   sceneName == battleScene1 ||
+                   sceneName == battleScene2 ||
+                   sceneName == battleScene3;
         }
 
         #endregion

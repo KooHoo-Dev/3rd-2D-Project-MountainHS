@@ -1,48 +1,52 @@
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEngine.Rendering;
 
 namespace AllIn1SpriteShader
 {
-	public static class EditorUtils
-	{
-		public static string UnifyEOL(string text)
-		{
-			if(string.IsNullOrEmpty(text)) return text;
+    public static class EditorUtils
+    {
+        public static string UnifyEOL(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return text;
+            }
 
-			text = text.Replace("\r\n", "\n");
-			text = text.Replace("\r", "\n");
-			return text;
-		}
+            text = text.Replace("\r\n", "\n");
+            text = text.Replace("\r", "\n");
+            return text;
+        }
 
-		public static AllIn1ShaderPropertyType GetShaderTypeByMaterialProperty(MaterialProperty matProperty)
-		{
-			AllIn1ShaderPropertyType res;
+        public static AllIn1ShaderPropertyType GetShaderTypeByMaterialProperty(MaterialProperty matProperty)
+        {
+            AllIn1ShaderPropertyType res;
 
 #if UNITY_6000_2_OR_NEWER
-			switch (matProperty.propertyType)
-			{
-				case UnityEngine.Rendering.ShaderPropertyType.Color:
-					res = AllIn1ShaderPropertyType.Color;
-					break;
-				case UnityEngine.Rendering.ShaderPropertyType.Float:
-					res = AllIn1ShaderPropertyType.Float;
-					break;
-				case UnityEngine.Rendering.ShaderPropertyType.Int:
-					res = AllIn1ShaderPropertyType.Int;
-					break;
-				case UnityEngine.Rendering.ShaderPropertyType.Range:
-					res = AllIn1ShaderPropertyType.Range;
-					break;
-				case UnityEngine.Rendering.ShaderPropertyType.Texture:
-					res = AllIn1ShaderPropertyType.Texture;
-					break;
-				case UnityEngine.Rendering.ShaderPropertyType.Vector:
-					res = AllIn1ShaderPropertyType.Vector;
-					break;
-				default:
-					res = AllIn1ShaderPropertyType.Vector;
-					break;
-			}
+            switch (matProperty.propertyType)
+            {
+                case ShaderPropertyType.Color:
+                    res = AllIn1ShaderPropertyType.Color;
+                    break;
+                case ShaderPropertyType.Float:
+                    res = AllIn1ShaderPropertyType.Float;
+                    break;
+                case ShaderPropertyType.Int:
+                    res = AllIn1ShaderPropertyType.Int;
+                    break;
+                case ShaderPropertyType.Range:
+                    res = AllIn1ShaderPropertyType.Range;
+                    break;
+                case ShaderPropertyType.Texture:
+                    res = AllIn1ShaderPropertyType.Texture;
+                    break;
+                case ShaderPropertyType.Vector:
+                    res = AllIn1ShaderPropertyType.Vector;
+                    break;
+                default:
+                    res = AllIn1ShaderPropertyType.Vector;
+                    break;
+            }
 #else
 			switch (matProperty.type)
 			{
@@ -69,9 +73,8 @@ namespace AllIn1SpriteShader
 					break;
 			}
 #endif
-			return res;
-
-		}
-	}
+            return res;
+        }
+    }
 }
 #endif

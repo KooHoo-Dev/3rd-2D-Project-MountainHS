@@ -1,16 +1,15 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace AllIn1SpriteShader
 {
     public class Demo2AutoScroll : MonoBehaviour
     {
-        private Transform[] children;
         public float totalTime;
-        public GameObject sceneDescription = null;
+        public GameObject sceneDescription;
+        private Transform[] children;
 
-        void Start()
+        private void Start()
         {
             sceneDescription.SetActive(false);
             Camera.main.fieldOfView = 60f;
@@ -24,12 +23,12 @@ namespace AllIn1SpriteShader
                 }
             }
 
-            totalTime = totalTime / (float)children.Length;
+            totalTime = totalTime / children.Length;
 
             StartCoroutine(ScrollElements());
         }
 
-        IEnumerator ScrollElements()
+        private IEnumerator ScrollElements()
         {
             int i = 0;
             while (true)
@@ -39,6 +38,7 @@ namespace AllIn1SpriteShader
                     i = (i + 1) % children.Length;
                     continue;
                 }
+
                 children[i].gameObject.SetActive(true);
                 yield return new WaitForSeconds(totalTime);
                 children[i].gameObject.SetActive(false);

@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace FTL
 {
-    public class ScrapViewer: MonoBehaviour
+    public class ScrapViewer : MonoBehaviour
     {
-        TMP_Text text;
+        private TMP_Text text;
 
         #region Unity Method
 

@@ -11,7 +11,7 @@ namespace FTL
         public int EnginePower;
     }
 
-    public class EnemyPowerController: ShipPowerController
+    public class EnemyPowerController : ShipPowerController
     {
         [SerializeField] private PowerData powerData;
 
@@ -26,7 +26,6 @@ namespace FTL
             TryAllocatePower(RoomType.Weapon, powerData.WeaponPower);
             // 엔진 1칸
             TryAllocatePower(RoomType.Engine, powerData.EnginePower);
-            
         }
 
         #endregion

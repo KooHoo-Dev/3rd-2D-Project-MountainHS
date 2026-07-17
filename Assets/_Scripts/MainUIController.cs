@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,8 +5,8 @@ namespace FTL
 {
     public class MainUIController : MonoBehaviour
     {
-        private bool HasViewer => brViewer != null;
         [SerializeField] private BattleResultViewer brViewer;
+        private bool HasViewer => brViewer != null;
 
         #region Unity Method
 
@@ -63,7 +62,8 @@ namespace FTL
             }
             else
             {
-                Debug.LogWarning("BattleResultViewer is not assigned in MainUIController. Cannot display battle result.");
+                Debug.LogWarning(
+                    "BattleResultViewer is not assigned in MainUIController. Cannot display battle result.");
             }
         }
 

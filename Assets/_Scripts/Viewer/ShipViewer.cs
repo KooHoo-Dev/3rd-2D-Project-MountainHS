@@ -5,19 +5,18 @@ using UnityEngine;
 namespace FTL
 {
     /// <summary>
-    /// 함선 내의 Room, RoomViewer 정보를 통해 시각화
+    ///     함선 내의 Room, RoomViewer 정보를 통해 시각화
     /// </summary>
     public class ShipViewer : MonoBehaviour
     {
+        private static FieldInfo neighborRoomIdsField;
         [SerializeField] private ShipController shipController;
         [SerializeField] private RoomViewer[] roomViewers;
         [SerializeField] private bool showRoomConnections = true;
-        [SerializeField] private Color roomConnectionColor = new Color(0.1f, 0.8f, 1f, 0.8f);
+        [SerializeField] private Color roomConnectionColor = new(0.1f, 0.8f, 1f, 0.8f);
         [SerializeField] private float roomConnectionWidth = 0.08f;
         [SerializeField] private float roomConnectionZOffset = -0.1f;
-
-        private static FieldInfo neighborRoomIdsField;
-        private readonly List<LineRenderer> roomConnectionLines = new List<LineRenderer>();
+        private readonly List<LineRenderer> roomConnectionLines = new();
         private Material roomConnectionMaterial;
         private GameObject tempLineGroup;
 
@@ -55,7 +54,7 @@ namespace FTL
 
         private void OnDrawGizmos()
         {
-            if (showRoomConnections == false)
+            if (!showRoomConnections)
             {
                 return;
             }
@@ -71,7 +70,7 @@ namespace FTL
         {
             ClearRoomConnectionLines();
 
-            if (showRoomConnections == false)
+            if (!showRoomConnections)
             {
                 Debug.LogWarning("Room connection lines are disabled. No lines will be drawn.");
                 return;
@@ -122,7 +121,7 @@ namespace FTL
 
         private LineRenderer CreateRoomConnectionLineRenderer()
         {
-            GameObject lineObject = new GameObject("Room Connection Line");
+            GameObject lineObject = new("Room Connection Line");
             lineObject.transform.SetParent(tempLineGroup.transform, false);
 
             LineRenderer lineRenderer = lineObject.AddComponent<LineRenderer>();
@@ -260,15 +259,17 @@ namespace FTL
         {
             if (Application.isPlaying)
             {
-                return new Vector3(room.GlobalPosition.x, room.GlobalPosition.y, transform.position.z + roomConnectionZOffset);
+                return new Vector3(room.GlobalPosition.x, room.GlobalPosition.y,
+                    transform.position.z + roomConnectionZOffset);
             }
 
             if (room.GlobalPosition != Vector2.zero)
             {
-                return new Vector3(room.GlobalPosition.x, room.GlobalPosition.y, transform.position.z + roomConnectionZOffset);
+                return new Vector3(room.GlobalPosition.x, room.GlobalPosition.y,
+                    transform.position.z + roomConnectionZOffset);
             }
 
-            Vector3 localPosition = new Vector3(room.LocalPosition.x, room.LocalPosition.y, roomConnectionZOffset);
+            Vector3 localPosition = new(room.LocalPosition.x, room.LocalPosition.y, roomConnectionZOffset);
             return transform.TransformPoint(localPosition);
         }
 
@@ -314,7 +315,8 @@ namespace FTL
 
             if (neighborRoomIdsField == null)
             {
-                neighborRoomIdsField = typeof(Room).GetField("neighborRoomIds", BindingFlags.Instance | BindingFlags.NonPublic);
+                neighborRoomIdsField =
+                    typeof(Room).GetField("neighborRoomIds", BindingFlags.Instance | BindingFlags.NonPublic);
             }
 
             if (neighborRoomIdsField == null)

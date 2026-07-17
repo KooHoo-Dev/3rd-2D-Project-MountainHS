@@ -6,37 +6,15 @@ namespace FTL
     {
         private const float chargeSpeedAssistMultiplier = 1.2f;
 
-        public float ChargeProgress => chargeProgress;
-        public float ChargeDuration => chargeDuration;
-        public bool CanEscape => canEscape;
-
         [SerializeField] private float chargeProgress;
         [SerializeField] private float chargeDuration = 90f;
         [SerializeField] private bool canEscape;
         [SerializeField] private int prevPower;
         [SerializeField] private float chargeSpeed = 1f;
 
-        #region Unity Method
-
-        protected override void Awake()
-        {
-            base.Awake();
-            type = RoomType.Engine;
-        }
-
-        private void Update()
-        {
-            if (CanRunFacilityLogic() == false)
-            {
-                return;
-            }
-
-            UpdateEscapeCharge();
-            UpdateCanEscape();
-            prevPower = Power;
-        }
-
-        #endregion
+        public float ChargeProgress => chargeProgress;
+        public float ChargeDuration => chargeDuration;
+        public bool CanEscape => canEscape;
 
         #region Public Method
 
@@ -52,6 +30,28 @@ namespace FTL
 
             chargeProgress += Time.deltaTime * chargeSpeed;
             chargeProgress = Mathf.Min(chargeProgress, chargeDuration);
+        }
+
+        #endregion
+
+        #region Unity Method
+
+        protected override void Awake()
+        {
+            base.Awake();
+            type = RoomType.Engine;
+        }
+
+        private void Update()
+        {
+            if (!CanRunFacilityLogic())
+            {
+                return;
+            }
+
+            UpdateEscapeCharge();
+            UpdateCanEscape();
+            prevPower = Power;
         }
 
         #endregion
@@ -77,8 +77,8 @@ namespace FTL
                 return 0f;
             }
 
-            return (1 + 0.5f * (Power - 1)) 
-                * (IsAssisted ? chargeSpeedAssistMultiplier : 1f);
+            return (1 + (0.5f * (Power - 1)))
+                   * (IsAssisted ? chargeSpeedAssistMultiplier : 1f);
         }
 
         #endregion

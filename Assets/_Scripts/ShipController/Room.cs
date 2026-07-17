@@ -1,27 +1,29 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace FTL
 {
-    [System.Serializable]
+    [Serializable]
     public class Room
     {
-        public bool HasFacility => FacilitySystem != null;
         [field: SerializeField] private List<int> neighborRoomIds;
         [field: SerializeField] public FacilitySystem FacilitySystem { get; set; }
-        [field: SerializeField] public List<CrewController> Crews { get; set; } = new List<CrewController>();
+        [field: SerializeField] public List<CrewController> Crews { get; set; } = new();
         [field: SerializeField] public RoomType Type { get; private set; }
         [field: SerializeField] public Vector2 LocalPosition { get; set; }
         [field: SerializeField] public Vector2 GlobalPosition { get; set; }
         [field: SerializeField] public int MaxCrewCapacity { get; private set; }
         [field: SerializeField] public int Id { get; private set; }
-        [field: SerializeField] public bool IsHit { get; set; } = false;
+        [field: SerializeField] public bool IsHit { get; set; }
+        public bool HasFacility => FacilitySystem != null;
 
         #region Public Method
 
-        public bool IsUnintialized() => Id == 0 && MaxCrewCapacity == 0;
+        public bool IsUnintialized()
+        {
+            return Id == 0 && MaxCrewCapacity == 0;
+        }
 
         public Room(Room room)
         {
@@ -63,7 +65,7 @@ namespace FTL
 
         public void ReduceCrew(CrewController crew)
         {
-            if (Crews.Contains(crew) == false)
+            if (!Crews.Contains(crew))
             {
                 Debug.LogWarning($"Crew {crew.name} is not in Room {Id}. Cannot remove.");
                 return;
@@ -90,7 +92,7 @@ namespace FTL
         public Vector3 GetCrewPosition(CrewController crew, Vector3 offset)
         {
             int crewIndex = Crews.IndexOf(crew);
-            Vector2 crewOffset = (Vector2)(offset * crewIndex);
+            Vector2 crewOffset = offset * crewIndex;
             return GlobalPosition + crewOffset;
         }
 
@@ -134,11 +136,12 @@ namespace FTL
 
         public void ResetRepairProgress()
         {
-            if (HasFacility == false)
+            if (!HasFacility)
             {
                 Debug.LogWarning($"Room {Id} does not have a facility. Cannot reset repair progress.");
                 return;
             }
+
             FacilitySystem.RepairProgress = 0f;
         }
 

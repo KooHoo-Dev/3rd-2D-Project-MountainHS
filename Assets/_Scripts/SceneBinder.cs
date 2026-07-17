@@ -4,14 +4,15 @@ namespace FTL
 {
     public class SceneBinder : MonoBehaviour
     {
-        [Header("Enemy Spawn")]
-        [SerializeField] private Transform enemySpawnPoint;
+        [Header("Enemy Spawn")] [SerializeField]
+        private Transform enemySpawnPoint;
+
         [SerializeField] private Transform enemySpawnParent;
         [SerializeField] private Transform enemyCrewSummaryGroupTransform;
         [SerializeField] private Transform enemyWeaponChargeGroupTransform;
 
-        [Header("Stage Environment")]
-        [SerializeField] private EnvironmentController stageEnvironmentController;
+        [Header("Stage Environment")] [SerializeField]
+        private EnvironmentController stageEnvironmentController;
 
         #region Public Method
 

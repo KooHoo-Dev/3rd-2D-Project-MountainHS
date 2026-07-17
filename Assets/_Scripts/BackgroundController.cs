@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace FTL
 {
-    public class BackgroundController:MonoBehaviour
+    public class BackgroundController : MonoBehaviour
     {
         [SerializeField] private List<Sprite> sprites;
         [SerializeField] private Image background;

@@ -6,7 +6,7 @@ namespace FTL
     {
         #region Public Method
 
-        public IEnumerator DeadCoroutine(float seconds, BattleResult result);
+        IEnumerator DeadCoroutine(float seconds, BattleResult result);
 
         #endregion
     }

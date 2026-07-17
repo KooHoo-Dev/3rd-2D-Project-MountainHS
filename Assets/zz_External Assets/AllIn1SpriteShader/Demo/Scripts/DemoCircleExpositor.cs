@@ -6,15 +6,15 @@ namespace AllIn1SpriteShader
     {
         [SerializeField] private float radius = 40f;
         [SerializeField] private float rotateSpeed = 10f;
-
-        private float zOffset = 0f;
-        private Transform[] items;
-        private int count = 0;
-        private int currentTarget = 0;
-        private float offsetRotation, iniY;
+        private int count;
+        private int currentTarget;
         private Quaternion dummyRotation;
+        private Transform[] items;
+        private float offsetRotation, iniY;
 
-        void Start()
+        private float zOffset;
+
+        private void Start()
         {
             dummyRotation = transform.rotation;
             iniY = transform.position.y;
@@ -30,7 +30,7 @@ namespace AllIn1SpriteShader
             for (int i = 0; i < count; i++)
             {
                 float angle = i * Mathf.PI * 2f / count;
-                Vector3 newPos = new Vector3(Mathf.Sin(angle) * radius, iniY, -Mathf.Cos(angle) * radius);
+                Vector3 newPos = new(Mathf.Sin(angle) * radius, iniY, -Mathf.Cos(angle) * radius);
                 items[i].position = newPos;
             }
 
@@ -46,8 +46,15 @@ namespace AllIn1SpriteShader
         public void ChangeTarget(int offset)
         {
             currentTarget += offset;
-            if (currentTarget > items.Length - 1) currentTarget = 0;
-            else if (currentTarget < 0) currentTarget = items.Length - 1;
+            if (currentTarget > items.Length - 1)
+            {
+                currentTarget = 0;
+            }
+            else if (currentTarget < 0)
+            {
+                currentTarget = items.Length - 1;
+            }
+
             dummyRotation *= Quaternion.Euler(Vector3.up * (offset * offsetRotation));
         }
     }

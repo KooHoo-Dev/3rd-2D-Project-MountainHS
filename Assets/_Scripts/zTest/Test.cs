@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Assets._Scripts.Test
 {
     public class Test
@@ -10,9 +6,9 @@ namespace Assets._Scripts.Test
 
         public void Main()
         {
-            TestA testA = new TestA();
+            TestA testA = new();
             TestA test;
-            TestB testB = new TestB();
+            TestB testB = new();
             test = testA;
             test = testB;
         }

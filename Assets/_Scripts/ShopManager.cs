@@ -1,15 +1,10 @@
-using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using Utilities;
 
 namespace FTL
 {
-    public class ShopManager: MonoBehaviour
+    public class ShopManager : MonoBehaviour
     {
         private const int reactorUpgradeMax = 10;
         private const int facilityUpgradeMaxValue = 5;
@@ -19,11 +14,13 @@ namespace FTL
         private const string restoreUIRootName = "Restore UI Root";
         private const string crewGroupRootName = "Crew Group Root";
 
-        public static int VisitCount = 0;
+        public static int VisitCount;
 
         // switch 두개 등록
         [SerializeField] private Button shipUpgradeSwitchButton;
+
         [SerializeField] private Button restoreSwitchButton;
+
         // 업그레이드 ui, 회복 ui
         [SerializeField] private Transform uiRoot;
         [SerializeField] private GameObject upgradeUIRoot;
@@ -33,10 +30,12 @@ namespace FTL
 
         // 함선 업그레이드
         // 시설 최대 전력 한계 증가
-        private List<int> facilityUpgradeCount = new List<int>();
-        private List<int> facilityUpgradeMax = new List<int>();
+        private readonly List<int> facilityUpgradeCount = new();
+
+        private readonly List<int> facilityUpgradeMax = new();
+
         // 반응로 최대 전력 증가
-        private int reactorUpgradeCount = 0;
+        private int reactorUpgradeCount;
 
         // 회복 ui
         // 승무원 회복
@@ -82,15 +81,18 @@ namespace FTL
         {
             IncreaseMaxPowerLimit(RoomType.Weapon, amount);
         }
+
         public void IncreaseMaxPowerLimtOnEngineFacility(int amount = 1)
         {
             IncreaseMaxPowerLimit(RoomType.Engine, amount);
         }
+
         public void IncreaseMaxPowerLimitOnShieldFacility(int amount = 1)
         {
             IncreaseMaxPowerLimit(RoomType.Shield, amount);
         }
-        public void IncreaseMaxPowerLimit(RoomType roomType, int amount=1)
+
+        public void IncreaseMaxPowerLimit(RoomType roomType, int amount = 1)
         {
             if (amount <= 0)
             {
@@ -158,7 +160,7 @@ namespace FTL
             }
 
             int currentScrap = GameManager.Instance.GetScrap();
-            int price = 20 * (amount/20);
+            int price = 20 * (amount / 20);
             if (currentScrap < price)
             {
                 Debug.LogWarning("Not enough scrap");
@@ -171,7 +173,9 @@ namespace FTL
             int realIncrease = newHp - currentCrewHp;
 
             if (realIncrease == 0)
+            {
                 return;
+            }
 
             GameManager.Instance.AddCrewHp(crewIndex, realIncrease);
             GameManager.Instance.ReduceScrap(price);
@@ -221,11 +225,11 @@ namespace FTL
 
         public void ApplyGameContext(GameContext gameContext)
         {
-
             for (int i = 0; i < gameContext.FacilityUpgradeCount.Count; i++)
             {
                 facilityUpgradeCount[i] = gameContext.FacilityUpgradeCount[i];
             }
+
             reactorUpgradeCount = gameContext.ReactorUpgradeCount;
         }
 
@@ -234,7 +238,7 @@ namespace FTL
         {
             VisitCount += 1;
         }
-        
+
         [ContextMenu("Print VisitCount")]
         public void PrintVisitCount()
         {

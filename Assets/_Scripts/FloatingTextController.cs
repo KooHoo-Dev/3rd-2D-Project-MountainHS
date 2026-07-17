@@ -5,7 +5,7 @@ using UnityEngine;
 namespace FTL
 {
     [RequireComponent(typeof(TMP_Text))]
-    public class FloatingTextController: MonoBehaviour
+    public class FloatingTextController : MonoBehaviour
     {
         // 그냥 나타나면 뿅하고 나타나서 몇초 뒤면 코루틴으로 사라지게
         [SerializeField] private float lifetime = 3f;
@@ -14,6 +14,16 @@ namespace FTL
         [SerializeField] private float yOffset = 0.5f;
         [SerializeField] private Vector3 direction = Vector3.up;
         [SerializeField] private TMP_Text text;
+
+        #region Private Method
+
+        private IEnumerator DisableCoroutine(float lifetime)
+        {
+            yield return new WaitForSeconds(lifetime);
+            gameObject.SetActive(false);
+        }
+
+        #endregion
 
         #region Unity Method
 
@@ -49,16 +59,6 @@ namespace FTL
         public void SetTextColor(Color color)
         {
             text.color = color;
-        }
-
-        #endregion
-
-        #region Private Method
-
-        private IEnumerator DisableCoroutine(float lifetime)
-        {
-            yield return new WaitForSeconds(lifetime);
-            gameObject.SetActive(false);
         }
 
         #endregion

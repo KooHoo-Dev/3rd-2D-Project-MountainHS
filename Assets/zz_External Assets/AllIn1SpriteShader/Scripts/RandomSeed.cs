@@ -13,7 +13,7 @@ namespace AllIn1SpriteShader
         private void Start()
         {
             Renderer renderer = GetComponent<Renderer>();
-            if(renderer != null)
+            if (renderer != null)
             {
                 propertyBlock = new MaterialPropertyBlock();
                 propertyBlock.SetFloat(randomSeedProperty, Random.Range(0f, 100f));
@@ -28,9 +28,15 @@ namespace AllIn1SpriteShader
                     {
                         image.material.SetFloat(randomSeedProperty, Random.Range(0, 1000f));
                     }
-                    else Debug.LogError("Missing Material on UI Image: " + gameObject.name);
+                    else
+                    {
+                        Debug.LogError("Missing Material on UI Image: " + gameObject.name);
+                    }
                 }
-                else Debug.LogError("Missing Renderer or UI Image on: " + gameObject.name);
+                else
+                {
+                    Debug.LogError("Missing Renderer or UI Image on: " + gameObject.name);
+                }
             }
         }
     }

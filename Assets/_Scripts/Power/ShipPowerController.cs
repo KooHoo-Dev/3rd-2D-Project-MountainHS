@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,11 +5,11 @@ namespace FTL
 {
     public class ShipPowerController : MonoBehaviour
     {
+        [SerializeField] protected ReactorSystem reactorSystem;
+        [SerializeField] protected List<FacilitySystem> facilities = new();
+        protected readonly Dictionary<RoomType, int> assignedPowers = new();
         public int GetReactorMaxPower => reactorSystem.MaxPower;
         public int GetPower => reactorSystem.Power;
-        [SerializeField] protected ReactorSystem reactorSystem;
-        [SerializeField] protected List<FacilitySystem> facilities = new List<FacilitySystem>();
-        protected readonly Dictionary<RoomType, int> assignedPowers = new Dictionary<RoomType, int>();
 
         #region Unity Method
 
@@ -60,7 +59,8 @@ namespace FTL
 
             int currentPower = GetAssignedPower(facilityType);
             int nextPower = currentPower + amount;
-            if (CanSpendReactorPower(amount) == false || facility.CanAddPower(amount) == false || CanSetFacilityPower(facility, nextPower) == false)
+            if (!CanSpendReactorPower(amount) || !facility.CanAddPower(amount) ||
+                !CanSetFacilityPower(facility, nextPower))
             {
                 return false;
             }
@@ -91,7 +91,7 @@ namespace FTL
             }
 
             int recoverAmount = Mathf.Min(amount, currentFacilityPower);
-            if (CanRecoverReactorPower(recoverAmount) == false)
+            if (!CanRecoverReactorPower(recoverAmount))
             {
                 return false;
             }

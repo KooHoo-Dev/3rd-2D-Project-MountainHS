@@ -1,16 +1,14 @@
-using System;
 using UnityEngine;
 
 namespace FTL
 {
     public class ReactorSystem : MonoBehaviour
     {
+        [SerializeField] private int maxPower = 3;
+        [SerializeField] private int power;
         public int MaxPower => maxPower;
         public int Power => power;
         public int TotalDamage => 0;
-
-        [SerializeField] private int maxPower = 3;
-        [SerializeField] private int power;
 
         #region Unity Method
 

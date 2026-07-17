@@ -4,18 +4,21 @@ namespace AllIn1SpriteShader
 {
     public class DemoRandomColorSwap : MonoBehaviour
     {
-        private Material mat;
-        private readonly int colorSwapRed = Shader.PropertyToID("_ColorSwapRed");
-        private readonly int colorSwapGreen = Shader.PropertyToID("_ColorSwapGreen");
         private readonly int colorSwapBlue = Shader.PropertyToID("_ColorSwapBlue");
+        private readonly int colorSwapGreen = Shader.PropertyToID("_ColorSwapGreen");
+        private readonly int colorSwapRed = Shader.PropertyToID("_ColorSwapRed");
+        private Material mat;
 
-        void Start()
+        private void Start()
         {
             SpriteRenderer sr = GetComponent<SpriteRenderer>();
             if (sr != null)
             {
                 mat = GetComponent<Renderer>().material;
-                if (mat != null) InvokeRepeating(nameof(NewColor), 0.0f, 0.6f);
+                if (mat != null)
+                {
+                    InvokeRepeating(nameof(NewColor), 0.0f, 0.6f);
+                }
                 else
                 {
                     Debug.LogError("No material found");

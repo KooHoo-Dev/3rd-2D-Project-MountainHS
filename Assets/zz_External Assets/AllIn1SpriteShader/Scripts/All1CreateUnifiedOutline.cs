@@ -10,19 +10,18 @@ namespace AllIn1SpriteShader
     [ExecuteInEditMode]
     public class All1CreateUnifiedOutline : MonoBehaviour
     {
-        [SerializeField] private Material outlineMaterial = null;
-        [SerializeField] private Transform outlineParentTransform = null;
+        [SerializeField] private Material outlineMaterial;
+        [SerializeField] private Transform outlineParentTransform;
 
-        [Space]
-        [Header("Only needed if Sprite (ignored if UI)")]
-        [SerializeField] private int duplicateOrderInLayer = -100;
+        [Space] [Header("Only needed if Sprite (ignored if UI)")] [SerializeField]
+        private int duplicateOrderInLayer = -100;
+
         [SerializeField] private string duplicateSortingLayer = "Default";
 
-        [Space]
-        [Header("This operation will delete the component")]
-        [SerializeField] private bool createUnifiedOutline;
+        [Space] [Header("This operation will delete the component")] [SerializeField]
+        private bool createUnifiedOutline;
 
-        void Update()
+        private void Update()
         {
             if (createUnifiedOutline)
             {
@@ -33,9 +32,13 @@ namespace AllIn1SpriteShader
                     return;
                 }
 
-                List<Transform> children = new List<Transform>();
+                List<Transform> children = new();
                 GetAllChildren(transform, ref children);
-                foreach (Transform t in children) CreateOutlineSpriteDuplicate(t.gameObject);
+                foreach (Transform t in children)
+                {
+                    CreateOutlineSpriteDuplicate(t.gameObject);
+                }
+
                 CreateOutlineSpriteDuplicate(gameObject);
 
                 DestroyImmediate(this);
@@ -47,17 +50,32 @@ namespace AllIn1SpriteShader
             bool objectIsUi = false;
             SpriteRenderer ownSr = target.GetComponent<SpriteRenderer>();
             Image ownImage = target.GetComponent<Image>();
-            if (ownSr != null) objectIsUi = false;
-            else if (ownImage != null) objectIsUi = true;
-            else if (ownSr == null && ownImage == null && !transform.Equals(outlineParentTransform)) return;
+            if (ownSr != null)
+            {
+                objectIsUi = false;
+            }
+            else if (ownImage != null)
+            {
+                objectIsUi = true;
+            }
+            else if (ownSr == null && ownImage == null && !transform.Equals(outlineParentTransform))
+            {
+                return;
+            }
 
-            GameObject objDuplicate = new GameObject();
+            GameObject objDuplicate = new();
             objDuplicate.name = target.name + "Outline";
             objDuplicate.transform.position = target.transform.position;
             objDuplicate.transform.rotation = target.transform.rotation;
             objDuplicate.transform.localScale = target.transform.lossyScale;
-            if (outlineParentTransform == null) objDuplicate.transform.parent = target.transform;
-            else objDuplicate.transform.parent = outlineParentTransform;
+            if (outlineParentTransform == null)
+            {
+                objDuplicate.transform.parent = target.transform;
+            }
+            else
+            {
+                objDuplicate.transform.parent = outlineParentTransform;
+            }
 
             if (!objectIsUi)
             {
@@ -80,7 +98,8 @@ namespace AllIn1SpriteShader
         private void MissingMaterial()
         {
 #if UNITY_EDITOR
-            EditorUtility.DisplayDialog("Missing Material", "Please assign a Material For New Duplicate and try again", "Ok");
+            EditorUtility.DisplayDialog("Missing Material", "Please assign a Material For New Duplicate and try again",
+                "Ok");
 #endif
         }
 

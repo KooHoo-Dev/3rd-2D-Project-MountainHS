@@ -4,9 +4,9 @@ namespace FTL
     {
         #region Public Method
 
-        public void TakeDamage(int damage);
+        void TakeDamage(int damage);
 
-        public void RestoreHp(int damage);
+        void RestoreHp(int damage);
 
         #endregion
     }

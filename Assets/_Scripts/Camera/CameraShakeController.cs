@@ -1,6 +1,4 @@
-
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace FTL
@@ -10,7 +8,7 @@ namespace FTL
         [SerializeField] private float xRange;
         [SerializeField] private float yRange;
         [SerializeField] private float shakeStrengthOffset = 1f;
-        [SerializeField] private bool isShaked = false;
+        [SerializeField] private bool isShaked;
 
         #region Unity Method
 

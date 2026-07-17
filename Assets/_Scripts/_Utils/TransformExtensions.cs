@@ -5,8 +5,8 @@ namespace Utilities
     public static class TransformExtensions
     {
         /// <summary>
-        /// 대상 Transform이 위치(point)와 거리(범위:range) 영역안에 존재하는지 여부를 반환합니다
-        /// 범위 안쪽이면 true, 밖이라면 false를 반환합니다
+        ///     대상 Transform이 위치(point)와 거리(범위:range) 영역안에 존재하는지 여부를 반환합니다
+        ///     범위 안쪽이면 true, 밖이라면 false를 반환합니다
         /// </summary>
         /// <param name="from"></param>
         /// <param name="point"></param>
@@ -14,12 +14,12 @@ namespace Utilities
         /// <returns></returns>
         public static bool IsInRange(this Transform from, Vector3 point, float range)
         {
-            return (Vector3.Distance(from.position, point) <= range);
+            return Vector3.Distance(from.position, point) <= range;
         }
 
         /// <summary>
-        /// 대상 Transform의 world position이 point와 동일한지(오차 1000분의 1이내)
-        /// 비교하여 반환합니다
+        ///     대상 Transform의 world position이 point와 동일한지(오차 1000분의 1이내)
+        ///     비교하여 반환합니다
         /// </summary>
         /// <param name="from"></param>
         /// <param name="point"></param>
@@ -27,11 +27,11 @@ namespace Utilities
         /// <returns></returns>
         public static bool IsSamePosition(this Transform from, Vector3 point)
         {
-            return (Vector3.Distance(from.position, point) <= 0.001);
+            return Vector3.Distance(from.position, point) <= 0.001;
         }
 
         /// <summary>
-        /// 대상 Transform까지의 월드 방향 벡터 (normalized)
+        ///     대상 Transform까지의 월드 방향 벡터 (normalized)
         /// </summary>
         public static Vector3 DirectionTo(this Transform from, Transform to)
         {
@@ -39,7 +39,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 대상 Position까지의 월드 방향 벡터 (normalized)
+        ///     대상 Position까지의 월드 방향 벡터 (normalized)
         /// </summary>
         public static Vector3 DirectionTo(this Transform from, Vector3 to)
         {
@@ -47,7 +47,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 대상 Transform까지의 XZ 평면 방향 벡터 (Y = 0)
+        ///     대상 Transform까지의 XZ 평면 방향 벡터 (Y = 0)
         /// </summary>
         public static Vector3 FlatDirectionTo(this Transform from, Transform to)
         {
@@ -57,7 +57,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 대상 Position까지의 XZ 평면 방향 벡터 (Y = 0)
+        ///     대상 Position까지의 XZ 평면 방향 벡터 (Y = 0)
         /// </summary>
         public static Vector3 FlatDirectionTo(this Transform from, Vector3 to)
         {
@@ -67,7 +67,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 대상까지의 거리
+        ///     대상까지의 거리
         /// </summary>
         public static float DistanceTo(this Transform from, Transform to)
         {
@@ -75,7 +75,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 대상까지의 거리 (X,Z만 계산)
+        ///     대상까지의 거리 (X,Z만 계산)
         /// </summary>
         public static float FlatDistanceTo(this Transform from, Transform to)
         {
@@ -89,7 +89,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 대상까지의 거리 제곱 (루트 연산 X, 최적화용)
+        ///     대상까지의 거리 제곱 (루트 연산 X, 최적화용)
         /// </summary>
         public static float SqrDistanceTo(this Transform from, Transform to)
         {
@@ -97,7 +97,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 대상이 내 시야 각 안에 있는지 확인
+        ///     대상이 내 시야 각 안에 있는지 확인
         /// </summary>
         public static bool IsInViewAngle(this Transform from, Transform target, float viewAngle)
         {
@@ -108,7 +108,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 대상 쪽을 향하는 회전 값 (Y축 포함)
+        ///     대상 쪽을 향하는 회전 값 (Y축 포함)
         /// </summary>
         public static Quaternion RotationTo(this Transform from, Transform to)
         {
@@ -117,18 +117,22 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 대상 쪽을 향하는 회전 값 (Y축 고정)
+        ///     대상 쪽을 향하는 회전 값 (Y축 고정)
         /// </summary>
         public static Quaternion FlatRotationTo(this Transform from, Transform to)
         {
             Vector3 dir = to.position - from.position;
             dir.y = 0f;
-            if (dir == Vector3.zero) return from.rotation;
+            if (dir == Vector3.zero)
+            {
+                return from.rotation;
+            }
+
             return Quaternion.LookRotation(dir.normalized);
         }
 
         /// <summary>
-        /// 부드럽게 회전하여 대상 바라보기 (Y축 포함)
+        ///     부드럽게 회전하여 대상 바라보기 (Y축 포함)
         /// </summary>
         public static void SmoothLookAt(this Transform from, Transform target, float rotateSpeed)
         {
@@ -137,7 +141,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 부드럽게 회전하여 대상 바라보기 (Y축 고정)
+        ///     부드럽게 회전하여 대상 바라보기 (Y축 고정)
         /// </summary>
         public static void SmoothLookAtFlat(this Transform from, Transform target, float rotateSpeed)
         {
@@ -145,6 +149,4 @@ namespace Utilities
             from.rotation = Quaternion.Slerp(from.rotation, targetRot, rotateSpeed * Time.deltaTime);
         }
     }
-
 }
-

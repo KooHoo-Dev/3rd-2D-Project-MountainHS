@@ -24,14 +24,17 @@ namespace Utilities
         {
             return Keyboard.current[key].wasPressedThisFrame;
         }
+
         public static bool GetKeyUp(Key key)
         {
             return Keyboard.current[key].wasReleasedThisFrame;
         }
+
         public static bool GetKey(Key key)
         {
             return Keyboard.current[key].isPressed;
         }
+
         public static bool AnyKeyDown()
         {
             return Keyboard.current.anyKey.wasPressedThisFrame;
@@ -42,9 +45,9 @@ namespace Utilities
         #region 마우스 입력
 
         /// <summary>
-        /// 마우스 버튼 종류를 정의하는 열거형
+        ///     마우스 버튼 종류를 정의하는 열거형
         /// </summary>
-        public enum MouseButton { Left = 0, Right = 1, Middle = 2}
+        public enum MouseButton { Left = 0, Right = 1, Middle = 2 }
 
         // 내부에서만 사용하는 함수 입니다.
         private static ButtonControl GetMouseControl(MouseButton button)
@@ -83,7 +86,7 @@ namespace Utilities
         }
 
         /// <summary>
-        /// 마우스가 한프레임에 이동한 위치 변화량을 반환합니다.
+        ///     마우스가 한프레임에 이동한 위치 변화량을 반환합니다.
         /// </summary>
         /// <returns></returns>
         public static Vector2 GetMouseDelta()
@@ -113,28 +116,32 @@ namespace Utilities
         #region 축 입력 (WASD / 방향기)
 
         /// <summary>
-        /// 수평 축 원시 입력값을 반환합니다 (-1, 0, 1)
-        /// A/D 키 또는 좌/우 화살표 키 대응. 
-        /// (레거시에서 Input.GetAxisRaw("Horizontal")과 동일합니다)
+        ///     수평 축 원시 입력값을 반환합니다 (-1, 0, 1)
+        ///     A/D 키 또는 좌/우 화살표 키 대응.
+        ///     (레거시에서 Input.GetAxisRaw("Horizontal")과 동일합니다)
         /// </summary>
         /// <returns></returns>
         public static float GetAxisHorizontalRaw()
         {
             float axis = 0.0f;
 
-            if (Keyboard.current.dKey.isPressed || Keyboard.current.rightArrowKey.isPressed) 
+            if (Keyboard.current.dKey.isPressed || Keyboard.current.rightArrowKey.isPressed)
+            {
                 axis += 1.0f;
+            }
 
-            if (Keyboard.current.aKey.isPressed || Keyboard.current.leftArrowKey.isPressed) 
+            if (Keyboard.current.aKey.isPressed || Keyboard.current.leftArrowKey.isPressed)
+            {
                 axis -= 1.0f;
+            }
 
             return axis;
         }
 
         /// <summary>
-        /// 수직 축 원시 입력값을 반환합니다 (-1, 0, 1)
-        /// W/S 키 또는 위/아래 화살표 키 대응. 
-        /// (레거시에서 Input.GetAxisRaw("Vertical")과 동일합니다)
+        ///     수직 축 원시 입력값을 반환합니다 (-1, 0, 1)
+        ///     W/S 키 또는 위/아래 화살표 키 대응.
+        ///     (레거시에서 Input.GetAxisRaw("Vertical")과 동일합니다)
         /// </summary>
         /// <returns></returns>
         public static float GetAxisVerticalRaw()
@@ -142,31 +149,38 @@ namespace Utilities
             float axis = 0.0f;
 
             if (Keyboard.current.wKey.isPressed || Keyboard.current.upArrowKey.isPressed)
+            {
                 axis += 1.0f;
+            }
 
             if (Keyboard.current.sKey.isPressed || Keyboard.current.downArrowKey.isPressed)
+            {
                 axis -= 1.0f;
+            }
 
             return axis;
         }
 
         /// <summary>
-        /// 수평 / 수직 Raw 입력을 합쳐 정규화된 Vector2로 반환합니다.
-        /// 대각선 입력시 속도가 조금 빨라지는(루트2 나오는거) 현상을
-        /// 보정하여 반환합니다.
+        ///     수평 / 수직 Raw 입력을 합쳐 정규화된 Vector2로 반환합니다.
+        ///     대각선 입력시 속도가 조금 빨라지는(루트2 나오는거) 현상을
+        ///     보정하여 반환합니다.
         /// </summary>
         /// <returns></returns>
         public static Vector2 GetMoveAxisRaw()
         {
-            Vector2 axis = new Vector2();
+            Vector2 axis = new();
             axis.x = GetAxisHorizontalRaw();
             axis.y = GetAxisVerticalRaw();
 
-            if (axis.sqrMagnitude > 1f) return axis.normalized;
+            if (axis.sqrMagnitude > 1f)
+            {
+                return axis.normalized;
+            }
+
             return axis;
         }
 
         #endregion
     }
-
 }

@@ -6,24 +6,25 @@ namespace FTL
 {
     public class EnvironmentController : MonoBehaviour
     {
-        [Header("Timing")]
-        [SerializeField] private float effectInterval = 10f;
+        [Header("Timing")] [SerializeField] private float effectInterval = 10f;
 
-        [Header("Room Damage")]
-        [SerializeField] private int minRoomHitCount = 1;
+        [Header("Room Damage")] [SerializeField]
+        private int minRoomHitCount = 1;
+
         [SerializeField] private int maxRoomHitCount = 2;
         [SerializeField] private int roomDamage = 1;
         [SerializeField] private int crewDamage = 10;
         [SerializeField] private bool applyToPlayer = true;
         [SerializeField] private bool applyToEnemy = true;
 
-        [Header("Asteroid Object")]
-        [SerializeField] private GameObject asteroidAttackPrefab;
+        [Header("Asteroid Object")] [SerializeField]
+        private GameObject asteroidAttackPrefab;
+
         [SerializeField] private SolarFlareController solarFlareController;
         [SerializeField] private Transform asteroidGroupTransform;
         [SerializeField] private float asteroidLifetime = 1.5f;
-        [SerializeField] private bool isAsteroidStage = false;
-        [SerializeField] private bool isSunStage = false;
+        [SerializeField] private bool isAsteroidStage;
+        [SerializeField] private bool isSunStage;
 
         private Coroutine environmentCoroutine;
         private bool hasLoggedMissingAsteroidPrefab;
@@ -83,7 +84,7 @@ namespace FTL
         {
             while (true)
             {
-                if (GameManager.Instance.CanRunCombat == false)
+                if (!GameManager.Instance.CanRunCombat)
                 {
                     StopEnvironmentEffects();
                     break;
@@ -92,7 +93,7 @@ namespace FTL
                 if (isSunStage)
                 {
                     float solarFlareDuration = solarFlareController.FlareDuration;
-                    yield return new WaitForSeconds(effectInterval-solarFlareDuration);
+                    yield return new WaitForSeconds(effectInterval - solarFlareDuration);
                     solarFlareController.ApplyFlareEffect();
                     yield return new WaitForSeconds(solarFlareDuration);
                     ApplyEnvironmentEffect();
@@ -164,7 +165,7 @@ namespace FTL
             for (int i = 0; i < 20; i++)
             {
                 int randomIndex = Random.Range(0, roomCount);
-                if (selectedIndexes.Contains(randomIndex) == false)
+                if (!selectedIndexes.Contains(randomIndex))
                 {
                     return randomIndex;
                 }
@@ -172,7 +173,7 @@ namespace FTL
 
             for (int i = 0; i < roomCount; i++)
             {
-                if (selectedIndexes.Contains(i) == false)
+                if (!selectedIndexes.Contains(i))
                 {
                     return i;
                 }
@@ -185,7 +186,7 @@ namespace FTL
         {
             if (asteroidAttackPrefab == null)
             {
-                if (hasLoggedMissingAsteroidPrefab == false)
+                if (!hasLoggedMissingAsteroidPrefab)
                 {
                     Debug.LogError("StageEnvironmentController: asteroidAttackPrefab is not assigned.");
                     hasLoggedMissingAsteroidPrefab = true;
@@ -194,7 +195,8 @@ namespace FTL
                 return;
             }
 
-            GameObject asteroidObject = Instantiate(asteroidAttackPrefab, room.GlobalPosition, Quaternion.identity, asteroidGroupTransform);
+            GameObject asteroidObject = Instantiate(asteroidAttackPrefab, room.GlobalPosition, Quaternion.identity,
+                asteroidGroupTransform);
             ProjectileController projectile = asteroidObject.GetComponent<ProjectileController>();
             ProjectileTargetData targetData;
             float seed = Random.Range(0f, 4f);

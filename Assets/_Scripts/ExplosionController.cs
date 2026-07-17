@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace FTL
 {
-    public class ExplosionController: MonoBehaviour
+    public class ExplosionController : MonoBehaviour
     {
-        private float elapsed = 0f;
         [SerializeField] private float explosionDuration = 0.12f;
+        private float elapsed;
 
         #region Unity Method
 

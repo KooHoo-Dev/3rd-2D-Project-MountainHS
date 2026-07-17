@@ -1,5 +1,3 @@
-using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Utilities;
@@ -12,6 +10,17 @@ namespace FTL
         [SerializeField] private Sprite cursorSprite;
         [SerializeField] private List<Sprite> targetSprites;
         private SpriteRenderer spriteRenderer;
+
+        #region Private Method
+
+        private void SetMousePos()
+        {
+            Vector2 mousePos = SimpleInput.GetMousePosition();
+            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+            gameObject.transform.position = mousePos;
+        }
+
+        #endregion
 
         #region Unity Method
 
@@ -46,17 +55,6 @@ namespace FTL
         public void ResetMouseSprite()
         {
             spriteRenderer.sprite = cursorSprite;
-        }
-
-        #endregion
-
-        #region Private Method
-
-        private void SetMousePos()
-        {
-            Vector2 mousePos = SimpleInput.GetMousePosition();
-            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-            gameObject.transform.position = mousePos;
         }
 
         #endregion

@@ -4,7 +4,7 @@ namespace FTL
     {
         #region Public Method
 
-        public Room GetTarget();
+        Room GetTarget();
 
         #endregion
     }

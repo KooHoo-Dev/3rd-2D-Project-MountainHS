@@ -1,4 +1,4 @@
-    using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,44 +11,47 @@ namespace FTL
     {
         private const float deadAnimationTime = 5f;
 
-        public bool IsDead => Hp == 0;
-        public bool IsCombatStopped => isCombatStopped;
-        public ShipOwnership Ownership { get; private set; }
         [Header("Start Weapon Types")]
-        [field: SerializeField] public List<WeaponType> WeaponTypes { get; private set; } = new List<WeaponType>();
+        [field: SerializeField]
+        public List<WeaponType> WeaponTypes { get; private set; } = new();
+
         [SerializeField] protected GameObject weaponChargeStatusPrefab;
         [SerializeField] protected List<WeaponTransformData> weaponTransformList;
 
         [Header("Ship Data")]
-        [field: SerializeField] public ShipData ShipData { get; private set; }
+        [field: SerializeField]
+        public ShipData ShipData { get; private set; }
 
         [field: SerializeField] public int Hp { get; set; }
 
-        [Header("Power System")]
-        public ShipPowerController PowerSystem;
+        [Header("Power System")] public ShipPowerController PowerSystem;
 
-        [Header("Room")]
-        [SerializeField] private GameObject roomPrefab;
+        [Header("Room")] [SerializeField] private GameObject roomPrefab;
+
         [SerializeField] private Transform roomGroupTransform;
-        [field: SerializeField] public List<Room> Rooms { get; private set; } = new List<Room>();
+        [field: SerializeField] public List<Room> Rooms { get; private set; } = new();
 
-        [Header("Crew")]
-        [SerializeField] private Transform crewGroupTransform;
+        [Header("Crew")] [SerializeField] private Transform crewGroupTransform;
+
         [SerializeField] private Transform crewSummaryGroupTransform;
         [SerializeField] protected Transform weaponGroupTransform;
         [SerializeField] protected Transform weaponChargeGroupTransform;
         [SerializeField] private GameObject crewPrefab;
         [SerializeField] private GameObject crewSummaryPrefab;
         [SerializeField] protected int crewCount = 3;
-        [SerializeField] protected bool isPlayer = false;
-
-        public List<CrewController> Crews { get; set; } = new List<CrewController>();
-        public List<FacilitySystem> FacilitySystems = new List<FacilitySystem>();
+        [SerializeField] protected bool isPlayer;
+        public List<FacilitySystem> FacilitySystems = new();
         protected CrewSystem crewSystem;
-        protected WeaponSystem weaponSystem;
         protected bool isDeadCoroutineActivated;
         protected bool isShipInitialized;
-        private bool isCombatStopped;
+        protected WeaponSystem weaponSystem;
+
+        public bool IsDead => Hp == 0;
+        public bool IsCombatStopped { get; private set; }
+
+        public ShipOwnership Ownership { get; private set; }
+
+        public List<CrewController> Crews { get; set; } = new();
 
         #region Unity Method
 
@@ -104,7 +107,7 @@ namespace FTL
             weaponGroupTransform = FindDirectChildWithTag(transform, "Weapon Group").transform;
             isDeadCoroutineActivated = false;
             isShipInitialized = false;
-            isCombatStopped = false;
+            IsCombatStopped = false;
         }
 
         private void TryInitializeShip(bool shouldLogError)
@@ -114,7 +117,7 @@ namespace FTL
                 return;
             }
 
-            if (CanInitializeShip(shouldLogError) == false)
+            if (!CanInitializeShip(shouldLogError))
             {
                 return;
             }
@@ -142,7 +145,7 @@ namespace FTL
                 weaponSystem != null &&
                 PowerSystem != null;
 
-            if (canInitialize == false && shouldLogError)
+            if (!canInitialize && shouldLogError)
             {
                 Debug.LogError($"{name}: Ship initialization failed. Required prefab or group reference is missing.");
             }
@@ -151,88 +154,90 @@ namespace FTL
         }
 
         private void InitRooms()
+        {
+            for (int i = 0; i < ShipData.Rooms.Count; i++)
             {
-                for (int i = 0; i < ShipData.Rooms.Count; i++)
+                GameObject roomObject = Instantiate(roomPrefab, roomGroupTransform);
+                RoomViewer roomViewer = roomObject.GetComponent<RoomViewer>();
+                Room room = new(ShipData.Rooms[i]);
+                // RoomData 초기화 함수 생성
+                roomObject.transform.localPosition = room.LocalPosition;
+                room.GlobalPosition = roomObject.transform.position;
+                roomViewer.Room = room;
+                roomViewer.SetRoomState();
+
+                if (room.Type != RoomType.Empty)
                 {
-                    GameObject roomObject = Instantiate(roomPrefab, roomGroupTransform);
-                    RoomViewer roomViewer = roomObject.GetComponent<RoomViewer>();
-                    Room room = new Room(ShipData.Rooms[i]);
-                    // RoomData 초기화 함수 생성
-                    roomObject.transform.localPosition = room.LocalPosition;
-                    room.GlobalPosition = roomObject.transform.position;
-                    roomViewer.Room = room;
-                    roomViewer.SetRoomState();
-
-                    if (room.Type != RoomType.Empty)
-                    {
-                        room.FacilitySystem = GetFacilitySystemByERoomType(room.Type);
-                    }
-
-                    Rooms.Add(room);
+                    room.FacilitySystem = GetFacilitySystemByERoomType(room.Type);
                 }
+
+                Rooms.Add(room);
             }
+        }
 
         private void InitCrews()
+        {
+            for (int i = 0; i < crewCount; i++)
             {
-                for (int i = 0; i < crewCount; i++)
-                {
-                    GameObject crewObject = Instantiate(crewPrefab, crewGroupTransform);
-                    CrewController crew = crewObject.GetComponent<CrewController>();
-                    Room room = Rooms[i];
-                    GameObject crewSummaryObject = Instantiate(crewSummaryPrefab, crewSummaryGroupTransform);
-                    CrewViewer crewViewer = crewSummaryObject.GetComponent<CrewViewer>();
-                    SpriteRenderer crewSprite = crewObject.transform.Find("Crew Sprite").GetComponent<SpriteRenderer>();
-                    SpriteRenderer crewTargetSprite = crewObject.transform.Find("Target Room").GetComponent<SpriteRenderer>();
+                GameObject crewObject = Instantiate(crewPrefab, crewGroupTransform);
+                CrewController crew = crewObject.GetComponent<CrewController>();
+                Room room = Rooms[i];
+                GameObject crewSummaryObject = Instantiate(crewSummaryPrefab, crewSummaryGroupTransform);
+                CrewViewer crewViewer = crewSummaryObject.GetComponent<CrewViewer>();
+                SpriteRenderer crewSprite = crewObject.transform.Find("Crew Sprite").GetComponent<SpriteRenderer>();
+                SpriteRenderer crewTargetSprite =
+                    crewObject.transform.Find("Target Room").GetComponent<SpriteRenderer>();
 
-                    crewViewer.SetCrewSprite(crewSprite);
-                    crewViewer.SetCrewTargetSpite(crewTargetSprite);
-                    crewViewer.SetCrewController(crew);
-                    crew.InitStartRoom(room);
-                    Crews.Add(crew);
-                }
+                crewViewer.SetCrewSprite(crewSprite);
+                crewViewer.SetCrewTargetSpite(crewTargetSprite);
+                crewViewer.SetCrewController(crew);
+                crew.InitStartRoom(room);
+                Crews.Add(crew);
             }
+        }
 
         private void InitWeapons()
+        {
+            for (int i = 0; i < WeaponTypes.Count; i++)
             {
-                for (int i = 0; i < WeaponTypes.Count; i++)
-                {
-                    WeaponType weaponType = WeaponTypes[i];
-                    WeaponDatabase weaponDatabase = GameManager.Instance.WeaponDatabase;
-                    GameObject weaponPrefab = weaponDatabase.GetPrefab(weaponType);
-                    GameObject weaponObject = Instantiate(weaponPrefab, weaponGroupTransform);
-                    GameObject weaponChargeObject = Instantiate(weaponChargeStatusPrefab, weaponChargeGroupTransform);
-                    WeaponViewer weaponViewer = weaponObject.GetComponent<WeaponViewer>();
-                    WeaponController weapon = weaponObject.GetComponent<WeaponController>();
-                    Image chargeImage = weaponChargeObject.transform.GetChild(1)
-                        .GetChild(1)
-                        .GetComponent<Image>();
-                    Button weaponButton = weaponChargeObject.GetComponentInChildren<Button>();
-                    SpriteRenderer weaponSprite = weaponObject.GetComponentInChildren<SpriteRenderer>();
-                    Vector3 weaponOffset = weaponTransformList[i].WeaponOffset;
-                    Vector3 weaponRotation = weaponTransformList[i].WeaponRotation;
-                    bool isFlipX = weaponTransformList[i].isFlipX;
-                    bool isFlipY = weaponTransformList[i].isFlipY;
-                    int index = i;
+                WeaponType weaponType = WeaponTypes[i];
+                WeaponDatabase weaponDatabase = GameManager.Instance.WeaponDatabase;
+                GameObject weaponPrefab = weaponDatabase.GetPrefab(weaponType);
+                GameObject weaponObject = Instantiate(weaponPrefab, weaponGroupTransform);
+                GameObject weaponChargeObject = Instantiate(weaponChargeStatusPrefab, weaponChargeGroupTransform);
+                WeaponViewer weaponViewer = weaponObject.GetComponent<WeaponViewer>();
+                WeaponController weapon = weaponObject.GetComponent<WeaponController>();
+                Image chargeImage = weaponChargeObject.transform.GetChild(1)
+                    .GetChild(1)
+                    .GetComponent<Image>();
+                Button weaponButton = weaponChargeObject.GetComponentInChildren<Button>();
+                SpriteRenderer weaponSprite = weaponObject.GetComponentInChildren<SpriteRenderer>();
+                Vector3 weaponOffset = weaponTransformList[i].WeaponOffset;
+                Vector3 weaponRotation = weaponTransformList[i].WeaponRotation;
+                bool isFlipX = weaponTransformList[i].isFlipX;
+                bool isFlipY = weaponTransformList[i].isFlipY;
+                int index = i;
 
-                    weaponObject.transform.localPosition += weaponOffset;
-                    weaponObject.transform.Rotate(weaponRotation);
-                    weaponSprite.flipX = isFlipX;
-                    weaponSprite.flipY = isFlipY;
-                    weaponViewer.SetChargeBar(chargeImage);
-                    weaponSystem.AddWeapon(weapon);
-                    if (isPlayer)
-                    {
-                        weaponButton.onClick.RemoveAllListeners();
-                        weaponButton.onClick.AddListener(() => weaponSystem.SetSelectedWeapon(index));
-                    }
+                weaponObject.transform.localPosition += weaponOffset;
+                weaponObject.transform.Rotate(weaponRotation);
+                weaponSprite.flipX = isFlipX;
+                weaponSprite.flipY = isFlipY;
+                weaponViewer.SetChargeBar(chargeImage);
+                weaponSystem.AddWeapon(weapon);
+                if (isPlayer)
+                {
+                    weaponButton.onClick.RemoveAllListeners();
+                    weaponButton.onClick.AddListener(() => weaponSystem.SetSelectedWeapon(index));
                 }
-                weaponSystem.SetWeaponSystemOfWeapons();
             }
+
+            weaponSystem.SetWeaponSystemOfWeapons();
+        }
 
 
         protected void HandlePowerInput(RoomType facilityType, bool isRecoverInput)
         {
-            if (CanControlShip() == false)
+            if (!CanControlShip())
             {
                 return;
             }
@@ -293,7 +298,6 @@ namespace FTL
                 default:
                     throw new ArgumentException("Invalid room type");
             }
-
         }
 
         public void SetWeaponTypes(List<WeaponType> weaponTypes)
@@ -335,6 +339,7 @@ namespace FTL
             {
                 room.TakeDamageToFacility(damage);
             }
+
             TakeDamage(damage);
 
             CheckGameOver();
@@ -342,7 +347,7 @@ namespace FTL
 
         public void StopCombatFunctions()
         {
-            isCombatStopped = true;
+            IsCombatStopped = true;
             if (weaponSystem != null)
             {
                 weaponSystem.ResetSelectedWeapon();
@@ -362,7 +367,7 @@ namespace FTL
 
         public void RequestAllocatePower(RoomType facilityType)
         {
-            if (CanControlShip() == false)
+            if (!CanControlShip())
             {
                 return;
             }
@@ -372,7 +377,7 @@ namespace FTL
 
         public void RequestDeallocatePower(RoomType facilityType)
         {
-            if (CanControlShip() == false)
+            if (!CanControlShip())
             {
                 return;
             }
@@ -398,11 +403,12 @@ namespace FTL
         #endregion
 
         #region Private Method
+
         protected bool CanControlShip()
         {
-            return IsDead == false &&
-                IsCombatStopped == false &&
-                GameManager.Instance.CanRunCombat;
+            return !IsDead &&
+                   !IsCombatStopped &&
+                   GameManager.Instance.CanRunCombat;
         }
 
         protected GameObject FindDirectChildWithTag(Transform parent, string tag)
@@ -410,7 +416,9 @@ namespace FTL
             foreach (Transform child in parent)
             {
                 if (child.CompareTag(tag))
+                {
                     return child.gameObject;
+                }
             }
 
             return null;
@@ -427,7 +435,7 @@ namespace FTL
         {
             BattleResult battleResult = BattleResult.None;
             bool isGameOver = IsDead || crewSystem.IsAllCrewDead;
-            if (isGameOver == false || isDeadCoroutineActivated == true)
+            if (!isGameOver || isDeadCoroutineActivated)
             {
                 return;
             }
@@ -436,13 +444,14 @@ namespace FTL
 
             if (crewSystem.IsAllCrewDead)
             {
-                battleResult = (Ownership.ShipSide == ShipSide.Player)
+                battleResult = Ownership.ShipSide == ShipSide.Player
                     ? BattleResult.PlayerAllCrewDead
                     : BattleResult.EnemyAllCrewDead;
             }
+
             if (IsDead)
             {
-                battleResult = (Ownership.ShipSide == ShipSide.Player)
+                battleResult = Ownership.ShipSide == ShipSide.Player
                     ? BattleResult.PlayerShipDestroyed
                     : BattleResult.EnemyShipDestroyed;
             }

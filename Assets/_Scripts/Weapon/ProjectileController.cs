@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using Utilities;
@@ -7,16 +6,14 @@ namespace FTL
 {
     public class ProjectileController : MonoBehaviour
     {
-        public bool IsArrived => transform.position == TargetPos;
-        public int TargetRoomId => targetRoomId;
         [field: SerializeField] public int Damage { get; private set; }
         [field: SerializeField] public int ShieldDamage { get; private set; }
         [field: SerializeField] public int CrewDamage { get; private set; }
         [SerializeField] private float speed;
         [field: SerializeField] public Collider2D StartCol { get; private set; }
         [field: SerializeField] public Vector3 TargetPos { get; private set; } = Vector3.zero;
-        [field: SerializeField] public float RandomSeed { get; private set; } = 0f;
-        [field: SerializeField] public bool IsAfterStartCol { get; private set; } = false;
+        [field: SerializeField] public float RandomSeed { get; private set; }
+        [field: SerializeField] public bool IsAfterStartCol { get; private set; }
 
         [SerializeField] private Collider2D endCol;
         [SerializeField] private LayerMask shipLayer;
@@ -25,6 +22,31 @@ namespace FTL
         [SerializeField] private bool isMoving = true;
 
         private SpriteRenderer spriteRenderer;
+        public bool IsArrived => transform.position == TargetPos;
+        public int TargetRoomId => targetRoomId;
+
+        #region Private Method
+
+        private IEnumerator SetProjectileDelay()
+        {
+            const float MAX_SPEED = 11f;
+            const float MIN_SPEED = 3f;
+            const float MIN_TIME = 0.5f;
+            const float MAX_TIME = 2f;
+            // 진행도
+
+            // 속도 11 ~ 3
+            float lerpRate = Mathf.InverseLerp(MAX_SPEED, MIN_SPEED, speed);
+            // 목표 시간: 0.5 ~ 2
+            float delayTime = Mathf.Lerp(MIN_TIME, MAX_TIME, lerpRate);
+            spriteRenderer.enabled = false;
+
+            yield return new WaitForSeconds(delayTime);
+            spriteRenderer.enabled = true;
+            isMoving = true;
+        }
+
+        #endregion
 
         #region Unity Method
 
@@ -34,19 +56,19 @@ namespace FTL
             endCol = null;
             targetRoomId = -1;
             IsAfterStartCol = false;
-            if (TryGetComponent<SpriteRenderer>(out spriteRenderer) == false)
+            if (!TryGetComponent(out spriteRenderer))
             {
-                if (transform.GetChild(0).TryGetComponent<SpriteRenderer>(out spriteRenderer) == false)
+                if (!transform.GetChild(0).TryGetComponent(out spriteRenderer))
                 {
-                    Debug.LogError("ProjectileController: SpriteRenderer component is missing. must be in Prefab root or child.");
-                    return;
+                    Debug.LogError(
+                        "ProjectileController: SpriteRenderer component is missing. must be in Prefab root or child.");
                 }
             }
         }
 
         private void Update()
         {
-            if (GameManager.Instance.CanRunCombat == false)
+            if (!GameManager.Instance.CanRunCombat)
             {
                 return;
             }
@@ -65,7 +87,7 @@ namespace FTL
 
             if (isMoving)
             {
-                if (IsAfterStartCol == false)
+                if (!IsAfterStartCol)
                 {
                     Vector3 moveAmount = Vector3.right * speed * Time.deltaTime;
                     transform.Translate(moveAmount);
@@ -80,7 +102,7 @@ namespace FTL
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (GameManager.Instance.CanRunCombat == false)
+            if (!GameManager.Instance.CanRunCombat)
             {
                 return;
             }
@@ -108,12 +130,11 @@ namespace FTL
                     Destroy(gameObject);
                 }
             }
-
         }
 
         private void OnTriggerExit2D(Collider2D collision)
         {
-            if (GameManager.Instance.CanRunCombat == false)
+            if (!GameManager.Instance.CanRunCombat)
             {
                 return;
             }
@@ -128,6 +149,7 @@ namespace FTL
                 isMoving = false;
                 StartCoroutine(SetProjectileDelay());
             }
+
             // 종료 콜라이더 벗어나면 삭제
             bool isLeavingEndCol = endCol == collision;
             if (isLeavingEndCol)
@@ -172,29 +194,6 @@ namespace FTL
         public void SetRandomSeed(float seed)
         {
             RandomSeed = seed;
-        }
-
-        #endregion
-
-        #region Private Method
-
-        private IEnumerator SetProjectileDelay()
-        {
-            const float MAX_SPEED = 11f;
-            const float MIN_SPEED = 3f;
-            const float MIN_TIME = 0.5f;
-            const float MAX_TIME = 2f;
-            // 진행도
-
-            // 속도 11 ~ 3
-            float lerpRate = Mathf.InverseLerp(MAX_SPEED, MIN_SPEED, speed);
-            // 목표 시간: 0.5 ~ 2
-            float delayTime = Mathf.Lerp(MIN_TIME, MAX_TIME, lerpRate);
-            spriteRenderer.enabled = false;
-
-            yield return new WaitForSeconds(delayTime);
-            spriteRenderer.enabled = true;
-            isMoving = true;
         }
 
         #endregion

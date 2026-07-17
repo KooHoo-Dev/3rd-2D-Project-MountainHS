@@ -3,9 +3,9 @@ namespace FTL
     public class CrewState
     {
         public int Hp;
+        public int LastRoomId;
         public int MaxHp;
         public string Name;
-        public int LastRoomId;
 
         #region Public Method
 
@@ -38,8 +38,9 @@ namespace FTL
             MaxHp = crew.MaxHp;
             Hp = crew.Hp;
             Name = crew.Name;
-            LastRoomId = (crew.CurrentRoom != null) 
-                ? crew.CurrentRoom.Id : -1;
+            LastRoomId = crew.CurrentRoom != null
+                ? crew.CurrentRoom.Id
+                : -1;
         }
 
         #endregion

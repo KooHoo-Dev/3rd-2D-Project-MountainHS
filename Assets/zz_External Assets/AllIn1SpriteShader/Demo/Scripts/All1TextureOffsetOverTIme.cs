@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace AllIn1SpriteShader
@@ -10,11 +8,12 @@ namespace AllIn1SpriteShader
         [SerializeField] private string texturePropertyName = "_MainTex";
         [SerializeField] private Vector2 offsetSpeed = Vector2.zero;
 
-        [SerializeField, Header("If missing will search object Sprite Renderer or UI Image")]
+        [SerializeField] [Header("If missing will search object Sprite Renderer or UI Image")]
         private Material mat;
 
-        private int textureShaderId;
         private Vector2 currOffset = Vector2.zero;
+
+        private int textureShaderId;
 
         private void Start()
         {
@@ -22,21 +21,38 @@ namespace AllIn1SpriteShader
             if (mat == null)
             {
                 SpriteRenderer sr = GetComponent<SpriteRenderer>();
-                if (sr != null) mat = sr.material;
+                if (sr != null)
+                {
+                    mat = sr.material;
+                }
                 else
                 {
                     Image i = GetComponent<Image>();
-                    if (i != null) mat = i.material;
+                    if (i != null)
+                    {
+                        mat = i.material;
+                    }
                 }
             }
 
             //Show error message if material or textureName property error
             //Otherwise cache shader property ID
-            if (mat == null) DestroyComponentAndLogError(gameObject.name + " has no valid Material, deleting All1TextureOffsetOverTIme component");
+            if (mat == null)
+            {
+                DestroyComponentAndLogError(gameObject.name +
+                                            " has no valid Material, deleting All1TextureOffsetOverTIme component");
+            }
             else
             {
-                if (mat.HasProperty(texturePropertyName)) textureShaderId = Shader.PropertyToID(texturePropertyName);
-                else DestroyComponentAndLogError(gameObject.name + "'s Material doesn't have a " + texturePropertyName + " property");
+                if (mat.HasProperty(texturePropertyName))
+                {
+                    textureShaderId = Shader.PropertyToID(texturePropertyName);
+                }
+                else
+                {
+                    DestroyComponentAndLogError(gameObject.name + "'s Material doesn't have a " + texturePropertyName +
+                                                " property");
+                }
             }
         }
 

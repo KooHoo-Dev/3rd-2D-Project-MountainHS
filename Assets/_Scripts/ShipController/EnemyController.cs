@@ -1,9 +1,6 @@
-using System.Collections;
-using UnityEngine;
-
 namespace FTL
 {
-    public class EnemyController: ShipController    
+    public class EnemyController : ShipController
     {
         private ITargeting targetingSystem;
 

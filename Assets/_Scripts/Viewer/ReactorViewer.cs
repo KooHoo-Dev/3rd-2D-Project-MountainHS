@@ -5,14 +5,25 @@ using UnityEngine.UI;
 
 namespace FTL
 {
-    public class ReactorViewer:MonoBehaviour
+    public class ReactorViewer : MonoBehaviour
     {
         [SerializeField] protected GameObject barPrefab;
         [SerializeField] protected Transform barGroupTransform;
         [SerializeField] protected List<Image> barSprites;
         [SerializeField] protected ReactorSystem reactorSystem;
-        [SerializeField] private bool isEnemy = false;
+        [SerializeField] private bool isEnemy;
         protected ObjectPool<GameObject> barPool;
+
+        #region Public Method
+
+        public void AddBar()
+        {
+            GameObject powerBar = barPool.Get();
+            barSprites.Add(powerBar.GetComponent<Image>());
+            SetBarState(barSprites.Count - 1, PowerBarStatus.Available);
+        }
+
+        #endregion
 
         #region Unity Method
 
@@ -30,7 +41,7 @@ namespace FTL
 
                 foreach (GameObject enemy in enemies)
                 {
-                    if (enemy.TryGetComponent<ReactorSystem>(out reactorSystem))
+                    if (enemy.TryGetComponent(out reactorSystem))
                     {
                         Debug.Log("ReactorViewer: Enemy ReactorSystem Found!");
                         break;
@@ -38,7 +49,9 @@ namespace FTL
                 }
 
                 if (reactorSystem == null)
+                {
                     Debug.LogError("ReactorViewer: There is no ReactorSystem on Enemy!");
+                }
             }
         }
 
@@ -49,6 +62,7 @@ namespace FTL
 
         // 전력바 상태 관리: 가용, 불가능
         // 전력바 상태에 따라 스프라이트 상태 변경
+
         #endregion
 
         #region Private Method
@@ -61,7 +75,7 @@ namespace FTL
                 return;
             }
 
-            UnityEngine.UI.Image image = barSprites[barIndex];
+            Image image = barSprites[barIndex];
             // 스프라이트 상태 변경
             switch (status)
             {
@@ -90,7 +104,7 @@ namespace FTL
                 totalPower = reactorSystem.MaxPower;
                 availablePower = reactorSystem.Power;
             }
-            else if (TryGetGameContextReactorCapacity(out totalPower) == false)
+            else if (!TryGetGameContextReactorCapacity(out totalPower))
             {
                 return;
             }
@@ -108,6 +122,7 @@ namespace FTL
                     AddBar();
                 }
             }
+
             for (int i = 0; i < barSprites.Count; i++)
             {
                 if (i < availablePower)
@@ -125,7 +140,7 @@ namespace FTL
         {
             reactorCapacity = 0;
 
-            if (GameManager.IsInitialized == false)
+            if (!GameManager.IsInitialized)
             {
                 Debug.LogError($"{gameObject.name}: GameManager is not Initialized to use!");
                 return false;
@@ -140,17 +155,6 @@ namespace FTL
 
             reactorCapacity = gameManager.GetShipReactorCapacity();
             return true;
-        }
-
-        #endregion
-
-        #region Public Method
-
-        public void AddBar()
-        {
-            GameObject powerBar = barPool.Get();
-            barSprites.Add(powerBar.GetComponent<UnityEngine.UI.Image>());
-            SetBarState(barSprites.Count - 1, PowerBarStatus.Available);
         }
 
         #endregion

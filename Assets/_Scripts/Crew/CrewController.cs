@@ -1,22 +1,21 @@
-using System;
 using UnityEngine;
 
 namespace FTL
 {
     public class CrewController : MonoBehaviour
     {
-        public bool IsDead => Hp == 0;
-        [field: SerializeField] public bool IsSelected { get; set; } = false;
-        [field: SerializeField] public Room CurrentRoom { get; set; } = null;
-        [field: SerializeField] public Room TargetRoom { get; private set; } = null;
+        [field: SerializeField] public bool IsSelected { get; set; }
+        [field: SerializeField] public Room CurrentRoom { get; set; }
+        [field: SerializeField] public Room TargetRoom { get; private set; }
         [field: SerializeField] public int MaxHp { get; set; } = 100;
-        [field: SerializeField] public int Hp { get; set; } = 0;
+        [field: SerializeField] public int Hp { get; set; }
         [field: SerializeField] public string Name { get; set; } = "Hans";
-        public CrewSystem CrewSystem { set; get; }
         [SerializeField] private float moveSpeed = 3f;
         [SerializeField] private CrewStatus crewStatus = CrewStatus.Idle;
-        [field: SerializeField] public static Vector3 Offset { get; private set; } = new Vector3(0f, 0.5f, 0f);
         private Transform crewSpriteTransform;
+        public bool IsDead => Hp == 0;
+        public CrewSystem CrewSystem { get; set; }
+        public static Vector3 Offset { get; } = new(0f, 0.5f, 0f);
 
         #region Unity Method
 
@@ -30,7 +29,7 @@ namespace FTL
 
         private void Update()
         {
-            if (CrewSystem == null || CrewSystem.CanRunCrewLogic() == false)
+            if (CrewSystem == null || !CrewSystem.CanRunCrewLogic())
             {
                 return;
             }
@@ -125,7 +124,8 @@ namespace FTL
                         crewStatus = CrewStatus.Idle;
                         break;
                     default:
-                        Debug.LogWarning($"CrewController: UpdateStatus: Unexpected facility status {CurrentRoom.GetFacilityStatus()} in room {CurrentRoom.Id}");
+                        Debug.LogWarning(
+                            $"CrewController: UpdateStatus: Unexpected facility status {CurrentRoom.GetFacilityStatus()} in room {CurrentRoom.Id}");
                         break;
                 }
             }
@@ -146,7 +146,9 @@ namespace FTL
         private void AssistFacility(bool isAssist)
         {
             if (CurrentRoom.HasFacility)
+            {
                 CurrentRoom.ApplyAssistEffectOnFacility(isAssist);
+            }
         }
 
         private void MoveToTargetRoom()
@@ -164,7 +166,8 @@ namespace FTL
                 else
                 {
                     float moveDistance = moveSpeed * Time.deltaTime;
-                    crewSpriteTransform.position = Vector3.MoveTowards(crewSpriteTransform.position, targetPosition, moveDistance);
+                    crewSpriteTransform.position =
+                        Vector3.MoveTowards(crewSpriteTransform.position, targetPosition, moveDistance);
                 }
             }
         }
@@ -188,8 +191,6 @@ namespace FTL
                 case CrewStatus.Assisting:
                     AssistFacility(true);
                     ResetRepairProgressOnEmptyRoom(CurrentRoom);
-                    break;
-                default:
                     break;
             }
         }

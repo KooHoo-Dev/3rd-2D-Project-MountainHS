@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -9,25 +8,25 @@ namespace FTL
     {
         private const float chargeSpeedAssistMultiplier = 1.2f;
 
-        public bool IsReady => isReady;
-        public bool IsPowered { set; get; } = false;
-        public float ChargeProgress => chargeProgress;
-        public float ChargeDuration => chargeDuration;
-
         [field: SerializeField] public bool IsAssisted { get; set; }
         [SerializeField] private GameObject projectilePrefab;
-        [SerializeField] private float chargeProgress = 0f;
+        [SerializeField] private float chargeProgress;
 
         [SerializeField] private float chargeDuration = 7f;
         [SerializeField] private float fireDelay;
         [SerializeField] private bool isReady;
-        [SerializeField] private bool prevIsPowered = false;
+        [SerializeField] private bool prevIsPowered;
         [SerializeField] private int fireCount;
         public ProjectileTargetData TargetData;
-        private WeaponSystem weaponSystem;
-        private ITargeting targetingSystem = null;
-        private float reduceSpeed = 4f;
         private float chargeSpeedMultiplier = 1f;
+        private readonly float reduceSpeed = 4f;
+        private ITargeting targetingSystem;
+        private WeaponSystem weaponSystem;
+
+        public bool IsReady => isReady;
+        public bool IsPowered { get; set; }
+        public float ChargeProgress => chargeProgress;
+        public float ChargeDuration => chargeDuration;
 
         #region Unity Method
 
@@ -42,7 +41,7 @@ namespace FTL
 
         private void Update()
         {
-            if (CanRunWeaponLogic() == false)
+            if (!CanRunWeaponLogic())
             {
                 return;
             }
@@ -54,13 +53,13 @@ namespace FTL
                 //    chargeProgress = 0f;
                 //}
 
-                chargeProgress = Mathf.Min(chargeProgress + Time.deltaTime * GetChargeSpeed(), chargeDuration);
+                chargeProgress = Mathf.Min(chargeProgress + (Time.deltaTime * GetChargeSpeed()), chargeDuration);
                 // chargeSprites에 있는 스프라이트 수 - 1만큼 간격 검증
             }
             else
             {
                 //isReady = false;
-                chargeProgress = Mathf.Max(chargeProgress - Time.deltaTime*reduceSpeed, 0);
+                chargeProgress = Mathf.Max(chargeProgress - (Time.deltaTime * reduceSpeed), 0);
             }
 
             UpdateIsReady();
@@ -75,6 +74,7 @@ namespace FTL
                 {
                     StartCoroutine(FireCoroutine(TargetData, seed));
                 }
+
                 TargetData.Reset();
                 chargeProgress = 0f;
                 weaponSystem.ResetWeaponTargetSprite(this);
@@ -133,7 +133,7 @@ namespace FTL
         {
             for (int i = 0; i < fireCount; i++)
             {
-                if (CanRunWeaponLogic() == false)
+                if (!CanRunWeaponLogic())
                 {
                     yield break;
                 }
@@ -152,7 +152,7 @@ namespace FTL
         {
             for (int i = 0; i < fireCount; i++)
             {
-                if (CanRunWeaponLogic() == false)
+                if (!CanRunWeaponLogic())
                 {
                     yield break;
                 }
@@ -160,7 +160,7 @@ namespace FTL
                 // 투사체에 타깃 정보 전달
                 GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
                 ProjectileController projectileController = projectile.GetComponent<ProjectileController>();
-                ProjectileTargetData targetData = new ProjectileTargetData();
+                ProjectileTargetData targetData = new();
                 Room targetRoom = targetingSystem.GetTarget();
                 targetData.RoomId = targetRoom.Id;
                 targetData.TargetPosition = targetRoom.GlobalPosition;

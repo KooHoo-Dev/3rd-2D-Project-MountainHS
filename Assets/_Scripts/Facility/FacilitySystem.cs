@@ -1,17 +1,12 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace FTL
 {
     public class FacilitySystem : MonoBehaviour
     {
-        public RoomType Type => type;
-        public FacilityStatus FacilityStatus => facilityStatus;
-        public int MaxPower => maxPower;
-        public bool IsPowered => Power > 0;
-        [field: SerializeField] public bool IsAssisted { get; protected set; } = false;
+        [field: SerializeField] public bool IsAssisted { get; protected set; }
         [field: SerializeField] public float RepairDuration { get; set; } = 7.5f;
-        [field: SerializeField] public float RepairProgress { get; set; } = 0f;
+        [field: SerializeField] public float RepairProgress { get; set; }
         [field: SerializeField] public int MaxPowerLimit { get; set; } = 3;
         public int TotalDamage;
         public int Power;
@@ -19,6 +14,10 @@ namespace FTL
         [SerializeField] protected int maxPower;
         protected FacilityStatus facilityStatus;
         protected ShipController ship;
+        public RoomType Type => type;
+        public FacilityStatus FacilityStatus => facilityStatus;
+        public int MaxPower => maxPower;
+        public bool IsPowered => Power > 0;
 
         #region Unity Method
 
@@ -53,6 +52,7 @@ namespace FTL
             {
                 Power += amount;
             }
+
             UpdateFacilityStatus();
         }
 
@@ -94,7 +94,7 @@ namespace FTL
 
         public void Repair(int amount)
         {
-            TotalDamage = Mathf.Max(TotalDamage-amount, 0);
+            TotalDamage = Mathf.Max(TotalDamage - amount, 0);
 
             maxPower = MaxPowerLimit - TotalDamage;
             UpdateFacilityStatus();
@@ -134,7 +134,7 @@ namespace FTL
         public bool CanRunFacilityLogic()
         {
             return GameManager.Instance.CanRunCombat &&
-                ship.IsCombatStopped == false;
+                   !ship.IsCombatStopped;
         }
 
         public virtual void ApplyAssistEffectOnFacility(bool isApplied)

@@ -1,7 +1,4 @@
-using Study.Utilities;
 using UnityEngine;
-using UnityEngine.InputSystem;
-
 
 namespace Utilities
 {
@@ -15,27 +12,27 @@ namespace Utilities
     {
         private const float GROUND_STICK_SPEED = -2.0f;
 
-        [Header("Settings")]
-        public float        speed               = 2.0f;
-        public float        gravity             = -9.81f; 
-        public float        jumpPower           = 8.0f; 
-        public int          maxJumpCount        = 2;
-        public float        groundCheckDistance = 0.5f;  
-        public float        skinWidth           = 0.02f;
-        public LayerMask    collisionLayer;
+        [Header("Settings")] public float speed = 2.0f;
+
+        public float gravity = -9.81f;
+        public float jumpPower = 8.0f;
+        public int maxJumpCount = 2;
+        public float groundCheckDistance = 0.5f;
+        public float skinWidth = 0.02f;
+        public LayerMask collisionLayer;
+        private Collider2D col;
+        private Vector3 externalDelta = Vector3.zero;
+
+        private int jumpCount;
+        private bool jumpRequested;
+        private float moveInput;
 
         private Rigidbody2D rBody;
-        private Collider2D  col;
-        
-        private int     jumpCount           = 0;
-        private bool    jumpRequested       = false;
-        private Vector3 externalDelta       = Vector3.zero;   
-        private float   moveInput           = 0.0f;
 
         // 아래의 두개는 외부에서 조회가 가능해야 합니다. 
         // 읽기 전용으로 바꿔줍니다
-        public float VerticalVelocity { get; private set; } = 0.0f;
-        public bool IsGrounded { get; private set; } = false;
+        public float VerticalVelocity { get; private set; }
+        public bool IsGrounded { get; private set; }
 
 
         #region Unity Methods
@@ -56,7 +53,7 @@ namespace Utilities
             ApplyJump();
 
             Vector3 desireMove =
-                new Vector3(moveInput * speed, VerticalVelocity) * Time.fixedDeltaTime
+                (new Vector3(moveInput * speed, VerticalVelocity) * Time.fixedDeltaTime)
                 + externalDelta;
 
             externalDelta = Vector3.zero;
@@ -65,7 +62,10 @@ namespace Utilities
             moveVector.x = ResolveAxisMovement(desireMove.x, Vector3.right);
             moveVector.y = ResolveAxisMovement(desireMove.y, Vector3.up);
 
-            if (moveVector.y != desireMove.y) VerticalVelocity = 0.0f;
+            if (moveVector.y != desireMove.y)
+            {
+                VerticalVelocity = 0.0f;
+            }
 
             rBody.MovePosition(transform.position + moveVector);
         }
@@ -86,7 +86,11 @@ namespace Utilities
 
         public bool RequestJump()
         {
-            if (jumpCount >= maxJumpCount) return false;
+            if (jumpCount >= maxJumpCount)
+            {
+                return false;
+            }
+
             jumpRequested = true;
             return true;
         }
@@ -109,16 +113,22 @@ namespace Utilities
 
         private float ResolveAxisMovement(float move, Vector3 axis)
         {
-            if (move == 0.0f) return 0.0f;
+            if (move == 0.0f)
+            {
+                return 0.0f;
+            }
 
-            Vector3 dir = (move > 0.0f ? axis : -axis);
+            Vector3 dir = move > 0.0f ? axis : -axis;
             float distance = Mathf.Abs(move);
             Bounds box = GetCastBox();
-            
+
             RaycastHit2D hit = Physics2D.BoxCast(
                 box.center, box.size, 0.0f, dir, distance, collisionLayer);
 
-            if (hit.collider == null) return move;
+            if (hit.collider == null)
+            {
+                return move;
+            }
 
             float allowed = Mathf.Max(0, hit.distance - skinWidth);
 
@@ -127,7 +137,7 @@ namespace Utilities
 
         private Bounds GetCastBox()
         {
-            Bounds box = col.bounds; 
+            Bounds box = col.bounds;
 
             Vector3 size = box.size;
             size.x -= skinWidth * 2;
@@ -139,14 +149,21 @@ namespace Utilities
 
         private void ApplyJump()
         {
-            if (jumpRequested == false) return;
+            if (!jumpRequested)
+            {
+                return;
+            }
+
             jumpRequested = false;
 
-            if (jumpCount >= maxJumpCount) return;
+            if (jumpCount >= maxJumpCount)
+            {
+                return;
+            }
 
             VerticalVelocity = jumpPower;
             jumpCount++;
-            IsGrounded = false; 
+            IsGrounded = false;
         }
 
         private bool CheckGrounded()
@@ -155,12 +172,10 @@ namespace Utilities
             RaycastHit2D hit = Physics2D.BoxCast(
                 box.center, box.size, 0.0f, Vector2.down, groundCheckDistance, collisionLayer);
 
-            bool result = (hit.collider != null);
+            bool result = hit.collider != null;
             return result;
         }
 
         #endregion
     }
 }
-
-

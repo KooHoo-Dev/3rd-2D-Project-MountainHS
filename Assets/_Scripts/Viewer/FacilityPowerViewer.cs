@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -12,7 +11,7 @@ namespace FTL
         [SerializeField] private Image assistIcon;
         [SerializeField] private TMP_Text iconText;
         [SerializeField] private RoomType facilityType = RoomType.Empty;
-        [SerializeField] private bool isEnemy = false;
+        [SerializeField] private bool isEnemy;
         private Image repairBar;
 
         #region Unity Method
@@ -25,11 +24,93 @@ namespace FTL
             Transform assistIconTransform = transform.Find("Assist Icon");
             Transform repairBarTransform = transform.Find("Repair Bar");
             if (assistIconTransform != null)
+            {
                 assistIcon = assistIconTransform.GetComponent<Image>();
+            }
+
             if (repairBarTransform != null)
+            {
                 repairBar = repairBarTransform.GetComponent<Image>();
+            }
 
             CacheBarSpritesFromChildren();
+        }
+
+        #endregion
+
+        #region Unity Method
+
+        private void Start()
+        {
+            if (repairBar != null)
+            {
+                repairBar.enabled = false;
+            }
+
+            // facilityType에 맞는 type을 가져오도록
+            if (isEnemy)
+            {
+                // EnemyShield
+                GameObject[] enemies = GameObject.FindGameObjectsWithTag("EnemyShip");
+                switch (facilityType)
+                {
+                    case RoomType.Weapon:
+                        WeaponSystem weaponSystem = null;
+                        foreach (GameObject enemy in enemies)
+                        {
+                            if (enemy.TryGetComponent(out weaponSystem))
+                            {
+                                Debug.Log("ReactorViewer: Enemy ReactorSystem Found!");
+                                break;
+                            }
+                        }
+
+                        facilitySystem = weaponSystem;
+                        break;
+                    case RoomType.Engine:
+                        EngineSystem engineSystem = null;
+                        foreach (GameObject enemy in enemies)
+                        {
+                            if (enemy.TryGetComponent(out engineSystem))
+                            {
+                                Debug.Log("ReactorViewer: Enemy ReactorSystem Found!");
+                                break;
+                            }
+                        }
+
+                        facilitySystem = engineSystem;
+                        break;
+                    case RoomType.Shield:
+                        ShieldSystem shieldSystem = null;
+                        foreach (GameObject enemy in enemies)
+                        {
+                            if (enemy.TryGetComponent(out shieldSystem))
+                            {
+                                Debug.Log("ReactorViewer: Enemy ReactorSystem Found!");
+                                break;
+                            }
+                        }
+
+                        facilitySystem = shieldSystem;
+                        break;
+                    case RoomType.Empty:
+                    default:
+                        Debug.LogError("ReactorViewer: Invalid Facility Type!");
+                        break;
+                }
+
+                if (facilitySystem == null)
+                {
+                    Debug.LogError("ReactorViewer: There is no ReactorSystem on Enemy!");
+                }
+            }
+
+            if (facilityType == RoomType.Empty)
+            {
+                facilityType = facilitySystem.Type;
+            }
+
+            iconText.SetText(facilityType.ToRoomTypeName());
         }
 
         #endregion
@@ -38,7 +119,7 @@ namespace FTL
 
         void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
         {
-            if (CanHandlePlayerPowerClick(eventData) == false)
+            if (!CanHandlePlayerPowerClick(eventData))
             {
                 return;
             }
@@ -65,12 +146,12 @@ namespace FTL
                 return false;
             }
 
-            if (IsFacilityIconClicked(eventData) == false)
+            if (!IsFacilityIconClicked(eventData))
             {
                 return false;
             }
 
-            if (GameManager.IsInitialized == false || GameManager.Instance.Player == null)
+            if (!GameManager.IsInitialized || GameManager.Instance.Player == null)
             {
                 Debug.LogWarning($"{gameObject.name}: Player is not ready to handle facility power click.");
                 return false;
@@ -92,76 +173,8 @@ namespace FTL
                 return false;
             }
 
-            return clickedObject == facilityIcon.gameObject || clickedObject.transform.IsChildOf(facilityIcon.transform);
-        }
-
-        #endregion
-
-        #region Unity Method
-
-        private void Start()
-        {
-            if (repairBar != null)
-                repairBar.enabled = false;
-
-            // facilityType에 맞는 type을 가져오도록
-            if (isEnemy)
-            {
-                // EnemyShield
-                GameObject[] enemies = GameObject.FindGameObjectsWithTag("EnemyShip");
-                switch (facilityType)
-                {
-                    case RoomType.Weapon:
-                        WeaponSystem weaponSystem = null;
-                        foreach (GameObject enemy in enemies)
-                        {
-                            if (enemy.TryGetComponent<WeaponSystem>(out weaponSystem))
-                            {
-                                Debug.Log("ReactorViewer: Enemy ReactorSystem Found!");
-                                break;
-                            }
-                        }
-                        facilitySystem = weaponSystem;
-                        break;
-                    case RoomType.Engine:
-                        EngineSystem engineSystem = null;
-                        foreach (GameObject enemy in enemies)
-                        {
-                            if (enemy.TryGetComponent<EngineSystem>(out engineSystem))
-                            {
-                                Debug.Log("ReactorViewer: Enemy ReactorSystem Found!");
-                                break;
-                            }
-                        }
-                        facilitySystem = engineSystem;
-                        break;
-                    case RoomType.Shield:
-                        ShieldSystem shieldSystem = null;
-                        foreach (GameObject enemy in enemies)
-                        {
-                            if (enemy.TryGetComponent<ShieldSystem>(out shieldSystem))
-                            {
-                                Debug.Log("ReactorViewer: Enemy ReactorSystem Found!");
-                                break;
-                            }
-                        }
-                        facilitySystem = shieldSystem;
-                        break;
-                    case RoomType.Empty:
-                    default:
-                        Debug.LogError("ReactorViewer: Invalid Facility Type!");
-                        break;
-                }
-
-                if (facilitySystem == null)
-                    Debug.LogError("ReactorViewer: There is no ReactorSystem on Enemy!");
-            }
-
-            if (facilityType == RoomType.Empty)
-                facilityType = facilitySystem.Type;
-
-            iconText.SetText(facilityType.ToRoomTypeName());
-
+            return clickedObject == facilityIcon.gameObject ||
+                   clickedObject.transform.IsChildOf(facilityIcon.transform);
         }
 
         #endregion
@@ -196,10 +209,14 @@ namespace FTL
         {
             // 수리바는 상점 씬에서는 필요가 없음
             if (repairBar == null)
+            {
                 return;
+            }
 
-            if (repairBar.enabled == false)
+            if (!repairBar.enabled)
+            {
                 return;
+            }
 
             float repairDuration = facilitySystem.RepairDuration;
             float repairProgress = facilitySystem.RepairProgress;
@@ -214,7 +231,9 @@ namespace FTL
         private void UpdateFacilityIcon()
         {
             if (facilityIcon == null)
+            {
                 return;
+            }
 
             // 만약 할당된 전력이 0이라면 시설 아이콘 색깔 비활성화
             switch (facilitySystem.FacilityStatus)
@@ -263,7 +282,7 @@ namespace FTL
                         // 해당 PowerBar 위치로 repairBar 이동시키고 SetActive
                         repairBar.enabled = true;
                         RectTransform barTransform = barSprites[i].rectTransform;
-                        repairBar.rectTransform.position = barTransform.position; 
+                        repairBar.rectTransform.position = barTransform.position;
                     }
                 }
                 else
@@ -276,7 +295,9 @@ namespace FTL
         private void UpdateAssistImage()
         {
             if (assistIcon == null)
+            {
                 return;
+            }
 
             assistIcon.enabled = facilitySystem.IsAssisted;
         }
@@ -284,7 +305,7 @@ namespace FTL
         private void UpdateGameContextViewer()
         {
             int maxPowerLimit = 0;
-            if (TryGetGameContextFacilityMaxPowerLimit(out maxPowerLimit) == false)
+            if (!TryGetGameContextFacilityMaxPowerLimit(out maxPowerLimit))
             {
                 Debug.LogError($"{gameObject.name}: Failed to get facility max power limit!");
                 return;
@@ -324,7 +345,7 @@ namespace FTL
         {
             maxPowerLimit = 0;
 
-            if (GameManager.IsInitialized == false)
+            if (!GameManager.IsInitialized)
             {
                 Debug.LogError($"{gameObject.name}: GameManager is not Initialized to use!");
                 return false;
@@ -347,7 +368,7 @@ namespace FTL
             Image[] images = barGroup.GetComponentsInChildren<Image>(true);
             for (int i = 0; i < images.Length; i++)
             {
-                if (barSprites.Contains(images[i]) == false)
+                if (!barSprites.Contains(images[i]))
                 {
                     barSprites.Add(images[i]);
                     images[i].gameObject.SetActive(false);

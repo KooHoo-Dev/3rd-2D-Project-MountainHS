@@ -9,7 +9,7 @@ namespace AllIn1SpriteShader
     [ExecuteInEditMode]
     public class SetGlobalTime : MonoBehaviour
     {
-        int globalTime;
+        private int globalTime;
 
         private void Start()
         {

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace FTL
@@ -8,17 +7,17 @@ namespace FTL
         private const int maxShieldLimit = 4;
         private const float chargeSpeedAssistMultiplier = 1.2f;
 
+        [Header("Shield")] [SerializeField] private int maxShield;
+
+        [SerializeField] private int shieldCount;
+        [SerializeField] private float chargeDuration = 3;
+        [SerializeField] private float chargeProgress;
+
         public int MaxShieldLimit => maxShieldLimit;
         public int MaxShield => maxShield;
         public int ShieldCount => shieldCount;
         public float ChargeDuration => chargeDuration;
         public float ChargeProgress => chargeProgress;
-
-        [Header("Shield")]
-        [SerializeField] private int maxShield;
-        [SerializeField] private int shieldCount;
-        [SerializeField] private float chargeDuration = 3;
-        [SerializeField] private float chargeProgress;
 
         #region Unity Method
 
@@ -31,7 +30,7 @@ namespace FTL
 
         private void Update()
         {
-            if (CanRunFacilityLogic() == false)
+            if (!CanRunFacilityLogic())
             {
                 return;
             }
@@ -88,10 +87,10 @@ namespace FTL
         #region Private Method
 
         /// <summary>
-        /// 최대 실드 수까지 실드 채워지는 기능 구현
-        /// 현재 실드 개수가 최대 실드 수보다 적으면 자동으로 증가 (실드 충전 시간 지나면)
-        /// 현재 실드 수가 최대 실드 수에 도달하면 더이상 충전하지 않음
-        /// 현재 실드 수 < 최대 실드 수 일때만 로직 실행
+        ///     최대 실드 수까지 실드 채워지는 기능 구현
+        ///     현재 실드 개수가 최대 실드 수보다 적으면 자동으로 증가 (실드 충전 시간 지나면)
+        ///     현재 실드 수가 최대 실드 수에 도달하면 더이상 충전하지 않음
+        ///     현재 실드 수 < 최대 실드 수 일때만 로직 실행
         /// </summary>
         private void UpdateShield()
         {
@@ -120,7 +119,7 @@ namespace FTL
         }
 
         /// <summary>
-        /// 전력 개수에 따라 최대 실드 수 결정
+        ///     전력 개수에 따라 최대 실드 수 결정
         /// </summary>
         /// <param name="power"></param>
         private void SetMaxShieldCountByPower(int power)

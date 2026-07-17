@@ -3,14 +3,23 @@ using UnityEngine;
 
 namespace FTL
 {
-    public class SpriteShakeController: MonoBehaviour
+    public class SpriteShakeController : MonoBehaviour
     {
         [SerializeField] private float xRange = 0.1f;
         [SerializeField] private float yRange = 0.1f;
         [SerializeField] private float shakeStrengthOffset = 0.02f;
-        [field: SerializeField] public bool IsShaked { get; private set; } = false;
+        [field: SerializeField] public bool IsShaked { get; private set; }
         [SerializeField] private Transform spriteParentTransform;
         [SerializeField] private SpriteRenderer spriteRenderer;
+
+        #region Public Method
+
+        public void ShakeSprite()
+        {
+            StartCoroutine(MoveSpriteObjectToRandomOffset());
+        }
+
+        #endregion
 
         #region Unity Method
 
@@ -29,15 +38,6 @@ namespace FTL
             {
                 spriteParentTransform = spriteRenderer.transform;
             }
-        }
-
-        #endregion
-
-        #region Public Method
-
-        public void ShakeSprite()
-        {
-            StartCoroutine(MoveSpriteObjectToRandomOffset());
         }
 
         #endregion

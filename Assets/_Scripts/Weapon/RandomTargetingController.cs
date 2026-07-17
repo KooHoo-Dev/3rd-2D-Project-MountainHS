@@ -4,9 +4,9 @@ using UnityEngine;
 namespace FTL
 {
     // 랜덤 방정보를 제공하는 클래스
-    public class RandomTargeter: ITargeting
+    public class RandomTargeter : ITargeting
     {
-        private List<Room> rooms = new List<Room>();
+        private readonly List<Room> rooms = new();
 
         #region Public Method
 

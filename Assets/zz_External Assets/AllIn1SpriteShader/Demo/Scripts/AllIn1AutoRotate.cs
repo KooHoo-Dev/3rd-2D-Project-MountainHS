@@ -10,7 +10,8 @@ namespace AllIn1SpriteShader.Demo.Scripts
 
         private void Update()
         {
-            transform.Rotate(rotationAxis * (rotationSpeed * Time.deltaTime), useLocalRotation ? Space.Self : Space.World);
+            transform.Rotate(rotationAxis * (rotationSpeed * Time.deltaTime),
+                useLocalRotation ? Space.Self : Space.World);
         }
     }
 }

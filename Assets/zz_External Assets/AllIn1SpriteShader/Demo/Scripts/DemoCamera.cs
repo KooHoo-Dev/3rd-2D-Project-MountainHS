@@ -7,12 +7,12 @@ namespace AllIn1SpriteShader
 {
     public class DemoCamera : MonoBehaviour
     {
-        [SerializeField] private Transform targetedItem = null;
-        [SerializeField] private All1ShaderDemoController demoController = null;
-        [SerializeField] private float speed = 0;
+        [SerializeField] private Transform targetedItem;
+        [SerializeField] private All1ShaderDemoController demoController;
+        [SerializeField] private float speed;
+        private bool canUpdate;
         private Vector3 offset;
         private Vector3 target;
-        private bool canUpdate = false;
 
         private void Awake()
         {
@@ -21,12 +21,25 @@ namespace AllIn1SpriteShader
             StartCoroutine(SetCamAfterStart());
         }
 
+        private void Update()
+        {
+            if (!canUpdate)
+            {
+                return;
+            }
+
+            target.y = demoController.GetCurrExpositor() * demoController.expositorDistance;
+            transform.position = Vector3.Lerp(transform.position, target, speed * Time.deltaTime);
+        }
+
         private void EnablePostProcessingForURP()
         {
-            #if UNITY_2019_3_OR_NEWER
+#if UNITY_2019_3_OR_NEWER
             try
             {
-                Type urpCameraDataType = Type.GetType("UnityEngine.Rendering.Universal.UniversalAdditionalCameraData, Unity.RenderPipelines.Universal.Runtime");
+                Type urpCameraDataType =
+                    Type.GetType(
+                        "UnityEngine.Rendering.Universal.UniversalAdditionalCameraData, Unity.RenderPipelines.Universal.Runtime");
                 if (urpCameraDataType == null)
                 {
                     return;
@@ -43,7 +56,8 @@ namespace AllIn1SpriteShader
                 if (urpCameraData == null)
                 {
                     urpCameraData = cam.gameObject.AddComponent(urpCameraDataType);
-                    Debug.Log("[DemoCamera] Added UniversalAdditionalCameraData component for URP post processing", this);
+                    Debug.Log("[DemoCamera] Added UniversalAdditionalCameraData component for URP post processing",
+                        this);
                 }
 
                 PropertyInfo renderPostProcessingProperty = urpCameraDataType.GetProperty("renderPostProcessing");
@@ -58,21 +72,16 @@ namespace AllIn1SpriteShader
                 }
                 else
                 {
-                    Debug.LogWarning("[DemoCamera] Could not find or access 'renderPostProcessing' property. URP version might not support this feature.", this);
+                    Debug.LogWarning(
+                        "[DemoCamera] Could not find or access 'renderPostProcessing' property. URP version might not support this feature.",
+                        this);
                 }
             }
             catch (Exception e)
             {
                 Debug.LogWarning($"[DemoCamera] Failed to enable URP post processing: {e.Message}", this);
             }
-            #endif
-        }
-
-        private void Update()
-        {
-            if (!canUpdate) return;
-            target.y = demoController.GetCurrExpositor() * demoController.expositorDistance;
-            transform.position = Vector3.Lerp(transform.position, target, speed * Time.deltaTime);
+#endif
         }
 
         private IEnumerator SetCamAfterStart()

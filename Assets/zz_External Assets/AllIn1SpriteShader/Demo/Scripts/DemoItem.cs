@@ -4,9 +4,9 @@ namespace AllIn1SpriteShader
 {
     public class DemoItem : MonoBehaviour
     {
-        static readonly Vector3 lookAtZ = new Vector3(0, 0, 1);
+        private static readonly Vector3 lookAtZ = new(0, 0, 1);
 
-        void Update()
+        private void Update()
         {
             transform.LookAt(transform.position + lookAtZ);
         }

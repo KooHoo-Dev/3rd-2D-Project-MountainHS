@@ -1,9 +1,6 @@
-using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
-using UnityEngine.SceneManagement;
 using Utilities;
 
 namespace FTL
@@ -12,24 +9,24 @@ namespace FTL
     {
         Shield, Room, Crew
     }
+
     public class CombatSystem : SingletonBase<CombatSystem>
     {
-        private Transform floatingTextGroupTransform;
-
-        private ShipController[] ships;
-        private Collider2D[] shipAreas;
-        private CameraShakeController cameraShakeController;
-        private SpriteShakeController[] spriteShakeControllers;
-
-        private Dictionary<Collider2D, ShipSide> colToNextShipAreaDict = new Dictionary<Collider2D, ShipSide>();
-        private Dictionary<ShipSide, Collider2D> shipSideToColDict = new Dictionary<ShipSide, Collider2D>();
-        private Dictionary<ShipSide, SpriteShakeController> shipSideToSpriteShake = new Dictionary<ShipSide, SpriteShakeController>();
-        
-        private ObjectPool<GameObject> floatingTextPool;
-        private ObjectPool<GameObject> explosionPool;
-        
         [SerializeField] private GameObject floatingTextPrefab;
         [SerializeField] private GameObject explosionPrefab;
+        private CameraShakeController cameraShakeController;
+
+        private readonly Dictionary<Collider2D, ShipSide> colToNextShipAreaDict = new();
+        private ObjectPool<GameObject> explosionPool;
+        private Transform floatingTextGroupTransform;
+
+        private ObjectPool<GameObject> floatingTextPool;
+        private Collider2D[] shipAreas;
+
+        private ShipController[] ships;
+        private readonly Dictionary<ShipSide, Collider2D> shipSideToColDict = new();
+        private readonly Dictionary<ShipSide, SpriteShakeController> shipSideToSpriteShake = new();
+        private SpriteShakeController[] spriteShakeControllers;
 
         #region Unity Method
 
@@ -37,8 +34,9 @@ namespace FTL
         {
             base.OnInitialize();
             floatingTextPool = new ObjectPool<GameObject>(CreateBar, OnGetBar, OnReleaseBar, OnDestroyBar);
-            explosionPool = new ObjectPool<GameObject>(CreateExplostion, OnGetExplosion, OnReleaseExplosion, OnDestroyExplosion);
-            GameObject floatingTextGroup = new GameObject("Floating Text Group");
+            explosionPool = new ObjectPool<GameObject>(CreateExplostion, OnGetExplosion, OnReleaseExplosion,
+                OnDestroyExplosion);
+            GameObject floatingTextGroup = new("Floating Text Group");
             floatingTextGroupTransform = floatingTextGroup.transform;
             floatingTextGroupTransform.SetParent(gameObject.transform);
         }
@@ -49,7 +47,7 @@ namespace FTL
 
         public void InitCombatSystem(PlayerController player, EnemyController enemy)
         {
-            if (NeedSceneBinding() == false)
+            if (!NeedSceneBinding())
             {
                 return;
             }
@@ -63,8 +61,8 @@ namespace FTL
             SpriteShakeController enemyShaker = enemy.GetComponent<SpriteShakeController>();
 
             ships = new ShipController[] { player, enemy };
-            shipAreas = new Collider2D[] { playerCollider, enemyCollider };
-            spriteShakeControllers = new SpriteShakeController[] { playerShaker, enemyShaker };
+            shipAreas = new[] { playerCollider, enemyCollider };
+            spriteShakeControllers = new[] { playerShaker, enemyShaker };
             shipSideToColDict.Clear();
             colToNextShipAreaDict.Clear();
             shipSideToSpriteShake.Clear();
@@ -82,6 +80,7 @@ namespace FTL
             {
                 return true;
             }
+
             if (shipAreas == null)
             {
                 return true;
@@ -107,14 +106,14 @@ namespace FTL
         }
 
         /// <summary>
-        ///- 투사체 피격 판정 
-        ///    - 멤버
-        ///        - 피격 판정
-        ///        - 도달한 Room 정보
-        ///    - 피격된 Room에 피격 시행 (TakeDamage)
-        ///        - Room의 TakeDamage 호출
-        ///        - Room의 시설
-        ///        - Room의 함선에 체력 피해 전달
+        ///     - 투사체 피격 판정
+        ///     - 멤버
+        ///     - 피격 판정
+        ///     - 도달한 Room 정보
+        ///     - 피격된 Room에 피격 시행 (TakeDamage)
+        ///     - Room의 TakeDamage 호출
+        ///     - Room의 시설
+        ///     - Room의 함선에 체력 피해 전달
         /// </summary>
         /// <param name="col"></param>
         /// <param name="projectile"></param>
@@ -140,7 +139,8 @@ namespace FTL
             // projectile 주인 확인
             bool isPlayerProjectile = projectile.StartCol.CompareTag(Tags.PlayerShip);
             int opponentShipIndex = isPlayerProjectile ? 1 : 0;
-            ShieldSystem oppenentShieldSystem = (ShieldSystem)ships[opponentShipIndex].GetFacilitySystemByERoomType(RoomType.Shield);
+            ShieldSystem oppenentShieldSystem =
+                (ShieldSystem)ships[opponentShipIndex].GetFacilitySystemByERoomType(RoomType.Shield);
             // 실드 시스템의 현재 실드가 1 이상이면
             // 실드 시스템 TakeDamage 호출
             // return true;
@@ -152,6 +152,7 @@ namespace FTL
                 SetFloatingText(projectile, EDamageType.Shield);
                 return true;
             }
+
             return false;
         }
 
@@ -161,7 +162,7 @@ namespace FTL
             int opponentShipIndex = isPlayerProjectile ? 1 : 0;
             ShipController oppenentShipController = ships[opponentShipIndex];
             SpriteShakeController oppenentSpriteShaker = spriteShakeControllers[opponentShipIndex];
-            ProjectileTargetData targetData = new ProjectileTargetData(projectile.TargetPos, projectile.TargetRoomId);
+            ProjectileTargetData targetData = new(projectile.TargetPos, projectile.TargetRoomId);
 
             // 명중 판정 로직 추가 (추후 구현)
             oppenentShipController.TakeDamageToRoom(projectile, targetData.RoomId);
@@ -174,7 +175,7 @@ namespace FTL
 
         public void SetShakeController(CameraShakeController shakeController)
         {
-            this.cameraShakeController = shakeController;
+            cameraShakeController = shakeController;
         }
 
         public List<Room> GetPlayerRooms()
@@ -225,7 +226,9 @@ namespace FTL
         public ShipSide GetOpponentShipSide(ShipSide startSide)
         {
             if (startSide == ShipSide.Player)
+            {
                 return ShipSide.Enemy0;
+            }
 
             return ShipSide.Player;
         }
@@ -236,12 +239,9 @@ namespace FTL
             {
                 return col;
             }
-            else
-            {
-                Debug.LogError($"CombatSystem: No collider found for ship side {shipSide}.");
-                return null;
-            }
 
+            Debug.LogError($"CombatSystem: No collider found for ship side {shipSide}.");
+            return null;
         }
 
         public void SetFloatingText(ProjectileController projectile, EDamageType type)

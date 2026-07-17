@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,8 +17,8 @@ namespace FTL
         [field: SerializeField] public Button HealButton { get; private set; }
         [SerializeField] private CrewController crew;
         [SerializeField] private bool useGameContext;
-        private MaterialPropertyBlock propertyBlock;
         private bool isSelected;
+        private MaterialPropertyBlock propertyBlock;
         private Vector3 targetPosition;
 
         #region Unity Method
@@ -56,6 +55,7 @@ namespace FTL
             {
                 gameObject.SetActive(false);
             }
+
             SetSelectedState(crew.IsSelected);
             UpdateViewer();
             UpdateTargetRoom();
@@ -68,7 +68,7 @@ namespace FTL
         public void SetGameContextCrew(int crewIndex, TMP_Text text, Image hpBar)
         {
             useGameContext = true;
-            this.CrewIndex = crewIndex;
+            CrewIndex = crewIndex;
             this.text = text;
             this.hpBar = hpBar;
         }
@@ -83,7 +83,7 @@ namespace FTL
             this.hpBar = hpBar;
         }
 
-        public void SetCrewSprite (SpriteRenderer crewSprite)
+        public void SetCrewSprite(SpriteRenderer crewSprite)
         {
             this.crewSprite = crewSprite;
         }
@@ -111,7 +111,7 @@ namespace FTL
                 return;
             }
 
-            if (targetRoom != null && crewTargetSprite.enabled == false)
+            if (targetRoom != null && !crewTargetSprite.enabled)
             {
                 targetPosition = targetRoom.GetCrewPosition(crew, CrewController.Offset);
                 crewTargetSprite.transform.position = targetPosition;
@@ -150,7 +150,7 @@ namespace FTL
 
         private void UpdateGameContextViewer()
         {
-            if (GameManager.IsInitialized == false)
+            if (!GameManager.IsInitialized)
             {
                 Debug.LogError($"{gameObject.name}: GameManager is not Initialized to use!");
                 return;

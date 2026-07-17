@@ -2,10 +2,10 @@ namespace FTL
 {
     public class FacilityState
     {
-        public RoomType Type;
-        public int TotalDamage;
         public int MaxPowerLimit;
         public int Power;
+        public int TotalDamage;
+        public RoomType Type;
 
         #region Public Method
 
