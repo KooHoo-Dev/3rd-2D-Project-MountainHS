@@ -3251,24 +3251,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1051567087}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 565afd6cb85545cbbd8b977eabc8dd96, type: 3}
+  m_Script: {fileID: 11500000, guid: 300044f0e496bfc4486466e8a60dc58a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.WeaponSystem
   <IsAssisted>k__BackingField: 0
   <RepairDuration>k__BackingField: 7.5
   <RepairProgress>k__BackingField: 0
   <MaxPowerLimit>k__BackingField: 3
+  type: 0
+  maxPower: 0
   TotalDamage: 0
   Power: 0
-  type: 0
-  maxPower: 3
   weapons: []
   selectedWeapon: {fileID: 0}
-  targetSpriteObjects:
-  - {fileID: 113881291}
-  - {fileID: 156797397}
-  - {fileID: 102818774}
-  - {fileID: 155635037}
+  targetSpriteObjects: []
   targetData:
     TargetPosition: {x: 0, y: 0, z: 0}
     RoomId: 0
@@ -3289,10 +3285,10 @@ MonoBehaviour:
   <RepairDuration>k__BackingField: 7.5
   <RepairProgress>k__BackingField: 0
   <MaxPowerLimit>k__BackingField: 5
-  TotalDamage: 0
-  Power: 0
   type: 2
   maxPower: 3
+  TotalDamage: 0
+  Power: 0
   maxShield: 0
   shieldCount: 0
   chargeDuration: 3
@@ -3313,10 +3309,10 @@ MonoBehaviour:
   <RepairDuration>k__BackingField: 7.5
   <RepairProgress>k__BackingField: 0
   <MaxPowerLimit>k__BackingField: 3
-  TotalDamage: 0
-  Power: 0
   type: 1
   maxPower: 3
+  TotalDamage: 0
+  Power: 0
   chargeProgress: 0
   chargeDuration: 90
   canEscape: 0
@@ -3348,7 +3344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 027149c8ad5d48c4a8add1d87b4b10c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.ShipPowerController
-  reactorSystem: {fileID: 1051567093}
+  reactorController: {fileID: 1051567093}
   facilities: []
 --- !u!114 &1051567095
 MonoBehaviour:
@@ -5450,7 +5446,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FTL.EngineViewer
   chargeStatus: {fileID: 1183791450}
   jumpButton: {fileID: 568047292}
-  engineSystem: {fileID: 1051567092}
+  engineController: {fileID: 1051567092}
   jumpProgressBar: {fileID: 555277564}
   assistImage: {fileID: 0}
 --- !u!114 &1786818205 stripped
@@ -6045,6 +6041,10 @@ PrefabInstance:
       propertyPath: shieldUpDelay
       value: 0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 1316263817145628412, guid: ecda4b0ed48be1a47ab4ddf3f93a394a, type: 3}
+      propertyPath: shieldController
+      value: 
+      objectReference: {fileID: 8531392561340961723}
     - target: {fileID: 1316263817145628412, guid: ecda4b0ed48be1a47ab4ddf3f93a394a, type: 3}
       propertyPath: shieldMainSprite
       value: 
@@ -7161,7 +7161,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 565afd6cb85545cbbd8b977eabc8dd96, type: 3}
+  m_Script: {fileID: 11500000, guid: 300044f0e496bfc4486466e8a60dc58a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.WeaponSystem
 --- !u!1001 &1930536318148678233
@@ -7881,6 +7881,10 @@ PrefabInstance:
       propertyPath: shieldUpDelay
       value: 0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 1316263817145628412, guid: ecda4b0ed48be1a47ab4ddf3f93a394a, type: 3}
+      propertyPath: shieldController
+      value: 
+      objectReference: {fileID: 1051567091}
     - target: {fileID: 1316263817145628412, guid: ecda4b0ed48be1a47ab4ddf3f93a394a, type: 3}
       propertyPath: shieldMainSprite
       value: 

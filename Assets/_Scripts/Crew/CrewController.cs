@@ -177,7 +177,6 @@ namespace FTL
             switch (crewStatus)
             {
                 case CrewStatus.Moving:
-                    Room roomBeforeMoving = CurrentRoom;
                     MoveToTargetRoom();
                     break;
                 case CrewStatus.Idle:

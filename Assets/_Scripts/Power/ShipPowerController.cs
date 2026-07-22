@@ -49,7 +49,6 @@ namespace FTL
             SetAssignedPower(facilityType, nextPower);
             facility.AddPower(amount);
             reactorController.ReducePower(amount);
-            return;
         }
 
         public void DeallocatePower(RoomType facilityType, int amount = 1)
