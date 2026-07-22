@@ -454,7 +454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46589655d8090e146aadc255851adb5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.EnemyPowerController
-  reactorSystem: {fileID: 7087205736477999771}
+  reactorController: {fileID: 7087205736477999771}
   facilities: []
   powerData:
     ShieldPower: 2
@@ -476,10 +476,10 @@ MonoBehaviour:
   <RepairDuration>k__BackingField: 7.5
   <RepairProgress>k__BackingField: 0
   <MaxPowerLimit>k__BackingField: 3
-  TotalDamage: 0
-  Power: 0
   type: 2
   maxPower: 8
+  TotalDamage: 0
+  Power: 0
   maxShield: 0
   shieldCount: 0
   chargeDuration: 3
@@ -500,10 +500,10 @@ MonoBehaviour:
   <RepairDuration>k__BackingField: 7.5
   <RepairProgress>k__BackingField: 0
   <MaxPowerLimit>k__BackingField: 3
-  TotalDamage: 0
-  Power: 0
   type: 1
   maxPower: 3
+  TotalDamage: 0
+  Power: 0
   chargeProgress: 0
   chargeDuration: 90
   canEscape: 0
@@ -518,23 +518,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 5074144084671364221}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 565afd6cb85545cbbd8b977eabc8dd96, type: 3}
+  m_Script: {fileID: 11500000, guid: 300044f0e496bfc4486466e8a60dc58a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FTL.WeaponSystem
   <IsAssisted>k__BackingField: 0
   <RepairDuration>k__BackingField: 7.5
   <RepairProgress>k__BackingField: 0
   <MaxPowerLimit>k__BackingField: 3
+  type: 0
+  maxPower: 0
   TotalDamage: 0
   Power: 0
-  type: 0
-  maxPower: 3
   weapons: []
   selectedWeapon: {fileID: 0}
   targetSpriteObjects: []
   targetData:
     TargetPosition: {x: 0, y: 0, z: 0}
     RoomId: 0
+  chargeSpeedMultiplier: 0
 --- !u!114 &3608840611304903342
 MonoBehaviour:
   m_ObjectHideFlags: 0

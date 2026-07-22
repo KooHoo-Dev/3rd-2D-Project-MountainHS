@@ -25,7 +25,7 @@ namespace FTL
             Type = facilityState.Type;
         }
 
-        public FacilityState(FacilitySystem facility)
+        public FacilityState(FacilityController facility)
         {
             TotalDamage = facility.TotalDamage;
             MaxPowerLimit = facility.MaxPowerLimit;

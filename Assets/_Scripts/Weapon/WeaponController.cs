@@ -21,7 +21,7 @@ namespace FTL
         private float chargeSpeedMultiplier = 1f;
         private readonly float reduceSpeed = 4f;
         private ITargeting targetingSystem;
-        private WeaponSystem weaponSystem;
+        private WeaponSystem weaponController;
 
         public bool IsReady => isReady;
         public bool IsPowered { get; set; }
@@ -77,7 +77,7 @@ namespace FTL
 
                 TargetData.Reset();
                 chargeProgress = 0f;
-                weaponSystem.ResetWeaponTargetSprite(this);
+                weaponController.ResetWeaponTargetSprite(this);
             }
             else if (IsReady && targetingSystem != null)
             {
@@ -106,9 +106,9 @@ namespace FTL
             this.targetingSystem = targetingSystem;
         }
 
-        public void SetWeaponSystem(WeaponSystem weaponSystem)
+        public void SetWeaponSystem(WeaponSystem weaponController)
         {
-            this.weaponSystem = weaponSystem;
+            this.weaponController = weaponController;
         }
 
         public void ApplyAssistEffectOnWeapon(bool isApplied)
@@ -183,7 +183,7 @@ namespace FTL
 
         private bool CanRunWeaponLogic()
         {
-            return weaponSystem != null && weaponSystem.CanRunFacilityLogic();
+            return weaponController != null && weaponController.CanRunFacilityLogic();
         }
 
         private void UpdateIsReady()

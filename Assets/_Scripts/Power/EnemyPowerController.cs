@@ -21,11 +21,11 @@ namespace FTL
         {
             base.Start();
             // 실드 2칸
-            TryAllocatePower(RoomType.Shield, powerData.ShieldPower);
+            AllocatePower(RoomType.Shield, powerData.ShieldPower);
             // 무기 2칸
-            TryAllocatePower(RoomType.Weapon, powerData.WeaponPower);
+            AllocatePower(RoomType.Weapon, powerData.WeaponPower);
             // 엔진 1칸
-            TryAllocatePower(RoomType.Engine, powerData.EnginePower);
+            AllocatePower(RoomType.Engine, powerData.EnginePower);
         }
 
         #endregion

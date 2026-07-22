@@ -8,7 +8,7 @@ namespace FTL
     public class Room
     {
         [field: SerializeField] private List<int> neighborRoomIds;
-        [field: SerializeField] public FacilitySystem FacilitySystem { get; set; }
+        [field: SerializeField] public FacilityController FacilitySystem { get; set; }
         [field: SerializeField] public List<CrewController> Crews { get; set; } = new();
         [field: SerializeField] public RoomType Type { get; private set; }
         [field: SerializeField] public Vector2 LocalPosition { get; set; }
@@ -53,7 +53,6 @@ namespace FTL
                 return;
             }
 
-            ;
             if (Crews.Count == MaxCrewCapacity)
             {
                 Debug.LogWarning($"Room {Id} is at full capacity. Cannot add Crew {crew.name}.");

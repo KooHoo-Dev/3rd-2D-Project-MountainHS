@@ -1,18 +1,49 @@
 # 프로젝트 구조 분석
 
-기준: 현재 `main` 브랜치의 `Assets/_Scripts`, `Assets/_Prefabs`, `Assets/_Data`, `Assets/_Scenes`를 읽어 정리했다.  
-목적: UML 다이어그램 작성을 위한 클래스/관계/프리팹 기초 자료 정리.
+기준 브랜치: `main`
+
+작성 범위: UML 다이어그램 기초 자료 생성을 위한 1~4번 항목 중심 정리.
+
+주의: 이 문서는 현재 레포지토리에 존재하는 스크립트, 프리팹, ScriptableObject 파일을 기준으로 정리했다. Unity Inspector 연결 상태나 런타임 씬 오브젝트 배치는 에디터 실행 없이는 일부 확정할 수 없으므로, 불명확한 항목은 "확인 필요"로 표시했다.
 
 ## 1. 전체 구조 요약
 
-- 핵심 흐름은 `GameManager`가 씬 전환과 전투 결과, `GameContext` 저장 데이터를 관리하고, 전투 씬 로드 시 `SceneBinder`가 플레이어/적 함선과 `CombatSystem`을 연결하는 구조다.
-- `GameManager`는 `EnemyDatabase`, `WeaponDatabase`, `GameContext`, `PlayerController`를 중심으로 전투 준비 상태와 전투 결과를 이어준다.
-- 전투 씬은 `PlayerController`와 `EnemyController`가 각각 `ShipController`를 상속하고, 같은 함선 시스템 묶음인 `WeaponSystem`, `ShieldSystem`, `EngineSystem`, `CrewSystem`, `ShipPowerController`, `ReactorSystem`을 사용한다.
-- 적 함선은 씬에 고정된 오브젝트만 쓰는 구조가 아니라, `SceneBinder`가 `GameContext.EnemyType`을 보고 `EnemyDatabase`에서 적 프리팹을 가져와 생성할 수 있다.
-- 무기는 `ShipController.InitWeapons()`에서 `WeaponTypes`와 `WeaponDatabase`를 이용해 동적으로 생성된다. 생성된 무기에는 `WeaponController`, `WeaponViewer`, 투사체 prefab 참조가 연결된다.
-- 전투 판정은 `ProjectileController -> CombatSystem -> ShipController/ShieldSystem/Room` 흐름으로 이어진다. 피해 후에는 `FloatingTextController`, `ExplosionController`, `SpriteShakeController` 같은 표현 계열도 함께 호출된다.
-- 환경 이벤트는 `SceneBinder`가 `EnvironmentController.InitStageEnvironment()`를 호출하면서 시작된다. `EnvironmentController`는 태양 플레어/소행성 공격을 통해 `ShipController.TakeDamageToRoom()` 또는 `ProjectileController` 기반 공격을 발생시킨다.
-- 씬 간 유지 데이터는 `GameContext`가 담당한다. 저장되는 주요 값은 방 목록, 시설 상태, 승무원 상태, 스크랩, 함선 HP, 반응로 전력, 무기 타입 목록, 적 타입이다.
+- 핵심 흐름
+  - `GameManager`는 전역 싱글톤으로 씬 로드 이벤트를 받아 전투 씬, 전투 준비 씬, 결과 처리 흐름을 제어한다.
+  - 전투 씬 진입 시 `GameManager`가 `SceneBinder`를 찾아 `GameContext`를 전달하고, `SceneBinder`가 플레이어 함선과 적 함선을 찾아/생성한 뒤 상태를 복원한다.
+  - `SceneBinder`는 복원된 `PlayerController`, 생성된 `EnemyController`를 `CombatSystem.InitCombatSystem`에 전달하여 전투 시스템의 양측 함선 참조를 구성한다.
+  - `ShipController`는 함선 공통 기반 클래스이며 방(`Room`), 승무원(`CrewController`), 시설(`FacilitySystem`), 무기(`WeaponController`)를 초기화하고 소유한다.
+  - `PlayerController`는 입력을 받아 무기 조준, 승무원 선택/이동, 시설 전력 할당을 수행한다.
+  - `EnemyController`는 `RandomTargeter`를 통해 플레이어 방 목록을 대상으로 삼고, 적 무기 시스템에 타겟팅 시스템을 주입한다.
+  - `CombatSystem`은 투사체의 함선 영역 이동, 보호막/방 충돌 처리, 피격 연출, 폭발/플로팅 텍스트 풀링을 담당한다.
+  - 전투 결과는 `ShipController.CheckGameOver` 또는 UI 액션을 통해 `GameManager.HandleBattleResult`로 전달되고, `GameManager`가 결과 UI 표시 및 다음 씬 이동을 담당한다.
+
+- 주요 매니저/시스템 관계
+  - `GameManager`
+    - 소유/참조: `GameContext`, `EnemyDatabase`, `WeaponDatabase`, `PlayerController`, `MainUIController`, `ShopManager`, `SceneBinder`
+    - 호출: `SceneBinder.BindSceneObjectsWithEnvironment`, `CombatSystem.StopCombat`, `MainUIController.SetBattleResult`, `SceneManager.LoadScene`
+  - `SceneBinder`
+    - 참조: `GameContext`, `PlayerController`, `EnemyController`, `EnemyDatabase`, `StageEnvironmentController`
+    - 역할: 씬 오브젝트 바인딩, 적 프리팹 생성, 플레이어 상태 복원, 전투 시스템 연결
+  - `CombatSystem`
+    - 참조: `PlayerController`, `EnemyController`, 각 함선의 `Collider2D`, `SpriteShakeController`, `ShieldSystem`, `Room`
+    - 역할: 전투 중 충돌/피해/연출 중재
+  - `ShipController`
+    - 소유: `Room`, `CrewController`, `FacilitySystem`, `WeaponController`, `CrewSystem`, `WeaponSystem`, `ShipPowerController`, `ShipOwnership`
+    - 역할: 함선 데이터 기반 런타임 구성 및 피해/사망 처리
+  - `ShopManager`
+    - 참조: `GameManager`, `GameContext`
+    - 역할: 전투 준비 씬에서 강화/회복 결과를 `GameContext`에 반영
+
+- 씬 전환 시 유지되는 데이터와 씬 오브젝트 의존성
+  - 유지 데이터
+    - `GameContext`가 플레이어 함선 HP, 스크랩, 반응로 전력, 시설 상태, 승무원 상태, 무기 타입 목록, 적 타입을 보관한다.
+    - `ShopManager.VisitCount`는 선형 전투 씬 진행 단계와 적/환경 선택에 사용된다.
+  - 씬 오브젝트 의존성
+    - `GameManager`는 `SceneManager.sceneLoaded`에서 씬별 오브젝트를 런타임 검색한다.
+    - 전투 씬에는 `SceneBinder`, `PlayerController`, 적 생성 위치/부모, 적 UI 그룹, 환경 컨트롤러가 필요하다.
+    - 전투 준비 씬에는 `ShopManager`가 필요하며, `GameManager`가 `ShopManager.ApplyGameContext`를 호출한다.
+    - `SceneBinder`는 `GameManager.Instance.EnemyDatabase`에서 적 프리팹을 받아 생성한다.
 
 ## 2. 클래스 구조 정리
 
@@ -20,208 +51,228 @@
 
 | 클래스 | 역할 | 주요 참조 | 주요 책임 | UML 표시 포인트 |
 |---|---|---|---|---|
-| `GameManager` | 전역 게임/전투 흐름 관리자 | `GameContext`, `PlayerController`, `MainUIController`, `SceneBinder`, `ShopManager`, `EnemyDatabase`, `WeaponDatabase`, `BackgroundController`, `CursorController` | 씬 로드 처리, 전투 결과 처리, 전투 일시정지/정지, `GameContext` 저장/복원, DB 제공 | `SingletonBase<GameManager>` 상속, `GameContext` 소유 |
-| `CombatSystem` | 전투 충돌/피해 판정 관리자 | `PlayerController`, `EnemyController`, `ProjectileController`, `ShieldSystem`, `ShipController`, `Room`, `FloatingTextController`, `ExplosionController`, `SpriteShakeController` | 함선 영역 바인딩, 투사체 영역 이동, 실드/방 충돌 처리, 피해 표시/폭발 풀 관리 | `SingletonBase<CombatSystem>` 상속, 양 함선 배열 보유 |
-| `SceneBinder` | 전투 씬 런타임 바인더 | `GameContext`, `PlayerController`, `EnemyController`, `EnemyDatabase`, `CombatSystem`, `EnvironmentController` | 플레이어 상태 복원, 적 프리팹 생성/기존 적 탐색, 적 UI 그룹 연결, 전투/환경 초기화 | `GameManager.OnSceneLoaded`에서 호출 |
-| `ShopManager` | 전투 준비/상점 관리자 | `GameManager`, `GameContext`, `CrewViewer`, UI `Button` | 시설 최대 전력 업그레이드, 반응로 업그레이드, 승무원 회복, 함선 수리 | `BattlePrepare` 중심 |
-| `ShipController` | 함선 공통 기반 시스템 | `ShipData`, `Room`, `CrewController`, `CrewSystem`, `FacilitySystem`, `WeaponSystem`, `ShipPowerController`, `WeaponDatabase`, `WeaponTransformData` | 방/승무원/무기 생성, 피해 처리, 사망 판정, 전력 요청, 무기 타입 적용 | `PlayerController`, `EnemyController` 부모, `IDamageable`, `IDeadable` 구현 |
-| `FacilitySystem` | 시설 공통 기반 | `ShipController`, `FacilityState`, `ERoomType`, `EFacilityStatus`, `GameManager` | 시설 전력/피해/수리/보조 상태 관리, 전투 실행 가능 여부 제공 | `WeaponSystem`, `ShieldSystem`, `EngineSystem` 부모 |
-| `WeaponSystem` | 무기 시설 시스템 | `WeaponController`, `ITargeting`, `ProjectileTargetData`, `CursorController` | 무기 전원 상태 반영, 선택 무기/타겟 관리, 적 자동 타겟팅 전달, 타겟 표시 스프라이트 제어 | `FacilitySystem` 상속, `WeaponController` 목록 소유 |
-| `ShieldSystem` | 실드 시설 시스템 | `CombatSystem`, `ShieldViewer` | 전력 기반 최대 실드 계산, 실드 충전, 실드 피해 처리 | `FacilitySystem` 상속 |
-| `EngineSystem` | 엔진 시설 시스템 | `EngineViewer` | 전력 기반 도주 충전, 도주 가능 여부 계산 | `FacilitySystem` 상속 |
-| `ShipPowerController` | 함선 전력 배분 시스템 | `ReactorSystem`, `FacilitySystem` | 시설 전력 할당/회수, 시설 피해로 인한 전력 오버플로 처리, 상태 복원 | `EnemyPowerController` 부모 |
-| `EnemyPowerController` | 적 전력 초기 배분 | `PowerData`, `ShipPowerController` | 시작 시 실드/무기/엔진 전력 자동 할당 | `ShipPowerController` 상속 |
-| `ReactorSystem` | 반응로 전력 저장 | 없음 | 최대 전력/현재 전력 증감 | `MonoBehaviour` |
-| `CrewSystem` | 승무원 그룹/선택 관리자 | `ShipController`, `CrewController`, `Room`, `FacilitySystem`, `GameManager` | 선택 승무원 관리, 목표 방 이동 명령, 사망 승무원 제거, 승무원 로직 실행 가능 여부 제공 | `ShipController`와 상호 참조 |
-| `EnvironmentController` | 전투 환경 이벤트 시스템 | `CombatSystem`, `ShipController`, `Room`, `ProjectileController`, `SolarFlareController` | 일정 주기 환경 피해, 소행성 투사체 생성, 태양 플레어 연출 후 방 피해 | `SceneBinder`가 초기화 |
+| `GameManager` | 전체 게임 흐름과 전역 상태 관리 | `GameContext`, `EnemyDatabase`, `WeaponDatabase`, `PlayerController`, `MainUIController`, `ShopManager`, `SceneBinder` | 씬 로드 처리, 전투 결과 처리, `GameContext` 저장/복원, 전투 정지/재개, 상점/전투 씬 연결 | `SingletonBase<GameManager>` 상속, `SceneManager.sceneLoaded` 이벤트 사용, 여러 시스템으로 향하는 중심 참조 |
+| `SceneBinder` | 전투 씬 런타임 의존성 연결 | `GameContext`, `PlayerController`, `EnemyController`, `StageEnvironmentController`, `EnemyDatabase` | 적 생성, 플레이어 상태 복원, 적 UI 그룹 연결, `CombatSystem` 초기화, 환경 활성화 | `MonoBehaviour`, `GameContext -> SceneBinder -> Player/Enemy/CombatSystem` 호출 흐름의 핵심 |
+| `CombatSystem` | 전투 충돌/피해/연출 중재 | `PlayerController`, `EnemyController`, `ShipController`, `Room`, `ShieldSystem`, `ProjectileController`, `FloatingTextController`, `ExplosionController` | 투사체 이동 보정, 방/보호막 충돌 처리, 함선별 콜라이더/흔들림 참조 관리, 풀링 | `SingletonBase<CombatSystem>` 상속, `ShipSide` 기반 딕셔너리 참조, 전투 런타임 허브 |
+| `ShipController` | 플레이어/적 함선 공통 기반 | `ShipData`, `Room`, `CrewController`, `CrewSystem`, `WeaponSystem`, `ShipPowerController`, `ShipOwnership`, `WeaponDatabase` | 방/승무원/무기 초기화, 시설 등록, 피해/수리/사망 처리, 전투 기능 정지 | `MonoBehaviour`, `IDamageable`, `IDeadable` 구현, `PlayerController`/`EnemyController`의 부모 |
+| `FacilitySystem` | 시설 공통 전력/피해 상태 관리 | `ShipController`, `FacilityState`, `RoomType`, `FacilityStatus` | 시설 전력 증가/감소, 피해/수리, 상태 갱신, 승무원 보조 효과 | `MonoBehaviour`, `WeaponSystem`/`EngineSystem`/`ShieldSystem`의 부모 |
+| `WeaponSystem` | 무기 시설 및 무기 타겟 관리 | `WeaponController`, `ProjectileTargetData`, `ITargeting`, `CursorController` | 무기 전력 활성화, 충전 속도 반영, 플레이어 조준 대상 적용, 적 타겟팅 시스템 주입 | `FacilitySystem` 상속, `ITargeting` 참조, `WeaponController` 목록 소유 |
+| `ShieldSystem` | 보호막 시설 | `FacilitySystem`, `ProjectileController` | 보호막 전력/피해 처리 | `FacilitySystem` 상속, 세부 호출 관계는 확인 필요 |
+| `EngineSystem` | 엔진 시설 | `FacilitySystem` | 엔진 전력/상태 관리 | `FacilitySystem` 상속 |
+| `ReactorSystem` | 반응로 전력 저장소 | `ShipPowerController` | 최대 전력/현재 전력 증가, 감소, 설정 | `MonoBehaviour`, `ShipPowerController`가 합성/참조 |
+| `ShipPowerController` | 함선 시설 전력 분배 | `ReactorSystem`, `FacilitySystem`, `RoomType`, `FacilityState` | 반응로 전력 할당/회수, 시설 전력 오버플로 처리, 저장 상태 적용 | `MonoBehaviour`, `EnemyPowerController`의 부모 |
+| `EnemyPowerController` | 적 함선 전력 제어 | `ShipPowerController` | 적 전력 분배 특화 처리 | `ShipPowerController` 상속 |
+| `CrewSystem` | 승무원 선택/이동/사망 관리 | `ShipController`, `CrewController`, `Room`, `FacilitySystem` | 선택 승무원 관리, 이동 목표 지정, 승무원 사망 반영 | `MonoBehaviour`, `ShipController`와 같은 오브젝트 구성 요소 |
+| `ShopManager` | 전투 준비 씬 강화/회복 관리 | `GameManager`, `GameContext`, `CrewViewer`, Unity UI `Button` | 시설/반응로 강화, 승무원 회복, 함선 수리, 방문 횟수 관리 | `MonoBehaviour`, static `VisitCount`, `GameContext` 변경 호출 |
+| `CursorController` | 마우스 커서 상태 관리 | `WeaponSystem`, `PlayerController` | 기본/조준 커서 전환 | `SingletonBase<CursorController>` 상속 |
+| `MainUIController` | 메인 UI/결과 UI/씬 버튼 제어 | `GameManager`, `BattleResultViewer`, `SceneManager` | 씬 이동, 게임 종료, 도주 처리, 전투 결과 UI 표시 | `MonoBehaviour`, UI 버튼 이벤트의 진입점 |
+| `StageEnvironmentController` | 전투 환경 활성화 관리 | `SceneBinder`, `AsteroidSpawner`, `SolarFlareController` | 소행성/태양 플레어 스테이지 환경 구성 | `MonoBehaviour`, 실제 연결 스크립트/필드 확인 필요 |
+| `BackgroundController` | 배경 랜덤 선택 | `GameManager` | 전투 씬 배경 선택/변경 | `MonoBehaviour`, 상세 연결 확인 필요 |
 
 ### 2.2 Controller 계열
 
 | 클래스 | 역할 | 주요 참조 | 주요 책임 | UML 표시 포인트 |
 |---|---|---|---|---|
-| `PlayerController` | 플레이어 함선 입력 컨트롤러 | `GameManager`, `CombatSystem`, `WeaponSystem`, `CrewSystem`, `SimpleInput` | 마우스 클릭 판독, 적 방 조준, 승무원 선택/이동, 시설 전력 키 입력 | `ShipController` 상속 |
-| `EnemyController` | 적 함선 컨트롤러 | `RandomTargeter`, `CombatSystem`, `WeaponSystem`, `ShipOwnership` | 플레이어 방 목록으로 랜덤 타겟팅 구성, 적 진영 설정 | `ShipController` 상속 |
-| `WeaponController` | 개별 무기 컨트롤러 | `WeaponSystem`, `ProjectileController`, `ProjectileTargetData`, `ITargeting` | 충전, 발사 가능 판정, 다중 발사 코루틴, 투사체 생성/타겟 전달 | `WeaponSystem`이 생성/소유 |
-| `ProjectileController` | 투사체 컨트롤러 | `CombatSystem`, `GameManager`, `ProjectileTargetData`, `Collider2D` | 투사체 이동, 시작/종료 함선 영역 판정, 실드/방 충돌 요청, 폭발 생성 요청 | 무기/환경 공격 모두에서 사용 |
-| `CrewController` | 개별 승무원 컨트롤러 | `CrewSystem`, `Room`, `FacilitySystem`, `CrewState` | 방 이동, 수리, 시설 보조, 피해/사망 처리 | `CrewSystem`이 관리 |
-| `CursorController` | 커스텀 마우스/조준 커서 | `SimpleInput`, `WeaponSystem` | 마우스 위치 추적, 무기 조준 커서 변경/복구 | `SingletonBase<CursorController>` 상속 |
-| `BackgroundController` | 전투 배경 컨트롤러 | `Image`, `Sprite` 목록 | 전투 씬 배경 랜덤 선택 | `GameManager.OnSceneLoaded`에서 호출 |
-| `ExplosionController` | 폭발 효과 컨트롤러 | 없음 | 활성화 후 지정 시간 뒤 비활성화 | `CombatSystem` 풀에서 사용 |
-| `FloatingTextController` | 피해 숫자 표시 컨트롤러 | `TMP_Text` | 텍스트/색상 설정, 이동, 일정 시간 후 비활성화 | `CombatSystem` 풀에서 사용 |
-| `SolarFlareController` | 태양 플레어 연출 컨트롤러 | `Image` | 플레어 색상 보간 연출 | `EnvironmentController`가 호출 |
-| `SpriteShakeController` | 스프라이트 흔들림 컨트롤러 | `SpriteRenderer`, `Transform` | 함선/방 피격 흔들림 연출 | `CombatSystem`, `RoomViewer`에서 사용 |
-| `CameraShakeController` | 카메라 흔들림 컨트롤러 | `Camera.main` | 카메라 위치 흔들림 연출 | 현재 `CombatSystem`에 참조 있으나 일부 호출은 주석 처리 |
-| `AspectRatioController` | 카메라 비율 컨트롤러 | `Camera.main` | 16:9 레터박스 적용 | `Main Camera.prefab` |
+| `PlayerController` | 플레이어 함선 제어 | `GameManager`, `CombatSystem`, `CrewSystem`, `WeaponSystem`, `ShipPowerController`, `Room`, `CrewController` | 입력 처리, 무기 선택/조준, 승무원 선택/이동, 시설 전력 할당, 저장 상태 복원 | `ShipController` 상속, 플레이어 입력에서 시스템 호출로 이어지는 핵심 클래스 |
+| `EnemyController` | 적 함선 제어 | `CombatSystem`, `RandomTargeter`, `WeaponSystem` | 적 타겟팅 시스템 생성, 적 무기에 타겟팅 주입, 적 소유권 설정 | `ShipController` 상속, `ITargeting` 구현체를 무기 시스템에 연결 |
+| `WeaponController` | 단일 무기 동작 | `WeaponSystem`, `ITargeting`, `ProjectileController`, `WeaponViewer`, `ProjectileTargetData` | 충전, 준비 상태 관리, 플레이어/적 발사 처리, 투사체 생성 | `MonoBehaviour`, `WeaponSystem`이 여러 개 소유 |
+| `ProjectileController` | 투사체 이동/충돌 | `CombatSystem`, `Room`, `ShieldSystem` | 목표 지점 이동, 시작/도착 콜라이더 판정, 보호막/방 충돌 전달, 폭발 요청 | `MonoBehaviour`, 충돌 이벤트에서 `CombatSystem` 호출 |
+| `CrewController` | 단일 승무원 동작 | `CrewSystem`, `Room`, `CrewViewer` | 방 배치/이동, 선택 상태, HP/사망 처리, 시설 수리/보조와 연결 | `MonoBehaviour`, 세부 필드/메서드 관계 확인 필요 |
+| `AsteroidSpawner` | 소행성 생성 | `ProjectileController`, `CombatSystem` | 환경 투사체 생성 | `MonoBehaviour`, `StageEnvironmentController`에서 사용 추정, 확인 필요 |
+| `SolarFlareController` | 태양 플레어 이벤트 | `ShipController`, `FacilitySystem` | 태양 플레어 환경 효과 처리 | `MonoBehaviour`, 상세 호출 관계 확인 필요 |
+| `ExplosionController` | 폭발 연출 | `CombatSystem` | 풀에서 꺼낸 폭발 오브젝트 재생/비활성화 | `MonoBehaviour`, `CombatSystem.GetExplosionObject`와 연결 |
+| `FloatingTextController` | 피해량 텍스트 연출 | `CombatSystem` | 피해 텍스트 표시 후 비활성화 | `MonoBehaviour`, `CombatSystem.SetFloatingText`와 연결 |
+| `AspectRatioController` | 카메라 화면 비율 처리 | `Camera` | 화면 비율 보정 | `MonoBehaviour`, `Main Camera.prefab`에 연결 |
 
 ### 2.3 Viewer/UI 계열
 
 | 클래스 | 역할 | 주요 참조 | 주요 책임 | UML 표시 포인트 |
 |---|---|---|---|---|
-| `MainUIController` | 공통 메뉴/씬 이동 UI | `GameManager`, `BattleResultViewer`, `SceneManager` | 씬 이동, 메인 메뉴 복귀, 게임 종료, 도주 요청, 전투 결과 UI 표시 | `Main UI.prefab` |
-| `BattleResultViewer` | 전투 결과 UI | `GameManager`, `EBattleResultExtensions` | 승패/보상 텍스트 표시, 결과에 따른 씬 이동 트리거 | `Battle Result UI.prefab` |
-| `CrewViewer` | 승무원 상태 UI | `CrewController`, `GameManager`, `CrewState` 간접 | 이름/HP 표시, 선택 글로우, 목표 방 표시, 상점 회복 UI 표시 | 전투/상점 겸용 |
-| `EngineViewer` | 엔진 도주 UI | `EngineSystem` | 도주 충전바, 점프 버튼 표시 | `EngineSystem` 참조 |
-| `FacilityPowerViewer` | 시설 전력/상태 UI | `FacilitySystem`, `GameManager`, `ERoomTypeExtensions` | 전력바, 피해바, 보조 아이콘, 시설명 텍스트, 적 시설 자동 탐색 | `PowerViewer` 상속 |
-| `HpViewer` | 함선 HP UI | `ShipController`, `GameManager` | HP 바 생성/색상 갱신, 적 함선 자동 탐색 옵션 | 전투/상점 겸용 |
-| `PowerViewer` | 기본 전력바 UI | `FacilitySystem` | 시설 전력바 생성/색상 갱신 | `FacilityPowerViewer` 부모 |
-| `ReactorViewer` | 반응로 전력 UI | `ReactorSystem`, `GameManager` | 반응로 전력칸 표시, `GameContext` 기반 표시 가능 | `Reactor Canvas.prefab` |
-| `RoomViewer` | 방 표시 UI/연출 | `Room`, `SpriteShakeController` | 방 번호/타입 색상 표시, 피격 시 흔들림 요청 | `Room.prefab` |
-| `ScrapViewer` | 스크랩 표시 UI | `GameManager` | 현재 스크랩 텍스트 표시 | `Scrap UI.prefab` |
-| `ShieldViewer` | 실드 UI | `ShieldSystem` | 실드 칸/충전바/메인 실드 표시, 실드 재생성 연출 | `Shield UI.prefab` |
-| `ShipViewer` | 함선 방 연결 시각화 | `ShipController`, `RoomViewer`, `Room` | 방 Viewer 동기화, 방 연결선/Gizmos 생성 | `Room.neighborRoomIds`를 reflection으로 읽음 |
-| `WeaponViewer` | 무기 충전 UI | `WeaponController`, `Image` | 무기 충전 스프라이트/바 갱신, 런타임 충전바 주입 | 무기 prefab에 붙음 |
+| `PowerViewer` | 전력 UI 공통 표시 | `PowerBarStatus` | 전력 바 상태 표시 | `MonoBehaviour`, `FacilityPowerViewer`의 부모 |
+| `FacilityPowerViewer` | 시설 전력 UI 입력/표시 | `PowerViewer`, `ShipPowerController`, `FacilitySystem`, `RoomType`, `IPointerClickHandler` | 시설 전력 클릭 처리, 전력 상태 표시 | `PowerViewer` 상속, `IPointerClickHandler` 구현 |
+| `ReactorViewer` | 반응로 전력 UI | `ReactorSystem` 또는 `ShipPowerController` | 반응로 전력 표시 | `MonoBehaviour`, 상세 참조 확인 필요 |
+| `ShieldViewer` | 보호막 UI | `ShieldSystem` | 보호막 상태 표시 | `MonoBehaviour`, 상세 참조 확인 필요 |
+| `HpViewer` | 함선 HP UI | `ShipController` | 함선 체력 표시 | `MonoBehaviour`, 플레이어/적 함선 UI 연결 |
+| `ScrapViewer` | 스크랩 UI | `PlayerController` 또는 `GameManager` | 보유 스크랩 표시 | `MonoBehaviour`, 상세 참조 확인 필요 |
+| `RoomViewer` | 방 스프라이트/상태 표시 | `Room`, `FacilitySystem` | 방 위치/상태/피격 표시 | `MonoBehaviour`, `Room.prefab`에 연결 |
+| `WeaponViewer` | 무기 충전 UI | `WeaponController`, UI Slider/Image | 무기 충전 바 및 상태 표시 | `MonoBehaviour`, 무기 프리팹에 연결 |
+| `CrewViewer` | 승무원 UI/요약 표시 | `CrewController`, Unity UI `Button` | 승무원 HP/선택/회복 UI 표시 | `MonoBehaviour`, `Crew Summary.prefab`과 승무원 UI에서 사용 |
+| `BattleResultViewer` | 전투 결과 UI | `BattleResult`, `GameManager` | 승패/도주 결과 및 보상 표시 | `MonoBehaviour`, `MainUIController`가 활성화 |
+| `ShipViewer` | 함선 시각 표시 | `ShipController` | 함선 표시 갱신 | `MonoBehaviour`, 적 프리팹에 연결 확인 |
+| `SpriteShakeController` | 피격 흔들림 연출 | `CombatSystem`, `ShipController` | 피격 시 스프라이트 흔들림 | `MonoBehaviour`, 함선/방 프리팹에 연결 |
 
 ### 2.4 데이터/상태 클래스
 
 | 클래스 | 역할 | 주요 필드 | 사용 위치 | UML 표시 포인트 |
 |---|---|---|---|---|
-| `GameContext` | 씬 간 저장 데이터 | `Rooms`, `FacilityStates`, `CrewStates`, `WeaponTypes`, `EnemyType`, `ScrapAmount`, `ShipHp`, `ShipPower` | `GameManager`, `SceneBinder`, `ShopManager`, Viewer | 순수 `[Serializable]` 데이터 클래스 |
-| `ShipData` | 함선 구성 ScriptableObject | `MaxHp`, `List<Room>` | `ShipController` | `PlayerShipData`, `EnemyShip1/2/3Data` |
-| `EnemyDatabase` | 적 프리팹 DB | `EnemyPrefabEntry[]` | `GameManager`, `SceneBinder` | `ScriptableObject`, `EEnemyType -> Enemy prefab` |
-| `EnemyPrefabEntry` | 적 타입/프리팹 매핑 | `enemyType`, `prefab` | `EnemyDatabase` | 직렬화 데이터 |
-| `WeaponDatabase` | 무기 프리팹 DB | `WeaponPrefabEntry[]` | `GameManager`, `ShipController.InitWeapons` | `ScriptableObject`, `EWeaponType -> Weapon prefab` |
-| `WeaponPrefabEntry` | 무기 타입/프리팹 매핑 | `weaponType`, `prefab` | `WeaponDatabase` | 직렬화 데이터 |
-| `WeaponTransformData` | 무기 배치 데이터 | `WeaponOffset`, `WeaponRotation`, `isFlipX`, `isFlipY` | `ShipController.InitWeapons` | 함선별 무기 배치 값 |
-| `Room` | 방 데이터/런타임 상태 | `Id`, `Type`, `LocalPosition`, `GlobalPosition`, `Crews`, `FacilitySystem`, `neighborRoomIds`, `IsHit` | `ShipData`, `ShipController`, `CrewController`, `CombatSystem`, `RoomViewer` | 데이터지만 런타임 참조 포함 |
-| `FacilityState` | 시설 저장 상태 | `Type`, `TotalDamage`, `MaxPowerLimit`, `Power` | `GameContext`, `FacilitySystem.ApplyState` | 순수 상태 스냅샷 |
-| `CrewState` | 승무원 저장 상태 | `Hp`, `MaxHp`, `Name`, `LastRoomId` | `GameContext`, `PlayerController.SetCrewsState` | 순수 상태 스냅샷 |
-| `ProjectileTargetData` | 투사체 타겟 값 | `TargetPosition`, `RoomId` | `WeaponController`, `WeaponSystem`, `ProjectileController`, `EnvironmentController` | `struct` |
-| `PowerData` | 적 초기 전력 값 | `ShieldPower`, `WeaponPower`, `EnginePower` | `EnemyPowerController` | 직렬화 데이터 |
-| Enums | 상태/타입 구분 | `EEnemyType`, `EWeaponType`, `ERoomType`, `EShipSide`, `EBattleResult`, `EExplosionType`, `EFacilityStatus`, `EPowerBarStatus`, `ECrewStatus` | 전투/시설/UI 전반 | UML에서는 enum으로 표시 |
+| `GameContext` | 씬 전환 간 플레이어 상태 저장 | `Rooms`, `FacilityStates`, `CrewStates`, `FacilityUpgradeCount`, `ScrapAmount`, `ShipHp`, `ShipMaxHp`, `ShipPower`, `ShipReactorCapacity`, `ReactorUpgradeCount`, `WeaponTypes`, `EnemyType` | `GameManager`, `SceneBinder`, `ShopManager` | 순수 직렬화 데이터 클래스, 전역 런타임 상태 저장소 |
+| `Room` | 함선 방 데이터/런타임 상태 | `Id`, `Type`, `LocalPosition`, `GlobalPosition`, `MaxCrewCapacity`, `neighborRoomIds`, `FacilitySystem`, `Crews`, `IsHit` | `ShipController`, `CombatSystem`, `CrewSystem`, `ProjectileController` | `[System.Serializable]` 데이터 클래스, `MonoBehaviour` 아님 |
+| `ShipData` | 함선 기본 데이터 ScriptableObject | `MaxHp`, `Rooms` | `ShipController`, `PlayerShipData.asset`, `EnemyShip*Data.asset` | `ScriptableObject`, 방 배치 데이터 소스 |
+| `EnemyDatabase` | 적 타입별 프리팹 데이터베이스 | `EnemyPrefabEntry(enemyType, prefab)` | `GameManager`, `SceneBinder` | `ScriptableObject`, `EnemyType -> GameObject` 매핑 |
+| `WeaponDatabase` | 무기 타입별 프리팹 데이터베이스 | `WeaponPrefabEntry(weaponType, prefab)` | `ShipController`, `GameManager` | `ScriptableObject`, `WeaponType -> GameObject` 매핑 |
+| `FacilityState` | 시설 저장 상태 | `Type`, `Power`, `MaxPowerLimit`, `TotalDamage` | `GameContext`, `FacilitySystem`, `ShipPowerController`, `PlayerController` | 순수 데이터 클래스, 시설 복원에 사용 |
+| `CrewState` | 승무원 저장 상태 | 승무원 HP/방 위치 관련 필드 | `GameContext`, `PlayerController`, `ShipController` | 순수 데이터 클래스, 상세 필드는 확인 필요 |
+| `ProjectileTargetData` | 투사체 목표 데이터 | `TargetPosition`, `RoomId` | `WeaponSystem`, `WeaponController`, `ProjectileController` | 순수 데이터 클래스/struct 성격, 조준 정보 전달 |
+| `WeaponTransformData` | 무기 배치 데이터 | `WeaponOffset`, `WeaponRotation`, `isFlipX`, `isFlipY` | `ShipController` | `[System.Serializable]`, 무기 프리팹 위치/회전 적용 |
+| `ShipOwnership` | 함선 소유 진영 정보 | `ShipSide` | `ShipController`, `CombatSystem`, `PlayerController`, `EnemyController` | `MonoBehaviour`, `ShipSide` 기반 전투 매핑에 사용 |
+| `ShipSide` | 함선 진영 enum | `Player`, `Enemy0` 등 | `ShipOwnership`, `CombatSystem` | UML enum |
+| `BattleResult` | 전투 결과 enum | 플레이어/적 파괴, 도주 등 | `GameManager`, `MainUIController`, `BattleResultViewer`, `ShipController` | UML enum |
+| `EnemyType` | 적 종류 enum | `Enemy1`, `Enemy2`, `Enemy3` | `GameManager`, `EnemyDatabase`, `SceneBinder`, `GameContext` | UML enum |
+| `WeaponType` | 무기 종류 enum | `BasicLaser1`, `BurstLaser1`, `BurstLaser2`, `BurstLaser3`, `Missile1` | `GameContext`, `WeaponDatabase`, `ShipController` | UML enum |
+| `RoomType` | 방/시설 종류 enum | `Weapon`, `Engine`, `Shield` 등 | `Room`, `FacilitySystem`, `ShipPowerController`, `ShopManager` | UML enum |
+| `FacilityStatus` | 시설 상태 enum | `Normal`, `Damaged`, `Broked`, `Disabled` | `FacilitySystem`, `Room` | UML enum |
+| `PowerBarStatus` | 전력 UI 상태 enum | 확인 필요 | `PowerViewer`, `FacilityPowerViewer` | UML enum |
 
 ### 2.5 기타 클래스
 
 | 클래스 | 역할 | 사용 위치 | 비고 |
 |---|---|---|---|
-| `RandomTargeter` | 랜덤 방 타겟 제공 | `EnemyController`, `WeaponController` | `ITargeting` 구현 |
-| `RoomGraph` | 방 그래프 예정 구조 | 직접 사용 확인 안 됨 | 확인 필요 |
-| `SingletonBase<T>` | 싱글톤 기반 | `GameManager`, `CombatSystem`, `CursorController` | `DontDestroyOnLoad` 처리 |
-| `SimpleInput` | Input System 래퍼 | `GameManager`, `PlayerController`, `CursorController` | static utility |
-| `Tags` | 태그/레이어 문자열 상수 | 클릭/충돌/함선 판별 | static utility |
-| `LayerMaskExtensions` | LayerMask 포함 여부 등 | `PlayerController`, `ProjectileController` | static utility |
-| `TransformExtensions`, `CharacterController2D`, `ComponentPool<T>`, `SpriteFlipper` | 범용 유틸/샘플성 | 핵심 FTL 흐름 직접 연결은 제한적 | 확인 필요 |
-| `EBattleResultExtensions`, `EDamageTypeExtensions`, `ERoomTypeExtensions` | enum 표시/계산 확장 | UI, 피해 표시, 시설명 표시 | static utility |
-| `zTest/Test`, `TestA`, `TestB` | 테스트/학습용 클래스 | 실제 씬/프리팹 연결 확인 안 됨 | 확인 필요 |
+| `SingletonBase<T>` | 싱글톤 기반 클래스 | `GameManager`, `CombatSystem`, `CursorController` | 전역 접근 패턴의 기반 |
+| `IDamageable` | 피해 처리 인터페이스 | `ShipController` | 구현 클래스: `ShipController` |
+| `IDeadable` | 사망 처리 인터페이스 | `ShipController` | 구현 클래스: `ShipController` |
+| `ITargeting` | 타겟 선택 인터페이스 | `WeaponSystem`, `WeaponController`, `RandomTargeter` | 적 무기 타겟팅 추상화 |
+| `RandomTargeter` | 랜덤 방 타겟팅 구현 | `EnemyController`, `WeaponController` | `ITargeting` 구현, 플레이어 방 목록 참조 |
+| `ShipDebugController` | 함선 디버그 UI/버튼 | 디버그 프리팹 또는 씬 | 확인 필요 |
+| `TutorialController` | 튜토리얼 UI 제어 | `Tutorial Canvas.prefab` | 확인 필요 |
+| `BackgroundController` | 배경 관리 | 전투 씬 | `GameManager`가 랜덤 배경 호출 |
 
 ## 3. UML 다이어그램 작성용 관계 요약
 
-### 상속 관계
+- 상속 관계
+  - `GameManager -> SingletonBase<GameManager>`
+  - `CombatSystem -> SingletonBase<CombatSystem>`
+  - `CursorController -> SingletonBase<CursorController>`
+  - `PlayerController -> ShipController -> MonoBehaviour`
+  - `EnemyController -> ShipController -> MonoBehaviour`
+  - `WeaponSystem -> FacilitySystem -> MonoBehaviour`
+  - `ShieldSystem -> FacilitySystem -> MonoBehaviour`
+  - `EngineSystem -> FacilitySystem -> MonoBehaviour`
+  - `EnemyPowerController -> ShipPowerController -> MonoBehaviour`
+  - `FacilityPowerViewer -> PowerViewer -> MonoBehaviour`
 
-- `GameManager -> SingletonBase<GameManager>`
-- `CombatSystem -> SingletonBase<CombatSystem>`
-- `CursorController -> SingletonBase<CursorController>`
-- `PlayerController -> ShipController`
-- `EnemyController -> ShipController`
-- `WeaponSystem -> FacilitySystem`
-- `ShieldSystem -> FacilitySystem`
-- `EngineSystem -> FacilitySystem`
-- `EnemyPowerController -> ShipPowerController`
-- `FacilityPowerViewer -> PowerViewer`
+- 인터페이스 구현 관계
+  - `ShipController` implements `IDamageable`
+  - `ShipController` implements `IDeadable`
+  - `FacilityPowerViewer` implements `IPointerClickHandler`
+  - `RandomTargeter` implements `ITargeting`
 
-### 인터페이스 구현 관계
+- 포함/소유 관계
+  - `GameManager` owns `GameContext`
+  - `GameContext` contains `List<Room>`, `List<FacilityState>`, `List<CrewState>`, `List<WeaponType>`
+  - `ShipController` owns `Rooms`, `Crews`, `FacilitySystems`
+  - `ShipController` composes/uses `CrewSystem`, `WeaponSystem`, `ShipPowerController`, `ShipOwnership`
+  - `ShipController` instantiates room, crew, weapon, weapon-charge UI prefabs during initialization
+  - `WeaponSystem` owns `List<WeaponController>`
+  - `CrewSystem` owns selected crew list and references all crew on the ship
+  - `ShipPowerController` owns/reference-list `FacilitySystem` objects and one `ReactorSystem`
+  - `CombatSystem` keeps runtime maps for `ShipSide -> Collider2D`, `ShipSide -> SpriteShakeController`, `Collider2D -> ShipSide`
+  - `EnemyDatabase` contains `EnemyPrefabEntry`
+  - `WeaponDatabase` contains `WeaponPrefabEntry`
+  - `ShipData` contains room layout data
 
-- `ShipController : IDamageable, IDeadable`
-- `RandomTargeter : ITargeting`
+- 참조 관계
+  - `GameManager -> SceneBinder`: 씬 로드 후 바인딩 호출
+  - `GameManager -> ShopManager`: 전투 준비 씬에서 상태 적용
+  - `GameManager -> MainUIController`: 전투 결과 UI 표시
+  - `SceneBinder -> GameManager.EnemyDatabase`: 적 프리팹 조회
+  - `SceneBinder -> PlayerController/EnemyController`: 상태 복원 및 전투 시스템 연결
+  - `SceneBinder -> StageEnvironmentController`: 소행성/태양 플레어 환경 설정
+  - `CombatSystem -> ShipController`: 피해 대상 함선 조회
+  - `CombatSystem -> ProjectileController`: 투사체 충돌 처리
+  - `PlayerController -> CombatSystem`: 클릭 위치에서 방/승무원 조회
+  - `PlayerController -> CrewSystem`: 승무원 선택/이동 요청
+  - `PlayerController -> WeaponSystem`: 무기 선택/방 타겟 지정
+  - `EnemyController -> RandomTargeter -> Room`: 적 무기의 목표 방 선택
+  - `WeaponController -> ProjectileController`: 발사 시 투사체 생성 및 목표 전달
+  - `WeaponController -> ITargeting`: 적 무기 자동 목표 선택
+  - `ProjectileController -> CombatSystem`: 보호막/방 충돌 처리 요청
+  - `ShopManager -> GameManager -> GameContext`: 강화/회복 데이터 변경
+  - `MainUIController -> GameManager`: 씬 이동, 도주, 초기화 요청
 
-### 포함/소유 관계
-
-- `GameManager` owns `GameContext`, `EnemyDatabase`, `WeaponDatabase`
-- `GameContext` owns `List<Room>`, `List<FacilityState>`, `List<CrewState>`, `List<EWeaponType>`, `EEnemyType`
-- `EnemyDatabase` owns `EnemyPrefabEntry[]`
-- `WeaponDatabase` owns `WeaponPrefabEntry[]`
-- `ShipController` owns runtime `Rooms`, `Crews`, `FacilitySystems`, `WeaponTypes`, `WeaponTransformData`
-- `ShipController` instantiates `Room`, `CrewController`, `WeaponController`, `CrewViewer`, `WeaponViewer` related prefab instances
-- `WeaponSystem` owns `List<WeaponController>` and target sprite objects
-- `CrewSystem` owns `List<CrewController>` and selected crew list
-- `CombatSystem` owns/caches player/enemy `ShipController`, ship colliders, `SpriteShakeController`, floating text pool, explosion pool
-
-### 주요 참조 관계
-
-- `GameManager -> SceneBinder`, `ShopManager`, `MainUIController`, `BackgroundController`, `CursorController`
-- `SceneBinder -> EnemyDatabase -> Enemy prefab -> EnemyController`
-- `SceneBinder -> EnvironmentController`
-- `PlayerController -> CombatSystem`, `WeaponSystem`, `CrewSystem`
-- `EnemyController -> RandomTargeter -> CombatSystem.GetPlayerRooms()`
-- `ShipController -> WeaponDatabase -> Weapon prefab -> WeaponController`
-- `WeaponController -> ProjectileController`
-- `ProjectileController -> CombatSystem`
-- `CombatSystem -> ShieldSystem`, `ShipController`, `FloatingTextController`, `ExplosionController`, `SpriteShakeController`
-- `EnvironmentController -> CombatSystem`, `ShipController`, `ProjectileController`, `SolarFlareController`
-- `Room -> FacilitySystem`, `CrewController`
-- Viewers mostly reference matching System/Controller or fallback to `GameManager/GameContext`
-
-### 호출 흐름상 중요한 관계
-
-- 씬 로드:
-  - `SceneManager.sceneLoaded -> GameManager.OnSceneLoaded -> SceneBinder.BindSceneObjects`
-  - `SceneBinder.SpawnEnemyOrFindSceneEnemy -> EnemyDatabase.GetPrefab -> Instantiate enemy -> EnemyController`
-  - `SceneBinder.BindCombatSystem -> CombatSystem.InitCombatSystem`
-  - `SceneBinder.BindStageEnvironment -> EnvironmentController.InitStageEnvironment`
-- 플레이어 전투 입력:
-  - `PlayerController.HandleMouse -> WeaponSystem.SetSelectedRoomTarget`
-  - `PlayerController.HandleMouse -> CrewSystem.AddSelectedCrew/SetTargetRoom`
-  - `PlayerController.TestHandleFacilityPower -> ShipController.HandlePowerInput -> ShipPowerController.TryAllocatePower/TryDeallocatePower`
-- 무기/투사체:
-  - `ShipController.InitWeapons -> WeaponDatabase.GetPrefab -> Instantiate WeaponController`
-  - `WeaponSystem.SetSelectedWeapon -> CursorController.SetCursorAim`
-  - `WeaponController.Update -> FireCoroutine -> Instantiate ProjectileController -> ProjectileController.SetTarget`
-  - `ProjectileController.OnTriggerExit2D -> CombatSystem.MoveToEnemyArea`
-  - `ProjectileController.OnTriggerEnter2D -> CombatSystem.HandleShieldCollision`
-  - `ProjectileController.Update -> CombatSystem.HandleRoomCollision`
-- 피해/결과:
-  - `CombatSystem.HandleRoomCollision -> ShipController.TakeDamageToRoom`
-  - `ShipController.TakeDamageToRoom -> Room.TakeDamageToCrews/TakeDamageToFacility -> CheckGameOver`
-  - `ShipController.CheckGameOver -> GameManager.StopBattle -> DeadCoroutine -> GameManager.HandleBattleResult`
-  - `GameManager.HandleBattleResult -> MainUIController.SetBattleResult -> BattleResultViewer`
-  - `BattleResultViewer.DisableBattleResultViewer -> GameManager.MoveSceneByBattleResult`
-- 환경:
-  - `EnvironmentController.EnvironmentCoroutine -> ApplyEnvironmentEffect`
-  - 소행성: `EnvironmentController.SpawnAsteroidAttack -> ProjectileController -> CombatSystem.MoveToEnemyArea`
-  - 태양: `SolarFlareController.ApplyFlareEffect -> ShipController.TakeDamageToRoom -> CombatSystem.SetFloatingText`
+- 호출 흐름상 중요한 관계
+  - 전투 씬 진입
+    - `SceneManager.sceneLoaded`
+    - `GameManager.OnSceneLoaded`
+    - `SceneBinder.BindSceneObjectsWithEnvironment`
+    - `SceneBinder.SpawnEnemyOrFindSceneEnemy`
+    - `PlayerController.SetFacilitySystems / SetCrewsState / SetWeaponTypes`
+    - `CombatSystem.InitCombatSystem`
+  - 플레이어 공격
+    - `PlayerController.Update`
+    - `WeaponSystem.SetSelectedWeapon`
+    - `CombatSystem.GetRoomOrNull`
+    - `WeaponSystem.SetSelectedRoomTarget`
+    - `WeaponController.FireCoroutine`
+    - `ProjectileController`
+    - `CombatSystem.HandleShieldCollision` 또는 `CombatSystem.HandleRoomCollision`
+  - 적 공격
+    - `EnemyController.Start`
+    - `RandomTargeter`
+    - `WeaponSystem.SetWeaponsTargetingSystem`
+    - `WeaponController.UpdateEnemyFire`
+    - `ProjectileController`
+    - `CombatSystem`
+  - 피해/전투 종료
+    - `CombatSystem.HandleRoomCollision`
+    - `ShipController.TakeDamageToRoom`
+    - `ShipController.CheckGameOver`
+    - `GameManager.HandleBattleResult`
+    - `MainUIController.SetBattleResult`
+  - 전투 준비/상점
+    - `ShopManager.Awake`
+    - `GameManager.EnsureBattlePrepareTestGameContext`
+    - `ShopManager.ApplyGameContext`
+    - `ShopManager.IncreaseMaxPowerLimit / IncreaseReactorMaxPower / HealCrew / Repair`
+    - `GameManager`의 `GameContext` 변경 메서드
 
 ## 4. 프리팹 정리
 
-| 프리팹 | 역할 | 연결 스크립트 | 사용 씬/시스템 | 재사용성 | UML 표시 포인트/비고 |
+| 프리팹 | 역할 | 연결 스크립트 | 사용 씬/시스템 | 재사용성 | 비고 |
 |---|---|---|---|---|---|
-| `GameManager.prefab` | 전역 게임 매니저 | `GameManager` | `_MainMenu`, `BattlePrepare`, `BattleScene*`, `GameOver` | 전역 재사용 | `EnemyDatabase`, `WeaponDatabase`, `GameContext`의 루트 |
-| `CustomMouse.prefab` | 커스텀 커서 | `CursorController` | 주요 씬 | 전역 재사용 | `SingletonBase<CursorController>` |
-| `Main Camera.prefab` | 카메라 | `AspectRatioController` | 주요 씬 | 재사용 | 카메라 비율 제어 |
-| `Crew.prefab` | 승무원 런타임 오브젝트 | `CrewController` | `ShipController.InitCrews`, 전투 씬 | 재사용 | `CrewSystem` 소유 대상 |
-| `Room.prefab` | 방 표시/피격 연출 | `RoomViewer`, `SpriteShakeController` | `ShipController.InitRooms`, 전투 씬 | 재사용 | `Room` 데이터 시각화 |
-| `Shield.prefab` | 실드 시각 오브젝트 | 직접 프로젝트 스크립트 없음 | 적/전투 씬 | 확인 필요 | `ShieldViewer`와 연결 여부는 Inspector 확인 필요 |
-| `EnemySpawnPoint.prefab` | 적 생성 위치 | 직접 프로젝트 스크립트 없음 | `SceneBinder` enemy spawn | 씬 배치용 | 위치 기준 오브젝트 |
-| `Enemy/Enemy1.prefab` | 적 함선 1 | `EnemyController`, `CrewSystem`, `EnemyPowerController`, `ReactorSystem`, `WeaponSystem`, `EngineSystem`, `ShieldSystem`, `ShipOwnership`, `ShipViewer`, `SpriteShakeController` | `EnemyDatabase`, `BattleScene*` | 재사용 | `EnemyShip1Data`, 무기/방/승무원 prefab 의존 |
-| `Enemy/Enemy2.prefab` | 적 함선 2 | Enemy1과 동일 계열 | `EnemyDatabase`, `BattleScene*` | 재사용 | `EnemyShip2Data` 기반 |
-| `Enemy/Enemy3.prefab` | 적 함선 3 | Enemy1과 동일 계열 | `EnemyDatabase`, `BattleScene*` | 재사용 | `EnemyShip3Data` 기반 |
-| `Weapon/Basic Laser 1.prefab` | 무기 | `WeaponController`, `WeaponViewer` | `WeaponDatabase`, `ShipController.InitWeapons` | 재사용 | `Red Laser Projectile` 참조 |
-| `Weapon/Burst Laser 1.prefab` | 무기 | `WeaponController`, `WeaponViewer` | `WeaponDatabase`, `ShipController.InitWeapons` | 재사용 | `Red Laser Projectile` 참조 |
-| `Weapon/Burst Laser 2.prefab` | 무기 | `WeaponController`, `WeaponViewer` | `WeaponDatabase`, `ShipController.InitWeapons`, 적 prefab | 재사용 | `Purple Laser Projectile` 참조 |
-| `Weapon/Burst Laser 3.prefab` | 무기 | `WeaponController`, `WeaponViewer` | `WeaponDatabase`, `ShipController.InitWeapons` | 재사용 | `Purple Laser Projectile` 참조 |
-| `Weapon/Missile 1.prefab` | 미사일 무기 | `WeaponController`, `WeaponViewer` | `WeaponDatabase`, `ShipController.InitWeapons` | 재사용 | `Basic Missile Projectile` 참조 |
-| `Projectile/Red Laser Projectile.prefab` | 레이저 투사체 | `ProjectileController` | Basic/Burst Laser 계열 | 재사용 | `CombatSystem` 충돌 처리 대상 |
-| `Projectile/Purple Laser Projectile.prefab` | 레이저 투사체 | `ProjectileController` | Burst Laser 2/3 | 재사용 | `CombatSystem` 충돌 처리 대상 |
-| `Projectile/Green Laser Projectile.prefab` | 레이저 투사체 | `ProjectileController` | 사용 위치 확인 필요 | 재사용 가능 | DB 직접 매핑은 확인 안 됨 |
-| `Projectile/Basic Missile Projectile.prefab` | 미사일 투사체 | `ProjectileController` | `Missile 1` | 재사용 | `CombatSystem` 충돌 처리 대상 |
-| `Projectile/Asteroid Projectile.prefab` | 환경 소행성 투사체 | `ProjectileController` | `EnvironmentController`, `BattleScene*` | 환경 전용 가능성 | 환경 이벤트가 직접 생성 |
-| `Explosion/Red Explosion.prefab` | 폭발 효과 | `ExplosionController` | `CombatSystem` explosion pool, 전투 씬 | 재사용 | 현재 전투 씬에서 주로 참조 |
-| `Explosion/Blue/Dark Red/Purple Explosion.prefab` | 폭발 효과 변형 | `ExplosionController` | 테스트 씬 | 재사용 가능 | 실제 전투 사용 여부 확인 필요 |
-| `Floating Text.prefab` | 피해 숫자 표시 | `FloatingTextController` | `CombatSystem` floating text pool | 재사용 | 피해 타입별 색상/숫자 표시 |
-| `Solar Flare.prefab` | 태양 플레어 연출 | `SolarFlareController` | `EnvironmentController`, 테스트 씬 | 환경 재사용 | 태양 스테이지용 |
-| `_UI/Main UI.prefab` | 공통 메뉴 UI | `MainUIController` | 주요 씬 | 재사용 | 씬 이동/일시정지/결과 UI 연결 |
-| `_UI/Battle Result UI.prefab` | 전투 결과 UI | `BattleResultViewer` | `BattleScene*`, 테스트 씬 | 재사용 | `GameManager.MoveSceneByBattleResult`로 이어짐 |
-| `_UI/Crew/Crew UI.prefab` | 승무원 UI 그룹 | 내부 `Crew Summary` | `BattleScene*` | 재사용 | 전투 승무원 요약 묶음 |
-| `_UI/Crew/Crew Summary.prefab` | 승무원 요약 UI | `CrewViewer` | `ShipController.InitCrews`, 상점/전투 UI | 재사용 | 전투/회복 UI 겸용 |
-| `_UI/Crew/Crew Heal Group.prefab` | 승무원 회복 UI 묶음 | 직접 프로젝트 스크립트 없음, 내부 `Crew Summary` | 상점 UI 계열 | 특정 UI 가능성 | 확인 필요 |
-| `_UI/Facility/Facilities Canvas.prefab` | 시설 UI 묶음 | 내부 `Facility UI` | `BattleScene*` | 재사용 | 시설 UI 그룹 |
-| `_UI/Facility/Facility UI.prefab` | 시설 전력/상태 UI | `FacilityPowerViewer` | 전투 시설 UI | 재사용 | `FacilitySystem` 참조 |
-| `_UI/Facility/Facility Upgrade UI.prefab` | 시설 업그레이드 UI | `FacilityPowerViewer` | `BattlePrepare` | 상점 전용 가능성 | `GameContext` 기반 표시 가능 |
-| `_UI/Reactor Canvas.prefab` | 반응로 UI | `ReactorViewer` | `BattleScene*`, `BattlePrepare` | 재사용 | `ReactorSystem` 또는 `GameContext` 참조 |
-| `_UI/Scrap UI.prefab` | 스크랩 UI | `ScrapViewer` | `BattleScene*`, `BattlePrepare` | 재사용 | `GameManager.GetScrap` |
-| `_UI/Shield UI.prefab` | 실드 UI | `ShieldViewer` | `BattleScene*` | 재사용 | `ShieldSystem` 참조 |
-| `_UI/Ship Hp/Hp Canvas.prefab` | 함선 HP UI | `HpViewer` | `BattleScene*`, `BattlePrepare` | 재사용 | `ShipController` 또는 `GameContext` 참조 |
-| `_UI/Ship Hp/Hp Bar.prefab` | HP 바 조각 | 직접 프로젝트 스크립트 없음 | `HpViewer`가 생성/사용 | UI 부품 | 반복 UI 단위 |
-| `_UI/Power Bar/Power Bar.prefab` | 전력바 조각 | 직접 프로젝트 스크립트 없음 | `PowerViewer`, `ReactorViewer`, `FacilityPowerViewer` | UI 부품 | 반복 UI 단위 |
-| `_UI/Power Bar/Power Bar Group.prefab` | 전력바 그룹 | 직접 프로젝트 스크립트 없음 | 여러 UI prefab 내부 | UI 부품 | 그룹 컨테이너 |
-| `_UI/Weapon Charge UI.prefab` | 무기 충전 UI 그룹 | 내부 `Weapon Charge Status` | `BattleScene*` | 재사용 | 무기 충전 UI 묶음 |
-| `_UI/Weapon Charge Status.prefab` | 개별 무기 충전 상태 UI | 직접 프로젝트 스크립트 없음 | `ShipController.InitWeapons` | UI 부품 | `WeaponViewer.SetChargeBar`로 연결됨 |
-| `_UI/Ship Debug Buttons.prefab` | 디버그 버튼 UI | 직접 프로젝트 스크립트 확인 안 됨 | `BattleScene*` | 디버그/씬 전용 | 버튼 이벤트 Inspector 확인 필요 |
+| `Assets/_Prefabs/GameManager.prefab` | 전역 게임 매니저 | `GameManager` | 전체 게임 흐름 | 재사용 가능/전역 | `EnemyDatabase`, `WeaponDatabase`, `GameContext` 참조 필요 |
+| `Assets/_Prefabs/Main Camera.prefab` | 메인 카메라 | `AspectRatioController` | 여러 씬 | 재사용 가능 | 카메라 비율 보정 |
+| `Assets/_Prefabs/CustomMouse.prefab` | 커스텀 커서 | `CursorController` | 전투/입력 시스템 | 재사용 가능 | 싱글톤 |
+| `Assets/_Prefabs/Room.prefab` | 함선 방 런타임 오브젝트 | `RoomViewer`, `SpriteShakeController` | `ShipController` 초기화 | 재사용 가능 | `ShipData.Rooms` 기반으로 생성 |
+| `Assets/_Prefabs/Crew.prefab` | 승무원 오브젝트 | `CrewController` | `ShipController`, `CrewSystem` | 재사용 가능 | 플레이어/적 승무원 생성에 사용 |
+| `Assets/_Prefabs/Shield.prefab` | 보호막 오브젝트 | 확인 필요 | `ShieldSystem`/함선 프리팹 | 재사용 가능 | 연결 스크립트 확인 필요 |
+| `Assets/_Prefabs/Enemy/Enemy1.prefab` | 적 함선 1 | `EnemyController`, `EnemyPowerController`, `CrewSystem`, `WeaponSystem`, `EngineSystem`, `ShieldSystem`, `ReactorSystem`, `ShipOwnership`, `ShipViewer`, `SpriteShakeController` | `EnemyDatabase`, `SceneBinder` | 재사용 가능 | `EnemyType.Enemy1` |
+| `Assets/_Prefabs/Enemy/Enemy2.prefab` | 적 함선 2 | `EnemyController`, `EnemyPowerController`, `CrewSystem`, `WeaponSystem`, `EngineSystem`, `ShieldSystem`, `ReactorSystem`, `ShipOwnership`, `ShipViewer`, `SpriteShakeController` | `EnemyDatabase`, `SceneBinder` | 재사용 가능 | `EnemyType.Enemy2` |
+| `Assets/_Prefabs/Enemy/Enemy3.prefab` | 적 함선 3 | `EnemyController`, `EnemyPowerController`, `CrewSystem`, `WeaponSystem`, `EngineSystem`, `ShieldSystem`, `ReactorSystem`, `ShipOwnership`, `ShipViewer`, `SpriteShakeController` | `EnemyDatabase`, `SceneBinder` | 재사용 가능 | `EnemyType.Enemy3` |
+| `Assets/_Prefabs/Weapon/Basic Laser 1.prefab` | 기본 레이저 무기 | `WeaponController`, `WeaponViewer` | `WeaponDatabase`, `ShipController` | 재사용 가능 | `WeaponType.BasicLaser1` |
+| `Assets/_Prefabs/Weapon/Burst Laser 1.prefab` | 버스트 레이저 무기 | `WeaponController`, `WeaponViewer` | `WeaponDatabase`, `ShipController` | 재사용 가능 | `WeaponType.BurstLaser1` |
+| `Assets/_Prefabs/Weapon/Burst Laser 2.prefab` | 버스트 레이저 무기 | `WeaponController`, `WeaponViewer` | `WeaponDatabase`, `ShipController` | 재사용 가능 | `WeaponType.BurstLaser2` |
+| `Assets/_Prefabs/Weapon/Burst Laser 3.prefab` | 버스트 레이저 무기 | `WeaponController`, `WeaponViewer` | `WeaponDatabase`, `ShipController` | 재사용 가능 | `WeaponType.BurstLaser3` |
+| `Assets/_Prefabs/Weapon/Missile 1.prefab` | 미사일 무기 | `WeaponController`, `WeaponViewer` | `WeaponDatabase`, `ShipController` | 재사용 가능 | `WeaponType.Missile1` |
+| `Assets/_Prefabs/Projectile/Red Laser Projectile.prefab` | 레이저 투사체 | `ProjectileController` | `WeaponController` | 재사용 가능 | 무기 프리팹에서 참조 |
+| `Assets/_Prefabs/Projectile/Purple Laser Projectile.prefab` | 레이저 투사체 | `ProjectileController` | `WeaponController` | 재사용 가능 | 무기 프리팹에서 참조 |
+| `Assets/_Prefabs/Projectile/Green Laser Projectile.prefab` | 레이저 투사체 | `ProjectileController` | `WeaponController` | 재사용 가능 | 무기 프리팹에서 참조 |
+| `Assets/_Prefabs/Projectile/Basic Missile Projectile.prefab` | 미사일 투사체 | `ProjectileController` | `WeaponController` | 재사용 가능 | 무기 프리팹에서 참조 |
+| `Assets/_Prefabs/Projectile/Asteroid Projectile.prefab` | 소행성 투사체 | `ProjectileController` | `AsteroidSpawner` | 재사용 가능 | 환경 이벤트용 |
+| `Assets/_Prefabs/Explosion/Blue Explosion.prefab` | 폭발 연출 | `ExplosionController` | `CombatSystem` | 재사용 가능 | 풀링 대상 |
+| `Assets/_Prefabs/Explosion/Dark Red Explosion.prefab` | 폭발 연출 | `ExplosionController` | `CombatSystem` | 재사용 가능 | 풀링 대상 |
+| `Assets/_Prefabs/Explosion/Purple Explosion.prefab` | 폭발 연출 | `ExplosionController` | `CombatSystem` | 재사용 가능 | 풀링 대상 |
+| `Assets/_Prefabs/Explosion/Red Explosion.prefab` | 폭발 연출 | `ExplosionController` | `CombatSystem` | 재사용 가능 | 풀링 대상 |
+| `Assets/_Prefabs/Floating Text.prefab` | 피해량 텍스트 | `FloatingTextController` | `CombatSystem` | 재사용 가능 | 풀링 대상 |
+| `Assets/_Prefabs/Solar Flare.prefab` | 태양 플레어 환경 오브젝트 | `SolarFlareController` | `StageEnvironmentController` | 재사용 가능 | 태양 스테이지용 |
+| `Assets/_Prefabs/Background Canvas.prefab` | 배경 캔버스 | 확인 필요 | 배경 시스템 | 씬/시스템 전용 가능성 | 확인 필요 |
+| `Assets/_Prefabs/EnemySpawnPoint.prefab` | 적 생성 위치 | 확인 필요 | `SceneBinder` | 씬 전용 가능성 | 전투 씬 배치용 |
+| `Assets/_Prefabs/_UI/Main UI.prefab` | 메인 전투 UI | `MainUIController` | 전투/메뉴 UI | 재사용 가능 | `BattleResultViewer` 참조 가능 |
+| `Assets/_Prefabs/_UI/Battle Result UI.prefab` | 전투 결과 UI | `BattleResultViewer` | `MainUIController` | 재사용 가능 | 전투 결과 표시 |
+| `Assets/_Prefabs/_UI/Scrap UI.prefab` | 스크랩 표시 UI | `ScrapViewer` | 전투/상점 UI | 재사용 가능 | 사용 위치 확인 필요 |
+| `Assets/_Prefabs/_UI/Reactor Canvas.prefab` | 반응로 UI | `ReactorViewer` | 플레이어 함선 UI | 재사용 가능 | 사용 위치 확인 필요 |
+| `Assets/_Prefabs/_UI/Shield UI.prefab` | 보호막 UI | `ShieldViewer` | 함선 UI | 재사용 가능 | 사용 위치 확인 필요 |
+| `Assets/_Prefabs/_UI/Ship Hp/Hp Canvas.prefab` | 함선 HP UI | `HpViewer` | 함선 UI | 재사용 가능 | 플레이어/적 사용 가능 |
+| `Assets/_Prefabs/_UI/Ship Hp/Hp Bar.prefab` | HP 바 단위 UI | 확인 필요 | `HpViewer` | 재사용 가능 | 확인 필요 |
+| `Assets/_Prefabs/_UI/Power Bar/Power Bar.prefab` | 전력 칸 UI | 확인 필요 | `PowerViewer` | 재사용 가능 | 확인 필요 |
+| `Assets/_Prefabs/_UI/Power Bar/Power Bar Group.prefab` | 전력 바 그룹 UI | 확인 필요 | `PowerViewer` | 재사용 가능 | 확인 필요 |
+| `Assets/_Prefabs/_UI/Facility/Facilities Canvas.prefab` | 시설 UI 캔버스 | 확인 필요 | 플레이어 함선 UI | 재사용 가능 | 확인 필요 |
+| `Assets/_Prefabs/_UI/Facility/Facility UI.prefab` | 시설 전력 UI | `FacilityPowerViewer` | `ShipPowerController`/시설 UI | 재사용 가능 | 시설 전력 클릭 UI |
+| `Assets/_Prefabs/_UI/Facility/Facility Upgrade UI.prefab` | 시설 업그레이드 UI | `FacilityPowerViewer` | `ShopManager` | 전투 준비 씬 전용 가능성 | 상점 UI 연결 확인 필요 |
+| `Assets/_Prefabs/_UI/Crew/Crew Summary.prefab` | 승무원 요약 UI | `CrewViewer` | `ShipController`, `ShopManager` | 재사용 가능 | 전투/상점 모두 사용 |
+| `Assets/_Prefabs/_UI/Crew/Crew UI.prefab` | 승무원 UI | 확인 필요 | 승무원 표시 | 재사용 가능 | 확인 필요 |
+| `Assets/_Prefabs/_UI/Crew/Crew Heal Group.prefab` | 승무원 회복 UI 그룹 | 확인 필요 | `ShopManager` | 전투 준비 씬 전용 가능성 | 확인 필요 |
+| `Assets/_Prefabs/_UI/Weapon Charge UI.prefab` | 무기 충전 UI | 확인 필요 | 무기 UI | 재사용 가능 | 확인 필요 |
+| `Assets/_Prefabs/_UI/Weapon Charge Status.prefab` | 무기 충전 상태 UI | `WeaponViewer` 또는 관련 UI | `ShipController.InitWeapons` | 재사용 가능 | 무기 생성 시 함께 생성 |
+| `Assets/_Prefabs/_UI/Ship Debug Buttons.prefab` | 디버그 버튼 UI | `ShipDebugController` 추정 | 디버그/테스트 | 확인 필요 | 확인 필요 |
+| `Assets/_Prefabs/_UI/Tutorial Canvas.prefab` | 튜토리얼 UI | `TutorialController` 추정 | 튜토리얼 씬/전투 씬 | 확인 필요 | 확인 필요 |
+

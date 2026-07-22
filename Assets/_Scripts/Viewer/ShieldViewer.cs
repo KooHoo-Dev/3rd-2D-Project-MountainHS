@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace FTL
@@ -9,7 +10,7 @@ namespace FTL
         [SerializeField] private Image[] shieldSquares;
         [SerializeField] private Image shieldChargeBar;
         [SerializeField] private SpriteRenderer shieldMainSprite;
-        [SerializeField] private ShieldSystem shieldSystem;
+        [FormerlySerializedAs("shieldSystem")] [SerializeField] private ShieldController shieldController;
         [SerializeField] private Collider2D col;
         [SerializeField] private Color color;
         [SerializeField] private Vector3 startLocalScale;
@@ -48,14 +49,14 @@ namespace FTL
 
                 foreach (GameObject enemy in enemies)
                 {
-                    if (enemy.TryGetComponent(out shieldSystem))
+                    if (enemy.TryGetComponent(out shieldController))
                     {
                         Debug.Log("ShieldViewer: Enemy ShieldSystem Found!");
                         break;
                     }
                 }
 
-                if (shieldSystem == null)
+                if (shieldController == null)
                 {
                     Debug.LogError("ShieldViewer: There is no shieldMainSprite on Enemy!");
                 }
@@ -75,9 +76,9 @@ namespace FTL
         // 충전한 정도에 따라서 투명도를 다르게 표시하고 싶은데
         private void UpdateViewer()
         {
-            int maxShield = shieldSystem.MaxShield;
-            int shieldCount = shieldSystem.ShieldCount;
-            int maxShieldLimit = shieldSystem.MaxShieldLimit;
+            int maxShield = shieldController.MaxShield;
+            int shieldCount = shieldController.ShieldCount;
+            int maxShieldLimit = shieldController.MaxShieldLimit;
 
             //if (shieldCount == maxShield
             //    && prevShieldCount == shieldCount)
@@ -91,8 +92,8 @@ namespace FTL
 
             void UpdateChargeBar()
             {
-                float chargeProgress = shieldSystem.ChargeProgress;
-                float chargeDuration = shieldSystem.ChargeDuration;
+                float chargeProgress = shieldController.ChargeProgress;
+                float chargeDuration = shieldController.ChargeDuration;
                 float chargeRate = chargeProgress / chargeDuration;
                 shieldChargeBar.fillAmount = chargeRate;
             }

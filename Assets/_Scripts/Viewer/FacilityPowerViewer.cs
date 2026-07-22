@@ -55,43 +55,43 @@ namespace FTL
                 switch (facilityType)
                 {
                     case RoomType.Weapon:
-                        WeaponSystem weaponSystem = null;
+                        WeaponSystem weaponController = null;
                         foreach (GameObject enemy in enemies)
                         {
-                            if (enemy.TryGetComponent(out weaponSystem))
+                            if (enemy.TryGetComponent(out weaponController))
                             {
                                 Debug.Log("ReactorViewer: Enemy ReactorSystem Found!");
                                 break;
                             }
                         }
 
-                        facilitySystem = weaponSystem;
+                        facilitySystem = weaponController;
                         break;
                     case RoomType.Engine:
-                        EngineSystem engineSystem = null;
+                        EngineController engineController = null;
                         foreach (GameObject enemy in enemies)
                         {
-                            if (enemy.TryGetComponent(out engineSystem))
+                            if (enemy.TryGetComponent(out engineController))
                             {
                                 Debug.Log("ReactorViewer: Enemy ReactorSystem Found!");
                                 break;
                             }
                         }
 
-                        facilitySystem = engineSystem;
+                        facilitySystem = engineController;
                         break;
                     case RoomType.Shield:
-                        ShieldSystem shieldSystem = null;
+                        ShieldController shieldController = null;
                         foreach (GameObject enemy in enemies)
                         {
-                            if (enemy.TryGetComponent(out shieldSystem))
+                            if (enemy.TryGetComponent(out shieldController))
                             {
                                 Debug.Log("ReactorViewer: Enemy ReactorSystem Found!");
                                 break;
                             }
                         }
 
-                        facilitySystem = shieldSystem;
+                        facilitySystem = shieldController;
                         break;
                     case RoomType.Empty:
                     default:
@@ -127,11 +127,11 @@ namespace FTL
             ShipPowerController powerSystem = GameManager.Instance.Player.PowerSystem;
             if (eventData.button == PointerEventData.InputButton.Left)
             {
-                powerSystem.TryAllocatePower(facilityType);
+                powerSystem.AllocatePower(facilityType);
             }
             else if (eventData.button == PointerEventData.InputButton.Right)
             {
-                powerSystem.TryDeallocatePower(facilityType);
+                powerSystem.DeallocatePower(facilityType);
             }
         }
 

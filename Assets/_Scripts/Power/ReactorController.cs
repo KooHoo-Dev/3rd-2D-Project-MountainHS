@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace FTL
 {
-    public class ReactorSystem : MonoBehaviour
+    public class ReactorController : MonoBehaviour
     {
         [SerializeField] private int maxPower = 3;
         [SerializeField] private int power;

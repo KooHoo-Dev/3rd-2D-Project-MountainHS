@@ -10,7 +10,7 @@ namespace FTL
         [SerializeField] protected GameObject barPrefab;
         [SerializeField] protected GameObject barGroup;
         [SerializeField] protected List<Image> barSprites = new();
-        [SerializeField] protected FacilitySystem facilitySystem;
+        [SerializeField] protected FacilityController facilitySystem;
         protected ObjectPool<GameObject> barPool;
 
         #region Unity Method

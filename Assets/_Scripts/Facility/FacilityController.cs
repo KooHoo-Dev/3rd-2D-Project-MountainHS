@@ -2,18 +2,19 @@ using UnityEngine;
 
 namespace FTL
 {
-    public class FacilitySystem : MonoBehaviour
+    public class FacilityController : MonoBehaviour
     {
         [field: SerializeField] public bool IsAssisted { get; protected set; }
         [field: SerializeField] public float RepairDuration { get; set; } = 7.5f;
         [field: SerializeField] public float RepairProgress { get; set; }
         [field: SerializeField] public int MaxPowerLimit { get; set; } = 3;
-        public int TotalDamage;
-        public int Power;
         [SerializeField] protected RoomType type;
         [SerializeField] protected int maxPower;
+        public int TotalDamage;
+        public int Power;
         protected FacilityStatus facilityStatus;
         protected ShipController ship;
+        protected ShipPowerController shipPowerController;
         public RoomType Type => type;
         public FacilityStatus FacilityStatus => facilityStatus;
         public int MaxPower => maxPower;
@@ -30,6 +31,11 @@ namespace FTL
             facilityStatus = FacilityStatus.Normal;
             TotalDamage = 0;
             UpdateFacilityStatus();
+        }
+
+        protected virtual void Start()
+        {
+            shipPowerController = ship.GetComponent<ShipPowerController>();
         }
 
         #endregion
@@ -73,6 +79,12 @@ namespace FTL
             newDamage = Mathf.Min(newDamage, MaxPowerLimit);
             TotalDamage = newDamage;
             maxPower = MaxPowerLimit - newDamage;
+            if (maxPower < Power)
+            {
+                int overflowAmount = Power - maxPower;
+                ReducePower(overflowAmount);
+                shipPowerController.DeallocatePower(type,  overflowAmount);
+            }
 
             UpdateFacilityStatus();
         }
@@ -118,17 +130,6 @@ namespace FTL
             {
                 facilityStatus = FacilityStatus.Normal;
             }
-        }
-
-        public int HandlePowerOverflow()
-        {
-            int overflowAmount = Power - maxPower;
-            if (overflowAmount < 0)
-            {
-                return 0;
-            }
-
-            return overflowAmount;
         }
 
         public bool CanRunFacilityLogic()

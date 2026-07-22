@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace FTL
@@ -7,7 +8,7 @@ namespace FTL
     {
         [SerializeField] private GameObject chargeStatus;
         [SerializeField] private GameObject jumpButton;
-        [SerializeField] private EngineSystem engineSystem;
+        [FormerlySerializedAs("engineSystem")] [SerializeField] private EngineController engineController;
         [SerializeField] private Image jumpProgressBar;
         [SerializeField] private Image assistImage;
 
@@ -27,10 +28,10 @@ namespace FTL
 
             bool UpdateChargeBar()
             {
-                float escapeChargeProgress = engineSystem.ChargeProgress;
-                float escapeChargeDuration = engineSystem.ChargeDuration;
+                float escapeChargeProgress = engineController.ChargeProgress;
+                float escapeChargeDuration = engineController.ChargeDuration;
                 float escapeChargeRate = escapeChargeProgress / escapeChargeDuration;
-                bool canJump = engineSystem.CanEscape;
+                bool canJump = engineController.CanEscape;
 
                 jumpProgressBar.fillAmount = escapeChargeRate;
                 return canJump;

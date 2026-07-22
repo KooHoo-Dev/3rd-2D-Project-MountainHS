@@ -10,7 +10,7 @@ namespace FTL
         {
             base.Start();
             targetingSystem = new RandomTargeter(CombatSystem.Instance.GetPlayerRooms());
-            weaponSystem.SetWeaponsTargetingSystem(targetingSystem);
+            WeaponController.SetWeaponsTargetingSystem(targetingSystem);
             Ownership.ShipSide = ShipSide.Enemy0;
         }
 

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace FTL
@@ -10,7 +11,7 @@ namespace FTL
         [SerializeField] protected GameObject barPrefab;
         [SerializeField] protected Transform barGroupTransform;
         [SerializeField] protected List<Image> barSprites;
-        [SerializeField] protected ReactorSystem reactorSystem;
+        [FormerlySerializedAs("reactorSystem")] [SerializeField] protected ReactorController reactorController;
         [SerializeField] private bool isEnemy;
         protected ObjectPool<GameObject> barPool;
 
@@ -20,7 +21,7 @@ namespace FTL
         {
             GameObject powerBar = barPool.Get();
             barSprites.Add(powerBar.GetComponent<Image>());
-            SetBarState(barSprites.Count - 1, PowerBarStatus.Available);
+            SetBarState(barSprites.Count - 1, ReactorBarStatus.Available);
         }
 
         #endregion
@@ -41,14 +42,14 @@ namespace FTL
 
                 foreach (GameObject enemy in enemies)
                 {
-                    if (enemy.TryGetComponent(out reactorSystem))
+                    if (enemy.TryGetComponent(out reactorController))
                     {
                         Debug.Log("ReactorViewer: Enemy ReactorSystem Found!");
                         break;
                     }
                 }
 
-                if (reactorSystem == null)
+                if (reactorController == null)
                 {
                     Debug.LogError("ReactorViewer: There is no ReactorSystem on Enemy!");
                 }
@@ -67,7 +68,7 @@ namespace FTL
 
         #region Private Method
 
-        private void SetBarState(int barIndex, PowerBarStatus status)
+        private void SetBarState(int barIndex, ReactorBarStatus status)
         {
             if (barIndex < 0 || barIndex >= barSprites.Count)
             {
@@ -79,13 +80,10 @@ namespace FTL
             // 스프라이트 상태 변경
             switch (status)
             {
-                case PowerBarStatus.Available:
+                case ReactorBarStatus.Available:
                     image.color = Color.green; // 가용 상태 색상
                     break;
-                case PowerBarStatus.Broken:
-                    image.color = Color.orange; // 불가능 상태 색상
-                    break;
-                case PowerBarStatus.UnAvailable:
+                case ReactorBarStatus.UnAvailable:
                     image.color = Color.grey; // 불가능 상태 색상
                     break;
                 default:
@@ -99,10 +97,10 @@ namespace FTL
         {
             int totalPower = 0;
             int availablePower = 0;
-            if (reactorSystem != null)
+            if (reactorController != null)
             {
-                totalPower = reactorSystem.MaxPower;
-                availablePower = reactorSystem.Power;
+                totalPower = reactorController.MaxPower;
+                availablePower = reactorController.Power;
             }
             else if (!TryGetGameContextReactorCapacity(out totalPower))
             {
@@ -127,11 +125,11 @@ namespace FTL
             {
                 if (i < availablePower)
                 {
-                    SetBarState(i, PowerBarStatus.Available);
+                    SetBarState(i, ReactorBarStatus.Available);
                 }
                 else
                 {
-                    SetBarState(i, PowerBarStatus.UnAvailable);
+                    SetBarState(i, ReactorBarStatus.UnAvailable);
                 }
             }
         }
@@ -156,10 +154,6 @@ namespace FTL
             reactorCapacity = gameManager.GetShipReactorCapacity();
             return true;
         }
-
-        #endregion
-
-        #region Private Method
 
         private GameObject CreateBar()
         {

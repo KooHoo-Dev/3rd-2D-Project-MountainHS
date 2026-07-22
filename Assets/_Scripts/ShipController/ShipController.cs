@@ -40,11 +40,11 @@ namespace FTL
         [SerializeField] private GameObject crewSummaryPrefab;
         [SerializeField] protected int crewCount = 3;
         [SerializeField] protected bool isPlayer;
-        public List<FacilitySystem> FacilitySystems = new();
+        public List<FacilityController> FacilitySystems = new();
         protected CrewSystem crewSystem;
         protected bool isDeadCoroutineActivated;
         protected bool isShipInitialized;
-        protected WeaponSystem weaponSystem;
+        protected WeaponSystem WeaponController;
 
         public bool IsDead => Hp == 0;
         public bool IsCombatStopped { get; private set; }
@@ -94,13 +94,13 @@ namespace FTL
 
             FacilitySystems.Clear();
             FacilitySystems.Add(GetComponent<WeaponSystem>());
-            FacilitySystems.Add(GetComponent<EngineSystem>());
-            FacilitySystems.Add(GetComponent<ShieldSystem>());
+            FacilitySystems.Add(GetComponent<EngineController>());
+            FacilitySystems.Add(GetComponent<ShieldController>());
             crewSystem = GetComponent<CrewSystem>();
 
             Ownership = GetComponentInChildren<ShipOwnership>();
 
-            weaponSystem = (WeaponSystem)GetFacilitySystemByERoomType(RoomType.Weapon);
+            WeaponController = (WeaponSystem)GetFacilitySystemByERoomType(RoomType.Weapon);
             PowerSystem = GetComponent<ShipPowerController>();
             roomGroupTransform = FindDirectChildWithTag(transform, "Room Group").transform;
             crewGroupTransform = FindDirectChildWithTag(transform, "Crew Group").transform;
@@ -142,7 +142,7 @@ namespace FTL
                 crewSummaryPrefab != null &&
                 weaponChargeStatusPrefab != null &&
                 crewSystem != null &&
-                weaponSystem != null &&
+                WeaponController != null &&
                 PowerSystem != null;
 
             if (!canInitialize && shouldLogError)
@@ -223,15 +223,15 @@ namespace FTL
                 weaponSprite.flipX = isFlipX;
                 weaponSprite.flipY = isFlipY;
                 weaponViewer.SetChargeBar(chargeImage);
-                weaponSystem.AddWeapon(weapon);
+                WeaponController.AddWeapon(weapon);
                 if (isPlayer)
                 {
                     weaponButton.onClick.RemoveAllListeners();
-                    weaponButton.onClick.AddListener(() => weaponSystem.SetSelectedWeapon(index));
+                    weaponButton.onClick.AddListener(() => WeaponController.SetSelectedWeapon(index));
                 }
             }
 
-            weaponSystem.SetWeaponSystemOfWeapons();
+            WeaponController.SetWeaponSystemOfWeapons();
         }
 
 
@@ -285,7 +285,7 @@ namespace FTL
 
         #region Public Method
 
-        public FacilitySystem GetFacilitySystemByERoomType(RoomType roomType)
+        public FacilityController GetFacilitySystemByERoomType(RoomType roomType)
         {
             switch (roomType)
             {
@@ -348,9 +348,9 @@ namespace FTL
         public void StopCombatFunctions()
         {
             IsCombatStopped = true;
-            if (weaponSystem != null)
+            if (WeaponController != null)
             {
-                weaponSystem.ResetSelectedWeapon();
+                WeaponController.ResetSelectedWeapon();
             }
         }
 
@@ -372,7 +372,7 @@ namespace FTL
                 return;
             }
 
-            PowerSystem.TryAllocatePower(facilityType);
+            PowerSystem.AllocatePower(facilityType);
         }
 
         public void RequestDeallocatePower(RoomType facilityType)
@@ -382,7 +382,7 @@ namespace FTL
                 return;
             }
 
-            PowerSystem.TryDeallocatePower(facilityType);
+            PowerSystem.DeallocatePower(facilityType);
         }
 
         public virtual IEnumerator DeadCoroutine(float seconds, BattleResult result)

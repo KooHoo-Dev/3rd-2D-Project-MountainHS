@@ -181,7 +181,7 @@ namespace FTL
         public void SetGameContext(PlayerController player)
         {
             List<Room> rooms = player.Rooms;
-            List<FacilitySystem> facilities = player.FacilitySystems;
+            List<FacilityController> facilities = player.FacilitySystems;
             List<CrewController> crews = player.Crews;
 
             List<FacilityState> facilityStates = new();

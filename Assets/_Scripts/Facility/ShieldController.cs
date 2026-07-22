@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace FTL
 {
-    public class ShieldSystem : FacilitySystem
+    public class ShieldController : FacilityController
     {
         private const int maxShieldLimit = 4;
         private const float chargeSpeedAssistMultiplier = 1.2f;

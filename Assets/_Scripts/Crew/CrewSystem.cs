@@ -10,7 +10,7 @@ namespace FTL
         [SerializeField] private List<CrewController> selectedCrews = new();
         [SerializeField] private bool isPlayer = true;
         [SerializeField] private Room targetRoom;
-        private readonly List<FacilitySystem> facilitySystems = new();
+        private readonly List<FacilityController> facilitySystems = new();
 
         public List<Room> Rooms { get; set; }
         public bool IsAllCrewDead => crews.Count == 0;
@@ -67,8 +67,8 @@ namespace FTL
             targetRoom = null;
 
             facilitySystems.Add(GetComponent<WeaponSystem>());
-            facilitySystems.Add(GetComponent<EngineSystem>());
-            facilitySystems.Add(GetComponent<ShieldSystem>());
+            facilitySystems.Add(GetComponent<EngineController>());
+            facilitySystems.Add(GetComponent<ShieldController>());
         }
 
         #endregion

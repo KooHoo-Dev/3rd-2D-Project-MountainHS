@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace FTL
 {
-    public class EngineSystem : FacilitySystem
+    public class EngineController : FacilityController
     {
         private const float chargeSpeedAssistMultiplier = 1.2f;
 
@@ -51,7 +51,6 @@ namespace FTL
 
             UpdateEscapeCharge();
             UpdateCanEscape();
-            prevPower = Power;
         }
 
         #endregion

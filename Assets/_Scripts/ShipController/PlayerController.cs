@@ -42,7 +42,7 @@ namespace FTL
         {
             if (SimpleInput.GetKeyDown(Key.Escape))
             {
-                weaponSystem.ResetSelectedWeapon();
+                WeaponController.ResetSelectedWeapon();
                 crewSystem.ResetSelectedCrews();
             }
 
@@ -60,13 +60,13 @@ namespace FTL
             if (SimpleInput.GetKeyDown(Key.Digit5))
             {
                 // 무기 시스템의 선택한 무기를 1번 무기로 교체
-                weaponSystem.SetSelectedWeapon(0);
+                WeaponController.SetSelectedWeapon(0);
             }
 
             if (SimpleInput.GetKeyDown(Key.Digit6))
             {
                 // 무기 시스템의 선택한 무기를 1번 무기로 교체
-                weaponSystem.SetSelectedWeapon(1);
+                WeaponController.SetSelectedWeapon(1);
             }
 
             // 사용자 클릭 정보 리턴
@@ -92,7 +92,7 @@ namespace FTL
             for (RoomType type = RoomType.Weapon; type <= RoomType.Shield; type++)
             {
                 int index = (int)type;
-                FacilitySystem facility = FacilitySystems[index];
+                FacilityController facility = FacilitySystems[index];
                 FacilityState facilityState = facilityStates[index];
                 facility.ApplyState(facilityState);
                 PowerSystem.ApplyState(facilityState);
@@ -196,7 +196,7 @@ namespace FTL
                 int roomId = room.Id;
                 Vector2 target = roomCol.bounds.center;
                 ProjectileTargetData targetData = new(target, roomId);
-                weaponSystem.SetSelectedRoomTarget(targetData);
+                WeaponController.SetSelectedRoomTarget(targetData);
             }
 
             bool isPlayerCrewSelected = crew != null && shipSide == ShipSide.Player;
@@ -217,7 +217,7 @@ namespace FTL
             else
             {
                 crewSystem.ResetSelectedCrews();
-                weaponSystem.ResetSelectedWeapon();
+                WeaponController.ResetSelectedWeapon();
             }
         }
 

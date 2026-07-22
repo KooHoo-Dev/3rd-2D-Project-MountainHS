@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace FTL
 {
-    public class WeaponSystem : FacilitySystem
+    public class WeaponSystem : FacilityController
     {
         [SerializeField] private List<WeaponController> weapons;
         [SerializeField] private WeaponController selectedWeapon;

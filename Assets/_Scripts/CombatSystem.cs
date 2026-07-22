@@ -139,16 +139,16 @@ namespace FTL
             // projectile 주인 확인
             bool isPlayerProjectile = projectile.StartCol.CompareTag(Tags.PlayerShip);
             int opponentShipIndex = isPlayerProjectile ? 1 : 0;
-            ShieldSystem oppenentShieldSystem =
-                (ShieldSystem)ships[opponentShipIndex].GetFacilitySystemByERoomType(RoomType.Shield);
+            ShieldController oppenentShieldController =
+                (ShieldController)ships[opponentShipIndex].GetFacilitySystemByERoomType(RoomType.Shield);
             // 실드 시스템의 현재 실드가 1 이상이면
             // 실드 시스템 TakeDamage 호출
             // return true;
             // 현재 실드가 0이라면 
             // return false
-            if (oppenentShieldSystem.ShieldCount > 0)
+            if (oppenentShieldController.ShieldCount > 0)
             {
-                oppenentShieldSystem.TakeDamageToShield(projectile.ShieldDamage);
+                oppenentShieldController.TakeDamageToShield(projectile.ShieldDamage);
                 SetFloatingText(projectile, EDamageType.Shield);
                 return true;
             }
