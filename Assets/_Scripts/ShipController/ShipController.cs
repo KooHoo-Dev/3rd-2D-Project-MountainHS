@@ -81,6 +81,121 @@ namespace FTL
             TryInitializeShip(true);
         }
 
+        public FacilityController GetFacilitySystemByERoomType(RoomType roomType)
+        {
+            switch (roomType)
+            {
+                case RoomType.Weapon:
+                    return FacilitySystems[(int)RoomType.Weapon];
+                case RoomType.Engine:
+                    return FacilitySystems[(int)RoomType.Engine];
+                case RoomType.Shield:
+                    return FacilitySystems[(int)RoomType.Shield];
+                default:
+                    throw new ArgumentException("Invalid room type");
+            }
+        }
+
+        public void SetWeaponTypes(List<WeaponType> weaponTypes)
+        {
+            WeaponTypes = new List<WeaponType>();
+
+            for (int i = 0; i < weaponTypes.Count; i++)
+            {
+                WeaponTypes.Add(weaponTypes[i]);
+            }
+        }
+
+        public void TakeDamage(int damage)
+        {
+            Hp = Mathf.Max(0, Hp - damage);
+        }
+
+        public void TakeDamageToRoom(ProjectileController projectile, int roomId)
+        {
+            int damage = projectile.Damage;
+            int crewDamage = projectile.CrewDamage;
+            TakeDamageToRoom(damage, crewDamage, roomId);
+        }
+
+        public void TakeDamageToRoom(int damage, int crewDamage, int roomId)
+        {
+            // 피격당한 room 객체 가져오기
+            Room room = GetRoomByIdOrNull(roomId);
+            if (room == null)
+            {
+                Debug.LogError($"{name}: Cannot apply room damage. Room id {roomId} was not found.");
+                return;
+            }
+
+            room.TakeDamageToCrews(crewDamage);
+            StartCoroutine(SetRoomHitCoroutine(room));
+            bool canDamageFacility = room != null && room.HasFacility;
+            if (canDamageFacility)
+            {
+                room.TakeDamageToFacility(damage);
+            }
+
+            TakeDamage(damage);
+
+            CheckGameOver();
+        }
+
+        public void StopCombatFunctions()
+        {
+            IsCombatStopped = true;
+            if (WeaponController != null)
+            {
+                WeaponController.ResetSelectedWeapon();
+            }
+        }
+
+        public void RestoreHp(int damage)
+        {
+            if (IsDead)
+            {
+                return;
+            }
+
+            int restoredHp = Hp + damage;
+            Hp = restoredHp > ShipData.MaxHp ? ShipData.MaxHp : restoredHp;
+        }
+
+        public void RequestAllocatePower(RoomType facilityType)
+        {
+            if (!CanControlShip())
+            {
+                return;
+            }
+
+            PowerSystem.AllocatePower(facilityType);
+        }
+
+        public void RequestDeallocatePower(RoomType facilityType)
+        {
+            if (!CanControlShip())
+            {
+                return;
+            }
+
+            PowerSystem.DeallocatePower(facilityType);
+        }
+
+        public virtual IEnumerator DeadCoroutine(float seconds, BattleResult result)
+        {
+            isDeadCoroutineActivated = true;
+            yield return new WaitForSeconds(seconds);
+            GameManager.Instance.HandleBattleResult(result);
+            gameObject.SetActive(false);
+        }
+
+        [ContextMenu("TakeDamage 1")]
+        public void TestTakeDamage()
+        {
+            TakeDamage(1);
+            CheckGameOver();
+        }
+
         #endregion
 
         #region Private Method
@@ -280,129 +395,6 @@ namespace FTL
 
             return null;
         }
-
-        #endregion
-
-        #region Public Method
-
-        public FacilityController GetFacilitySystemByERoomType(RoomType roomType)
-        {
-            switch (roomType)
-            {
-                case RoomType.Weapon:
-                    return FacilitySystems[(int)RoomType.Weapon];
-                case RoomType.Engine:
-                    return FacilitySystems[(int)RoomType.Engine];
-                case RoomType.Shield:
-                    return FacilitySystems[(int)RoomType.Shield];
-                default:
-                    throw new ArgumentException("Invalid room type");
-            }
-        }
-
-        public void SetWeaponTypes(List<WeaponType> weaponTypes)
-        {
-            WeaponTypes = new List<WeaponType>();
-
-            for (int i = 0; i < weaponTypes.Count; i++)
-            {
-                WeaponTypes.Add(weaponTypes[i]);
-            }
-        }
-
-        public void TakeDamage(int damage)
-        {
-            Hp = Mathf.Max(0, Hp - damage);
-        }
-
-        public void TakeDamageToRoom(ProjectileController projectile, int roomId)
-        {
-            int damage = projectile.Damage;
-            int crewDamage = projectile.CrewDamage;
-            TakeDamageToRoom(damage, crewDamage, roomId);
-        }
-
-        public void TakeDamageToRoom(int damage, int crewDamage, int roomId)
-        {
-            // 피격당한 room 객체 가져오기
-            Room room = GetRoomByIdOrNull(roomId);
-            if (room == null)
-            {
-                Debug.LogError($"{name}: Cannot apply room damage. Room id {roomId} was not found.");
-                return;
-            }
-
-            room.TakeDamageToCrews(crewDamage);
-            StartCoroutine(SetRoomHitCoroutine(room));
-            bool canDamageFacility = room != null && room.HasFacility;
-            if (canDamageFacility)
-            {
-                room.TakeDamageToFacility(damage);
-            }
-
-            TakeDamage(damage);
-
-            CheckGameOver();
-        }
-
-        public void StopCombatFunctions()
-        {
-            IsCombatStopped = true;
-            if (WeaponController != null)
-            {
-                WeaponController.ResetSelectedWeapon();
-            }
-        }
-
-        public void RestoreHp(int damage)
-        {
-            if (IsDead)
-            {
-                return;
-            }
-
-            int restoredHp = Hp + damage;
-            Hp = restoredHp > ShipData.MaxHp ? ShipData.MaxHp : restoredHp;
-        }
-
-        public void RequestAllocatePower(RoomType facilityType)
-        {
-            if (!CanControlShip())
-            {
-                return;
-            }
-
-            PowerSystem.AllocatePower(facilityType);
-        }
-
-        public void RequestDeallocatePower(RoomType facilityType)
-        {
-            if (!CanControlShip())
-            {
-                return;
-            }
-
-            PowerSystem.DeallocatePower(facilityType);
-        }
-
-        public virtual IEnumerator DeadCoroutine(float seconds, BattleResult result)
-        {
-            isDeadCoroutineActivated = true;
-            yield return new WaitForSeconds(seconds);
-            GameManager.Instance.HandleBattleResult(result);
-            gameObject.SetActive(false);
-        }
-
-        [ContextMenu("TakeDamage 1")]
-        public void TestTakeDamage()
-        {
-            TakeDamage(1);
-            CheckGameOver();
-        }
-
-        #endregion
-
-        #region Private Method
 
         protected bool CanControlShip()
         {

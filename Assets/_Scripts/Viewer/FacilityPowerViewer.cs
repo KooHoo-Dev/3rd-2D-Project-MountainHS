@@ -177,10 +177,6 @@ namespace FTL
                    clickedObject.transform.IsChildOf(facilityIcon.transform);
         }
 
-        #endregion
-
-        #region Private Method
-
         protected override void SetBarState(int barIndex, PowerBarStatus status)
         {
             base.SetBarState(barIndex, status);
