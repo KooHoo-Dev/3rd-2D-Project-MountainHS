@@ -82,7 +82,6 @@ namespace FTL
             if (maxPower < Power)
             {
                 int overflowAmount = Power - maxPower;
-                ReducePower(overflowAmount);
                 shipPowerController.DeallocatePower(type,  overflowAmount);
             }
 
